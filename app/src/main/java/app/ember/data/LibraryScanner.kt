@@ -419,14 +419,15 @@ class LibraryScanner(
 
     /** Disc 2's "Track 01" would read "Chapter 1" again: when file numbers restart on each disc, number straight through. */
     private fun renumberAcrossDiscs(chapters: MutableList<ChapterEntity>, tracks: MutableList<TrackEntity>, bookTitle: String) {
+        // "Chapter 3" or "Part 2": the word, and the number.
         fun numbers(titles: List<String>) = titles.mapIndexed { i, t ->
-            Regex("^Chapter (\\d+)$").find(app.ember.util.Names.chapter(t, bookTitle, i))?.groupValues?.get(1)?.toInt()
+            Regex("^(Chapter|Part) (\\d+)$").find(app.ember.util.Names.chapter(t, bookTitle, i))?.groupValues?.let { it[1] to it[2].toInt() }
         }
         val nums = numbers(chapters.map { it.title })
-        if (nums.filterNotNull().zipWithNext().none { (a, b) -> b <= a }) return
-        for (i in chapters.indices) if (nums[i] != null) chapters[i] = chapters[i].copy(title = "Chapter ${i + 1}")
+        if (nums.filterNotNull().map { it.second }.zipWithNext().none { (a, b) -> b <= a }) return
+        for (i in chapters.indices) nums[i]?.let { chapters[i] = chapters[i].copy(title = "${it.first} ${i + 1}") }
         val tnums = numbers(tracks.map { it.title })
-        for (i in tracks.indices) if (tnums[i] != null) tracks[i] = tracks[i].copy(title = "Chapter ${i + 1}")
+        for (i in tracks.indices) tnums[i]?.let { tracks[i] = tracks[i].copy(title = "${it.first} ${i + 1}") }
     }
 
     // ---------------- Merging by hand ----------------
