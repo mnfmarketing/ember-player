@@ -1,1 +1,0 @@
-  mCurrentFocus=Window{8fed89d u0 app.ember.audiobooks/app.ember.wear.MainActivity}
