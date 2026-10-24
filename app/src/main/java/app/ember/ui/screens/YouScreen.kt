@@ -529,15 +529,21 @@ fun PhotoCropDialog(source: Bitmap, onDismiss: () -> Unit, onSave: (Bitmap) -> U
                 TextButton(onClick = {
                     val base = circlePx / min(source.width, source.height)
                     val sc = base * zoom
-                    val side = circlePx / sc
+                    // Rounding can make the circle a hair wider than the photo: never ask for more than is there.
+                    val side = min(circlePx / sc, min(source.width, source.height).toFloat())
                     val cx = source.width / 2f - offX / sc
                     val cy = source.height / 2f - offY / sc
-                    val l = (cx - side / 2).coerceIn(0f, source.width - side)
-                    val t = (cy - side / 2).coerceIn(0f, source.height - side)
+                    val l = (cx - side / 2).coerceIn(0f, max(0f, source.width - side))
+                    val t = (cy - side / 2).coerceIn(0f, max(0f, source.height - side))
                     val out = Bitmap.createBitmap(ProfilePhoto.SIZE, ProfilePhoto.SIZE, Bitmap.Config.ARGB_8888)
                     android.graphics.Canvas(out).drawBitmap(
                         source,
-                        android.graphics.Rect(l.toInt(), t.toInt(), (l + side).toInt(), (t + side).toInt()),
+                        android.graphics.Rect(
+                            l.toInt(),
+                            t.toInt(),
+                            (l + side).toInt().coerceAtMost(source.width),
+                            (t + side).toInt().coerceAtMost(source.height),
+                        ),
                         android.graphics.Rect(0, 0, ProfilePhoto.SIZE, ProfilePhoto.SIZE),
                         android.graphics.Paint(android.graphics.Paint.FILTER_BITMAP_FLAG),
                     )
