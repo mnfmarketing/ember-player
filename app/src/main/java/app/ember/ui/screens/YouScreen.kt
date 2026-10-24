@@ -327,11 +327,13 @@ fun YouScreen(
         }
     }
     // Test hook: a photo handed in by the emulator checks goes straight to the crop step.
-    val testCrop by ProfilePhoto.testCrop.collectAsState()
-    androidx.compose.runtime.LaunchedEffect(testCrop) {
-        val uri = testCrop ?: return@LaunchedEffect
-        ProfilePhoto.testCrop.value = null
-        cropping = withContext(Dispatchers.IO) { ProfilePhoto.decodeForCrop(context, uri) }
+    androidx.compose.runtime.LaunchedEffect(Unit) {
+        ProfilePhoto.testCrop.collect { uri ->
+            if (uri != null) {
+                cropping = withContext(Dispatchers.IO) { ProfilePhoto.decodeForCrop(context, uri) }
+                ProfilePhoto.testCrop.value = null
+            }
+        }
     }
 }
 
