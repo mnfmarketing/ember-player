@@ -62,6 +62,8 @@ data class Settings(
     val btnPrevious: Int = 1,
     /** The sleep timer lowers the volume over its last seconds (off: it just pauses). */
     val sleepFade: Boolean = false,
+    /** Pause when the phone is put face down; resume when it's turned back up. */
+    val flipToPause: Boolean = false,
     /** Bedtime: playing between these times starts the sleep timer by itself. */
     val bedtimeOn: Boolean = false,
     /** Minutes after midnight. */
@@ -108,6 +110,7 @@ class SettingsStore(private val context: Context) {
         val btnNext = intPreferencesKey("btn_next")
         val btnPrevious = intPreferencesKey("btn_previous")
         val sleepFade = booleanPreferencesKey("sleep_fade")
+        val flipToPause = booleanPreferencesKey("flip_to_pause")
         val bedtimeOn = booleanPreferencesKey("bedtime_on")
         val bedtimeFrom = intPreferencesKey("bedtime_from")
         val bedtimeTo = intPreferencesKey("bedtime_to")
@@ -153,6 +156,7 @@ class SettingsStore(private val context: Context) {
         btnNext = this[Keys.btnNext] ?: 2,
         btnPrevious = this[Keys.btnPrevious] ?: 1,
         sleepFade = this[Keys.sleepFade] ?: false,
+        flipToPause = this[Keys.flipToPause] ?: false,
         bedtimeOn = this[Keys.bedtimeOn] ?: false,
         bedtimeFromMin = this[Keys.bedtimeFrom] ?: (22 * 60),
         bedtimeToMin = this[Keys.bedtimeTo] ?: (6 * 60),
@@ -196,6 +200,7 @@ class SettingsStore(private val context: Context) {
     suspend fun setCarDevices(addresses: Set<String>) = context.dataStore.edit { it[Keys.carDevices] = addresses.joinToString(",") }
     suspend fun setRateOnFinish(on: Boolean) = context.dataStore.edit { it[Keys.rateOnFinish] = on }
     suspend fun setSleepFade(on: Boolean) = context.dataStore.edit { it[Keys.sleepFade] = on }
+    suspend fun setFlipToPause(on: Boolean) = context.dataStore.edit { it[Keys.flipToPause] = on }
     suspend fun setBedtime(on: Boolean, fromMin: Int, toMin: Int, timerMin: Int) = context.dataStore.edit {
         it[Keys.bedtimeOn] = on
         it[Keys.bedtimeFrom] = fromMin
@@ -247,6 +252,7 @@ class SettingsStore(private val context: Context) {
         it[Keys.btnNext] = s.btnNext
         it[Keys.btnPrevious] = s.btnPrevious
         it[Keys.sleepFade] = s.sleepFade
+        it[Keys.flipToPause] = s.flipToPause
         it[Keys.bedtimeOn] = s.bedtimeOn
         it[Keys.bedtimeFrom] = s.bedtimeFromMin
         it[Keys.bedtimeTo] = s.bedtimeToMin

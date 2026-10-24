@@ -146,6 +146,9 @@ abstract class LibraryDao {
     @Query("SELECT * FROM listen_log WHERE bookId = :bookId ORDER BY at DESC, id DESC LIMIT 400")
     abstract fun observeListenLog(bookId: String): Flow<List<ListenEventEntity>>
 
+    @Query("SELECT * FROM listen_log ORDER BY at DESC, id DESC LIMIT :n")
+    abstract suspend fun recentListenLog(n: Int): List<ListenEventEntity>
+
     @Query("SELECT COUNT(*) FROM listen_log")
     abstract suspend fun countListenLog(): Int
 
@@ -254,6 +257,32 @@ abstract class LibraryDao {
     @Query("DELETE FROM shelf_books WHERE bookId = :bookId")
     abstract suspend fun deleteShelfLinksFor(bookId: String)
 
+    // Books merged by hand
+    @Query("SELECT * FROM book_merges ORDER BY mergedKey, idx")
+    abstract suspend fun getMerges(): List<BookMergeEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract suspend fun insertMerges(rows: List<BookMergeEntity>)
+
+    @Query("DELETE FROM book_merges WHERE mergedKey = :mergedKey")
+    abstract suspend fun deleteMerge(mergedKey: String)
+
+    @Query("UPDATE books SET skipIntroSec = :intro, skipOutroSec = :outro WHERE id = :id")
+    abstract suspend fun setSkips(id: String, intro: Int, outro: Int)
+
+    /** Moves a book's bookmarks between [lo] and [hi] to another book, shifting their times (merging and splitting books). */
+    @Query("UPDATE bookmarks SET bookId = :to, positionMs = positionMs + :shiftMs WHERE bookId = :from AND positionMs >= :lo AND positionMs < :hi")
+    abstract suspend fun moveBookmarks(from: String, to: String, shiftMs: Long, lo: Long, hi: Long)
+
+    @Query("UPDATE clips SET mediaId = :to, startMs = startMs + :shiftMs, endMs = endMs + :shiftMs WHERE mediaId = :from AND startMs >= :lo AND startMs < :hi")
+    abstract suspend fun moveClips(from: String, to: String, shiftMs: Long, lo: Long, hi: Long)
+
+    @Query("UPDATE listen_log SET bookId = :to, positionMs = positionMs + :shiftMs, toMs = CASE WHEN toMs >= 0 THEN toMs + :shiftMs ELSE toMs END WHERE bookId = :from AND positionMs >= :lo AND positionMs < :hi")
+    abstract suspend fun moveListenLog(from: String, to: String, shiftMs: Long, lo: Long, hi: Long)
+
+    @Query("UPDATE OR IGNORE shelf_books SET bookId = :to WHERE bookId = :from")
+    abstract suspend fun moveShelfLinks(from: String, to: String)
+
     // Folders
     @Query("SELECT * FROM folders ORDER BY name COLLATE NOCASE")
     abstract fun observeFolders(): Flow<List<LibraryFolderEntity>>
@@ -286,8 +315,9 @@ abstract class LibraryDao {
         LibraryFolderEntity::class,
         ClipEntity::class,
         ListenEventEntity::class,
+        BookMergeEntity::class,
     ],
-    version = 4,
+    version = 5,
     exportSchema = true,
 )
 abstract class EmberDatabase : RoomDatabase() {

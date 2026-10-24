@@ -40,6 +40,15 @@ class EmberApp : Application() {
                 prefs.edit().putBoolean("tidy_names_1", true).apply()
             }
         }
+        // Once: books split into CD1 / CD2 / CD3 folders become one book (with your place, bookmarks and log).
+        container.appScope.launch {
+            val prefs = getSharedPreferences("upgrades", MODE_PRIVATE)
+            if (!prefs.getBoolean("merge_discs_1", false)) {
+                kotlinx.coroutines.delay(8_000)
+                if (container.db.dao().getFolders().isNotEmpty()) runCatching { container.scanner.scanAll() }
+                prefs.edit().putBoolean("merge_discs_1", true).apply()
+            }
+        }
         // A daily backup, even if Android postponed the nightly job.
         container.appScope.launch {
             kotlinx.coroutines.delay(20_000)

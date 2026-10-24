@@ -347,6 +347,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun setSleepFade(on: Boolean) = viewModelScope.launch { c.settings.setSleepFade(on) }
+    fun setFlipToPause(on: Boolean) = viewModelScope.launch { c.settings.setFlipToPause(on) }
     fun setBedtime(on: Boolean, fromMin: Int, toMin: Int, timerMin: Int) = viewModelScope.launch { c.settings.setBedtime(on, fromMin, toMin, timerMin) }
 
     /** Where you probably fell asleep last night (see SleepMarks). */
@@ -412,6 +413,33 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     fun setBookEffects(bookId: String, custom: Boolean, trimSilence: Boolean, voiceBoost: Boolean) =
         updateBook(bookId) { it.copy(customEffects = custom, trimSilence = trimSilence, voiceBoost = voiceBoost) }
+
+    // ---- Merging books (CD1, CD2...) by hand ----
+
+    fun canMerge(ids: Collection<String>): Boolean = c.scanner.canMerge(books.value.filter { it.id in ids })
+
+    suspend fun isManualMerge(id: String): Boolean = c.scanner.isManualMerge(id)
+
+    fun mergeBooks(orderedIds: List<String>, title: String) {
+        viewModelScope.launch {
+            val all = c.db.dao().getBooks().associateBy { it.id }
+            val picked = orderedIds.mapNotNull { all[it] }
+            val id = c.scanner.merge(picked, title)
+            app.ember.playback.PlaybackStatus.notice.value = if (id != null) "Merged ${picked.size} books into one" else "Those books can't be merged"
+        }
+    }
+
+    fun splitBook(id: String) {
+        viewModelScope.launch {
+            val ok = c.scanner.split(id)
+            app.ember.playback.PlaybackStatus.notice.value = if (ok) "Split back into its parts" else "That book can't be split"
+        }
+    }
+
+    /** Seconds skipped at the start / end of each of this book's files when playback moves on by itself. */
+    fun setBookSkips(bookId: String, intro: Int, outro: Int) {
+        viewModelScope.launch { c.db.dao().setSkips(bookId, intro, outro) }
+    }
 
     // ---- Notes export (Markdown, for Notion and the like) ----
 
@@ -2007,6 +2035,9 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             _backupBusy.value = true
             _backupMessage.value = "Restoring…"
             val r = c.backup.restore(p.text)
+            // Books merged by hand come back together once the library is scanned.
+            val dao = c.db.dao()
+            if (dao.getMerges().any { dao.getBook(app.ember.data.LibraryScanner.bookIdFor(it.mergedKey)) == null }) c.scanner.scanAll()
             _backupBusy.value = false
             _backupMessage.value = r?.describe() ?: "That backup couldn't be read."
         }

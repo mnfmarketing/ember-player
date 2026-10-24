@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.QueueMusic
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.CheckCircle
+import androidx.compose.material.icons.rounded.CallMerge
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.LibraryAdd
@@ -58,6 +59,8 @@ fun BookSelectionBar(
     val allLinked = picked.isNotEmpty() && picked.all { it.isExternal }
     var shelfPicker by remember { mutableStateOf(false) }
     var confirmRemove by remember { mutableStateOf(false) }
+    var merging by remember { mutableStateOf(false) }
+    val mergeable = picked.size >= 2 && vm.canMerge(ids)
 
     Surface(
         modifier = modifier
@@ -95,6 +98,9 @@ fun BookSelectionBar(
                 vm.resetProgress(ids)
                 onClear()
             }) { Icon(Icons.Rounded.RestartAlt, "Mark as not finished", tint = EmberColors.TextMuted) }
+            if (mergeable) {
+                IconButton(onClick = { merging = true }) { Icon(Icons.Rounded.CallMerge, "Merge into one book", tint = EmberColors.TextMuted) }
+            }
             if (allLinked) {
                 IconButton(onClick = { confirmRemove = true }) { Icon(Icons.Rounded.Delete, "Remove from Ember", tint = MaterialTheme.colorScheme.error) }
             }
@@ -130,6 +136,12 @@ fun BookSelectionBar(
                 shelfPicker = false
                 onClear()
             }
+        }
+    }
+    if (merging) {
+        MergeBooksDialog(vm, picked, onDismiss = { merging = false }) {
+            merging = false
+            onClear()
         }
     }
     if (confirmRemove) {

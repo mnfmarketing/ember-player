@@ -37,4 +37,19 @@ class NamesTest {
         assertEquals("Project Hail Mary", Names.shortTitle("Project Hail Mary"))
         assertEquals("Dune", Names.shortTitle("Dune, Book One"))
     }
+
+    @Test fun discFolderNames() {
+        val yes = listOf("CD1", "CD 01", "cd02", "Disc 2", "Disk 3", "Part 4", "Pt 5", "Pt. 6", "01", "7", "The Bone Season CD1", "The Bone Season - Disc 2", "Disc 1 of 3")
+        val no = listOf("Extras", "Bonus Material", "The Bone Season", "Part One", "Dune", "CD", "Season 2 Specials")
+        yes.forEach { org.junit.Assert.assertTrue(it, app.ember.data.LibraryScanner.isDiscName(it)) }
+        no.forEach { org.junit.Assert.assertFalse(it, app.ember.data.LibraryScanner.isDiscName(it)) }
+    }
+
+    @Test fun mergedNames() {
+        fun b(t: String) = app.ember.data.BookEntity(id = t, title = t)
+        assertEquals("The Bone Season", app.ember.ui.screens.mergedName(listOf(b("The Bone Season CD1"), b("The Bone Season CD2"))))
+        assertEquals("The Bone Season", app.ember.ui.screens.mergedName(listOf(b("The Bone Season - Disc 1"), b("The Bone Season - Disc 2"))))
+        assertEquals("Loose", app.ember.ui.screens.mergedName(listOf(b("Loose One"), b("Loose Two"))))
+        assertEquals("Dune", app.ember.ui.screens.mergedName(listOf(b("Dune"), b("Emma"))))
+    }
 }

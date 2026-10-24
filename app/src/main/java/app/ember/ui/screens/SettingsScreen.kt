@@ -264,6 +264,11 @@ fun SettingsScreen(
                 }
             }
             ToggleRow(
+                "Flip to pause",
+                "Put your phone face down to pause. Turn it back up within 30 minutes to pick up again.",
+                settings.flipToPause,
+            ) { vm.setFlipToPause(it) }
+            ToggleRow(
                 "Rate books when you finish them",
                 "When a book plays to the end, Ember asks for your rating and offers to open it in StoryGraph or Goodreads.",
                 settings.rateOnFinish,

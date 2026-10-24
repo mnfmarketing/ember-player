@@ -32,6 +32,27 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    /** Test hook: add a library folder through Android's folder picker, then scan it. */
+    private val libraryFolderPicker = registerForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.OpenDocumentTree(),
+    ) { uri ->
+        if (uri != null) {
+            try {
+                contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            } catch (e: SecurityException) {
+            }
+            container.appScope.launch {
+                val dao = container.db.dao()
+                val folder = dao.getFolderByUri(uri.toString()) ?: run {
+                    val name = uri.lastPathSegment?.substringAfterLast(':')?.substringAfterLast('/') ?: "Folder"
+                    val id = dao.insertFolder(app.ember.data.LibraryFolderEntity(uri = uri.toString(), name = name))
+                    app.ember.data.LibraryFolderEntity(id = id, uri = uri.toString(), name = name)
+                }
+                container.scanner.scanFolder(folder)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         // Status bar icons follow the phone's light/dark setting.
         enableEdgeToEdge(
@@ -109,6 +130,28 @@ class MainActivity : ComponentActivity() {
                 android.provider.DocumentsContract.buildDocumentUri("com.android.externalstorage.documents", "primary:Audiobooks"),
             )
         }
+        intent.getStringExtra("ember_pick_library_folder")?.let { path ->
+            libraryFolderPicker.launch(
+                android.provider.DocumentsContract.buildDocumentUri("com.android.externalstorage.documents", "primary:$path"),
+            )
+        }
+        // Test hooks for Ember-21: seek, add a bookmark, a book's skips, merge and split.
+        intent.getStringExtra("ember_seek")?.split(',')?.let { p ->
+            if (p.size == 2) container.player.seekTo(p[0].toIntOrNull() ?: 0, p[1].toLongOrNull() ?: 0L)
+        }
+        intent.getStringExtra("ember_add_bookmark")?.split(',')?.takeIf { it.size == 2 }?.let { p ->
+            container.appScope.launch { container.db.dao().insertBookmark(app.ember.data.BookmarkEntity(bookId = p[0], positionMs = p[1].toLongOrNull() ?: 0L, note = "test")) }
+        }
+        intent.getStringExtra("ember_book_skips")?.split(',')?.takeIf { it.size == 3 }?.let { p ->
+            container.appScope.launch { container.db.dao().setSkips(p[0], p[1].toIntOrNull() ?: 0, p[2].toIntOrNull() ?: 0) }
+        }
+        intent.getStringExtra("ember_merge")?.split('|')?.takeIf { it.size == 2 }?.let { p ->
+            container.appScope.launch {
+                val all = container.db.dao().getBooks().associateBy { it.id }
+                container.scanner.merge(p[0].split(',').mapNotNull { all[it] }, p[1])
+            }
+        }
+        intent.getStringExtra("ember_split")?.let { id -> container.appScope.launch { container.scanner.split(id) } }
         intent.getStringExtra("ember_torrent")?.let {
             container.torrents.testPickSmallest = intent.getBooleanExtra("ember_torrent_smallest", false)
             container.torrents.incoming.value = it
@@ -142,6 +185,13 @@ class MainActivity : ComponentActivity() {
             }
         }
         if (intent.getBooleanExtra("ember_shake", false)) app.ember.playback.PlaybackService.testShake()
+        // Flip to pause: "on"/"off" sets the setting, "down"/"up" stands in for turning the phone over.
+        intent.getStringExtra("ember_flip")?.let { f ->
+            when (f) {
+                "on", "off" -> container.appScope.launch { container.settings.setFlipToPause(f == "on") }
+                else -> app.ember.playback.PlaybackService.testFlip(f == "down")
+            }
+        }
         intent.getStringExtra("ember_finish_prompt")?.let { app.ember.playback.PlaybackStatus.finished.value = app.ember.playback.PlaybackStatus.Finished(it) }
         intent.getStringExtra("ember_route")?.let { routeRequest.value = it }
         intent.getStringExtra("ember_play")?.let { container.player.playBook(it) }

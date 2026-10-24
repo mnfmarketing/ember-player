@@ -20,6 +20,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
 import java.util.UUID
+import app.ember.container
 
 /** Walks folders picked by the user and turns audio files into books. */
 class LibraryScanner(
@@ -65,6 +66,10 @@ class LibraryScanner(
         val sourceUri: Uri,
         /** A companion PDF beside the audio (maps, extras), if there is one. */
         val pdf: Doc? = null,
+        /** For a book made of several (CD1, CD2, ... or merged by hand): each part's scan key and file count, in order. */
+        val parts: List<Pair<String, Int>> = emptyList(),
+        /** The name you gave a book merged by hand. */
+        val forcedTitle: String? = null,
     )
 
     /** Runs after every scan (used to match books from a restored backup). */
@@ -90,7 +95,7 @@ class LibraryScanner(
         runCatching { afterScan?.invoke() }
     }
 
-    private suspend fun scanFolderLocked(folder: LibraryFolderEntity) {
+    private suspend fun scanFolderLocked(folder: LibraryFolderEntity, keep: Set<String> = emptySet()) {
         if (folder.uri.startsWith(DRIVE_PREFIX)) {
             scanDriveLocked(folder)
             return
@@ -123,8 +128,9 @@ class LibraryScanner(
             return
         }
         problem(folder, null)
+        applyManualMerges(folder.id, candidates)
 
-        val foundIds = HashSet<String>()
+        val foundIds = HashSet<String>(keep)
         candidates.forEachIndexed { i, c ->
             val id = bookIdFor(c.key)
             foundIds += id
@@ -153,6 +159,27 @@ class LibraryScanner(
         val dirs = children.filter { it.isDir }.sortedWith(naturalOrder)
         val folderCover = pickCover(images)
         val folderUri = DocumentsContract.buildDocumentUriUsingTree(treeUri, docId)
+
+        // CD1, CD2, CD3 (or Disc 1, Part 2...) folders with nothing else beside them: one book.
+        if (audio.isEmpty() && dirs.size >= 2 && dirs.all { isDiscName(it.name) }) {
+            val discs = dirs.map { it to listChildren(treeUri, it.docId) }
+            val usable = discs.all { (_, kids) -> kids.none { k -> k.isDir } && kids.any { k -> !k.isDir && k.isAudio } }
+            if (usable) {
+                val parts = discs.map { (d, kids) -> d to kids.filter { k -> !k.isDir && k.isAudio }.sortedWith(naturalOrder) }
+                val discCover = discs.firstNotNullOfOrNull { (_, kids) -> pickCover(kids.filter { k -> !k.isDir && k.isImage }) }
+                val pdf = pdfs.firstOrNull() ?: discs.firstNotNullOfOrNull { (_, kids) -> kids.filter { k -> !k.isDir && k.isPdf }.minWithOrNull(naturalOrder) }
+                out += Candidate(
+                    key = docId,
+                    files = parts.flatMap { it.second },
+                    fallbackTitle = name,
+                    cover = folderCover ?: discCover,
+                    sourceUri = folderUri,
+                    pdf = pdf,
+                    parts = parts.map { (d, files) -> d.docId to files.size },
+                )
+                return
+            }
+        }
 
         if (audio.isNotEmpty()) {
             val allContainers = audio.all { it.ext in CONTAINER_EXT }
@@ -206,6 +233,31 @@ class LibraryScanner(
     private fun matchingCover(images: List<Doc>, audio: Doc): Doc? {
         val base = audio.name.substringBeforeLast('.').lowercase()
         return images.firstOrNull { it.name.substringBeforeLast('.').lowercase() == base }
+    }
+
+    /** Books you merged by hand in this folder replace their parts in the scan. */
+    private suspend fun applyManualMerges(folderId: Long, candidates: MutableList<Candidate>) {
+        // Matched by the parts' keys (the folder's id can differ after restoring a backup on a new phone).
+        val merges = dao.getMerges().groupBy { it.mergedKey }
+        for ((mergedKey, rows) in merges) {
+            val members = rows.sortedBy { it.idx }.mapNotNull { r -> candidates.firstOrNull { it.key == r.memberKey } }
+            if (members.size < 2) continue
+            val at = candidates.indexOf(members.first())
+            candidates.removeAll(members.toSet())
+            candidates.add(
+                at.coerceAtMost(candidates.size),
+                Candidate(
+                    key = mergedKey,
+                    files = members.flatMap { it.files },
+                    fallbackTitle = rows.first().title,
+                    cover = members.firstNotNullOfOrNull { it.cover },
+                    sourceUri = members.first().sourceUri,
+                    pdf = members.firstNotNullOfOrNull { it.pdf },
+                    parts = members.map { it.key to it.files.size },
+                    forcedTitle = rows.first().title,
+                ),
+            )
+        }
     }
 
     private suspend fun importCandidate(id: String, c: Candidate, folderId: Long) {
@@ -270,7 +322,10 @@ class LibraryScanner(
         } catch (e: Exception) {
         }
 
-        val bookTitle = title?.takeIf { it.isNotBlank() } ?: c.fallbackTitle
+        val bookTitle = c.forcedTitle
+            ?: title?.takeIf { it.isNotBlank() }?.let { if (c.parts.isNotEmpty()) stripDisc(it) else it }
+            ?: c.fallbackTitle
+        if (c.parts.isNotEmpty()) renumberAcrossDiscs(chapters, bookTitle)
         var coverPath = existing?.coverPath
         var coverColor = existing?.coverColor
         if (coverPath == null) {
@@ -294,8 +349,169 @@ class LibraryScanner(
             folderId = folderId,
             durationMs = offset,
             pdfUri = base.pdfUri ?: c.pdf?.uri?.toString(),
+            userEdited = base.userEdited || c.forcedTitle != null,
         )
         dao.replaceContent(book, trackRows, chapters)
+        if (existing == null && c.parts.isNotEmpty()) carryOver(id, c.parts, trackRows, "", manual = c.forcedTitle != null)
+    }
+
+    /**
+     * When separate disc books become one, everything moves to the merged book: bookmarks, clips and the
+     * listening log (shifted to the merged timeline), shelves, Up Next, and your place, rating, speed and
+     * status from the disc you played most recently. The disc books then go away.
+     */
+    private suspend fun carryOver(newId: String, parts: List<Pair<String, Int>>, tracks: List<TrackEntity>, keyPrefix: String, manual: Boolean) {
+        var fileIdx = 0
+        val olds = mutableListOf<Pair<BookEntity, Long>>()
+        for ((key, count) in parts) {
+            val offset = tracks.take(fileIdx).sumOf { it.durationMs }
+            fileIdx += count
+            val old = dao.getBook(bookIdFor(keyPrefix + key)) ?: continue
+            if (old.id != newId) olds += old to offset
+        }
+        if (olds.isEmpty()) return
+        val merged = dao.getBook(newId) ?: return
+        for ((old, offset) in olds) {
+            dao.moveBookmarks(old.id, newId, offset, Long.MIN_VALUE, Long.MAX_VALUE)
+            dao.moveClips(old.id, newId, offset, Long.MIN_VALUE, Long.MAX_VALUE)
+            dao.moveListenLog(old.id, newId, offset, Long.MIN_VALUE, Long.MAX_VALUE)
+            dao.moveShelfLinks(old.id, newId)
+        }
+        val played = olds.filter { it.first.lastPlayedAt > 0 || it.first.status != BookEntity.STATUS_NEW }
+        val recent = played.maxByOrNull { it.first.lastPlayedAt }
+        val status = when {
+            olds.all { it.first.status == BookEntity.STATUS_FINISHED } -> BookEntity.STATUS_FINISHED
+            recent != null -> BookEntity.STATUS_IN_PROGRESS
+            else -> BookEntity.STATUS_NEW
+        }
+        val r = recent?.first
+        val firstCover = olds.firstNotNullOfOrNull { it.first.coverPath }
+        dao.updateBook(
+            merged.copy(
+                positionMs = recent?.let { (b, off) -> (off + b.positionMs).coerceAtMost(merged.durationMs) } ?: 0,
+                status = status,
+                lastPlayedAt = r?.lastPlayedAt ?: 0,
+                finishedAt = if (status == BookEntity.STATUS_FINISHED) olds.maxOf { it.first.finishedAt } else 0,
+                addedAt = olds.minOf { it.first.addedAt },
+                rating = r?.rating?.takeIf { it > 0 } ?: olds.maxOf { it.first.rating },
+                speed = r?.speed ?: merged.speed,
+                customEffects = r?.customEffects ?: merged.customEffects,
+                trimSilence = r?.trimSilence ?: merged.trimSilence,
+                voiceBoost = r?.voiceBoost ?: merged.voiceBoost,
+                skipIntroSec = r?.skipIntroSec ?: merged.skipIntroSec,
+                skipOutroSec = r?.skipOutroSec ?: merged.skipOutroSec,
+                coverPath = if (manual) firstCover ?: merged.coverPath else merged.coverPath ?: firstCover,
+                coverColor = if (manual && firstCover != null) olds.first { it.first.coverPath != null }.first.coverColor else merged.coverColor ?: olds.firstNotNullOfOrNull { it.first.coverColor },
+            ),
+        )
+        val oldIds = olds.map { it.first.id }.toSet()
+        runCatching {
+            val settings = context.container.settings
+            settings.editUpNext { list -> list.map { if (it in oldIds) newId else it } }
+            if (settings.current().lastBookId in oldIds) settings.setLastBook(newId)
+        }
+        oldIds.forEach { dao.deleteBook(it) }
+    }
+
+    /** "Book Title CD1" / "Book Title - Disc 2" as an album tag on a disc: just the book's title. */
+    private fun stripDisc(t: String): String =
+        t.replace(Regex("[\\s,:._-]*[\\(\\[]?\\s*(cd|disc|disk|part|pt)\\.?\\s*[-_#]?\\s*\\d{1,3}(\\s*(of|/)\\s*\\d{1,3})?\\s*[\\)\\]]?\\s*$", RegexOption.IGNORE_CASE), "").trim().ifBlank { t }
+
+    /** Disc 2's "Track 01" would read "Chapter 1" again: when file numbers restart on each disc, number straight through. */
+    private fun renumberAcrossDiscs(chapters: MutableList<ChapterEntity>, bookTitle: String) {
+        val names = chapters.map { app.ember.util.Names.chapter(it.title, bookTitle, it.idx) }
+        val nums = names.map { Regex("^Chapter (\\d+)$").find(it)?.groupValues?.get(1)?.toInt() }
+        val numbered = nums.filterNotNull()
+        val restarts = numbered.zipWithNext().any { (a, b) -> b <= a }
+        if (!restarts) return
+        for (i in chapters.indices) {
+            if (nums[i] != null) chapters[i] = chapters[i].copy(title = "Chapter ${i + 1}")
+        }
+    }
+
+    // ---------------- Merging by hand ----------------
+
+    /** The scan key a local book was found under (its folder or file), or null if it can't be merged by hand. */
+    private fun scanKeyOf(b: BookEntity): String? {
+        if (b.source != BookEntity.SOURCE_LOCAL || b.sourceUri.isBlank()) return null
+        val key = runCatching { DocumentsContract.getDocumentId(Uri.parse(b.sourceUri)) }.getOrNull() ?: return null
+        return key.takeIf { bookIdFor(it) == b.id }
+    }
+
+    /** Whether these books can become one: local books from the same library folder, none merged already. */
+    fun canMerge(books: List<BookEntity>): Boolean =
+        books.size >= 2 && books.map { it.folderId }.distinct().size == 1 && books.first().folderId != null && books.all { scanKeyOf(it) != null }
+
+    /** Merges books (in this order) into one with this name; returns the merged book's id, or null if they can't be merged. */
+    suspend fun merge(books: List<BookEntity>, title: String): String? {
+        if (!canMerge(books)) return null
+        val folder = dao.getFolders().firstOrNull { it.id == books.first().folderId } ?: return null
+        val mergedKey = "merge:" + System.currentTimeMillis()
+        val keys = books.map { scanKeyOf(it)!! }
+        dao.insertMerges(keys.mapIndexed { i, k -> BookMergeEntity(mergedKey, i, k, title.trim().ifBlank { books.first().title }, folder.id) })
+        mutex.withLock {
+            withContext(Dispatchers.IO) {
+                scanFolderLocked(folder)
+                _progress.value = null
+            }
+        }
+        return bookIdFor(mergedKey).takeIf { dao.getBook(it) != null }
+    }
+
+    /** Whether this book was merged by hand (so it can be split back apart). */
+    suspend fun isManualMerge(bookId: String): Boolean = dao.getMerges().any { bookIdFor(it.mergedKey) == bookId }
+
+    /** Splits a book merged by hand back into its parts, each getting back its own bookmarks, clips, log and place. */
+    suspend fun split(bookId: String): Boolean {
+        val rows = dao.getMerges().filter { bookIdFor(it.mergedKey) == bookId }.sortedBy { it.idx }
+        if (rows.isEmpty()) return false
+        val merged = dao.getBook(bookId) ?: return false
+        val folder = dao.getFolders().firstOrNull { it.id == merged.folderId }
+        dao.deleteMerge(rows.first().mergedKey)
+        val shelves = dao.getShelfIdsFor(bookId)
+        mutex.withLock {
+            withContext(Dispatchers.IO) {
+                if (folder != null) scanFolderLocked(folder, keep = setOf(bookId))
+                _progress.value = null
+                var offset = 0L
+                val pos = merged.positionMs
+                for (r in rows) {
+                    val id = bookIdFor(r.memberKey)
+                    val part = dao.getBook(id) ?: continue
+                    val end = offset + part.durationMs
+                    dao.moveBookmarks(bookId, id, -offset, offset, end)
+                    dao.moveClips(bookId, id, -offset, offset, end)
+                    dao.moveListenLog(bookId, id, -offset, offset, end)
+                    shelves.forEach { dao.addToShelf(ShelfBookEntity(it, id)) }
+                    val status = when {
+                        merged.status == BookEntity.STATUS_FINISHED || (merged.status != BookEntity.STATUS_NEW && pos >= end) -> BookEntity.STATUS_FINISHED
+                        merged.status != BookEntity.STATUS_NEW && pos in offset until end -> BookEntity.STATUS_IN_PROGRESS
+                        else -> BookEntity.STATUS_NEW
+                    }
+                    dao.updateBook(
+                        part.copy(
+                            positionMs = if (pos in offset until end) pos - offset else 0,
+                            status = status,
+                            lastPlayedAt = if (status != BookEntity.STATUS_NEW) merged.lastPlayedAt else 0,
+                            finishedAt = if (status == BookEntity.STATUS_FINISHED) merged.finishedAt.takeIf { it > 0 } ?: merged.lastPlayedAt else 0,
+                            rating = merged.rating,
+                            speed = merged.speed,
+                        ),
+                    )
+                    if (pos in offset until end) {
+                        runCatching {
+                            val settings = context.container.settings
+                            settings.editUpNext { list -> list.map { if (it == bookId) id else it } }
+                            if (settings.current().lastBookId == bookId) settings.setLastBook(id)
+                        }
+                    }
+                    offset = end
+                }
+                dao.deleteBook(bookId)
+            }
+        }
+        runCatching { afterScan?.invoke() }
+        return true
     }
 
     private fun cleanChapterTitle(tag: String?, fileTitle: String): String {
@@ -312,6 +528,7 @@ class LibraryScanner(
         val fallbackTitle: String,
         val cover: DriveFile?,
         val sourceId: String,
+        val parts: List<Pair<String, Int>> = emptyList(),
     )
 
     private fun DriveFile.ext() = name.substringAfterLast('.', "").lowercase()
@@ -369,6 +586,15 @@ class LibraryScanner(
             val base = img.name.substringBeforeLast('.').lowercase()
             val rank = preferred.indexOfFirst { base.contains(it) }
             if (rank < 0) 99 else rank
+        }
+        if (audio.isEmpty() && dirs.size >= 2 && dirs.all { isDiscName(it.name) }) {
+            val discs = dirs.map { it to drive.list(it.id) }
+            if (discs.all { (_, kids) -> kids.none { k -> k.isFolder } && kids.any { k -> k.isAudioFile() } }) {
+                val parts = discs.map { (d, kids) -> d to kids.filter { k -> k.isAudioFile() }.sortedWith { a, b -> naturalCompare(a.name, b.name) } }
+                val discCover = discs.firstNotNullOfOrNull { (_, kids) -> kids.firstOrNull { k -> k.isImageFile() } }
+                out += DriveCandidate(folderId, parts.flatMap { it.second }, name, folderCover ?: discCover, folderId, parts.map { (d, f) -> d.id to f.size })
+                return
+            }
         }
         if (audio.isNotEmpty()) {
             val allContainers = audio.all { it.ext() in CONTAINER_EXT }
@@ -453,7 +679,8 @@ class LibraryScanner(
                 coverColor = it.color
             }
         }
-        val bookTitle = title?.takeIf { it.isNotBlank() } ?: c.fallbackTitle
+        val bookTitle = title?.takeIf { it.isNotBlank() }?.let { if (c.parts.isNotEmpty()) stripDisc(it) else it } ?: c.fallbackTitle
+        if (c.parts.isNotEmpty()) renumberAcrossDiscs(chapters, bookTitle)
         // Same book you already started through the Drive app's folder picker? Keep your place.
         val previous = if (existing == null) findDriveAppTwin(bookTitle, offset) else null
         val base = existing ?: previous?.let {
@@ -479,6 +706,7 @@ class LibraryScanner(
             dao.getBookmarks(previous.id).forEach { dao.insertBookmark(it.copy(id = 0, bookId = id)) }
             dao.getShelfIdsFor(previous.id).forEach { dao.addToShelf(ShelfBookEntity(it, id)) }
         }
+        if (existing == null && c.parts.isNotEmpty()) carryOver(id, c.parts, trackRows, DRIVE_PREFIX, manual = false)
     }
 
     private suspend fun findDriveAppTwin(title: String, durationMs: Long): BookEntity? =
@@ -521,6 +749,14 @@ class LibraryScanner(
 
         val AUDIO_EXT = setOf("mp3", "m4a", "m4b", "aac", "ogg", "opus", "flac", "wav", "mp4")
         val CONTAINER_EXT = setOf("m4b", "m4a", "mp4")
+
+        private val discName = Regex(
+            "^(?:.*[\\s._-])?(?:cd|disc|disk|part|pt)\\.?\\s*[-_#]?\\s*\\d{1,3}(?:\\s*(?:of|/)\\s*\\d{1,3})?$|^\\d{1,3}$",
+            RegexOption.IGNORE_CASE,
+        )
+
+        /** "CD1", "CD 01", "Disc 2", "Disk 3", "Part 4", "Pt 5", "01", or "Book Title CD1". */
+        fun isDiscName(name: String): Boolean = discName.matches(name.trim())
 
         fun bookIdFor(key: String): String = UUID.nameUUIDFromBytes(key.toByteArray()).toString()
 

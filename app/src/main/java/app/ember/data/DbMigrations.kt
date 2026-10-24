@@ -53,6 +53,19 @@ object DbMigrations {
         "ALTER TABLE `books` ADD COLUMN `voiceBoost` INTEGER NOT NULL DEFAULT 0",
     )
 
+    /** Library database, version 4 to 5: skipping repeated intros and outros per book, and books merged by hand. */
+    val EMBER_4_5 = listOf(
+        "ALTER TABLE `books` ADD COLUMN `skipIntroSec` INTEGER NOT NULL DEFAULT 0",
+        "ALTER TABLE `books` ADD COLUMN `skipOutroSec` INTEGER NOT NULL DEFAULT 0",
+        "CREATE TABLE IF NOT EXISTS `book_merges` (" +
+            "`mergedKey` TEXT NOT NULL, " +
+            "`idx` INTEGER NOT NULL, " +
+            "`memberKey` TEXT NOT NULL, " +
+            "`title` TEXT NOT NULL, " +
+            "`folderId` INTEGER NOT NULL, " +
+            "PRIMARY KEY(`mergedKey`, `idx`))",
+    )
+
     /** Podcast database (media.db), version 1 to 2: adds podcast chapters. */
     val MEDIA_1_2 = listOf(
         "ALTER TABLE `episodes` ADD COLUMN `chaptersUrl` TEXT NOT NULL DEFAULT ''",
@@ -86,7 +99,7 @@ object DbMigrations {
     )
 
     /** All library steps, keyed by (from, to). Kept as plain SQL so tests can run them without Android. */
-    val emberSteps: Map<Pair<Int, Int>, List<String>> = mapOf((1 to 2) to EMBER_1_2, (2 to 3) to EMBER_2_3, (3 to 4) to EMBER_3_4)
+    val emberSteps: Map<Pair<Int, Int>, List<String>> = mapOf((1 to 2) to EMBER_1_2, (2 to 3) to EMBER_2_3, (3 to 4) to EMBER_3_4, (4 to 5) to EMBER_4_5)
     val mediaSteps: Map<Pair<Int, Int>, List<String>> = mapOf((1 to 2) to MEDIA_1_2, (2 to 3) to MEDIA_2_3)
 
     val ember: Array<Migration> = emberSteps.map { (k, sql) -> step(k.first, k.second, sql) }.toTypedArray()

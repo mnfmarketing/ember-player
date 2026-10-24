@@ -96,7 +96,11 @@ fun CarModeScreen(vm: MainViewModel, onExit: () -> Unit) {
     val view = LocalView.current
     DisposableEffect(Unit) {
         view.keepScreenOn = true
-        onDispose { view.keepScreenOn = false }
+        app.ember.playback.CarMode.screenShowing = true
+        onDispose {
+            view.keepScreenOn = false
+            app.ember.playback.CarMode.screenShowing = false
+        }
     }
     DarkSystemBars()
     val current = np

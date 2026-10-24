@@ -36,6 +36,9 @@ data class BookEntity(
     @ColumnInfo(defaultValue = "0") val customEffects: Boolean = false,
     @ColumnInfo(defaultValue = "0") val trimSilence: Boolean = false,
     @ColumnInfo(defaultValue = "0") val voiceBoost: Boolean = false,
+    /** Seconds skipped at the start / end of each file when playback moves on by itself (repeated intros and outros). */
+    @ColumnInfo(defaultValue = "0") val skipIntroSec: Int = 0,
+    @ColumnInfo(defaultValue = "0") val skipOutroSec: Int = 0,
 ) {
     val isExternal: Boolean get() = source == SOURCE_EXTERNAL
     /** The title without filler like ": A Novel" or "(Unabridged)", for covers, rows and players. */
@@ -64,6 +67,20 @@ data class BookEntity(
         const val EXTERNAL_SCALE = 100L
     }
 }
+
+/**
+ * A book you merged by hand from several folders or files (CD1, CD2, ...). [mergedKey] is the
+ * merged book's scan key; each row is one member's scan key, in play order. Rescans keep it.
+ */
+@Entity(tableName = "book_merges", primaryKeys = ["mergedKey", "idx"])
+data class BookMergeEntity(
+    val mergedKey: String,
+    val idx: Int,
+    val memberKey: String,
+    /** The name and folder the merged book keeps (stored on every row; read from idx 0). */
+    val title: String,
+    val folderId: Long,
+)
 
 @Entity(tableName = "tracks", primaryKeys = ["bookId", "idx"])
 data class TrackEntity(
@@ -169,5 +186,7 @@ data class ListenEventEntity(
         const val REASON_UNPLUGGED = 2
         const val REASON_OTHER_APP = 3
         const val REASON_FINISHED = 4
+        /** Paused by turning the phone face down, or played by turning it back up. */
+        const val REASON_FLIPPED = 5
     }
 }

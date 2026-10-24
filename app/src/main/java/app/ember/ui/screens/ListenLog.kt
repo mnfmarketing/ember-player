@@ -177,12 +177,13 @@ private fun LogRow(vm: MainViewModel, e: ListenEventEntity, chapters: List<Chapt
     val delta = e.toMs - e.positionMs
     val toChapter = if (e.kind == ListenEventEntity.JUMP) chapters.firstOrNull { abs(it.startMs - e.toMs) < 1_500 } else null
     val (icon, title) = when (e.kind) {
-        ListenEventEntity.PLAY -> Icons.Rounded.PlayArrow to "Play"
+        ListenEventEntity.PLAY -> Icons.Rounded.PlayArrow to "Play" + if (e.reason == ListenEventEntity.REASON_FLIPPED) " · phone turned up" else ""
         ListenEventEntity.PAUSE -> Icons.Rounded.Pause to "Pause" + when (e.reason) {
             ListenEventEntity.REASON_SLEEP -> " · sleep timer"
             ListenEventEntity.REASON_UNPLUGGED -> " · headphones disconnected"
             ListenEventEntity.REASON_OTHER_APP -> " · another app"
             ListenEventEntity.REASON_FINISHED -> " · finished"
+            ListenEventEntity.REASON_FLIPPED -> " · phone turned over"
             else -> ""
         }
         ListenEventEntity.SKIP -> (if (delta < 0) Icons.Rounded.FastRewind else Icons.Rounded.FastForward) to

@@ -25,6 +25,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.QueueMusic
 import androidx.compose.material.icons.rounded.Description
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.CallMerge
+import androidx.compose.material.icons.rounded.CallSplit
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.Checklist
 import androidx.compose.material.icons.rounded.Delete
@@ -104,6 +106,8 @@ fun BookQuickSheet(
     var confirmRemove by remember { mutableStateOf(false) }
     var showLog by remember { mutableStateOf(false) }
     var exportNotes by remember { mutableStateOf(false) }
+    var confirmSplit by remember { mutableStateOf(false) }
+    val manualMerge by androidx.compose.runtime.produceState(false, bookId) { value = vm.isManualMerge(bookId) }
     val settings by vm.settings.collectAsState()
     val chapters by remember(bookId) { vm.observeChapters(bookId) }.collectAsState(initial = emptyList())
     val pickImage = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri: Uri? ->
@@ -244,6 +248,15 @@ fun BookQuickSheet(
                     onSelect()
                 }
             }
+            if (manualMerge) {
+                SheetAction(Icons.Rounded.CallSplit, "Split back apart") { confirmSplit = true }
+            } else if (onSelect != null && book.source == BookEntity.SOURCE_LOCAL) {
+                SheetAction(Icons.Rounded.CallMerge, "Merge with other books…") {
+                    onDismiss()
+                    onSelect()
+                    app.ember.playback.PlaybackStatus.notice.value = "Tick the other parts, then tap Merge at the top"
+                }
+            }
             if (book.hasPdf) {
                 SheetAction(Icons.Rounded.PictureAsPdf, "Open the PDF") {
                     onDismiss()
@@ -290,6 +303,12 @@ fun BookQuickSheet(
         ListenLogSheet(vm, book.id, book.title, chapters, book.durationMs) { showLog = false }
     }
     if (exportNotes) ExportNotesDialog(vm, book.id) { exportNotes = false }
+    if (confirmSplit) {
+        SplitBookDialog(vm, book, onDismiss = { confirmSplit = false }) {
+            confirmSplit = false
+            onDismiss()
+        }
+    }
     if (coverSearch) {
         CoverSearchSheet(
             vm = vm,

@@ -34,6 +34,9 @@ object CarMode {
     /** The car disconnected: leave car mode if it's showing. */
     val close = MutableStateFlow<Long?>(null)
 
+    /** Whether the car mode screen is showing (flip to pause is ignored then). */
+    @Volatile var screenShowing = false
+
     /** Whether Ember's screen is showing right now (set by MainActivity). */
     @Volatile var appVisible = false
 

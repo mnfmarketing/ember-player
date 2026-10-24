@@ -115,6 +115,22 @@ jobs:
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null
           ffmpeg -loglevel error -f lavfi -i "sine=frequency=220:duration=900" -c:a aac -b:a 64k demo.m4a
+          # A book split into CD1/CD2/CD3 (file numbers start over on each disc), and two separate books.
+          for d in 1 2 3; do
+            mkdir -p "mergetest/The Disc Test Book/CD$d"
+            for t in 1 2; do
+              ffmpeg -loglevel error -f lavfi -i "sine=frequency=$((200 + d * 80 + t * 20)):duration=25" -c:a libmp3lame -b:a 64k \
+                -metadata title="Track 0$t" -metadata album="The Disc Test Book - Disc $d" -metadata artist="Ember Tests" \
+                "mergetest/The Disc Test Book/CD$d/0$t Track 0$t.mp3"
+            done
+          done
+          for name in One Two; do
+            mkdir -p "mergetest/Loose $name"
+            for t in 1 2; do
+              ffmpeg -loglevel error -f lavfi -i "sine=frequency=$((300 + t * 40)):duration=20" -c:a libmp3lame -b:a 64k \
+                -metadata title="Part $t" -metadata album="Loose $name" -metadata artist="Ember Tests" "mergetest/Loose $name/0$t.mp3"
+            done
+          done
           ls -la demo.m4a Ember-*.apk
 
       - name: Make a test audiobook torrent

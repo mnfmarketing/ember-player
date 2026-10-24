@@ -75,6 +75,38 @@ object SelfCheck {
             .put("demo0Effects", books.firstOrNull { it.id == "demo-0" }?.let { "${it.customEffects},${it.trimSilence},${it.voiceBoost}" } ?: "")
             .put("sleepLog", dao.countSleepMarks())
             .put("dbSnapshots", DbSnapshots.dir(context).list()?.sorted()?.joinToString() ?: "")
+            .put("playing", app.ember.playback.PlaybackStatus.isPlaying.value)
+            .put("flipToPause", c.settings.current().flipToPause)
+            .put("lastBookId", c.settings.current().lastBookId ?: "")
+            .put("merges", dao.getMerges().size)
+            .put(
+                "recentLog",
+                org.json.JSONArray().apply {
+                    dao.recentListenLog(8).forEach { e ->
+                        put(JSONObject().put("bookId", e.bookId).put("kind", e.kind).put("reason", e.reason).put("positionMs", e.positionMs).put("toMs", e.toMs))
+                    }
+                },
+            )
+            .put(
+                "library",
+                org.json.JSONArray().apply {
+                    books.filter { !it.id.startsWith("demo-") && !it.isExternal }.forEach { b ->
+                        put(
+                            JSONObject()
+                                .put("id", b.id)
+                                .put("title", b.title)
+                                .put("durationMs", b.durationMs)
+                                .put("positionMs", b.positionMs)
+                                .put("status", b.status)
+                                .put("skips", "${b.skipIntroSec},${b.skipOutroSec}")
+                                .put("tracks", dao.getTracks(b.id).joinToString(" | ") { "${it.title} (${it.durationMs / 1000}s)" })
+                                .put("chapters", dao.getChapters(b.id).joinToString(" | ") { "${it.title}@${it.startMs / 1000}" })
+                                .put("bookmarks", dao.getBookmarks(b.id).joinToString(",") { "${it.positionMs}" })
+                                .put("log", dao.recentListenLog(400).count { it.bookId == b.id }),
+                        )
+                    }
+                },
+            )
     }
 
     suspend fun report(context: Context, name: String) = withContext(Dispatchers.IO) {

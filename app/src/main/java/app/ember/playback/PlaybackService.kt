@@ -88,6 +88,12 @@ class PlaybackService : MediaLibraryService() {
     private var listenAccumMs = 0L
     private var lastTickAt = 0L
     private var shake: ShakeDetector? = null
+    private var flip: FlipDetector? = null
+    /** Ember paused because the phone was turned face down (so turning it up resumes). */
+    private var flippedPause = false
+    private var flippedAt = 0L
+    private var playReason = app.ember.data.ListenEventEntity.REASON_NONE
+    private var flipStopJob: kotlinx.coroutines.Job? = null
     /** The show of the episode playing, for its own effects and intro/outro skips. */
     private var showFx: PodcastEntity? = null
     private var outroHandled = false
@@ -156,6 +162,7 @@ class PlaybackService : MediaLibraryService() {
             container.settings.flow.collect { s ->
                 settings = s
                 applyEffects()
+                updateFlip()
             }
         }
         scope.launch {
@@ -178,6 +185,7 @@ class PlaybackService : MediaLibraryService() {
         scope.launch { tickLoop() }
         scope.launch { wearPoke.collect { publishWear(force = true) } }
         scope.launch { shakePoke.collect { if (shake != null) onShake() } }
+        scope.launch { flipPoke.collect { onFlip(it) } }
         scope.launch { clipWatch() }
         // Changing a show's settings applies right away to the episode that's playing.
         scope.launch {
@@ -340,6 +348,8 @@ class PlaybackService : MediaLibraryService() {
         }
         shake?.stop()
         shake = null
+        flip?.stop()
+        flip = null
         sound.release()
         castPlayer?.setSessionAvailabilityListener(null)
         castPlayer?.release()
@@ -362,6 +372,8 @@ class PlaybackService : MediaLibraryService() {
             publishWear()
             val id = mediaItem?.mediaId?.let { bookIdFromTrack(it) } ?: return
             if (id != bookId && !id.startsWith(EPISODE_PREFIX)) scope.launch { loadTrackState(id) }
+            // The next file started by itself: skip the book's repeated intro.
+            if (reason == Player.MEDIA_ITEM_TRANSITION_REASON_AUTO && id == bookId) skipIntoFile(active.currentMediaItemIndex)
         }
 
         override fun onPlayerError(error: androidx.media3.common.PlaybackException) {
@@ -390,6 +402,7 @@ class PlaybackService : MediaLibraryService() {
             }
             scope.launch { refreshWidget(applicationContext) }
             publishWear()
+            updateFlip()
         }
 
         override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
@@ -404,7 +417,11 @@ class PlaybackService : MediaLibraryService() {
             val speed = active.playbackParameters.speed
             if (playWhenReady) {
                 pauseReason = app.ember.data.ListenEventEntity.REASON_NONE
-                scope.launch { log.play(id, pos, speed) }
+                val why = playReason
+                playReason = app.ember.data.ListenEventEntity.REASON_NONE
+                // Played some other way: turning the phone up no longer means anything.
+                if (why != app.ember.data.ListenEventEntity.REASON_FLIPPED) flippedPause = false
+                scope.launch { log.play(id, pos, speed, why) }
             } else {
                 val why = when {
                     pauseReason != app.ember.data.ListenEventEntity.REASON_NONE -> pauseReason
@@ -508,11 +525,63 @@ class PlaybackService : MediaLibraryService() {
         }
     }
 
+    /** A book's own intro skip, in ms (0 when off or not a book). */
+    private fun bookIntroMs(): Long = bookFx?.takeIf { !isEpisode && it.id == bookId }?.skipIntroSec?.times(1000L) ?: 0L
+    private fun bookOutroMs(): Long = bookFx?.takeIf { !isEpisode && it.id == bookId }?.skipOutroSec?.times(1000L) ?: 0L
+
+    /** Starts file [index] past the book's repeated intro (only for files long enough to have one). */
+    private fun skipIntoFile(index: Int) {
+        val intro = bookIntroMs()
+        if (intro <= 0 || index < 0) return
+        val d = trackDurations.getOrElse(index) { 0L }
+        if (d > 0 && d < intro + 10_000) return
+        if (active.currentPosition >= intro) return
+        quietSeek = true
+        active.seekTo(index, intro)
+    }
+
+    private var outroIndex = -1
+    private var outroPos = -1L
+
+    /**
+     * Skips a book's repeated outro: when playback runs into the last seconds of a file, it moves on to the
+     * next file (past its intro), or to the very end on the last one. Only when it gets there by playing:
+     * scrubbing or jumping into those seconds stays where you chose.
+     */
+    private fun bookOutroWatch() {
+        val outro = bookOutroMs()
+        if (outro <= 0 || !active.isPlaying || PlaybackStatus.clipRange.value != null) {
+            outroIndex = -1
+            return
+        }
+        val idx = active.currentMediaItemIndex
+        val pos = active.currentPosition
+        val d = trackDurations.getOrElse(idx) { 0L }.takeIf { it > 0 } ?: active.duration.takeIf { it > 0 } ?: return
+        val prevIdx = outroIndex
+        val prevPos = outroPos
+        outroIndex = idx
+        outroPos = pos
+        if (d < outro + 10_000) return
+        val zone = d - outro
+        val playedInto = prevIdx == idx && prevPos in 0 until zone && pos >= zone && pos - prevPos < 3_000
+        if (!playedInto) return
+        outroIndex = -1
+        quietSeek = true
+        if (idx + 1 < active.mediaItemCount) {
+            val intro = bookIntroMs()
+            val nd = trackDurations.getOrElse(idx + 1) { 0L }
+            active.seekTo(idx + 1, if (intro > 0 && (nd == 0L || nd >= intro + 10_000)) intro else 0L)
+        } else {
+            active.seekTo(idx, d)
+        }
+    }
+
     /** Stops a clip preview at the clip's end. */
     private suspend fun clipWatch() {
         while (true) {
             delay(200)
             outroWatch()
+            bookOutroWatch()
             val (_, end) = PlaybackStatus.clipRange.value ?: continue
             if (active.mediaItemCount > 0 && active.isPlaying && globalPosition() >= end) {
                 active.pause()
@@ -638,6 +707,46 @@ class PlaybackService : MediaLibraryService() {
         if (!s.active) return
         val renewed = !prev.active || (s.endsAt ?: 0) > (prev.endsAt ?: 0) + 1_000 || s.stopAtPositionMs != prev.stopAtPositionMs
         if (renewed && active.mediaItemCount > 0) lastAwakePos = globalPosition()
+    }
+
+    /**
+     * Flip to pause: the motion sensors are only watched while a book plays with the setting on,
+     * and for up to 30 minutes after a face-down pause (to notice it being turned back up).
+     */
+    private fun updateFlip() {
+        val want = settings.flipToPause && active.mediaItemCount > 0 && (active.isPlaying || flippedPause)
+        if (want && flip == null) {
+            flip = FlipDetector(this) { down -> scope.launch { onFlip(down) } }.also { it.start() }
+        } else if (!want && flip != null) {
+            flip?.stop()
+            flip = null
+        }
+    }
+
+    private fun onFlip(faceDown: Boolean) {
+        if (!settings.flipToPause || CarMode.screenShowing) return
+        if (faceDown) {
+            if (!active.playWhenReady || active.mediaItemCount == 0) return
+            pauseReason = app.ember.data.ListenEventEntity.REASON_FLIPPED
+            flippedPause = true
+            flippedAt = System.currentTimeMillis()
+            active.pause()
+            flipStopJob?.cancel()
+            flipStopJob = scope.launch {
+                delay(FLIP_RESUME_MS)
+                flippedPause = false
+                updateFlip()
+            }
+        } else if (flippedPause) {
+            flippedPause = false
+            flipStopJob?.cancel()
+            if (!active.playWhenReady && System.currentTimeMillis() - flippedAt < FLIP_RESUME_MS) {
+                playReason = app.ember.data.ListenEventEntity.REASON_FLIPPED
+                if (active.playbackState == Player.STATE_IDLE) active.prepare()
+                active.play()
+            }
+        }
+        updateFlip()
     }
 
     /** Shake detection runs while a timer is on, and for 5 minutes after one runs out. */
@@ -982,7 +1091,10 @@ class PlaybackService : MediaLibraryService() {
         // Playing a book takes it off Up Next.
         if (id in settings.upNext) container.appScope.launch { container.settings.editUpNext { it - id } }
         val restart = book.status == BookEntity.STATUS_FINISHED || book.positionMs >= book.durationMs - 1_000
-        val start = if (restart) 0L else book.positionMs
+        var start = if (restart) 0L else book.positionMs
+        // Starting from the very top skips the book's repeated intro too.
+        val intro = book.skipIntroSec * 1000L
+        if (start == 0L && intro > 0 && tracks.first().durationMs.let { it == 0L || it >= intro + 10_000 }) start = intro
         var idx = 0
         for (i in offsets.indices) if (offsets[i] <= start) idx = i
         active.setPlaybackSpeed(book.speed)
@@ -1300,6 +1412,13 @@ class PlaybackService : MediaLibraryService() {
         }
 
         private val shakePoke = kotlinx.coroutines.flow.MutableSharedFlow<Unit>(extraBufferCapacity = 1)
+        private val flipPoke = kotlinx.coroutines.flow.MutableSharedFlow<Boolean>(extraBufferCapacity = 2)
+        private const val FLIP_RESUME_MS = 30 * 60_000L
+
+        /** The emulator checks' stand-in for turning the phone face down (true) or back up (false). */
+        fun testFlip(faceDown: Boolean) {
+            flipPoke.tryEmit(faceDown)
+        }
 
         /** The emulator checks' stand-in for shaking the phone. */
         fun testShake() {
@@ -1349,6 +1468,79 @@ class PlaybackService : MediaLibraryService() {
             }
         }
     }
+}
+
+/**
+ * Notices the phone being put face down (screen to the floor, lying flat) and turned back up.
+ * Face down counts after a second with the proximity sensor covered, or after a few seconds of
+ * lying perfectly still when it isn't (the Fold open, where that sensor faces up). Holding the
+ * phone above you in bed isn't still enough, and a pocket isn't flat.
+ */
+private class FlipDetector(context: Context, private val onFlip: (Boolean) -> Unit) : SensorEventListener {
+    private val sensors = context.getSystemService(SensorManager::class.java)
+    private var near = false
+    private var downSince = 0L
+    private var upSince = 0L
+    private var isDown = false
+    private var lastG = 0f
+    private var shakeSum = 0f
+    private var samples = 0
+
+    fun start() {
+        val sm = sensors ?: return
+        val accel = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) ?: return
+        sm.registerListener(this, accel, SensorManager.SENSOR_DELAY_NORMAL)
+        sm.getDefaultSensor(Sensor.TYPE_PROXIMITY)?.let { sm.registerListener(this, it, SensorManager.SENSOR_DELAY_NORMAL) }
+    }
+
+    fun stop() {
+        sensors?.unregisterListener(this)
+    }
+
+    override fun onSensorChanged(event: SensorEvent) {
+        if (event.sensor.type == Sensor.TYPE_PROXIMITY) {
+            near = event.values[0] < minOf(event.sensor.maximumRange, 3f)
+            return
+        }
+        val x = event.values[0]
+        val y = event.values[1]
+        val z = event.values[2]
+        val g = sqrt(x * x + y * y + z * z)
+        val now = System.currentTimeMillis()
+        val flatDown = z < -8.6f && kotlin.math.abs(x) < 2.2f && kotlin.math.abs(y) < 2.2f
+        val faceUp = z > 6.5f
+        if (flatDown) {
+            if (downSince == 0L) {
+                downSince = now
+                shakeSum = 0f
+                samples = 0
+            } else {
+                shakeSum += kotlin.math.abs(g - lastG)
+                samples++
+            }
+            val still = samples >= 10 && shakeSum / samples < 0.12f
+            val held = now - downSince
+            if (!isDown && ((near && held >= 1_000) || (still && held >= 3_000))) {
+                isDown = true
+                onFlip(true)
+            }
+        } else {
+            downSince = 0L
+        }
+        if (faceUp && isDown) {
+            if (upSince == 0L) upSince = now
+            if (now - upSince >= 400) {
+                isDown = false
+                upSince = 0L
+                onFlip(false)
+            }
+        } else {
+            upSince = 0L
+        }
+        lastG = g
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
 }
 
 private class ShakeDetector(context: Context, private val onShake: () -> Unit) : SensorEventListener {

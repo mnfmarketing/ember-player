@@ -110,6 +110,8 @@ class BackupManager(private val context: Context, private val c: AppContainer) {
                         .put("customEffects", b.customEffects)
                         .put("trimSilence", b.trimSilence)
                         .put("voiceBoost", b.voiceBoost)
+                        .put("skipIntroSec", b.skipIntroSec)
+                        .put("skipOutroSec", b.skipOutroSec)
                     if (b.userEdited && !b.isExternal) {
                         o.put(
                             "chapters",
@@ -150,6 +152,15 @@ class BackupManager(private val context: Context, private val c: AppContainer) {
                             .put("startMs", k.startMs).put("endMs", k.endMs).put("note", k.note)
                             .put("chapterTitle", k.chapterTitle).put("createdAt", k.createdAt),
                     )
+                }
+            },
+        )
+        // Books merged by hand, so a restore puts them back together on the next scan.
+        root.put(
+            "merges",
+            JSONArray().apply {
+                dao.getMerges().forEach { m ->
+                    put(JSONObject().put("mergedKey", m.mergedKey).put("idx", m.idx).put("memberKey", m.memberKey).put("title", m.title).put("folderId", m.folderId))
                 }
             },
         )
@@ -358,6 +369,7 @@ class BackupManager(private val context: Context, private val c: AppContainer) {
         backUpNow("before-restore")
         return lock.withLock {
             withContext(Dispatchers.IO) {
+                restoreMerges(root)
                 val books = applyBooks(root)
                 restoreListening(root)
                 restoreSettings(root)
@@ -365,6 +377,15 @@ class BackupManager(private val context: Context, private val c: AppContainer) {
                 RestoreResult(books.matched, books.waiting, books.bookmarks, books.clips, shows)
             }
         }
+    }
+
+    private suspend fun restoreMerges(root: JSONObject) {
+        val list = root.optJSONArray("merges") ?: return
+        val have = dao.getMerges().map { it.mergedKey }.toSet()
+        val rows = (0 until list.length()).map { list.getJSONObject(it) }
+            .filter { it.optString("mergedKey") !in have && it.optString("memberKey").isNotBlank() }
+            .map { BookMergeEntity(it.getString("mergedKey"), it.optInt("idx"), it.getString("memberKey"), it.optString("title"), it.optLong("folderId")) }
+        if (rows.isNotEmpty()) dao.insertMerges(rows)
     }
 
     /** Called after every library scan: matches books from an earlier restore that have now appeared. */
@@ -535,6 +556,9 @@ class BackupManager(private val context: Context, private val c: AppContainer) {
             )
         }
         if (b.rating == 0) b = b.copy(rating = o.optInt("rating"))
+        if (b.skipIntroSec == 0 && b.skipOutroSec == 0 && (o.optInt("skipIntroSec") > 0 || o.optInt("skipOutroSec") > 0)) {
+            b = b.copy(skipIntroSec = o.optInt("skipIntroSec"), skipOutroSec = o.optInt("skipOutroSec"))
+        }
         if (o.optBoolean("customEffects") && !b.customEffects) {
             b = b.copy(customEffects = true, trimSilence = o.optBoolean("trimSilence"), voiceBoost = o.optBoolean("voiceBoost"))
         }

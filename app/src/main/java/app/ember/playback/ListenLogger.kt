@@ -15,11 +15,11 @@ class ListenLogger(private val dao: LibraryDao) {
     private val mutex = Mutex()
     private var writes = 0
 
-    suspend fun play(bookId: String, positionMs: Long, speed: Float) = mutex.withLock {
+    suspend fun play(bookId: String, positionMs: Long, speed: Float, reason: Int = ListenEventEntity.REASON_NONE) = mutex.withLock {
         val last = dao.lastListenEvent(bookId)
         // Buffering hiccups can flip play on twice; one entry is enough.
         if (last != null && last.kind == ListenEventEntity.PLAY && System.currentTimeMillis() - last.at < 3_000) return@withLock
-        insert(ListenEventEntity(bookId = bookId, at = System.currentTimeMillis(), kind = ListenEventEntity.PLAY, positionMs = positionMs, speed = speed))
+        insert(ListenEventEntity(bookId = bookId, at = System.currentTimeMillis(), kind = ListenEventEntity.PLAY, positionMs = positionMs, speed = speed, reason = reason))
     }
 
     /** A pause. For the sleep timer, [awakeMs] is where you were when you last set or shook it. */

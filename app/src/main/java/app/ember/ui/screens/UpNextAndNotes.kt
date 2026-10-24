@@ -324,6 +324,41 @@ fun BookSoundSection(vm: MainViewModel, bookId: String) {
                 vm.setBookEffects(book.id, true, book.trimSilence, it)
             }
         }
+        Spacer(Modifier.height(8.dp))
+        SkipChoices("Skip at the start of each file", "For a jingle or \"This is Audible\" on every file", book.skipIntroSec, listOf(0, 3, 5, 10, 15, 30)) {
+            vm.setBookSkips(book.id, it, book.skipOutroSec)
+        }
+        SkipChoices("Skip at the end of each file", "Moves on to the next file that much sooner", book.skipOutroSec, listOf(0, 3, 5, 10, 15)) {
+            vm.setBookSkips(book.id, book.skipIntroSec, it)
+        }
+    }
+}
+
+/** Off / 3s / 5s ... as a row of chips. */
+@Composable
+private fun SkipChoices(title: String, sub: String, value: Int, choices: List<Int>, onPick: (Int) -> Unit) {
+    Column(Modifier.fillMaxWidth().padding(vertical = 6.dp)) {
+        Text(title, style = MaterialTheme.typography.bodyLarge, color = EmberColors.Text)
+        Text(sub, style = MaterialTheme.typography.bodySmall, color = EmberColors.TextMuted)
+        Spacer(Modifier.height(6.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            choices.forEach { c ->
+                val on = c == value
+                Box(
+                    Modifier
+                        .clip(RoundedCornerShape(50))
+                        .background(if (on) MaterialTheme.colorScheme.primary else EmberColors.SurfaceHigh)
+                        .clickable(onClickLabel = if (c == 0) "Off" else "$c seconds") { onPick(c) }
+                        .padding(horizontal = 12.dp, vertical = 8.dp),
+                ) {
+                    Text(
+                        if (c == 0) "Off" else "${c}s",
+                        style = MaterialTheme.typography.labelLarge,
+                        color = if (on) MaterialTheme.colorScheme.onPrimary else EmberColors.Text,
+                    )
+                }
+            }
+        }
     }
 }
 
