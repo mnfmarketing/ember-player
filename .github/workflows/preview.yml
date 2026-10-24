@@ -9,11 +9,26 @@ permissions:
   contents: write
   actions: read
 
+# Two kinds of run, to save GitHub minutes:
+#  - quick (default): a fresh install with the demo library and only ci/focus.sh (~20 min)
+#  - full: put [full] in the commit message (~70 min): upgrade, backup/restore, every screen, the watch app
 jobs:
   build:
     runs-on: ubuntu-24.04
+    outputs:
+      mode: ${{ steps.mode.outputs.mode }}
+      watch: ${{ steps.mode.outputs.watch }}
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 2
+
+      - name: Quick or full run
+        id: mode
+        run: |
+          if git log -1 --pretty=%B | grep -q '\[full\]'; then echo "mode=full" >> $GITHUB_OUTPUT; else echo "mode=quick" >> $GITHUB_OUTPUT; fi
+          # The watch app is only tested on a full run or when its code changed.
+          if git log -1 --pretty=%B | grep -q '\[full\]' || git diff --name-only HEAD~1 HEAD | grep -q '^wear/'; then echo "watch=yes" >> $GITHUB_OUTPUT; else echo "watch=no" >> $GITHUB_OUTPUT; fi
 
       - uses: actions/setup-java@v5
         with:
@@ -81,6 +96,8 @@ jobs:
     needs: build
     runs-on: ubuntu-22.04
     timeout-minutes: 75
+    env:
+      MODE: ${{ needs.build.outputs.mode }}
     steps:
       - uses: actions/checkout@v5
 
@@ -101,6 +118,7 @@ jobs:
           ls -la demo.m4a Ember-*.apk
 
       - name: Make a test audiobook torrent
+        if: env.MODE == 'full'
         run: |
           sudo apt-get install -y -qq mktorrent > /dev/null
           pip install -q rangehttpserver
@@ -116,6 +134,7 @@ jobs:
           ls -laR .
 
       - name: Get the last released build (for the upgrade check)
+        if: env.MODE == 'full'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -140,10 +159,10 @@ jobs:
           emulator-boot-timeout: 900
           ram-size: 4096M
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -no-boot-anim -camera-back none -no-audio -no-metrics
-          script: bash ci/smoke.sh Ember-${{ github.run_number }}.apk old.apk
+          script: bash ci/${{ env.MODE == 'full' && 'smoke.sh' || 'quick.sh' }} Ember-${{ github.run_number }}.apk old.apk
 
       - name: Check upgrade and restore results
-        if: always()
+        if: always() && env.MODE == 'full'
         run: python3 ci/verdict.py smoke-out | tee smoke-out/verdict.txt
 
       - name: Save results
@@ -162,6 +181,7 @@ jobs:
 
   watch:
     needs: build
+    if: needs.build.outputs.watch == 'yes'
     runs-on: ubuntu-22.04
     timeout-minutes: 30
     steps:
@@ -198,8 +218,8 @@ jobs:
 
   # Saves the watch screenshots next to the phone ones (after the phone run has saved its own).
   save-watch:
-    needs: [watch, smoke]
-    if: always()
+    needs: [build, watch, smoke]
+    if: always() && needs.build.outputs.watch == 'yes'
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v5

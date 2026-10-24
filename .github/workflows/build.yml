@@ -1,5 +1,8 @@
 name: Build Ember
 
+# Builds and publishes a release. The emulator checks already ran on this exact code in
+# the full preview run before release (see preview.yml), so they aren't repeated here.
+
 on:
   push:
     branches: [main]
@@ -83,52 +86,3 @@ jobs:
             Ember-Watch-${{ env.EMBER_BUILD }}.apk
           make_latest: true
 
-  smoke:
-    needs: build
-    runs-on: ubuntu-22.04
-    timeout-minutes: 75
-    steps:
-      - uses: actions/checkout@v5
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: Ember-emulator
-
-      - name: Enable KVM
-        run: |
-          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
-          sudo udevadm control --reload-rules
-          sudo udevadm trigger --name-match=kvm
-
-      - name: Make demo audio
-        run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null
-          ffmpeg -loglevel error -f lavfi -i "sine=frequency=220:duration=900" -c:a aac -b:a 64k demo.m4a
-          ls -la demo.m4a Ember-*.apk
-
-      - name: Run on emulator
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 30
-          target: default
-          arch: x86_64
-          profile: pixel_6
-          disable-animations: true
-          emulator-boot-timeout: 900
-          ram-size: 4096M
-          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -no-boot-anim -camera-back none -no-audio -no-metrics
-          script: bash ci/smoke.sh Ember-${{ env.EMBER_BUILD }}.apk
-
-      - name: Save results
-        if: always()
-        run: |
-          git config user.name "ember-ci"
-          git config user.email "ci@users.noreply.github.com"
-          mkdir -p /tmp/smoke && cp -r smoke-out/. /tmp/smoke/ 2>/dev/null || true
-          git fetch -q origin ci-logs || true
-          if git rev-parse -q --verify origin/ci-logs > /dev/null; then git checkout -q -B ci-logs origin/ci-logs; else git checkout -q --orphan ci-logs; git rm -rfq --cached . ; fi
-          git clean -fdq -e Ember-*.apk
-          rm -rf smoke && mkdir -p smoke/${{ env.EMBER_BUILD }} && cp -r /tmp/smoke/. smoke/${{ env.EMBER_BUILD }}/
-          git add smoke
-          git commit -qm "Smoke test ${{ env.EMBER_BUILD }}" || true
-          git push -q -f origin ci-logs

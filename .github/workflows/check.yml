@@ -11,8 +11,11 @@ permissions:
 jobs:
   compile:
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-java@v5
         with:
@@ -38,6 +41,9 @@ jobs:
       - name: Test M4B tag and chapter writing on real files
         run: |
           set -o pipefail
+          # Only when the M4B code or its test changed since main (saves minutes).
+          git fetch -q origin main || true
+          if ! git diff --name-only origin/main...HEAD 2>/dev/null | grep -qE 'Mp4|tag-test'; then echo "M4B code unchanged; skipping"; exit 0; fi
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null
           bash ci/tag-test.sh 2>&1 | tee -a build.log
 

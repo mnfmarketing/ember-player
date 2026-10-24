@@ -3,6 +3,8 @@
 package app.ember.ui.screens
 
 import kotlinx.coroutines.launch
+import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.runtime.SideEffect
 
 import androidx.compose.ui.input.pointer.positionChange
 
@@ -151,6 +153,7 @@ fun PlayerScreen(
     onOpenRoute: (String) -> Unit = {},
 ) {
     val np by vm.nowPlaying.collectAsState()
+    val lifeState by androidx.lifecycle.compose.LocalLifecycleOwner.current.lifecycle.currentStateFlow.collectAsState()
     val current = np ?: run {
         Box(Modifier.fillMaxSize().background(EmberColors.Background))
         return
@@ -194,9 +197,18 @@ fun PlayerScreen(
                 .statusBarsPadding()
                 .navigationBarsPadding(),
         ) {
-            val wide = maxWidth >= 700.dp
-            val availHeight = maxHeight.value
-            if (embedded && maxWidth < 700.dp) {
+            // While the player is closing, the tabs and mini player slide back in and take some of
+            // its room. Keep the size it had while open, so the cover doesn't shrink as it leaves.
+            val resumed = lifeState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED)
+            val measured = maxHeight
+            val widthNow = maxWidth
+            var openHeight by remember(widthNow) { mutableStateOf(0.dp) }
+            if (resumed && openHeight != measured) SideEffect { openHeight = measured }
+            val heightUsed = if (!resumed && openHeight > measured) openHeight else measured
+            val wide = widthNow >= 700.dp
+            val availHeight = heightUsed.value
+            Box(Modifier.align(Alignment.TopCenter).fillMaxWidth().requiredHeight(heightUsed)) {
+            if (embedded && widthNow < 700.dp) {
                 // Slim column beside the library on the unfolded screen.
                 SidePanePlayer(
                     np = current,
@@ -315,6 +327,7 @@ fun PlayerScreen(
                         Spacer(Modifier.height(16.dp))
                     }
                 }
+            }
             }
         }
     }
