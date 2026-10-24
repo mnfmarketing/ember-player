@@ -11,8 +11,8 @@
 + timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell settings put global hide_error_dialogs 1
 + adb shell settings put secure anr_show_background 0
 + timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell settings put secure anr_show_background 0
-+ adb install -r Ember-8.apk
-+ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb install -r Ember-8.apk
++ adb install -r Ember-9.apk
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb install -r Ember-9.apk
 Performing Streamed Install
 Success
 + adb shell pm grant app.ember.audiobooks android.permission.POST_NOTIFICATIONS
@@ -41,8 +41,8 @@ Starting: Intent { cmp=app.ember.audiobooks/app.ember.ui.MainActivity }
 Status: ok
 LaunchState: COLD
 Activity: app.ember.audiobooks/app.ember.ui.MainActivity
-TotalTime: 1326
-WaitTime: 1328
+TotalTime: 1620
+WaitTime: 1635
 Complete
 + sleep 4
 + adb shell am force-stop app.ember.audiobooks
@@ -53,8 +53,8 @@ Starting: Intent { cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extra
 Status: ok
 LaunchState: COLD
 Activity: app.ember.audiobooks/app.ember.ui.MainActivity
-TotalTime: 998
-WaitTime: 1006
+TotalTime: 1119
+WaitTime: 1120
 Complete
 + sleep 30
 + adb logcat -c
@@ -104,19 +104,19 @@ Warning: Activity not started, intent has been delivered to currently running to
 ++ sleep 5
 ++ adb pull /sdcard/Download/EmberTest/f-start.json smoke-out/f-start.json
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/f-start.json smoke-out/f-start.json
-/sdcard/Download/EmberTest/f-start.json: 1 file pulled, 0 skipped. 0.0 MB/s (1132 bytes in 0.041s)
+/sdcard/Download/EmberTest/f-start.json: 1 file pulled, 0 skipped. 0.0 MB/s (1132 bytes in 0.042s)
 +++ grep -E '"profile(Name|Photo)"' smoke-out/f-start.json
 +++ tr -d '\n'
 ++ say 'start:   "profileName": "",  "profilePhoto": false,'
-++ echo '== start:   "profileName": "",  "profilePhoto": false,'
 ++ tee -a smoke-out/focus.txt
+++ echo '== start:   "profileName": "",  "profilePhoto": false,'
 == start:   "profileName": "",  "profilePhoto": false,
 ++ tap_text 'Add your name'
 ++ adb shell uiautomator dump /sdcard/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
 ++ adb pull /sdcard/ui.xml /tmp/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 27.1 MB/s (26478 bytes in 0.001s)
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 20.5 MB/s (26478 bytes in 0.001s)
 ++ python3 - 'Add your name'
 tapped Add your name at 540,579
 ++ sleep 2
@@ -131,7 +131,7 @@ tapped Add your name at 540,579
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
 ++ adb pull /sdcard/ui.xml /tmp/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 1.8 MB/s (5685 bytes in 0.003s)
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.1 MB/s (5685 bytes in 0.048s)
 ++ python3 - Save
 tapped Save at 821,949
 ++ sleep 2
@@ -167,9 +167,9 @@ Warning: Activity not started, intent has been delivered to currently running to
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
 ++ adb pull /sdcard/ui.xml /tmp/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.1 MB/s (4388 bytes in 0.042s)
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 22.2 MB/s (26187 bytes in 0.001s)
 ++ python3 - Save
-tapped Save at 961,2168
+could not find Save
 ++ sleep 3
 ++ shot f07-you-photo 2
 ++ sleep 2
@@ -178,6 +178,7 @@ tapped Save at 961,2168
 ++ open_route library
 ++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
 ++ shot f08-library-tab-photo 3
 ++ sleep 3
 ++ adb exec-out screencap -p
@@ -189,7 +190,7 @@ Warning: Activity not started, intent has been delivered to currently running to
 ++ sleep 5
 ++ adb pull /sdcard/Download/EmberTest/f-photo.json smoke-out/f-photo.json
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/f-photo.json smoke-out/f-photo.json
-/sdcard/Download/EmberTest/f-photo.json: 1 file pulled, 0 skipped. 0.0 MB/s (1143 bytes in 0.042s)
+/sdcard/Download/EmberTest/f-photo.json: 1 file pulled, 0 skipped. 1.3 MB/s (1142 bytes in 0.001s)
 +++ grep -E '"profile(Name|Photo)"' smoke-out/f-photo.json
 +++ tr -d '\n'
 ++ say 'after photo:   "profileName": "Ben Reader",  "profilePhoto": false,'
@@ -206,7 +207,7 @@ Warning: Activity not started, intent has been delivered to currently running to
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
 ++ adb pull /sdcard/ui.xml /tmp/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 28.4 MB/s (25828 bytes in 0.001s)
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.6 MB/s (25829 bytes in 0.041s)
 ++ python3 - 'See all stats'
 tapped See all stats at 842,756
 ++ shot f09-all-stats 3
@@ -228,9 +229,9 @@ tapped See all stats at 842,756
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
 ++ adb pull /sdcard/ui.xml /tmp/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 28.0 MB/s (27596 bytes in 0.001s)
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 3.0 MB/s (27610 bytes in 0.009s)
 ++ python3 - 'Sleep timer'
-tapped Sleep timer at 273,996
+tapped Sleep timer at 273,852
 ++ shot f11-settings-sleep-timer 3
 ++ sleep 3
 ++ adb exec-out screencap -p
@@ -243,9 +244,9 @@ tapped Sleep timer at 273,996
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
 ++ adb pull /sdcard/ui.xml /tmp/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 22.6 MB/s (27596 bytes in 0.001s)
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 22.5 MB/s (27610 bytes in 0.001s)
 ++ python3 - 'Backup and restore'
-tapped Backup and restore at 351,1791
+tapped Backup and restore at 351,1647
 ++ shot f12-settings-backup 3
 ++ sleep 3
 ++ adb exec-out screencap -p
@@ -258,9 +259,9 @@ tapped Backup and restore at 351,1791
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
 ++ adb pull /sdcard/ui.xml /tmp/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 24.0 MB/s (27596 bytes in 0.001s)
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 19.1 MB/s (27610 bytes in 0.001s)
 ++ python3 - 'Sound and equalizer'
-tapped Sound and equalizer at 361,1155
+tapped Sound and equalizer at 361,1011
 ++ shot f13-sound-sheet 3
 ++ sleep 3
 ++ adb exec-out screencap -p
@@ -284,7 +285,7 @@ Warning: Activity not started, intent has been delivered to currently running to
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
 ++ adb pull /sdcard/ui.xml /tmp/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 19.5 MB/s (25828 bytes in 0.001s)
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 22.3 MB/s (25829 bytes in 0.001s)
 ++ python3 - Settings
 tapped Settings at 996,147
 ++ shot f14-gear-settings 3
@@ -307,7 +308,7 @@ Warning: Activity not started, intent has been delivered to currently running to
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
 ++ adb pull /sdcard/ui.xml /tmp/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 20.2 MB/s (25828 bytes in 0.001s)
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 13.4 MB/s (25829 bytes in 0.002s)
 ++ python3 - 'Change your photo'
 tapped Change your photo at 632,438
 ++ sleep 2
@@ -320,7 +321,7 @@ tapped Change your photo at 632,438
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
 ++ adb pull /sdcard/ui.xml /tmp/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 9.8 MB/s (15154 bytes in 0.001s)
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.4 MB/s (15154 bytes in 0.041s)
 ++ python3 - 'Remove photo'
 could not find Remove photo
 ++ sleep 2
@@ -369,7 +370,7 @@ Warning: Activity not started, intent has been delivered to currently running to
 + sleep 5
 + adb pull /sdcard/Download/EmberTest/quick-end.json smoke-out/quick-end.json
 + timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/quick-end.json smoke-out/quick-end.json
-/sdcard/Download/EmberTest/quick-end.json: 1 file pulled, 0 skipped. 0.0 MB/s (1143 bytes in 0.041s)
+/sdcard/Download/EmberTest/quick-end.json: 1 file pulled, 0 skipped. 0.0 MB/s (1142 bytes in 0.042s)
 + finish_logs
 + adb logcat -d
 + timeout 90 /usr/local/lib/android/sdk/platform-tools/adb logcat -d
