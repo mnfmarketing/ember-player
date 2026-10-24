@@ -1,0 +1,61 @@
+10-24 03:57:09.291   699   699 W AvrcpMediaPlayerWrapper: onQueueChanged(): app.ember.audiobooks tried to update with no new data
+10-24 03:57:09.295   699   699 W AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks tried to update with no new data
+10-24 03:57:11.333   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:57:14.339   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:57:17.340   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:57:20.344   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:57:23.345   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:57:26.344   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:57:29.346   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:57:32.348   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:57:35.480   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:57:38.452   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:57:41.460   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:57:44.460   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:57:47.458   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:57:50.460   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:57:53.467   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:57:56.469   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:57:59.469   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:58:02.471   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:58:05.472   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:58:08.848   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:58:08.848   699   699 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="The Disc Test Book" artist="Ember Tests" album="The Disc Test Book" duration=25051 trackPosition=1/1 }
+10-24 03:58:12.241   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:58:12.241   699   699 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="The Disc Test Book" artist="Ember Tests" album="The Disc Test Book" duration=25051 trackPosition=1/1 }
+10-24 03:58:42.722   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:58:42.723   699   699 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="The Disc Test Book" artist="Ember Tests" album="The Disc Test Book" duration=25051 trackPosition=1/1 }
+10-24 03:58:46.242   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:58:46.246   699   699 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="The Disc Test Book" artist="Ember Tests" album="The Disc Test Book" duration=25051 trackPosition=1/1 }
+10-24 03:58:49.232   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:58:49.232   699   699 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="The Disc Test Book" artist="Ember Tests" album="The Disc Test Book" duration=25051 trackPosition=1/1 }
+10-24 03:58:53.364   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:58:53.364   699   699 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="The Disc Test Book" artist="Ember Tests" album="The Disc Test Book" duration=25051 trackPosition=1/1 }
+10-24 03:59:04.079   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:59:04.079   699   699 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="The Disc Test Book" artist="Ember Tests" album="The Disc Test Book" duration=25051 trackPosition=1/1 }
+10-24 03:59:07.928   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:59:07.928   699   699 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="The Disc Test Book" artist="Ember Tests" album="The Disc Test Book" duration=25051 trackPosition=1/1 }
+10-24 03:59:10.928   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:59:10.928   699   699 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="The Disc Test Book" artist="Ember Tests" album="The Disc Test Book" duration=25051 trackPosition=1/1 }
+10-24 03:59:15.147   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:59:15.147   699   699 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="The Disc Test Book" artist="Ember Tests" album="The Disc Test Book" duration=25051 trackPosition=1/1 }
+10-24 03:59:17.663   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:59:17.663   699   699 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="The Disc Test Book" artist="Ember Tests" album="The Disc Test Book" duration=25051 trackPosition=1/1 }
+10-24 03:59:26.353   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:59:26.353   699   699 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="The Disc Test Book" artist="Ember Tests" album="The Disc Test Book" duration=25051 trackPosition=1/1 }
+10-24 03:59:28.879   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:59:28.879   699   699 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="The Disc Test Book" artist="Ember Tests" album="The Disc Test Book" duration=25051 trackPosition=1/1 }
+10-24 03:59:38.643   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:59:41.652   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:59:44.656   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:59:49.587   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 03:59:57.625   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 04:00:00.624   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 04:00:03.625   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 04:00:06.863   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 04:00:25.205   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 04:00:25.205   699   699 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="Loose Two" artist="Ember Tests" album="Loose Two" duration=20035 trackPosition=1/1 }
+10-24 04:00:29.101   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 04:00:29.101   699   699 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="Loose Two" artist="Ember Tests" album="Loose Two" duration=20035 trackPosition=1/1 }
+10-24 04:00:32.139   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 04:00:32.139   699   699 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="Loose Two" artist="Ember Tests" album="Loose Two" duration=20035 trackPosition=1/1 }
