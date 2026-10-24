@@ -1,0 +1,2 @@
+== start:   "profileName": "",  "profilePhoto": false,
+== after photo:   "profileName": "Ben Reader",  "profilePhoto": true,

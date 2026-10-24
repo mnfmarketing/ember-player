@@ -12,10 +12,10 @@
   "shelfLinks": 2,
   "listeningDays": 11,
   "podcasts": 0,
-  "demo0PositionMs": 311526,
+  "demo0PositionMs": 357268,
   "pendingRestore": false,
   "automaticBackups": 1,
-  "lastBackupAt": 1792873374208,
+  "lastBackupAt": 1792874094599,
   "torrents": "",
   "torrentDebug": "",
   "wifiHold": false,
@@ -32,7 +32,7 @@
   "lastBookId": "demo-0",
   "merges": 0,
   "profileName": "Ben Reader",
-  "profilePhoto": false,
+  "profilePhoto": true,
   "recentLog": [
     {
       "bookId": "demo-0",
