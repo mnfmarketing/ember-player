@@ -146,6 +146,10 @@ fun EmberRoot(vm: MainViewModel, routeRequest: String? = null, onRouteHandled: (
         val nav = rememberNavController()
         val entry by nav.currentBackStackEntryAsState()
         val route = entry?.destination?.route
+        // The player still on screen, including while it animates closed. The mini player and tabs
+        // wait until it's fully gone; appearing earlier would take its room and squash the cover.
+        val visibleEntries by nav.visibleEntries.collectAsState()
+        val playerOnScreen = visibleEntries.any { it.destination.route == "player" }
         var focused by rememberSaveable { mutableStateOf(false) }
         // Unfolded: the player can shrink to a small bar so the library gets the whole screen.
         var minimized by rememberSaveable { mutableStateOf(false) }
@@ -611,7 +615,7 @@ fun EmberRoot(vm: MainViewModel, routeRequest: String? = null, onRouteHandled: (
                         val current = np
                         val heroShown by vm.homeHeroShown.collectAsState()
                         AnimatedVisibility(
-                            visible = current != null && route !in formRoutes && !(route == "home" && heroShown),
+                            visible = current != null && route !in formRoutes && !(route == "home" && heroShown) && !playerOnScreen,
                             enter = slideInVertically { it } + fadeIn(),
                             exit = slideOutVertically { it } + fadeOut(),
                         ) {
@@ -636,7 +640,7 @@ fun EmberRoot(vm: MainViewModel, routeRequest: String? = null, onRouteHandled: (
                             // No tab bar here: keep the mini player clear of the system navigation bar.
                             Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
                         }
-                        if (onTab) {
+                        if (onTab && !playerOnScreen) {
                             NavigationBar(containerColor = EmberColors.Background, tonalElevation = 0.dp) {
                                 compactTabs.forEach { t ->
                                     NavigationBarItem(
