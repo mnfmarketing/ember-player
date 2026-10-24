@@ -11,8 +11,8 @@
 + timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell settings put global hide_error_dialogs 1
 + adb shell settings put secure anr_show_background 0
 + timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell settings put secure anr_show_background 0
-+ adb install -r Ember-1.apk
-+ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb install -r Ember-1.apk
++ adb install -r Ember-2.apk
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb install -r Ember-2.apk
 Performing Streamed Install
 Success
 + adb shell pm grant app.ember.audiobooks android.permission.POST_NOTIFICATIONS
@@ -41,8 +41,8 @@ Starting: Intent { cmp=app.ember.audiobooks/app.ember.ui.MainActivity }
 Status: ok
 LaunchState: COLD
 Activity: app.ember.audiobooks/app.ember.ui.MainActivity
-TotalTime: 1154
-WaitTime: 1161
+TotalTime: 1149
+WaitTime: 1150
 Complete
 + sleep 4
 + adb shell am force-stop app.ember.audiobooks
@@ -53,8 +53,8 @@ Starting: Intent { cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extra
 Status: ok
 LaunchState: COLD
 Activity: app.ember.audiobooks/app.ember.ui.MainActivity
-TotalTime: 1399
-WaitTime: 1404
+TotalTime: 881
+WaitTime: 885
 Complete
 + sleep 30
 + adb logcat -c
@@ -89,6 +89,12 @@ Warning: Activity not started, intent has been delivered to currently running to
 + timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
 ++ dirname ci/quick.sh
 + source ci/focus.sh
+++ adb shell settings put global window_animation_scale 1
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell settings put global window_animation_scale 1
+++ adb shell settings put global transition_animation_scale 1
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell settings put global transition_animation_scale 1
+++ adb shell settings put global animator_duration_scale 1
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell settings put global animator_duration_scale 1
 ++ open_route library
 ++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
@@ -99,41 +105,80 @@ Warning: Activity not started, intent has been delivered to currently running to
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
 Warning: Activity not started, intent has been delivered to currently running top-most instance.
 ++ sleep 4
-++ tap_text 'Close player'
-++ adb shell uiautomator dump /sdcard/ui.xml
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
-++ adb pull /sdcard/ui.xml /tmp/ui.xml
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 12.7 MB/s (20903 bytes in 0.002s)
-++ python3 - 'Close player'
+++ record_close f01-close-arrow 'tap_text "Close player"'
+++ local rec=3950
+++ sleep 1.5
+++ adb shell screenrecord --time-limit 5 --bit-rate 4000000 /sdcard/f01-close-arrow.mp4
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell screenrecord --time-limit 5 --bit-rate 4000000 /sdcard/f01-close-arrow.mp4
+++ eval 'tap_text "Close player"'
++++ tap_text 'Close player'
++++ adb shell uiautomator dump /sdcard/ui.xml
++++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
++++ adb pull /sdcard/ui.xml /tmp/ui.xml
++++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.4 MB/s (20903 bytes in 0.047s)
++++ python3 - 'Close player'
 tapped Close player at 84,137
-++ for i in 1 2 3
-++ adb exec-out screencap -p
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
-++ for i in 1 2 3
-++ adb exec-out screencap -p
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
-++ for i in 1 2 3
-++ adb exec-out screencap -p
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ wait 3950
+++ sleep 1
+++ adb pull /sdcard/f01-close-arrow.mp4 smoke-out/f01-close-arrow.mp4
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/f01-close-arrow.mp4 smoke-out/f01-close-arrow.mp4
+/sdcard/f01-close-arrow.mp4: 1 file pulled, 0 skipped. 228.9 MB/s (946228 bytes in 0.004s)
 ++ sleep 2
 ++ open_route player
 ++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
 Warning: Activity not started, intent has been delivered to currently running top-most instance.
 ++ sleep 4
-++ adb shell input swipe 540 500 540 1700 300
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input swipe 540 500 540 1700 300
-++ for i in 1 2 3
-++ adb exec-out screencap -p
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
-++ for i in 1 2 3
-++ adb exec-out screencap -p
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
-++ for i in 1 2 3
-++ adb exec-out screencap -p
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ record_close f02-close-pull 'adb shell input swipe 540 500 540 1700 300'
+++ local rec=3974
+++ adb shell screenrecord --time-limit 5 --bit-rate 4000000 /sdcard/f02-close-pull.mp4
+++ sleep 1.5
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell screenrecord --time-limit 5 --bit-rate 4000000 /sdcard/f02-close-pull.mp4
+++ eval 'adb shell input swipe 540 500 540 1700 300'
++++ adb shell input swipe 540 500 540 1700 300
++++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input swipe 540 500 540 1700 300
+++ wait 3974
+++ sleep 1
+++ adb pull /sdcard/f02-close-pull.mp4 smoke-out/f02-close-pull.mp4
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/f02-close-pull.mp4 smoke-out/f02-close-pull.mp4
+/sdcard/f02-close-pull.mp4: 1 file pulled, 0 skipped. 17.1 MB/s (793345 bytes in 0.044s)
 ++ sleep 2
+++ open_route home
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 3
+++ open_route player
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 4
+++ record_close f03-close-to-home 'tap_text "Close player"'
+++ local rec=4008
+++ sleep 1.5
+++ adb shell screenrecord --time-limit 5 --bit-rate 4000000 /sdcard/f03-close-to-home.mp4
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell screenrecord --time-limit 5 --bit-rate 4000000 /sdcard/f03-close-to-home.mp4
+++ eval 'tap_text "Close player"'
++++ tap_text 'Close player'
++++ adb shell uiautomator dump /sdcard/ui.xml
++++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
++++ adb pull /sdcard/ui.xml /tmp/ui.xml
++++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.5 MB/s (20903 bytes in 0.042s)
++++ python3 - 'Close player'
+tapped Close player at 84,137
+++ wait 4008
+++ sleep 1
+++ adb pull /sdcard/f03-close-to-home.mp4 smoke-out/f03-close-to-home.mp4
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/f03-close-to-home.mp4 smoke-out/f03-close-to-home.mp4
+/sdcard/f03-close-to-home.mp4: 1 file pulled, 0 skipped. 19.7 MB/s (933983 bytes in 0.045s)
+++ adb shell settings put global window_animation_scale 0
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell settings put global window_animation_scale 0
+++ adb shell settings put global transition_animation_scale 0
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell settings put global transition_animation_scale 0
+++ adb shell settings put global animator_duration_scale 0
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell settings put global animator_duration_scale 0
 + selfcheck quick-end.json
 + adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck quick-end.json
 + timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck quick-end.json
@@ -141,7 +186,7 @@ Warning: Activity not started, intent has been delivered to currently running to
 + sleep 5
 + adb pull /sdcard/Download/EmberTest/quick-end.json smoke-out/quick-end.json
 + timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/quick-end.json smoke-out/quick-end.json
-/sdcard/Download/EmberTest/quick-end.json: 1 file pulled, 0 skipped. 0.0 MB/s (844 bytes in 0.041s)
+/sdcard/Download/EmberTest/quick-end.json: 1 file pulled, 0 skipped. 0.0 MB/s (844 bytes in 0.042s)
 + finish_logs
 + adb logcat -d
 + timeout 90 /usr/local/lib/android/sdk/platform-tools/adb logcat -d

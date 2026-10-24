@@ -1,0 +1,207 @@
+10-24 02:59:15.374  2607  2607 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-24 02:59:15.375  2607  2607 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.profilebootclasspath"
+10-24 02:59:15.375  2607  2607 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+10-24 02:59:15.375  2607  2607 I AndroidRuntime: Using default boot image
+10-24 02:59:15.375  2607  2607 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+10-24 02:59:15.375  2607  2607 I AndroidRuntime: Leaving lock profiling enabled
+10-24 02:59:15.375  2607  2607 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+10-24 02:59:15.376  2607  2607 I app_process: Core platform API reporting enabled, enforcing=false
+10-24 02:59:15.372  2607  2607 W app_process: type=1400 audit(0.0:31): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8279 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-24 02:59:15.372  2607  2607 I chatty  : uid=2000(shell) app_process identical 2 lines
+10-24 02:59:15.372  2607  2607 W app_process: type=1400 audit(0.0:34): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8279 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-24 02:59:15.451  2607  2607 D app_process: Time zone APEX ICU file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+10-24 02:59:15.452  2607  2607 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt66l.dat
+10-24 02:59:15.454  2607  2607 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+10-24 02:59:15.457  2607  2607 I app_process: The ClassLoaderContext is a special shared library.
+10-24 02:59:15.468  2607  2607 I app_process: The ClassLoaderContext is a special shared library.
+10-24 02:59:15.500  2607  2607 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+10-24 02:59:15.503  2607  2607 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-24 02:59:15.513  2607  2622 V UiAutomation: Init UiAutomation@2724a23[id=1, flags=0]
+10-24 02:59:15.552   300   300 D goldfish-address-space: claimShared: Ask to claim region [0x3f89e4000 0x3f93c8000]
+10-24 02:59:16.609  2607  2607 W AccessibilityNodeInfoDumper: Fetch time: 74ms
+10-24 02:59:16.609   508  2478 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@900d48a
+10-24 02:59:16.610  2607  2622 V UiAutomation: Init UiAutomation@2724a23[id=-1, flags=0]
+10-24 02:59:16.616  2607  2607 D AndroidRuntime: Shutting down VM
+10-24 02:59:16.801   357   466 D AudioFlinger: mixer(0x73326f332040) throttle end: throttle time(3)
+10-24 02:59:17.048   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 02:59:17.048   699   699 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="Pride and Prejudice" artist="Jane Austen" album="Pride and Prejudice" duration=600000 trackPosition=1/1 }
+10-24 02:59:17.048   699   699 E AvrcpMediaPlayerWrapper:   └ Current Playstate: PlaybackState {state=3, position=272027, buffered position=383000, speed=1.0, updated=101548, actions=7340031, custom actions=[], active item id=0, error=null}
+10-24 02:59:17.048   699   699 E AvrcpMediaPlayerWrapper:   └ QueueItem(0): { mediaId="NowPlayingId0" title="Pride and Prejudice" artist="Chapter 1" album="" duration=0 trackPosition=1/1 }
+10-24 02:59:17.048   699   699 V AvrcpMediaPlayerWrapper: trySendMediaUpdate(): Metadata has been updated for app.ember.audiobooks
+10-24 02:59:17.048   699   699 D AvrcpMediaPlayerList: sendMediaUpdate
+10-24 02:59:17.049   699   699 D AvrcpMediaPlayerList: sendMediaUpdate state=PlaybackState {state=3, position=272027, buffered position=383000, speed=1.0, updated=101548, actions=7340031, custom actions=[], active item id=0, error=null}
+10-24 02:59:17.049   699   699 D AvrcpTargetService: onMediaUpdated: track_changed=false state=true queue=false
+10-24 02:59:17.049   699   699 D AvrcpNativeInterface: sendMediaUpdate: metadata=false playStatus=true queue=false
+10-24 02:59:17.049   699   699 D AvrcpTargetJni: sendMediaUpdateNative
+10-24 02:59:17.049   699   699 I bt_stack: [INFO:avrcp_service.cc(346)] virtual void bluetooth::avrcp::AvrcpService::SendMediaUpdate(bool, bool, bool) track_changed=0 :  play_state=1 :  queue=0
+10-24 02:59:17.194  2637  2637 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-24 02:59:17.221  2637  2637 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.profilebootclasspath"
+10-24 02:59:17.221  2637  2637 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+10-24 02:59:17.221  2637  2637 I AndroidRuntime: Using default boot image
+10-24 02:59:17.221  2637  2637 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+10-24 02:59:17.222  2637  2637 I AndroidRuntime: Leaving lock profiling enabled
+10-24 02:59:17.222  2637  2637 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+10-24 02:59:17.223  2637  2637 I app_process: Core platform API reporting enabled, enforcing=false
+10-24 02:59:17.196  2637  2637 W app_process: type=1400 audit(0.0:35): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8279 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-24 02:59:17.220  2637  2637 I chatty  : uid=2000(shell) app_process identical 1 line
+10-24 02:59:17.220  2637  2637 W app_process: type=1400 audit(0.0:37): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8279 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-24 02:59:17.273  2637  2637 D app_process: Time zone APEX ICU file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+10-24 02:59:17.273  2637  2637 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt66l.dat
+10-24 02:59:17.220  2637  2637 W app_process: type=1400 audit(0.0:38): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8279 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-24 02:59:17.276  2637  2637 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+10-24 02:59:17.277  2637  2637 I app_process: The ClassLoaderContext is a special shared library.
+10-24 02:59:17.287  2637  2637 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+10-24 02:59:17.290  2637  2637 D AndroidRuntime: Calling main entry com.android.commands.input.Input
+10-24 02:59:17.301  2637  2637 D AndroidRuntime: Shutting down VM
+10-24 02:59:17.877   300   300 D goldfish-address-space: claimShared: Ask to claim region [0x3f93c8000 0x3f9dac000]
+10-24 02:59:17.885   357   466 D AudioFlinger: mixer(0x73326f332040) throttle end: throttle time(48)
+10-24 02:59:18.002   357   466 D AudioFlinger: mixer(0x73326f332040) throttle end: throttle time(33)
+10-24 02:59:18.076   357   466 D AudioFlinger: mixer(0x73326f332040) throttle end: throttle time(3)
+10-24 02:59:18.174   357   466 D AudioFlinger: mixer(0x73326f332040) throttle end: throttle time(74)
+10-24 02:59:18.210   699   699 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=3, position=273158, buffered position=383000, speed=1.0, updated=102695, actions=7340031, custom actions=[], active item id=0, error=null}
+10-24 02:59:18.217   718   718 V MediaTimeout: processState: PlaybackState {state=3, position=273158, buffered position=383000, speed=1.0, updated=102695, actions=7340031, custom actions=[], active item id=0, error=null}
+10-24 02:59:18.306   357   466 D AudioFlinger: mixer(0x73326f332040) throttle end: throttle time(9)
+10-24 02:59:18.523  2394  2406 I mber.audiobook: Background concurrent copying GC freed 194145(7219KB) AllocSpace objects, 31(632KB) LOS objects, 49% free, 9542KB/18MB, paused 15us total 298.874ms
+10-24 02:59:18.572   357   466 D AudioFlinger: mixer(0x73326f332040) throttle end: throttle time(17)
+10-24 02:59:18.843   357   466 D AudioFlinger: mixer(0x73326f332040) throttle end: throttle time(22)
+10-24 02:59:18.973  2586  2599 I MPEG4Writer: setStartTimestampUs: 98485066
+10-24 02:59:18.985   440  2625 W GraphicBufferSource: released unpopulated slots: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63]
+10-24 02:59:19.054  2586  2586 D MPEG4Writer: reset()
+10-24 02:59:19.054  2586  2586 D MPEG4Writer: Video track stopping. Stop source
+10-24 02:59:19.054  2586  2586 D MPEG4Writer: Video track source stopping
+10-24 02:59:19.054  2586  2586 D MPEG4Writer: Video track source stopped
+10-24 02:59:19.054  2586  2598 V MediaWriter: Track event err/info msg:101, trackId:1, type:1000,val:-1011
+10-24 02:59:19.054  2586  2598 I MPEG4Writer: Received total/0-length (23/0) buffers and encoded 23 frames. - Video
+10-24 02:59:19.054  2586  2599 V MediaWriter: Track event err/info msg:101, trackId:2, type:1000,val:-1011
+10-24 02:59:19.054  2586  2599 W MPEG4Writer: 0-duration samples found: 1
+10-24 02:59:19.054  2586  2599 I MPEG4Writer: Received total/0-length (1/0) buffers and encoded 1 frames. - Metadata
+10-24 02:59:19.055  2586  2586 D MPEG4Writer: Video track stopped. Status:0. Stop source
+10-24 02:59:19.055  2586  2586 D MPEG4Writer: Metadata track stopping. Stop source
+10-24 02:59:19.055  2586  2586 D MPEG4Writer: Metadata track source stopping
+--
+10-24 02:59:27.701  2692  2692 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-24 02:59:27.700  2692  2692 W app_process: type=1400 audit(0.0:45): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8279 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-24 02:59:27.703  2692  2692 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.profilebootclasspath"
+10-24 02:59:27.703  2692  2692 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+10-24 02:59:27.703  2692  2692 I AndroidRuntime: Using default boot image
+10-24 02:59:27.703  2692  2692 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+10-24 02:59:27.703  2692  2692 I AndroidRuntime: Leaving lock profiling enabled
+10-24 02:59:27.703  2692  2692 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+10-24 02:59:27.704  2692  2692 I app_process: Core platform API reporting enabled, enforcing=false
+10-24 02:59:27.700  2692  2692 W app_process: type=1400 audit(0.0:46): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8279 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-24 02:59:27.700  2692  2692 I chatty  : uid=2000(shell) app_process identical 1 line
+10-24 02:59:27.700  2692  2692 W app_process: type=1400 audit(0.0:48): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8279 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-24 02:59:27.737  2692  2692 D app_process: Time zone APEX ICU file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+10-24 02:59:27.737  2692  2692 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt66l.dat
+10-24 02:59:27.739  2692  2692 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+10-24 02:59:27.739  2692  2692 I app_process: The ClassLoaderContext is a special shared library.
+10-24 02:59:27.745  2692  2692 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+10-24 02:59:27.747  2692  2692 D AndroidRuntime: Calling main entry com.android.commands.input.Input
+10-24 02:59:27.974   300   300 D goldfish-address-space: claimShared: Ask to claim region [0x3f8000000 0x3f89e4000]
+10-24 02:59:28.007   300   300 D goldfish-address-space: claimShared: Ask to claim region [0x3fb426000 0x3fbe0a000]
+10-24 02:59:28.180  2692  2692 D AndroidRuntime: Shutting down VM
+10-24 02:59:28.331   357   466 D AudioFlinger: mixer(0x73326f332040) throttle end: throttle time(9)
+10-24 02:59:28.508   357   466 D AudioFlinger: mixer(0x73326f332040) throttle end: throttle time(3)
+10-24 02:59:29.174   357   466 D AudioFlinger: mixer(0x73326f332040) throttle end: throttle time(79)
+10-24 02:59:29.215   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 02:59:29.215   699   699 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="Pride and Prejudice" artist="Jane Austen" album="Pride and Prejudice" duration=600000 trackPosition=1/1 }
+10-24 02:59:29.215   699   699 E AvrcpMediaPlayerWrapper:   └ Current Playstate: PlaybackState {state=3, position=284192, buffered position=383000, speed=1.0, updated=113715, actions=7340031, custom actions=[], active item id=0, error=null}
+10-24 02:59:29.215   699   699 E AvrcpMediaPlayerWrapper:   └ QueueItem(0): { mediaId="NowPlayingId0" title="Pride and Prejudice" artist="Chapter 1" album="" duration=0 trackPosition=1/1 }
+10-24 02:59:29.216   699   699 V AvrcpMediaPlayerWrapper: trySendMediaUpdate(): Metadata has been updated for app.ember.audiobooks
+10-24 02:59:29.216   699   699 D AvrcpMediaPlayerList: sendMediaUpdate
+10-24 02:59:29.216   699   699 D AvrcpMediaPlayerList: sendMediaUpdate state=PlaybackState {state=3, position=284192, buffered position=383000, speed=1.0, updated=113715, actions=7340031, custom actions=[], active item id=0, error=null}
+10-24 02:59:29.216   699   699 D AvrcpTargetService: onMediaUpdated: track_changed=false state=true queue=false
+10-24 02:59:29.216   699   699 D AvrcpNativeInterface: sendMediaUpdate: metadata=false playStatus=true queue=false
+10-24 02:59:29.216   699   699 D AvrcpTargetJni: sendMediaUpdateNative
+10-24 02:59:29.216   699   699 I bt_stack: [INFO:avrcp_service.cc(346)] virtual void bluetooth::avrcp::AvrcpService::SendMediaUpdate(bool, bool, bool) track_changed=0 :  play_state=1 :  queue=0
+10-24 02:59:29.416   357   466 D AudioFlinger: mixer(0x73326f332040) throttle end: throttle time(2)
+10-24 02:59:29.934   357   466 D AudioFlinger: mixer(0x73326f332040) throttle end: throttle time(11)
+10-24 02:59:29.991   357   466 D AudioFlinger: mixer(0x73326f332040) throttle end: throttle time(33)
+10-24 02:59:30.221   699   699 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=3, position=285198, buffered position=383000, speed=1.0, updated=114719, actions=7340031, custom actions=[], active item id=0, error=null}
+10-24 02:59:30.222   718   718 V MediaTimeout: processState: PlaybackState {state=3, position=285198, buffered position=383000, speed=1.0, updated=114719, actions=7340031, custom actions=[], active item id=0, error=null}
+10-24 02:59:30.234   357   466 D AudioFlinger: mixer(0x73326f332040) throttle end: throttle time(6)
+10-24 02:59:31.246  2673  2685 I MPEG4Writer: setStartTimestampUs: 110708068
+10-24 02:59:31.253   440   440 W GraphicBufferSource: released unpopulated slots: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63]
+10-24 02:59:31.258  2673  2673 D MPEG4Writer: reset()
+10-24 02:59:31.258  2673  2673 D MPEG4Writer: Video track stopping. Stop source
+10-24 02:59:31.258  2673  2673 D MPEG4Writer: Video track source stopping
+--
+10-24 02:59:42.976  2768  2768 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-24 02:59:42.978  2768  2768 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.profilebootclasspath"
+10-24 02:59:42.978  2768  2768 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+10-24 02:59:42.978  2768  2768 I AndroidRuntime: Using default boot image
+10-24 02:59:42.978  2768  2768 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+10-24 02:59:42.978  2768  2768 I AndroidRuntime: Leaving lock profiling enabled
+10-24 02:59:42.979  2768  2768 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+10-24 02:59:42.980  2768  2768 I app_process: Core platform API reporting enabled, enforcing=false
+10-24 02:59:42.972  2768  2768 W app_process: type=1400 audit(0.0:55): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8279 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-24 02:59:42.972  2768  2768 I chatty  : uid=2000(shell) app_process identical 2 lines
+10-24 02:59:42.972  2768  2768 W app_process: type=1400 audit(0.0:58): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8279 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-24 02:59:43.015  2768  2768 D app_process: Time zone APEX ICU file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+10-24 02:59:43.015  2768  2768 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt66l.dat
+10-24 02:59:43.017  2768  2768 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+10-24 02:59:43.018  2768  2768 I app_process: The ClassLoaderContext is a special shared library.
+10-24 02:59:43.018  2768  2768 I app_process: The ClassLoaderContext is a special shared library.
+10-24 02:59:43.024  2768  2768 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+10-24 02:59:43.027  2768  2768 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-24 02:59:43.031  2768  2783 V UiAutomation: Init UiAutomation@20e5065[id=2, flags=0]
+10-24 02:59:43.063   300  1449 D goldfish-address-space: claimShared: Ask to claim region [0x3f93c8000 0x3f9dac000]
+10-24 02:59:44.061  2768  2768 W AccessibilityNodeInfoDumper: Fetch time: 10ms
+10-24 02:59:44.061   508  1002 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@bede8a8
+10-24 02:59:44.061  2768  2783 V UiAutomation: Init UiAutomation@20e5065[id=-1, flags=0]
+10-24 02:59:44.063  2768  2768 D AndroidRuntime: Shutting down VM
+10-24 02:59:44.133   357   466 D AudioFlinger: mixer(0x73326f332040) throttle end: throttle time(4)
+10-24 02:59:44.228   699   699 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 02:59:44.228   699   699 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="Pride and Prejudice" artist="Jane Austen" album="Pride and Prejudice" duration=600000 trackPosition=1/1 }
+10-24 02:59:44.228   699   699 E AvrcpMediaPlayerWrapper:   └ Current Playstate: PlaybackState {state=3, position=299202, buffered position=383000, speed=1.0, updated=128728, actions=7340031, custom actions=[], active item id=0, error=null}
+10-24 02:59:44.228   699   699 E AvrcpMediaPlayerWrapper:   └ QueueItem(0): { mediaId="NowPlayingId0" title="Pride and Prejudice" artist="Chapter 1" album="" duration=0 trackPosition=1/1 }
+10-24 02:59:44.229   699   699 V AvrcpMediaPlayerWrapper: trySendMediaUpdate(): Metadata has been updated for app.ember.audiobooks
+10-24 02:59:44.229   699   699 D AvrcpMediaPlayerList: sendMediaUpdate
+10-24 02:59:44.229   699   699 D AvrcpMediaPlayerList: sendMediaUpdate state=PlaybackState {state=3, position=299202, buffered position=383000, speed=1.0, updated=128728, actions=7340031, custom actions=[], active item id=0, error=null}
+10-24 02:59:44.229   699   699 D AvrcpTargetService: onMediaUpdated: track_changed=false state=true queue=false
+10-24 02:59:44.229   699   699 D AvrcpNativeInterface: sendMediaUpdate: metadata=false playStatus=true queue=false
+10-24 02:59:44.229   699   699 D AvrcpTargetJni: sendMediaUpdateNative
+10-24 02:59:44.229   699   699 I bt_stack: [INFO:avrcp_service.cc(346)] virtual void bluetooth::avrcp::AvrcpService::SendMediaUpdate(bool, bool, bool) track_changed=0 :  play_state=1 :  queue=0
+10-24 02:59:44.603  2795  2795 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-24 02:59:44.607  2795  2795 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.profilebootclasspath"
+10-24 02:59:44.607  2795  2795 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+10-24 02:59:44.607  2795  2795 I AndroidRuntime: Using default boot image
+10-24 02:59:44.607  2795  2795 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+10-24 02:59:44.607  2795  2795 I AndroidRuntime: Leaving lock profiling enabled
+10-24 02:59:44.607  2795  2795 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+10-24 02:59:44.608  2795  2795 I app_process: Core platform API reporting enabled, enforcing=false
+10-24 02:59:44.656  2795  2795 D app_process: Time zone APEX ICU file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+10-24 02:59:44.656  2795  2795 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt66l.dat
+10-24 02:59:44.659  2795  2795 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+10-24 02:59:44.660  2795  2795 I app_process: The ClassLoaderContext is a special shared library.
+10-24 02:59:44.667  2795  2795 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+10-24 02:59:44.671  2795  2795 D AndroidRuntime: Calling main entry com.android.commands.input.Input
+10-24 02:59:44.600  2795  2795 W app_process: type=1400 audit(0.0:59): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8279 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-24 02:59:44.682  2795  2795 D AndroidRuntime: Shutting down VM
+10-24 02:59:44.684  2795  2806 W app_process: Thread attaching while runtime is shutting down: Binder:2795_1
+10-24 02:59:44.684  2795  2806 I AndroidRuntime: NOTE: attach of thread 'Binder:2795_1' failed
+10-24 02:59:44.600  2795  2795 W app_process: type=1400 audit(0.0:60): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8279 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-24 02:59:44.600  2795  2795 I chatty  : uid=2000(shell) app_process identical 1 line
+10-24 02:59:44.600  2795  2795 W app_process: type=1400 audit(0.0:62): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8279 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-24 02:59:45.000   300  1449 D goldfish-address-space: claimShared: Ask to claim region [0x3f8000000 0x3f89e4000]
+10-24 02:59:45.041   357   466 D AudioFlinger: mixer(0x73326f332040) throttle end: throttle time(14)
+10-24 02:59:45.045   300  1449 D goldfish-address-space: claimShared: Ask to claim region [0x3fb545000 0x3fbf29000]
+10-24 02:59:45.316   718   718 V MediaTimeout: processState: PlaybackState {state=3, position=300297, buffered position=383000, speed=1.0, updated=129815, actions=7340031, custom actions=[], active item id=0, error=null}
+10-24 02:59:45.317   699   699 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=3, position=300297, buffered position=383000, speed=1.0, updated=129815, actions=7340031, custom actions=[], active item id=0, error=null}
+10-24 02:59:45.470   357   466 D AudioFlinger: mixer(0x73326f332040) throttle end: throttle time(110)
+10-24 02:59:45.527   357   466 D AudioFlinger: mixer(0x73326f332040) throttle end: throttle time(43)
+10-24 02:59:46.525  2749  2761 I MPEG4Writer: setStartTimestampUs: 125991165
+10-24 02:59:46.529  2749  2749 D MPEG4Writer: reset()
+10-24 02:59:46.529  2749  2749 D MPEG4Writer: Video track stopping. Stop source
+10-24 02:59:46.530  2749  2749 D MPEG4Writer: Video track source stopping
+10-24 02:59:46.530  2749  2749 D MPEG4Writer: Video track source stopped
+10-24 02:59:46.530  2749  2760 V MediaWriter: Track event err/info msg:101, trackId:1, type:1000,val:-1011
+10-24 02:59:46.530  2749  2760 I MPEG4Writer: Received total/0-length (24/0) buffers and encoded 24 frames. - Video
+10-24 02:59:46.530  2749  2749 D MPEG4Writer: Video track stopped. Status:0. Stop source
+10-24 02:59:46.530  2749  2749 D MPEG4Writer: Metadata track stopping. Stop source
+10-24 02:59:46.530  2749  2749 D MPEG4Writer: Metadata track source stopping
+10-24 02:59:46.530  2749  2749 D MPEG4Writer: Metadata track source stopped
+10-24 02:59:46.530  2749  2761 V MediaWriter: Track event err/info msg:101, trackId:2, type:1000,val:-1011
+10-24 02:59:46.530  2749  2761 W MPEG4Writer: 0-duration samples found: 1
+10-24 02:59:46.530  2749  2761 I MPEG4Writer: Received total/0-length (1/0) buffers and encoded 1 frames. - Metadata
+10-24 02:59:46.530  2749  2749 D MPEG4Writer: Metadata track stopped. Status:0. Stop source
