@@ -1,0 +1,221 @@
+name: Preview (no release)
+
+# Builds and screenshots the dev branch on an emulator. Publishes no release.
+on:
+  push:
+    branches: [preview]
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11.1'
+
+      - name: Signing key (from the repo's secrets)
+        env:
+          KEY_B64: ${{ secrets.EMBER_KEYSTORE_B64 }}
+        run: |
+          echo "$KEY_B64" | base64 -d > "$RUNNER_TEMP/ember.jks"
+          echo "EMBER_KEYSTORE_PATH=$RUNNER_TEMP/ember.jks" >> $GITHUB_ENV
+
+      - name: Build APK
+        env:
+          EMBER_STORE_PASSWORD: ${{ secrets.EMBER_STORE_PASSWORD }}
+          EMBER_KEY_PASSWORD: ${{ secrets.EMBER_KEY_PASSWORD }}
+        run: |
+          set -o pipefail
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
+          gradle :app:assembleRelease :wear:assembleRelease --no-daemon --console=plain 2>&1 | tee build.log
+
+      - name: Save build log on failure
+        if: failure()
+        run: |
+          touch build.log
+          grep -E "^e: |error:|What went wrong" -A2 build.log | head -40 | while IFS= read -r line; do echo "::error::$line"; done || true
+          git config user.name "ember-ci"
+          git config user.email "ci@users.noreply.github.com"
+          mkdir -p /tmp/logs && cp build.log /tmp/logs/build-${{ github.run_number }}.log
+          git checkout --orphan ci-logs
+          git rm -rf --cached . > /dev/null
+          git clean -fdq
+          mkdir -p logs && cp /tmp/logs/*.log logs/
+          git add logs
+          git commit -qm "Build log ${{ github.run_number }}"
+          git push -f origin ci-logs
+
+      - name: Name the APKs
+        run: |
+          # The emulator runs the x86_64 build; the phone gets arm64.
+          cp app/build/outputs/apk/release/app-x86_64-release.apk Ember-${{ github.run_number }}.apk
+          cp app/build/outputs/apk/release/app-arm64-v8a-release.apk Ember-phone-${{ github.run_number }}.apk
+          cp wear/build/outputs/apk/release/wear-release.apk Ember-Watch-${{ github.run_number }}.apk
+          ls -la *.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Ember-apk
+          path: Ember-${{ github.run_number }}.apk
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Ember-watch
+          path: Ember-Watch-*.apk
+          retention-days: 1
+
+
+  smoke:
+    needs: build
+    runs-on: ubuntu-22.04
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: Ember-apk
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Make demo audio
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null
+          ffmpeg -loglevel error -f lavfi -i "sine=frequency=220:duration=900" -c:a aac -b:a 64k demo.m4a
+          ls -la demo.m4a Ember-*.apk
+
+      - name: Make a test audiobook torrent
+        run: |
+          sudo apt-get install -y -qq mktorrent > /dev/null
+          pip install -q rangehttpserver
+          mkdir -p "torrentsrv/The Torrent Test Book"
+          for n in 1 2 3; do
+            ffmpeg -loglevel error -f lavfi -i "sine=frequency=$((200 + n * 60)):duration=1800" -c:a libmp3lame -b:a 128k \
+              -metadata title="Chapter $n" -metadata album="The Torrent Test Book" -metadata artist="Ember Tests" \
+              "torrentsrv/The Torrent Test Book/0$n Chapter $n.mp3"
+          done
+          ffmpeg -loglevel error -f lavfi -i "color=c=0x2E4A62:s=500x500" -frames:v 1 "torrentsrv/The Torrent Test Book/cover.jpg"
+          printf 'not part of the book' > "torrentsrv/The Torrent Test Book/readme.txt"
+          cd torrentsrv && mktorrent -a udp://127.0.0.1:6969/announce -w http://10.0.2.2:8000/ -o test-book.torrent "The Torrent Test Book"
+          ls -laR .
+
+      - name: Get the last released build (for the upgrade check)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # The emulator needs the x86_64 copy of the last release, kept with that release's build run.
+          run_id=$(gh run list --repo ${{ github.repository }} --workflow build.yml --branch main --status success -L 1 --json databaseId -q '.[0].databaseId' || true)
+          if [ -n "$run_id" ] && gh run download "$run_id" --repo ${{ github.repository }} -n Ember-emulator -D old-build 2>/dev/null; then
+            cp old-build/*.apk old.apk
+          else
+            # Releases up to Ember-18 were one APK for every chip.
+            gh release download --repo ${{ github.repository }} --pattern 'Ember-[0-9]*.apk' --output old.apk || true
+          fi
+          ls -la old.apk || echo "No earlier release found"
+
+      - name: Run on emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 30
+          target: default
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          emulator-boot-timeout: 900
+          ram-size: 4096M
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -no-boot-anim -camera-back none -no-audio -no-metrics
+          script: bash ci/smoke.sh Ember-${{ github.run_number }}.apk old.apk
+
+      - name: Check upgrade and restore results
+        if: always()
+        run: python3 ci/verdict.py smoke-out | tee smoke-out/verdict.txt
+
+      - name: Save results
+        if: always()
+        run: |
+          git config user.name "ember-ci"
+          git config user.email "ci@users.noreply.github.com"
+          mkdir -p /tmp/smoke && cp -r smoke-out/. /tmp/smoke/ 2>/dev/null || true
+          git fetch -q origin ci-logs || true
+          if git rev-parse -q --verify origin/ci-logs > /dev/null; then git checkout -q -B ci-logs origin/ci-logs; else git checkout -q --orphan ci-logs; git rm -rfq --cached . ; fi
+          git clean -fdq -e Ember-*.apk
+          rm -rf preview && mkdir -p preview/${{ github.run_number }} && cp -r /tmp/smoke/. preview/${{ github.run_number }}/
+          git add preview
+          git commit -qm "Preview ${{ github.run_number }}" || true
+          git push -q -f origin ci-logs
+
+  watch:
+    needs: build
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: Ember-watch
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Run on a watch emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 30
+          target: android-wear
+          arch: x86
+          profile: wearos_large_round
+          disable-animations: true
+          emulator-boot-timeout: 900
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -no-boot-anim -camera-back none -no-audio -no-metrics
+          script: bash ci/watch.sh Ember-Watch-${{ github.run_number }}.apk
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: watch-out
+          path: watch-out
+          retention-days: 3
+
+  # Saves the watch screenshots next to the phone ones (after the phone run has saved its own).
+  save-watch:
+    needs: [watch, smoke]
+    if: always()
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: watch-out
+          path: /tmp/watch-out
+      - name: Save results
+        run: |
+          git config user.name "ember-ci"
+          git config user.email "ci@users.noreply.github.com"
+          git fetch -q origin ci-logs || true
+          if git rev-parse -q --verify origin/ci-logs > /dev/null; then git checkout -q -B ci-logs origin/ci-logs; else git checkout -q --orphan ci-logs; git rm -rfq --cached . ; fi
+          git clean -fdq
+          mkdir -p preview/${{ github.run_number }}/watch && cp -r /tmp/watch-out/. preview/${{ github.run_number }}/watch/ 2>/dev/null || echo "no watch results" > preview/${{ github.run_number }}/watch/missing.txt
+          git add preview
+          git commit -qm "Preview ${{ github.run_number }} watch" || true
+          git push -q -f origin ci-logs

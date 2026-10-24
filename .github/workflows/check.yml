@@ -1,0 +1,81 @@
+name: Compile check
+
+# Compiles work in progress on the dev branch. Builds no APK and publishes nothing.
+on:
+  push:
+    branches: [dev]
+
+permissions:
+  contents: write
+
+jobs:
+  compile:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11.1'
+
+      - name: Compile
+        run: |
+          set -o pipefail
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
+          gradle :app:compileReleaseKotlin :wear:compileReleaseKotlin --no-daemon --console=plain 2>&1 | tee build.log
+
+      - name: Test database upgrades
+        run: |
+          set -o pipefail
+          gradle :app:testDebugUnitTest --tests 'app.ember.data.DbMigrationTest' --tests 'app.ember.util.NamesTest' --no-daemon --console=plain 2>&1 | tee -a build.log
+          mkdir -p /tmp/evidence && cp app/build/test-results/testDebugUnitTest/*.xml /tmp/evidence/
+
+      - name: Test M4B tag and chapter writing on real files
+        run: |
+          set -o pipefail
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null
+          bash ci/tag-test.sh 2>&1 | tee -a build.log
+
+      - name: Save errors
+        if: failure()
+        run: |
+          touch build.log
+          grep -E "^e: |What went wrong|FAILED|Exception|AssertionError|::error::" -A3 build.log | head -60 | while IFS= read -r line; do echo "::error::$line"; done || true
+          grep -E "^e: " build.log > errors.txt || cp build.log errors.txt
+          git config user.name "ember-ci"
+          git config user.email "ci@users.noreply.github.com"
+          cp errors.txt /tmp/errors.txt
+          git fetch -q origin ci-logs || true
+          if git rev-parse -q --verify origin/ci-logs > /dev/null; then git checkout -q -B ci-logs origin/ci-logs; else git checkout -q --orphan ci-logs; git rm -rfq --cached . ; fi
+          git clean -fdq
+          mkdir -p check && cp /tmp/errors.txt check/errors-${{ github.run_number }}.txt
+          git add check
+          git commit -qm "Compile errors ${{ github.run_number }}"
+          git push -q -f origin ci-logs
+          git checkout -q -f ${{ github.sha }}
+
+      - name: Save tag test evidence
+        if: always()
+        run: |
+          mkdir -p /tmp/evidence
+          cp tagtest/out/*.json /tmp/evidence/ 2>/dev/null || true
+          cp app/build/test-results/testDebugUnitTest/*.xml /tmp/evidence/ 2>/dev/null || true
+          mkdir -p /tmp/schemas && cp -r app/schemas/. /tmp/schemas/ 2>/dev/null || true
+          ffprobe -v error -show_chapters -show_entries format_tags -of json tagtest/in/front.m4b > /tmp/evidence/original-front.json 2>/dev/null || true
+          git config user.name "ember-ci"
+          git config user.email "ci@users.noreply.github.com"
+          git fetch -q origin ci-logs || true
+          git stash -u -q || true
+          if git rev-parse -q --verify origin/ci-logs > /dev/null; then git checkout -q -B ci-logs origin/ci-logs; else git checkout -q --orphan ci-logs; git rm -rfq --cached . ; fi
+          git clean -fdq
+          rm -rf tagtest-evidence && mkdir -p tagtest-evidence && cp /tmp/evidence/* tagtest-evidence/ 2>/dev/null || true
+          rm -rf schemas && mkdir -p schemas && cp -r /tmp/schemas/. schemas/ 2>/dev/null || true
+          git add tagtest-evidence schemas
+          git commit -qm "Tag test evidence ${{ github.run_number }}" || true
+          git push -q -f origin ci-logs
+          git checkout -q -f ${{ github.sha }}

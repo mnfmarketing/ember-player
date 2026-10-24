@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android's own phone backup: keep it small (the library, settings and Ember's backups, not covers or downloads). -->
+<full-backup-content>
+    <include domain="database" path="." />
+    <include domain="sharedpref" path="." />
+    <include domain="file" path="datastore/" />
+    <include domain="file" path="backups/" />
+</full-backup-content>
