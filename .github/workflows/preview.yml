@@ -115,6 +115,8 @@ jobs:
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null
           ffmpeg -loglevel error -f lavfi -i "sine=frequency=220:duration=900" -c:a aac -b:a 64k demo.m4a
+          # A photo for the profile circle (wider than tall, so cropping matters).
+          ffmpeg -loglevel error -f lavfi -i "testsrc2=size=1200x800" -frames:v 1 avatar-test.jpg
           # A book split into CD1/CD2/CD3 (file numbers start over on each disc), and two separate books.
           for d in 1 2 3; do
             mkdir -p "mergetest/The Disc Test Book/CD$d"

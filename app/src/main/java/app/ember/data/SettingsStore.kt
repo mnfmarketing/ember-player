@@ -72,6 +72,10 @@ data class Settings(
     val bedtimeTimerMin: Int = 30,
     /** Books to play next, in order (book ids). */
     val upNext: List<String> = emptyList(),
+    /** Your name, for the profile circle ("" until you set it). */
+    val profileName: String = "",
+    /** When your profile photo was last changed (0 = no photo; the first letter of your name shows instead). */
+    val profilePhotoAt: Long = 0,
 )
 
 class SettingsStore(private val context: Context) {
@@ -111,6 +115,8 @@ class SettingsStore(private val context: Context) {
         val btnPrevious = intPreferencesKey("btn_previous")
         val sleepFade = booleanPreferencesKey("sleep_fade")
         val flipToPause = booleanPreferencesKey("flip_to_pause")
+        val profileName = stringPreferencesKey("profile_name")
+        val profilePhotoAt = androidx.datastore.preferences.core.longPreferencesKey("profile_photo_at")
         val bedtimeOn = booleanPreferencesKey("bedtime_on")
         val bedtimeFrom = intPreferencesKey("bedtime_from")
         val bedtimeTo = intPreferencesKey("bedtime_to")
@@ -157,6 +163,8 @@ class SettingsStore(private val context: Context) {
         btnPrevious = this[Keys.btnPrevious] ?: 1,
         sleepFade = this[Keys.sleepFade] ?: false,
         flipToPause = this[Keys.flipToPause] ?: false,
+        profileName = this[Keys.profileName] ?: "",
+        profilePhotoAt = this[Keys.profilePhotoAt] ?: 0L,
         bedtimeOn = this[Keys.bedtimeOn] ?: false,
         bedtimeFromMin = this[Keys.bedtimeFrom] ?: (22 * 60),
         bedtimeToMin = this[Keys.bedtimeTo] ?: (6 * 60),
@@ -201,6 +209,8 @@ class SettingsStore(private val context: Context) {
     suspend fun setRateOnFinish(on: Boolean) = context.dataStore.edit { it[Keys.rateOnFinish] = on }
     suspend fun setSleepFade(on: Boolean) = context.dataStore.edit { it[Keys.sleepFade] = on }
     suspend fun setFlipToPause(on: Boolean) = context.dataStore.edit { it[Keys.flipToPause] = on }
+    suspend fun setProfileName(name: String) = context.dataStore.edit { it[Keys.profileName] = name.trim() }
+    suspend fun setProfilePhotoAt(at: Long) = context.dataStore.edit { it[Keys.profilePhotoAt] = at }
     suspend fun setBedtime(on: Boolean, fromMin: Int, toMin: Int, timerMin: Int) = context.dataStore.edit {
         it[Keys.bedtimeOn] = on
         it[Keys.bedtimeFrom] = fromMin

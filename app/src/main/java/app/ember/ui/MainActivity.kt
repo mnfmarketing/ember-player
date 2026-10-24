@@ -152,6 +152,12 @@ class MainActivity : ComponentActivity() {
                 container.scanner.merge(ids.split(',').mapNotNull { all[it] }, title)
             }
         }
+        // Test hooks for the profile tab: your name, and a photo (in Ember's own files folder) to crop.
+        intent.getStringExtra("ember_profile_name")?.let { n -> container.appScope.launch { container.settings.setProfileName(n) } }
+        intent.getStringExtra("ember_profile_photo")?.let { name ->
+            getExternalFilesDir(null)?.let { dir -> app.ember.data.ProfilePhoto.testCrop.value = android.net.Uri.fromFile(java.io.File(dir, name)) }
+            routeRequest.value = "you"
+        }
         intent.getStringExtra("ember_split")?.let { id -> container.appScope.launch { container.scanner.split(id) } }
         intent.getStringExtra("ember_torrent")?.let {
             container.torrents.testPickSmallest = intent.getBooleanExtra("ember_torrent_smallest", false)

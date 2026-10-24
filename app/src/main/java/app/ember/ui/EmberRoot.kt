@@ -48,6 +48,9 @@ import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
+import androidx.compose.material.icons.rounded.Person
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.NavigationRail
@@ -130,10 +133,20 @@ private val compactTabs = listOf(
     TopDest("home", "Home", Icons.Rounded.Home),
     TopDest("library", "Books", Icons.Rounded.LibraryBooks),
     TopDest("podcasts", "Podcasts", Icons.Rounded.Podcasts),
-    TopDest("stats", "Stats", Icons.Rounded.Insights),
+    // Shown as your profile circle, labeled with your first name.
+    TopDest("you", "You", Icons.Rounded.Person),
 )
 
-private val railTabs = compactTabs + TopDest("settings", "Settings", Icons.Rounded.Settings)
+private val railTabs = compactTabs
+
+/** A tab's icon: your profile circle for the last tab, the usual icon for the rest. */
+@Composable
+private fun TabIcon(vm: MainViewModel, t: TopDest, selected: Boolean) {
+    if (t.route == "you") app.ember.ui.screens.ProfileAvatar(vm, 26.dp, selected = selected) else Icon(t.icon, null)
+}
+
+private fun tabLabel(t: TopDest, profileName: String): String =
+    if (t.route == "you") profileName.trim().substringBefore(' ').ifBlank { "You" } else t.label
 
 private val formRoutes = setOf("player", "edit/{id}", "chapters/{id}", "add_external", "drive_picker", "card/{kind}/{id}", "search?q={q}", "torrent_add", "pdf/{id}", "car", "recap")
 
@@ -224,7 +237,7 @@ fun EmberRoot(vm: MainViewModel, routeRequest: String? = null, onRouteHandled: (
                 }
                 app.ember.playback.PlaybackIssue.Action.RECONNECT_DRIVE -> {
                     vm.dismissPlaybackIssue()
-                    nav.navigateTop("settings")
+                    nav.navigate("settings/Library folders") { launchSingleTop = true }
                 }
                 app.ember.playback.PlaybackIssue.Action.STREAM -> vm.streamInstead()
                 app.ember.playback.PlaybackIssue.Action.NONE -> vm.dismissPlaybackIssue()
@@ -241,7 +254,7 @@ fun EmberRoot(vm: MainViewModel, routeRequest: String? = null, onRouteHandled: (
                 onRouteHandled()
                 return@LaunchedEffect
             }
-            if (r == "home" || r == "library" || r == "podcasts" || r == "stats" || r == "settings") nav.navigateTop(r) else nav.navigate(r) { launchSingleTop = true }
+            if (r == "home" || r == "library" || r == "podcasts" || r == "you") nav.navigateTop(r) else nav.navigate(r) { launchSingleTop = true }
             onRouteHandled()
         }
         if (np == null && focused) focused = false
@@ -295,7 +308,7 @@ fun EmberRoot(vm: MainViewModel, routeRequest: String? = null, onRouteHandled: (
             if (result == SnackbarResult.ActionPerformed) vm.undoLast(offer) else vm.dismissUndo(offer)
         }
         val addDrive: () -> Unit = {
-            if (vm.driveStatus.value == app.ember.drive.DriveAuth.Status.CONNECTED) nav.navigate("drive_picker") else nav.navigateTop("settings")
+            if (vm.driveStatus.value == app.ember.drive.DriveAuth.Status.CONNECTED) nav.navigate("drive_picker") else nav.navigate("settings/Library folders") { launchSingleTop = true }
         }
 
         // Long-press a cover anywhere for that book's settings, without opening the book.
@@ -319,10 +332,10 @@ fun EmberRoot(vm: MainViewModel, routeRequest: String? = null, onRouteHandled: (
                             NavigationRailItem(
                                 selected = route == t.route,
                                 onClick = { nav.navigateTop(t.route) },
-                                icon = { Icon(t.icon, null) },
-                                label = { Text(t.label) },
+                                icon = { TabIcon(vm, t, route == t.route) },
+                                label = { Text(tabLabel(t, savedFraction.profileName), maxLines = 1) },
                                 colors = NavigationRailItemDefaults.colors(
-                                    indicatorColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.22f),
+                                    indicatorColor = if (t.route == "you") Color.Transparent else MaterialTheme.colorScheme.primary.copy(alpha = 0.22f),
                                     selectedIconColor = MaterialTheme.colorScheme.primary,
                                     selectedTextColor = MaterialTheme.colorScheme.primary,
                                     unselectedIconColor = EmberColors.TextMuted,
@@ -429,18 +442,40 @@ fun EmberRoot(vm: MainViewModel, routeRequest: String? = null, onRouteHandled: (
                             composable("drive_picker") {
                                 DriveFolderPickerScreen(vm = vm, onDone = { nav.popBackStack() })
                             }
+                            composable("you") {
+                                app.ember.ui.screens.YouScreen(
+                                    vm = vm,
+                                    onOpenSettings = { section -> nav.navigate(if (section == null) "settings" else "settings/$section") { launchSingleTop = true } },
+                                    onOpenStats = { nav.navigate("stats") { launchSingleTop = true } },
+                                    onOpenClips = { nav.navigate("clips") },
+                                    onOpenRecap = { nav.navigate("recap") },
+                                    onOpenUpNext = { nav.navigate("upnext") },
+                                    onOpenDownloads = { nav.navigate("downloads") },
+                                    onOpenCar = { nav.navigate("car") },
+                                )
+                            }
                             composable("stats") {
-                                StatsScreen(vm = vm, onOpenBook = openBook, onOpenRecap = { nav.navigate("recap") })
+                                StatsScreen(vm = vm, onOpenBook = openBook, onOpenRecap = { nav.navigate("recap") }, onBack = { nav.popBackStack() })
                             }
                             composable("settings") {
-                                val back: () -> Unit = { nav.popBackStack() }
                                 SettingsScreen(
                                     vm = vm,
-                                    onBack = if (expanded) null else back,
+                                    onBack = { nav.popBackStack() },
                                     onAddFolder = addFolder,
                                     onPickDriveFolder = { nav.navigate("drive_picker") },
                                     onOpenDownloads = { nav.navigate("downloads") },
                                     onOpenCar = { nav.navigate("car") },
+                                )
+                            }
+                            composable("settings/{section}") { entry ->
+                                SettingsScreen(
+                                    vm = vm,
+                                    onBack = { nav.popBackStack() },
+                                    onAddFolder = addFolder,
+                                    onPickDriveFolder = { nav.navigate("drive_picker") },
+                                    onOpenDownloads = { nav.navigate("downloads") },
+                                    onOpenCar = { nav.navigate("car") },
+                                    section = entry.arguments?.getString("section"),
                                 )
                             }
                             composable("car") {
@@ -646,10 +681,10 @@ fun EmberRoot(vm: MainViewModel, routeRequest: String? = null, onRouteHandled: (
                                     NavigationBarItem(
                                         selected = route == t.route,
                                         onClick = { nav.navigateTop(t.route) },
-                                        icon = { Icon(t.icon, null) },
-                                        label = { Text(t.label) },
+                                        icon = { TabIcon(vm, t, route == t.route) },
+                                        label = { Text(tabLabel(t, savedFraction.profileName), maxLines = 1, overflow = TextOverflow.Ellipsis) },
                                         colors = NavigationBarItemDefaults.colors(
-                                            indicatorColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.22f),
+                                            indicatorColor = if (t.route == "you") Color.Transparent else MaterialTheme.colorScheme.primary.copy(alpha = 0.22f),
                                             selectedIconColor = MaterialTheme.colorScheme.primary,
                                             selectedTextColor = MaterialTheme.colorScheme.primary,
                                             unselectedIconColor = EmberColors.TextMuted,

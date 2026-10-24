@@ -142,11 +142,6 @@ fun HomeScreen(
                         Icon(androidx.compose.material.icons.Icons.Rounded.ContentCut, "Your clips", tint = EmberColors.TextMuted)
                     }
                 }
-                if (compact) {
-                    IconButton(onClick = onOpenSettings) {
-                        Icon(Icons.Rounded.Settings, "Settings", tint = EmberColors.TextMuted)
-                    }
-                }
             }
         }
 

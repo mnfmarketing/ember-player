@@ -254,8 +254,14 @@ class BackupManager(private val context: Context, private val c: AppContainer) {
                 .put("bedtimeFromMin", s.bedtimeFromMin)
                 .put("bedtimeToMin", s.bedtimeToMin)
                 .put("bedtimeTimerMin", s.bedtimeTimerMin)
+                .put("flipToPause", s.flipToPause)
+                .put("profileName", s.profileName)
                 .put("upNext", JSONArray(s.upNext)),
         )
+        // Your profile photo (small: 512 px), so a restore brings it back.
+        ProfilePhoto.file(context).takeIf { it.exists() && it.length() in 1..400_000 }?.let {
+            root.put("profilePhoto", Base64.encodeToString(it.readBytes(), Base64.NO_WRAP))
+        }
         root
     }
 
@@ -638,6 +644,16 @@ class BackupManager(private val context: Context, private val c: AppContainer) {
     private suspend fun restoreSettings(root: JSONObject) {
         val s = root.optJSONObject("settings") ?: return
         val cur = c.settings.current()
+        // Your name and photo come back unless you've already set new ones.
+        if (cur.profileName.isBlank() && s.optString("profileName").isNotBlank()) c.settings.setProfileName(s.optString("profileName"))
+        if (cur.profilePhotoAt == 0L && root.has("profilePhoto")) {
+            val bytes = try {
+                Base64.decode(root.getString("profilePhoto"), Base64.NO_WRAP)
+            } catch (e: Exception) {
+                null
+            }
+            if (bytes != null && ProfilePhoto.saveBytes(context, bytes)) c.settings.setProfilePhotoAt(System.currentTimeMillis())
+        }
         val eq = s.optJSONArray("eqCustom")?.let { a -> (0 until a.length()).map { a.optInt(it) } }?.takeIf { it.size == 5 }
         c.settings.restore(
             cur.copy(
@@ -669,6 +685,7 @@ class BackupManager(private val context: Context, private val c: AppContainer) {
                 bedtimeFromMin = s.optInt("bedtimeFromMin", cur.bedtimeFromMin),
                 bedtimeToMin = s.optInt("bedtimeToMin", cur.bedtimeToMin),
                 bedtimeTimerMin = s.optInt("bedtimeTimerMin", cur.bedtimeTimerMin),
+                flipToPause = s.optBoolean("flipToPause", cur.flipToPause),
                 upNext = (cur.upNext + (s.optJSONArray("upNext")?.let { a -> (0 until a.length()).map { a.optString(it) } } ?: emptyList()))
                     .filter { it.isNotBlank() }.distinct(),
             ),

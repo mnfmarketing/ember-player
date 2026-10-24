@@ -79,6 +79,8 @@ object SelfCheck {
             .put("flipToPause", c.settings.current().flipToPause)
             .put("lastBookId", c.settings.current().lastBookId ?: "")
             .put("merges", dao.getMerges().size)
+            .put("profileName", c.settings.current().profileName)
+            .put("profilePhoto", ProfilePhoto.exists(context))
             .put(
                 "recentLog",
                 org.json.JSONArray().apply {

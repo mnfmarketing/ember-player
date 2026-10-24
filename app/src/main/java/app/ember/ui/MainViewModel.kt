@@ -414,6 +414,26 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     fun setBookEffects(bookId: String, custom: Boolean, trimSilence: Boolean, voiceBoost: Boolean) =
         updateBook(bookId) { it.copy(customEffects = custom, trimSilence = trimSilence, voiceBoost = voiceBoost) }
 
+    // ---- Your profile (name and photo) ----
+
+    fun setProfileName(name: String) {
+        viewModelScope.launch { c.settings.setProfileName(name) }
+    }
+
+    fun setProfilePhoto(square: android.graphics.Bitmap) {
+        viewModelScope.launch {
+            val ok = withContext(Dispatchers.IO) { app.ember.data.ProfilePhoto.save(getApplication<Application>(), square) }
+            if (ok) c.settings.setProfilePhotoAt(System.currentTimeMillis())
+        }
+    }
+
+    fun removeProfilePhoto() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) { app.ember.data.ProfilePhoto.delete(getApplication<Application>()) }
+            c.settings.setProfilePhotoAt(0)
+        }
+    }
+
     // ---- Merging books (CD1, CD2...) by hand ----
 
     fun canMerge(ids: Collection<String>): Boolean = c.scanner.canMerge(books.value.filter { it.id in ids })

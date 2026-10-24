@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.LocalFireDepartment
 import androidx.compose.material3.AlertDialog
@@ -53,7 +54,7 @@ import java.time.format.TextStyle
 import java.util.Locale
 
 @Composable
-fun StatsScreen(vm: MainViewModel, onOpenBook: (String) -> Unit, onOpenRecap: () -> Unit = {}) {
+fun StatsScreen(vm: MainViewModel, onOpenBook: (String) -> Unit, onOpenRecap: () -> Unit = {}, onBack: (() -> Unit)? = null) {
     val stats by vm.stats.collectAsState()
     var editGoals by remember { mutableStateOf(false) }
     val accent = MaterialTheme.colorScheme.primary
@@ -64,9 +65,12 @@ fun StatsScreen(vm: MainViewModel, onOpenBook: (String) -> Unit, onOpenRecap: ()
                 Modifier
                     .fillMaxWidth()
                     .statusBarsPadding()
-                    .padding(start = 20.dp, end = 8.dp, top = 12.dp, bottom = 8.dp),
+                    .padding(start = if (onBack != null) 4.dp else 20.dp, end = 8.dp, top = 12.dp, bottom = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
+                if (onBack != null) {
+                    IconButton(onClick = onBack) { Icon(Icons.Rounded.ArrowBack, "Back", tint = EmberColors.Text) }
+                }
                 Text("Your listening", style = MaterialTheme.typography.headlineLarge, color = EmberColors.Text, modifier = Modifier.weight(1f))
                 IconButton(onClick = { editGoals = true }) { Icon(Icons.Rounded.Edit, "Edit goals", tint = EmberColors.TextMuted) }
             }

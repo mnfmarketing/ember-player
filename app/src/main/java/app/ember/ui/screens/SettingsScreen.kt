@@ -46,6 +46,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -72,9 +73,12 @@ fun SettingsScreen(
     onPickDriveFolder: () -> Unit,
     onOpenDownloads: () -> Unit = {},
     onOpenCar: () -> Unit = {},
+    /** Opens scrolled to this section (a group title), or with the sound sheet open ("sound"). */
+    section: String? = null,
 ) {
     val settings by vm.settings.collectAsState()
     val folders by vm.folders.collectAsState()
+    val listState = androidx.compose.foundation.lazy.rememberLazyListState()
     val scan by vm.scanProgress.collectAsState()
     var removing by remember { mutableStateOf<LibraryFolderEntity?>(null) }
     var showSound by remember { mutableStateOf(false) }
@@ -110,7 +114,32 @@ fun SettingsScreen(
         }
     }
 
-    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 32.dp)) {
+    // Where each group title sits in the list below (after the header, the folders and the Drive card).
+    // Keep in step with the items when adding or moving a section.
+    LaunchedEffect(section, folders.size) {
+        if (section == "sound") {
+            showSound = true
+            return@LaunchedEffect
+        }
+        val f = folders.size
+        val index = when (section) {
+            "Library folders" -> 1
+            "Playback" -> 4 + f
+            "Sleep timer" -> 7 + f
+            "Car mode" -> 9 + f
+            "Headphone and car buttons" -> 11 + f
+            "Book info" -> 13 + f
+            "Podcasts" -> 15 + f
+            "Storage" -> 17 + f
+            "Backup and restore" -> 19 + f
+            "Goals" -> 21 + f
+            "Good to know" -> 24 + f
+            else -> return@LaunchedEffect
+        }
+        listState.scrollToItem(index)
+    }
+
+    LazyColumn(Modifier.fillMaxSize(), state = listState, contentPadding = PaddingValues(bottom = 32.dp)) {
         item {
             Row(
                 Modifier
