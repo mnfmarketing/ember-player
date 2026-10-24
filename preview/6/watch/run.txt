@@ -1,0 +1,51 @@
+++ command -v adb
++ ADB_BIN=/usr/local/lib/android/sdk/platform-tools/adb
++ adb logcat -c
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb logcat -c
++ adb install -r Ember-Watch-6.apk
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb install -r Ember-Watch-6.apk
+Performing Streamed Install
+Success
++ adb shell input keyevent KEYCODE_WAKEUP
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_WAKEUP
++ adb shell am start -S -n app.ember.audiobooks/app.ember.wear.MainActivity --ez demo true
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -S -n app.ember.audiobooks/app.ember.wear.MainActivity --ez demo true
+Stopping: app.ember.audiobooks
+Starting: Intent { cmp=app.ember.audiobooks/app.ember.wear.MainActivity (has extras) }
++ shot w1-now-playing 8
++ sleep 8
++ adb exec-out screencap -p
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
++ adb shell am start -S -n app.ember.audiobooks/app.ember.wear.MainActivity --ez demo true --es screen sleep
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -S -n app.ember.audiobooks/app.ember.wear.MainActivity --ez demo true --es screen sleep
+Stopping: app.ember.audiobooks
+Starting: Intent { cmp=app.ember.audiobooks/app.ember.wear.MainActivity (has extras) }
++ shot w2-sleep-timer 6
++ sleep 6
++ adb exec-out screencap -p
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
++ adb shell am start -S -n app.ember.audiobooks/app.ember.wear.MainActivity
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -S -n app.ember.audiobooks/app.ember.wear.MainActivity
+Stopping: app.ember.audiobooks
+Starting: Intent { cmp=app.ember.audiobooks/app.ember.wear.MainActivity }
++ shot w3-no-phone 12
++ sleep 12
++ adb exec-out screencap -p
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
++ adb shell dumpsys window
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell dumpsys window
++ grep -E mCurrentFocus
++ adb logcat -d
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb logcat -d
++ grep -E 'FATAL EXCEPTION|AndroidRuntime: (FATAL|Process)' -A 25 watch-out/logcat.txt
++ ls -la watch-out
+total 3336
+drwxr-xr-x 2 runner runner    4096 Oct 24 04:30 .
+drwxr-xr-x 8 runner runner    4096 Oct 24 04:30 ..
+-rw-r--r-- 1 runner runner    7009 Oct 24 04:30 crashes.txt
+-rw-r--r-- 1 runner runner      84 Oct 24 04:30 focus.txt
+-rw-r--r-- 1 runner runner 3355634 Oct 24 04:30 logcat.txt
+-rw-r--r-- 1 runner runner    2257 Oct 24 04:30 run.txt
+-rw-r--r-- 1 runner runner    4326 Oct 24 04:30 w1-now-playing.png
+-rw-r--r-- 1 runner runner    4216 Oct 24 04:30 w2-sleep-timer.png
+-rw-r--r-- 1 runner runner   15999 Oct 24 04:30 w3-no-phone.png

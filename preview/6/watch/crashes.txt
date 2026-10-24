@@ -1,0 +1,55 @@
+10-24 04:29:59.258   997  1072 E AndroidRuntime: FATAL EXCEPTION: [com.google.android.gms.chimera.container.intentoperation.GmsIntentOperationChimeraService-Executor] idle
+10-24 04:29:59.258   997  1072 E AndroidRuntime: Process: com.google.android.gms, PID: 997
+10-24 04:29:59.258   997  1072 E AndroidRuntime: java.lang.NullPointerException: NfcAdapter is null
+10-24 04:29:59.258   997  1072 E AndroidRuntime: 	at android.nfc.cardemulation.CardEmulation.getInstance(CardEmulation.java:150)
+10-24 04:29:59.258   997  1072 E AndroidRuntime: 	at olp.<init>(:com.google.android.gms@224814082@22.48.14 (220704-493411920):1)
+10-24 04:29:59.258   997  1072 E AndroidRuntime: 	at olq.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):4)
+10-24 04:29:59.258   997  1072 E AndroidRuntime: 	at dagger.internal.DoubleCheck.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):1)
+10-24 04:29:59.258   997  1072 E AndroidRuntime: 	at mnl.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):2)
+10-24 04:29:59.258   997  1072 E AndroidRuntime: 	at dagger.internal.DoubleCheck.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):1)
+10-24 04:29:59.258   997  1072 E AndroidRuntime: 	at msh.c(:com.google.android.gms@224814082@22.48.14 (220704-493411920):0)
+10-24 04:29:59.258   997  1072 E AndroidRuntime: 	at com.google.android.gms.dck.service.BleActionStateIntentOperation.onHandleIntent(:com.google.android.gms@224814082@22.48.14 (220704-493411920):3)
+10-24 04:29:59.258   997  1072 E AndroidRuntime: 	at com.google.android.chimera.IntentOperation.onHandleIntent(:com.google.android.gms@224814082@22.48.14 (220704-493411920):2)
+10-24 04:29:59.258   997  1072 E AndroidRuntime: 	at jsn.onHandleIntent(:com.google.android.gms@224814082@22.48.14 (220704-493411920):4)
+10-24 04:29:59.258   997  1072 E AndroidRuntime: 	at emb.run(:com.google.android.gms@224814082@22.48.14 (220704-493411920):3)
+10-24 04:29:59.258   997  1072 E AndroidRuntime: 	at ema.run(:com.google.android.gms@224814082@22.48.14 (220704-493411920):11)
+10-24 04:29:59.258   997  1072 E AndroidRuntime: 	at aztn.run(:com.google.android.gms@224814082@22.48.14 (220704-493411920):2)
+10-24 04:29:59.258   997  1072 E AndroidRuntime: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
+10-24 04:29:59.258   997  1072 E AndroidRuntime: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
+10-24 04:29:59.258   997  1072 E AndroidRuntime: 	at java.lang.Thread.run(Thread.java:923)
+10-24 04:29:59.262  1384  1645 D WCS     : [DataItemBridgeModeConfig]Not writing bridge mode data item for package: com.google.android.permissioncontroller
+10-24 04:29:59.264  1384  1679 D WCS     : [DataItemBridgeModeConfig]Not writing bridge mode data item for package: com.android.vending
+10-24 04:29:59.264  1384  1698 D WCS     : [BridgeModeWriter]Successfully updated DataItem for package: com.android.vending
+10-24 04:29:59.264  1384  1698 D WCS     : [DataItemBridgeModeConfig]Not writing bridge mode data item for package: com.google.android.wearable.healthservices
+10-24 04:29:59.264  1384  1698 D WCS     : [DataItemBridgeModeConfig]Not writing bridge mode data item for package: com.google.android.tts
+10-24 04:29:59.265  1384  1683 D WCS     : [BridgeModeWriter]Successfully updated DataItem for package: com.google.android.wearable.healthservices
+10-24 04:29:59.265  1384  1443 D DataClientWriter: Writing data item /protogensettings/location/combined_location/8f3bd83c
+10-24 04:29:59.265  1384  1683 D WCS     : [DataItemBridgeModeConfig]Not writing bridge mode data item for package: com.google.android.gms
+--
+10-24 04:30:02.655  1952  2167 E AndroidRuntime: FATAL EXCEPTION: [com.google.android.gms.chimera.container.intentoperation.GmsIntentOperationChimeraService-Executor] idle
+10-24 04:30:02.655  1952  2167 E AndroidRuntime: Process: com.google.android.gms, PID: 1952
+10-24 04:30:02.655  1952  2167 E AndroidRuntime: java.lang.NullPointerException: NfcAdapter is null
+10-24 04:30:02.655  1952  2167 E AndroidRuntime: 	at android.nfc.cardemulation.CardEmulation.getInstance(CardEmulation.java:150)
+10-24 04:30:02.655  1952  2167 E AndroidRuntime: 	at olp.<init>(:com.google.android.gms@224814082@22.48.14 (220704-493411920):1)
+10-24 04:30:02.655  1952  2167 E AndroidRuntime: 	at olq.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):4)
+10-24 04:30:02.655  1952  2167 E AndroidRuntime: 	at dagger.internal.DoubleCheck.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):1)
+10-24 04:30:02.655  1952  2167 E AndroidRuntime: 	at mnl.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):2)
+10-24 04:30:02.655  1952  2167 E AndroidRuntime: 	at dagger.internal.DoubleCheck.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):1)
+10-24 04:30:02.655  1952  2167 E AndroidRuntime: 	at msh.c(:com.google.android.gms@224814082@22.48.14 (220704-493411920):0)
+10-24 04:30:02.655  1952  2167 E AndroidRuntime: 	at com.google.android.gms.dck.service.BleActionStateIntentOperation.onHandleIntent(:com.google.android.gms@224814082@22.48.14 (220704-493411920):3)
+10-24 04:30:02.655  1952  2167 E AndroidRuntime: 	at com.google.android.chimera.IntentOperation.onHandleIntent(:com.google.android.gms@224814082@22.48.14 (220704-493411920):2)
+10-24 04:30:02.655  1952  2167 E AndroidRuntime: 	at jsn.onHandleIntent(:com.google.android.gms@224814082@22.48.14 (220704-493411920):4)
+10-24 04:30:02.655  1952  2167 E AndroidRuntime: 	at emb.run(:com.google.android.gms@224814082@22.48.14 (220704-493411920):3)
+10-24 04:30:02.655  1952  2167 E AndroidRuntime: 	at ema.run(:com.google.android.gms@224814082@22.48.14 (220704-493411920):11)
+10-24 04:30:02.655  1952  2167 E AndroidRuntime: 	at aztn.run(:com.google.android.gms@224814082@22.48.14 (220704-493411920):2)
+10-24 04:30:02.655  1952  2167 E AndroidRuntime: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
+10-24 04:30:02.655  1952  2167 E AndroidRuntime: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
+10-24 04:30:02.655  1952  2167 E AndroidRuntime: 	at java.lang.Thread.run(Thread.java:923)
+10-24 04:30:02.660   461   623 D ConnectivityService: Adding iface wlan0 to network 100
+10-24 04:30:02.661   433   433 I hostapd : wlan1: STA-OPMODE-SMPS-MODE-CHANGED 02:15:b2:00:00:00 off
+10-24 04:30:02.662   444   869 E Netd    : no such netId 100
+10-24 04:30:02.666   461   623 E ConnectivityService: Exception adding interface: java.lang.IllegalStateException: android.os.ServiceSpecificException: Machine is not on the network (code 64)
+10-24 04:30:02.667   461   623 D PowerManagerService: scheduleUserInactivityTimeout timeMs=2147506541
+10-24 04:30:02.666   444   869 E Netd    : no such netId 100
+10-24 04:30:02.668   461   623 W BestClock: java.time.DateTimeException: Missing NTP fix
+10-24 04:30:02.672  1213  1213 I TileLoggerImpl: Log dropped due to not meeting collection basis.
