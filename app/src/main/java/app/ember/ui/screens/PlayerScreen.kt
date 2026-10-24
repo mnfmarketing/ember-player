@@ -1644,11 +1644,9 @@ private fun Modifier.swipeDownToClose(onClose: () -> Unit): Modifier {
                 }
                 if (!dragging) return@awaitEachGesture
                 if (released && pulled > size.height * 0.18f) {
-                    scope.launch {
-                        offset.animateTo(size.height.toFloat(), androidx.compose.animation.core.tween(160))
-                        close()
-                        offset.snapTo(0f)
-                    }
+                    // Close right away and keep sliding down while the screen behind fades in.
+                    close()
+                    scope.launch { offset.animateTo(size.height.toFloat(), androidx.compose.animation.core.tween(260)) }
                 } else {
                     scope.launch { offset.animateTo(0f, androidx.compose.animation.core.spring()) }
                 }

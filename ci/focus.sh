@@ -17,14 +17,14 @@ record_close() {
 }
 open_route library; sleep 3
 open_route player; sleep 4
-record_close f01-close-arrow 'tap_text "Close player"'
+record_close f01-close-arrow 'adb shell input tap 84 138'
 sleep 2
 open_route player; sleep 4
 record_close f02-close-pull 'adb shell input swipe 540 500 540 1700 300'
 sleep 2
 open_route home; sleep 3
 open_route player; sleep 4
-record_close f03-close-to-home 'tap_text "Close player"'
+record_close f03-close-back-to-home 'adb shell input keyevent KEYCODE_BACK'
 adb shell settings put global window_animation_scale 0
 adb shell settings put global transition_animation_scale 0
 adb shell settings put global animator_duration_scale 0
