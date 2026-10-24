@@ -73,12 +73,17 @@ say "flip: playing before=$(grep -o '"playing": [a-z]*' $OUT/f-flip-0.json) down
 python3 -c "import json; print('== flip log', [(e['kind'], e['reason']) for e in json.load(open('$OUT/f-flip-up.json'))['recentLog'][:4]])" | tee -a "$OUT/focus.txt"
 pause_now
 open_route settings; sleep 3
-for i in 1 2 3 4; do adb shell input swipe 540 1700 540 700 300; sleep 1; done
+adb shell input swipe 540 1700 540 700 300
 shot f06-settings-a 2
-adb shell input swipe 540 1700 540 1000 300
+adb shell input swipe 540 1700 540 700 300
 shot f07-settings-b 2
+adb shell input swipe 540 1700 540 700 300
+shot f07c-settings-c 2
 
 # ---- 5. Merge two books by hand, then split them back apart ----
+# Play both (Loose Two last) so they're at the top of the library.
+adb shell am start -n "$ACT" --es ember_play "$L1" > /dev/null; sleep 3
+pause_now
 adb shell am start -n "$ACT" --es ember_play "$L2" > /dev/null; sleep 4
 adb shell am start -n "$ACT" --es ember_seek "0,8000" > /dev/null; sleep 3
 pause_now
@@ -98,7 +103,7 @@ selfcheck f-merged.json
 M=$(book f-merged.json "Loose" id)
 if [ -z "$M" ]; then
   say "merge through the screens didn't happen; using the hook"
-  adb shell am start -n "$ACT" --es ember_merge "$L1,$L2|Loose" > /dev/null; sleep 15
+  adb shell am start -n "$ACT" --es ember_merge "$L1,$L2" --es ember_merge_title Loose > /dev/null; sleep 15
   selfcheck f-merged.json
   M=$(book f-merged.json "Loose" id)
 fi

@@ -325,7 +325,7 @@ class LibraryScanner(
         val bookTitle = c.forcedTitle
             ?: title?.takeIf { it.isNotBlank() }?.let { if (c.parts.isNotEmpty()) stripDisc(it) else it }
             ?: c.fallbackTitle
-        if (c.parts.isNotEmpty()) renumberAcrossDiscs(chapters, bookTitle)
+        if (c.parts.isNotEmpty()) renumberAcrossDiscs(chapters, trackRows, bookTitle)
         var coverPath = existing?.coverPath
         var coverColor = existing?.coverColor
         if (coverPath == null) {
@@ -418,15 +418,15 @@ class LibraryScanner(
         t.replace(Regex("[\\s,:._-]*[\\(\\[]?\\s*(cd|disc|disk|part|pt)\\.?\\s*[-_#]?\\s*\\d{1,3}(\\s*(of|/)\\s*\\d{1,3})?\\s*[\\)\\]]?\\s*$", RegexOption.IGNORE_CASE), "").trim().ifBlank { t }
 
     /** Disc 2's "Track 01" would read "Chapter 1" again: when file numbers restart on each disc, number straight through. */
-    private fun renumberAcrossDiscs(chapters: MutableList<ChapterEntity>, bookTitle: String) {
-        val names = chapters.map { app.ember.util.Names.chapter(it.title, bookTitle, it.idx) }
-        val nums = names.map { Regex("^Chapter (\\d+)$").find(it)?.groupValues?.get(1)?.toInt() }
-        val numbered = nums.filterNotNull()
-        val restarts = numbered.zipWithNext().any { (a, b) -> b <= a }
-        if (!restarts) return
-        for (i in chapters.indices) {
-            if (nums[i] != null) chapters[i] = chapters[i].copy(title = "Chapter ${i + 1}")
+    private fun renumberAcrossDiscs(chapters: MutableList<ChapterEntity>, tracks: MutableList<TrackEntity>, bookTitle: String) {
+        fun numbers(titles: List<String>) = titles.mapIndexed { i, t ->
+            Regex("^Chapter (\\d+)$").find(app.ember.util.Names.chapter(t, bookTitle, i))?.groupValues?.get(1)?.toInt()
         }
+        val nums = numbers(chapters.map { it.title })
+        if (nums.filterNotNull().zipWithNext().none { (a, b) -> b <= a }) return
+        for (i in chapters.indices) if (nums[i] != null) chapters[i] = chapters[i].copy(title = "Chapter ${i + 1}")
+        val tnums = numbers(tracks.map { it.title })
+        for (i in tracks.indices) if (tnums[i] != null) tracks[i] = tracks[i].copy(title = "Chapter ${i + 1}")
     }
 
     // ---------------- Merging by hand ----------------
@@ -680,7 +680,7 @@ class LibraryScanner(
             }
         }
         val bookTitle = title?.takeIf { it.isNotBlank() }?.let { if (c.parts.isNotEmpty()) stripDisc(it) else it } ?: c.fallbackTitle
-        if (c.parts.isNotEmpty()) renumberAcrossDiscs(chapters, bookTitle)
+        if (c.parts.isNotEmpty()) renumberAcrossDiscs(chapters, trackRows, bookTitle)
         // Same book you already started through the Drive app's folder picker? Keep your place.
         val previous = if (existing == null) findDriveAppTwin(bookTitle, offset) else null
         val base = existing ?: previous?.let {

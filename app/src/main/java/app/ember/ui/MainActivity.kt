@@ -145,10 +145,11 @@ class MainActivity : ComponentActivity() {
         intent.getStringExtra("ember_book_skips")?.split(',')?.takeIf { it.size == 3 }?.let { p ->
             container.appScope.launch { container.db.dao().setSkips(p[0], p[1].toIntOrNull() ?: 0, p[2].toIntOrNull() ?: 0) }
         }
-        intent.getStringExtra("ember_merge")?.split('|')?.takeIf { it.size == 2 }?.let { p ->
+        intent.getStringExtra("ember_merge")?.let { ids ->
+            val title = intent.getStringExtra("ember_merge_title") ?: ""
             container.appScope.launch {
                 val all = container.db.dao().getBooks().associateBy { it.id }
-                container.scanner.merge(p[0].split(',').mapNotNull { all[it] }, p[1])
+                container.scanner.merge(ids.split(',').mapNotNull { all[it] }, title)
             }
         }
         intent.getStringExtra("ember_split")?.let { id -> container.appScope.launch { container.scanner.split(id) } }
