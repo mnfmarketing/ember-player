@@ -154,8 +154,21 @@ class MainActivity : ComponentActivity() {
         }
         // Test hooks for the profile tab: your name, and a photo (in Ember's own files folder) to crop.
         intent.getStringExtra("ember_profile_name")?.let { n -> container.appScope.launch { container.settings.setProfileName(n) } }
-        intent.getStringExtra("ember_profile_photo")?.let { name ->
-            getExternalFilesDir(null)?.let { dir -> app.ember.data.ProfilePhoto.testCrop.value = android.net.Uri.fromFile(java.io.File(dir, name)) }
+        // (The test can't put files in Ember's storage, so Ember draws a wide test picture itself.)
+        if (intent.hasExtra("ember_profile_photo")) {
+            val f = java.io.File(cacheDir, "avatar-test.jpg")
+            try {
+                val bmp = android.graphics.Bitmap.createBitmap(1200, 800, android.graphics.Bitmap.Config.ARGB_8888)
+                val cv = android.graphics.Canvas(bmp)
+                val p = android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG)
+                cv.drawColor(0xFF2E4A62.toInt())
+                p.color = 0xFFE2683C.toInt(); cv.drawCircle(600f, 400f, 300f, p)
+                p.color = 0xFFFBF5F0.toInt(); cv.drawCircle(500f, 330f, 50f, p); cv.drawCircle(700f, 330f, 50f, p)
+                p.color = 0xFF1A0E09.toInt(); cv.drawRect(480f, 500f, 720f, 540f, p)
+                java.io.FileOutputStream(f).use { bmp.compress(android.graphics.Bitmap.CompressFormat.JPEG, 90, it) }
+                app.ember.data.ProfilePhoto.testCrop.value = android.net.Uri.fromFile(f)
+            } catch (e: Exception) {
+            }
             routeRequest.value = "you"
         }
         intent.getStringExtra("ember_split")?.let { id -> container.appScope.launch { container.scanner.split(id) } }

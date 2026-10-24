@@ -226,7 +226,7 @@ fun YouScreen(
                             .clickable(onClickLabel = "Change your photo") { if (s.profilePhotoAt > 0) photoMenu = true else pickPhoto() },
                         contentAlignment = Alignment.Center,
                     ) {
-                        Icon(Icons.Rounded.PhotoCamera, null, tint = EmberColors.Text, modifier = Modifier.size(18.dp))
+                        Icon(Icons.Rounded.PhotoCamera, "Change your photo", tint = EmberColors.Text, modifier = Modifier.size(18.dp))
                     }
                 }
                 Spacer(Modifier.height(12.dp))

@@ -19,10 +19,9 @@ shot f03-you-letter 2
 open_route home; shot f04-home-tab-letter 3
 
 # ---- A photo: crop step (moved a little), then saved ----
-adb push avatar-test.jpg /sdcard/Android/data/app.ember.audiobooks/files/avatar-test.jpg > /dev/null
-adb shell am start -n "$ACT" --es ember_profile_photo avatar-test.jpg > /dev/null; sleep 6
+adb shell am start -n "$ACT" --es ember_profile_photo test > /dev/null; sleep 6
 shot f05-crop 1
-adb shell input swipe 540 1100 760 1100 400; sleep 1
+adb shell input swipe 540 1100 700 1050 400; sleep 1
 shot f06-crop-moved 1
 tap_text "Save"; sleep 3
 shot f07-you-photo 2
@@ -51,7 +50,7 @@ adb shell input keyevent KEYCODE_BACK; sleep 2
 # ---- Remove the photo: back to the letter ----
 open_route you; sleep 2
 adb shell input swipe 540 700 540 1900 300; sleep 1
-tap_text "Your profile photo"; sleep 2
+tap_text "Change your photo"; sleep 2
 shot f15-photo-menu 1
 tap_text "Remove photo"; sleep 2
 shot f16-you-letter-again 2
