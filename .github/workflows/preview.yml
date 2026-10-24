@@ -143,8 +143,8 @@ jobs:
           if [ -n "$run_id" ] && gh run download "$run_id" --repo ${{ github.repository }} -n Ember-emulator -D old-build 2>/dev/null; then
             cp old-build/*.apk old.apk
           else
-            # Releases up to Ember-18 were one APK for every chip.
-            gh release download --repo ${{ github.repository }} --pattern 'Ember-[0-9]*.apk' --output old.apk || true
+            # Release APKs are phone-only (arm64) and can't run on the emulator; skip the upgrade check.
+            echo "No emulator copy of the last release; the upgrade check is skipped this time."
           fi
           ls -la old.apk || echo "No earlier release found"
 
