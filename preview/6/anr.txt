@@ -1,0 +1,5 @@
+10-24 04:39:46.113   504  4419 E ActivityManager: ANR in app.ember.audiobooks (app.ember.audiobooks/app.ember.ui.MainActivity)
+10-24 04:39:46.113   504  4419 E ActivityManager: PID: 2548
+10-24 04:39:46.113   504  4419 E ActivityManager: Reason: Input dispatching timed out (984c48b app.ember.audiobooks/app.ember.ui.MainActivity (server) is not responding. Waited 5002ms for MotionEvent(deviceId=-1, source=0x00001002, displayId=0, action=MOVE, actionButton=0x00000000, flags=0x00000000, metaState=0x00000000, buttonState=0x00000000, classification=NONE, edgeFlags=0x00000000, xPrecision=1.0, yPrecision=1.0, xCursorPosition=nan, yCursorPosition=nan, pointers=[0: (883.0, 1423.0)]), policyFlags=0x6b000000)
+10-24 04:39:46.113   504  4419 E ActivityManager: Parent: app.ember.audiobooks/app.ember.ui.MainActivity
+10-24 04:39:46.113   504  4419 E ActivityManager: Load: 1.07 / 0.65 / 0.35
