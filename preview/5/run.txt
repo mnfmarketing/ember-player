@@ -1,0 +1,651 @@
+++ dirname ci/quick.sh
++ source ci/lib.sh
+++ PKG=app.ember.audiobooks
+++ ACT=app.ember.audiobooks/app.ember.ui.MainActivity
+++ REPORTS=/sdcard/Download/EmberTest
+++ OUT=smoke-out
+++ mkdir -p smoke-out
++++ command -v adb
+++ ADB_BIN=/usr/local/lib/android/sdk/platform-tools/adb
++ adb shell settings put global hide_error_dialogs 1
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell settings put global hide_error_dialogs 1
++ adb shell settings put secure anr_show_background 0
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell settings put secure anr_show_background 0
++ adb install -r Ember-5.apk
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb install -r Ember-5.apk
+Performing Streamed Install
+Success
++ adb shell pm grant app.ember.audiobooks android.permission.POST_NOTIFICATIONS
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell pm grant app.ember.audiobooks android.permission.POST_NOTIFICATIONS
+
+Exception occurred while executing 'grant':
+java.lang.IllegalArgumentException: Unknown permission: android.permission.POST_NOTIFICATIONS
+	at com.android.server.pm.permission.PermissionManagerService.grantRuntimePermissionInternal(PermissionManagerService.java:1451)
+	at com.android.server.pm.permission.PermissionManagerService.grantRuntimePermission(PermissionManagerService.java:1410)
+	at com.android.server.pm.PackageManagerShellCommand.runGrantRevokePermission(PackageManagerShellCommand.java:2287)
+	at com.android.server.pm.PackageManagerShellCommand.onCommand(PackageManagerShellCommand.java:249)
+	at android.os.BasicShellCommandHandler.exec(BasicShellCommandHandler.java:98)
+	at android.os.ShellCommand.exec(ShellCommand.java:44)
+	at com.android.server.pm.PackageManagerService.onShellCommand(PackageManagerService.java:21646)
+	at android.os.Binder.shellCommand(Binder.java:929)
+	at android.os.Binder.onTransact(Binder.java:813)
+	at android.content.pm.IPackageManager$Stub.onTransact(IPackageManager.java:4603)
+	at com.android.server.pm.PackageManagerService.onTransact(PackageManagerService.java:4305)
+	at android.os.Binder.execTransactInternal(Binder.java:1159)
+	at android.os.Binder.execTransact(Binder.java:1123)
++ true
++ seed_files
++ adb shell am start -W -n app.ember.audiobooks/app.ember.ui.MainActivity
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -W -n app.ember.audiobooks/app.ember.ui.MainActivity
+Starting: Intent { cmp=app.ember.audiobooks/app.ember.ui.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: app.ember.audiobooks/app.ember.ui.MainActivity
+TotalTime: 1420
+WaitTime: 1438
+Complete
++ sleep 4
++ adb shell am force-stop app.ember.audiobooks
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am force-stop app.ember.audiobooks
++ adb shell am start -W -n app.ember.audiobooks/app.ember.ui.MainActivity --ez ember_demo true
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -W -n app.ember.audiobooks/app.ember.ui.MainActivity --ez ember_demo true
+Starting: Intent { cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras) }
+Status: ok
+LaunchState: COLD
+Activity: app.ember.audiobooks/app.ember.ui.MainActivity
+TotalTime: 1417
+WaitTime: 1460
+Complete
++ sleep 30
++ adb logcat -c
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb logcat -c
++ open_route home
++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
++ shot q01-home 5
++ sleep 5
++ adb exec-out screencap -p
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
++ open_route library
++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
++ shot q02-library 4
++ sleep 4
++ adb exec-out screencap -p
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_play demo-0
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_play demo-0
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
++ sleep 5
++ open_route player
++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
++ shot q03-player 4
++ sleep 4
++ adb exec-out screencap -p
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ dirname ci/quick.sh
++ source ci/focus.sh
+++ adb shell mkdir -p /sdcard/MergeTest
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell mkdir -p /sdcard/MergeTest
+++ adb push mergetest/. /sdcard/MergeTest/
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb push mergetest/. /sdcard/MergeTest/
+mergetest/./: 10 files pushed, 0 skipped. 13.7 MB/s (1846884 bytes in 0.129s)
+++ adb shell ls -R /sdcard/MergeTest
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell ls -R /sdcard/MergeTest
+++ head -30
+/sdcard/MergeTest:
+Loose One
+Loose Two
+The Disc Test Book
+
+/sdcard/MergeTest/Loose One:
+01.mp3
+02.mp3
+
+/sdcard/MergeTest/Loose Two:
+01.mp3
+02.mp3
+
+/sdcard/MergeTest/The Disc Test Book:
+CD1
+CD2
+CD3
+
+/sdcard/MergeTest/The Disc Test Book/CD1:
+01 Track 01.mp3
+02 Track 02.mp3
+
+/sdcard/MergeTest/The Disc Test Book/CD2:
+01 Track 01.mp3
+02 Track 02.mp3
+
+/sdcard/MergeTest/The Disc Test Book/CD3:
+01 Track 01.mp3
+02 Track 02.mp3
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_pick_library_folder MergeTest
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_pick_library_folder MergeTest
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 6
+++ shot f01-folder-picker 1
+++ sleep 1
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ tap_text 'Use this folder'
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 18.2 MB/s (24033 bytes in 0.001s)
+++ python3 - 'Use this folder'
+tapped Use this folder at 540,2211
+++ sleep 3
+++ tap_text Allow
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.2 MB/s (6671 bytes in 0.041s)
+++ python3 - Allow
+tapped Allow at 877,1324
+++ sleep 20
+++ open_route library
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f02-library 5
+++ sleep 5
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ selfcheck f-scan.json
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-scan.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-scan.json
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 5
+++ adb pull /sdcard/Download/EmberTest/f-scan.json smoke-out/f-scan.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/f-scan.json smoke-out/f-scan.json
+/sdcard/Download/EmberTest/f-scan.json: 1 file pulled, 0 skipped. 0.1 MB/s (2220 bytes in 0.041s)
++++ book f-scan.json 'The Disc Test Book' id
++++ python3 ci/book.py smoke-out/f-scan.json 'The Disc Test Book' id
+++ DISC=6434bfca-ec22-3999-be35-c121e141cc82
++++ book f-scan.json 'Loose One' id
++++ python3 ci/book.py smoke-out/f-scan.json 'Loose One' id
+++ L1=bc919567-fad0-31c3-ac0b-edf7c2767628
++++ book f-scan.json 'Loose Two' id
++++ python3 ci/book.py smoke-out/f-scan.json 'Loose Two' id
+++ L2=95455b4e-5628-337a-a52d-3ed8ed9ff460
++++ book f-scan.json 'The Disc Test Book' tracks
++++ python3 ci/book.py smoke-out/f-scan.json 'The Disc Test Book' tracks
+++ say 'disc book id=6434bfca-ec22-3999-be35-c121e141cc82 tracks: Chapter 1 (25s) | Chapter 2 (25s) | Chapter 3 (25s) | Chapter 4 (25s) | Chapter 5 (25s) | Chapter 6 (25s)'
+++ tee -a smoke-out/focus.txt
+++ echo '== disc book id=6434bfca-ec22-3999-be35-c121e141cc82 tracks: Chapter 1 (25s) | Chapter 2 (25s) | Chapter 3 (25s) | Chapter 4 (25s) | Chapter 5 (25s) | Chapter 6 (25s)'
+== disc book id=6434bfca-ec22-3999-be35-c121e141cc82 tracks: Chapter 1 (25s) | Chapter 2 (25s) | Chapter 3 (25s) | Chapter 4 (25s) | Chapter 5 (25s) | Chapter 6 (25s)
++++ book f-scan.json 'The Disc Test Book' chapters
++++ python3 ci/book.py smoke-out/f-scan.json 'The Disc Test Book' chapters
+++ say 'disc book chapters: Chapter 1@0 | Chapter 2@25 | Chapter 3@50 | Chapter 4@75 | Chapter 5@100 | Chapter 6@125'
+++ echo '== disc book chapters: Chapter 1@0 | Chapter 2@25 | Chapter 3@50 | Chapter 4@75 | Chapter 5@100 | Chapter 6@125'
+++ tee -a smoke-out/focus.txt
+== disc book chapters: Chapter 1@0 | Chapter 2@25 | Chapter 3@50 | Chapter 4@75 | Chapter 5@100 | Chapter 6@125
+++ say 'loose ids: bc919567-fad0-31c3-ac0b-edf7c2767628 95455b4e-5628-337a-a52d-3ed8ed9ff460'
+++ echo '== loose ids: bc919567-fad0-31c3-ac0b-edf7c2767628 95455b4e-5628-337a-a52d-3ed8ed9ff460'
+++ tee -a smoke-out/focus.txt
+== loose ids: bc919567-fad0-31c3-ac0b-edf7c2767628 95455b4e-5628-337a-a52d-3ed8ed9ff460
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_book_skips 6434bfca-ec22-3999-be35-c121e141cc82,5,0
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_book_skips 6434bfca-ec22-3999-be35-c121e141cc82,5,0
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 2
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_play 6434bfca-ec22-3999-be35-c121e141cc82
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_play 6434bfca-ec22-3999-be35-c121e141cc82
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 4
+++ pause_now
+++ adb shell input keyevent KEYCODE_MEDIA_PAUSE
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_MEDIA_PAUSE
+++ sleep 2
+++ selfcheck f-start.json
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-start.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-start.json
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 5
+++ adb pull /sdcard/Download/EmberTest/f-start.json smoke-out/f-start.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/f-start.json smoke-out/f-start.json
+/sdcard/Download/EmberTest/f-start.json: 1 file pulled, 0 skipped. 2.8 MB/s (2402 bytes in 0.001s)
++++ book f-start.json 'The Disc Test Book' positionMs
++++ python3 ci/book.py smoke-out/f-start.json 'The Disc Test Book' positionMs
+++ say 'starting from the top (want about 5000+): 8855'
+++ echo '== starting from the top (want about 5000+): 8855'
+++ tee -a smoke-out/focus.txt
+== starting from the top (want about 5000+): 8855
+++ open_route player
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 4
+++ tap_text 'Sound and equalizer'
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 14.8 MB/s (20563 bytes in 0.001s)
+++ python3 - 'Sound and equalizer'
+tapped Sound and equalizer at 744,137
+++ sleep 3
+++ shot f03-sound-sheet 1
+++ sleep 1
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ adb shell input swipe 540 1900 540 700 400
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input swipe 540 1900 540 700 400
+++ sleep 1
+++ adb shell input swipe 540 1900 540 700 400
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input swipe 540 1900 540 700 400
+++ shot f04-sound-sheet-skips 2
+++ sleep 2
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ tap_text 5s
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 19.9 MB/s (29001 bytes in 0.001s)
+++ python3 - 5s
+Traceback (most recent call last):
+  File "<stdin>", line 8, in <module>
+AttributeError: 'NoneType' object has no attribute 'group'
+++ sleep 1
+++ shot f05-skip-picked 1
+++ sleep 1
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ adb shell input keyevent KEYCODE_BACK
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_BACK
+++ sleep 2
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_seek 0,19000
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_seek 0,19000
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 1
+++ adb shell input keyevent KEYCODE_MEDIA_PLAY
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_MEDIA_PLAY
+++ sleep 10
+++ pause_now
+++ adb shell input keyevent KEYCODE_MEDIA_PAUSE
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_MEDIA_PAUSE
+++ sleep 2
+++ selfcheck f-intro.json
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-intro.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-intro.json
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 5
+++ adb pull /sdcard/Download/EmberTest/f-intro.json smoke-out/f-intro.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/f-intro.json smoke-out/f-intro.json
+/sdcard/Download/EmberTest/f-intro.json: 1 file pulled, 0 skipped. 0.1 MB/s (2852 bytes in 0.041s)
++++ book f-intro.json 'The Disc Test Book' positionMs
++++ python3 ci/book.py smoke-out/f-intro.json 'The Disc Test Book' positionMs
+++ say 'intro skip (want about 33000-36000, without skip about 29000): 31170'
+++ tee -a smoke-out/focus.txt
+++ echo '== intro skip (want about 33000-36000, without skip about 29000): 31170'
+== intro skip (want about 33000-36000, without skip about 29000): 31170
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_book_skips 6434bfca-ec22-3999-be35-c121e141cc82,5,5
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_book_skips 6434bfca-ec22-3999-be35-c121e141cc82,5,5
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 2
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_seek 1,12000
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_seek 1,12000
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 1
+++ adb shell input keyevent KEYCODE_MEDIA_PLAY
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_MEDIA_PLAY
+++ sleep 13
+++ pause_now
+++ adb shell input keyevent KEYCODE_MEDIA_PAUSE
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_MEDIA_PAUSE
+++ sleep 2
+++ selfcheck f-outro.json
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-outro.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-outro.json
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 5
+++ adb pull /sdcard/Download/EmberTest/f-outro.json smoke-out/f-outro.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/f-outro.json smoke-out/f-outro.json
+/sdcard/Download/EmberTest/f-outro.json: 1 file pulled, 0 skipped. 0.1 MB/s (3302 bytes in 0.042s)
++++ book f-outro.json 'The Disc Test Book' positionMs
++++ python3 ci/book.py smoke-out/f-outro.json 'The Disc Test Book' positionMs
+++ say 'outro skip (want about 55000-62000 in file 3, without skip about 48000): 57381'
+++ tee -a smoke-out/focus.txt
+++ echo '== outro skip (want about 55000-62000 in file 3, without skip about 48000): 57381'
+== outro skip (want about 55000-62000 in file 3, without skip about 48000): 57381
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_seek 3,21000
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_seek 3,21000
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 1
+++ adb shell input keyevent KEYCODE_MEDIA_PLAY
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_MEDIA_PLAY
+++ sleep 2
+++ pause_now
+++ adb shell input keyevent KEYCODE_MEDIA_PAUSE
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_MEDIA_PAUSE
+++ sleep 2
+++ selfcheck f-scrub.json
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-scrub.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-scrub.json
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 5
+++ adb pull /sdcard/Download/EmberTest/f-scrub.json smoke-out/f-scrub.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/f-scrub.json smoke-out/f-scrub.json
+/sdcard/Download/EmberTest/f-scrub.json: 1 file pulled, 0 skipped. 0.1 MB/s (3335 bytes in 0.042s)
++++ book f-scrub.json 'The Disc Test Book' positionMs
++++ python3 ci/book.py smoke-out/f-scrub.json 'The Disc Test Book' positionMs
+++ say 'scrubbed into the end (want about 96000-99000): 98776'
+++ echo '== scrubbed into the end (want about 96000-99000): 98776'
+++ tee -a smoke-out/focus.txt
+== scrubbed into the end (want about 96000-99000): 98776
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_book_skips 6434bfca-ec22-3999-be35-c121e141cc82,0,0
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_book_skips 6434bfca-ec22-3999-be35-c121e141cc82,0,0
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_flip on
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_flip on
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 2
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_play demo-0
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_play demo-0
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 6
+++ selfcheck f-flip-0.json
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-flip-0.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-flip-0.json
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 5
+++ adb pull /sdcard/Download/EmberTest/f-flip-0.json smoke-out/f-flip-0.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/f-flip-0.json smoke-out/f-flip-0.json
+/sdcard/Download/EmberTest/f-flip-0.json: 1 file pulled, 0 skipped. 0.1 MB/s (3274 bytes in 0.042s)
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_flip down
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_flip down
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 3
+++ selfcheck f-flip-down.json
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-flip-down.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-flip-down.json
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 5
+++ adb pull /sdcard/Download/EmberTest/f-flip-down.json smoke-out/f-flip-down.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/f-flip-down.json smoke-out/f-flip-down.json
+/sdcard/Download/EmberTest/f-flip-down.json: 1 file pulled, 0 skipped. 0.1 MB/s (3246 bytes in 0.042s)
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_flip up
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_flip up
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 4
+++ selfcheck f-flip-up.json
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-flip-up.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-flip-up.json
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 5
+++ adb pull /sdcard/Download/EmberTest/f-flip-up.json smoke-out/f-flip-up.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/f-flip-up.json smoke-out/f-flip-up.json
+/sdcard/Download/EmberTest/f-flip-up.json: 1 file pulled, 0 skipped. 0.1 MB/s (3213 bytes in 0.041s)
++++ grep -o '"playing": [a-z]*' smoke-out/f-flip-0.json
++++ grep -o '"playing": [a-z]*' smoke-out/f-flip-down.json
++++ grep -o '"playing": [a-z]*' smoke-out/f-flip-up.json
+++ say 'flip: playing before="playing": true down="playing": false up="playing": true'
+++ echo '== flip: playing before="playing": true down="playing": false up="playing": true'
+++ tee -a smoke-out/focus.txt
+== flip: playing before="playing": true down="playing": false up="playing": true
+++ python3 -c 'import json; print('\''== flip log'\'', [(e['\''kind'\''], e['\''reason'\'']) for e in json.load(open('\''smoke-out/f-flip-up.json'\''))['\''recentLog'\''][:4]])'
+++ tee -a smoke-out/focus.txt
+== flip log [(1, 5), (2, 5), (1, 0), (2, 0)]
+++ pause_now
+++ adb shell input keyevent KEYCODE_MEDIA_PAUSE
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_MEDIA_PAUSE
+++ sleep 2
+++ open_route settings
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 3
+++ adb shell input swipe 540 1700 540 700 300
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input swipe 540 1700 540 700 300
+++ shot f06-settings-a 2
+++ sleep 2
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ adb shell input swipe 540 1700 540 700 300
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input swipe 540 1700 540 700 300
+++ shot f07-settings-b 2
+++ sleep 2
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ adb shell input swipe 540 1700 540 700 300
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input swipe 540 1700 540 700 300
+++ shot f07c-settings-c 2
+++ sleep 2
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_play bc919567-fad0-31c3-ac0b-edf7c2767628
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_play bc919567-fad0-31c3-ac0b-edf7c2767628
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 3
+++ pause_now
+++ adb shell input keyevent KEYCODE_MEDIA_PAUSE
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_MEDIA_PAUSE
+++ sleep 2
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_play 95455b4e-5628-337a-a52d-3ed8ed9ff460
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_play 95455b4e-5628-337a-a52d-3ed8ed9ff460
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 4
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_seek 0,8000
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_seek 0,8000
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 3
+++ pause_now
+++ adb shell input keyevent KEYCODE_MEDIA_PAUSE
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_MEDIA_PAUSE
+++ sleep 2
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_add_bookmark 95455b4e-5628-337a-a52d-3ed8ed9ff460,10000
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_add_bookmark 95455b4e-5628-337a-a52d-3ed8ed9ff460,10000
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 2
+++ selfcheck f-before-merge.json
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-before-merge.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-before-merge.json
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 5
+++ adb pull /sdcard/Download/EmberTest/f-before-merge.json smoke-out/f-before-merge.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/f-before-merge.json smoke-out/f-before-merge.json
+/sdcard/Download/EmberTest/f-before-merge.json: 1 file pulled, 0 skipped. 0.1 MB/s (3245 bytes in 0.042s)
++++ book f-before-merge.json 'Loose Two' positionMs
++++ python3 ci/book.py smoke-out/f-before-merge.json 'Loose Two' positionMs
++++ book f-before-merge.json 'Loose Two' bookmarks
++++ python3 ci/book.py smoke-out/f-before-merge.json 'Loose Two' bookmarks
+++ say 'before merge: L2 pos=10930 marks=10000'
+++ echo '== before merge: L2 pos=10930 marks=10000'
+++ tee -a smoke-out/focus.txt
+== before merge: L2 pos=10930 marks=10000
+++ open_route library
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 4
+++ tap_text 'Loose One' 900
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.8 MB/s (34061 bytes in 0.041s)
+++ python3 - 'Loose One' 900
+tapped Loose One at 515,895
+++ sleep 3
+++ shot f08-book-sheet 1
+++ sleep 1
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ tap_text 'Merge with other books…'
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 13.1 MB/s (18997 bytes in 0.001s)
+++ python3 - 'Merge with other books…'
+tapped Merge with other books… at 407,1415
+++ sleep 3
+++ tap_text 'Loose Two'
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.9 MB/s (40259 bytes in 0.042s)
+++ python3 - 'Loose Two'
+tapped Loose Two at 175,895
+++ sleep 2
+++ shot f09-two-selected 1
+++ sleep 1
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ tap_text 'Merge into one book'
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 27.6 MB/s (41566 bytes in 0.001s)
+++ python3 - 'Merge into one book'
+tapped Merge into one book at 980,147
+++ sleep 3
+++ shot f10-merge-dialog 1
+++ sleep 1
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ tap_text Merge
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 8.9 MB/s (12731 bytes in 0.001s)
+++ python3 - Merge
+tapped Merge at 809,1576
+++ sleep 15
+++ selfcheck f-merged.json
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-merged.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-merged.json
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 5
+++ adb pull /sdcard/Download/EmberTest/f-merged.json smoke-out/f-merged.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/f-merged.json smoke-out/f-merged.json
+/sdcard/Download/EmberTest/f-merged.json: 1 file pulled, 0 skipped. 0.1 MB/s (2972 bytes in 0.041s)
++++ book f-merged.json Loose id
++++ python3 ci/book.py smoke-out/f-merged.json Loose id
+++ M=c942353e-380e-3e6e-853d-4ec4a5bf95e1
+++ '[' -z c942353e-380e-3e6e-853d-4ec4a5bf95e1 ']'
+++ open_route library
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f11-library-merged 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
++++ book f-merged.json Loose tracks
++++ python3 ci/book.py smoke-out/f-merged.json Loose tracks
+++ say 'merged id=c942353e-380e-3e6e-853d-4ec4a5bf95e1 tracks: Part 1 (20s) | Part 2 (20s) | Part 1 (20s) | Part 2 (20s)'
+++ echo '== merged id=c942353e-380e-3e6e-853d-4ec4a5bf95e1 tracks: Part 1 (20s) | Part 2 (20s) | Part 1 (20s) | Part 2 (20s)'
+++ tee -a smoke-out/focus.txt
+== merged id=c942353e-380e-3e6e-853d-4ec4a5bf95e1 tracks: Part 1 (20s) | Part 2 (20s) | Part 1 (20s) | Part 2 (20s)
++++ book f-merged.json Loose positionMs
++++ python3 ci/book.py smoke-out/f-merged.json Loose positionMs
++++ book f-merged.json Loose bookmarks
++++ python3 ci/book.py smoke-out/f-merged.json Loose bookmarks
++++ book f-merged.json Loose log
++++ python3 ci/book.py smoke-out/f-merged.json Loose log
++++ book f-merged.json 'Loose Two' id
++++ python3 ci/book.py smoke-out/f-merged.json 'Loose Two' id
+++ say 'merged (want marks 50000, pos about 48000-52000): pos=51002 marks=50072 log=5; Loose Two still there: '\'''\'''
+++ echo '== merged (want marks 50000, pos about 48000-52000): pos=51002 marks=50072 log=5; Loose Two still there: '\'''\'''
+++ tee -a smoke-out/focus.txt
+== merged (want marks 50000, pos about 48000-52000): pos=51002 marks=50072 log=5; Loose Two still there: ''
+++ tap_text Loose 900
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 21.8 MB/s (30432 bytes in 0.001s)
+++ python3 - Loose 900
+tapped Loose at 129,895
+++ sleep 3
+++ shot f12-merged-sheet 1
+++ sleep 1
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ tap_text 'Split back apart'
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 15.0 MB/s (18981 bytes in 0.001s)
+++ python3 - 'Split back apart'
+tapped Split back apart at 316,1415
+++ sleep 2
+++ shot f13-split-dialog 1
+++ sleep 1
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ tap_text Split
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.1 MB/s (5469 bytes in 0.041s)
+++ python3 - Split
+tapped Split at 821,1350
+++ sleep 15
+++ selfcheck f-split.json
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-split.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-split.json
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 5
+++ adb pull /sdcard/Download/EmberTest/f-split.json smoke-out/f-split.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/f-split.json smoke-out/f-split.json
+/sdcard/Download/EmberTest/f-split.json: 1 file pulled, 0 skipped. 0.1 MB/s (3242 bytes in 0.041s)
++++ book f-split.json 'Loose Two' id
++++ python3 ci/book.py smoke-out/f-split.json 'Loose Two' id
+++ '[' -z 95455b4e-5628-337a-a52d-3ed8ed9ff460 ']'
+++ open_route library
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f14-library-split 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
++++ book f-split.json 'Loose Two' positionMs
++++ python3 ci/book.py smoke-out/f-split.json 'Loose Two' positionMs
++++ book f-split.json 'Loose Two' bookmarks
++++ python3 ci/book.py smoke-out/f-split.json 'Loose Two' bookmarks
++++ book f-split.json 'Loose Two' log
++++ python3 ci/book.py smoke-out/f-split.json 'Loose Two' log
++++ book f-split.json Loose id
++++ python3 ci/book.py smoke-out/f-split.json Loose id
+++ say 'split (want L2 marks 10000, pos about 8000-12000): L2 pos=10930 marks=10000 log=3; merged gone: '\'''\'''
+++ tee -a smoke-out/focus.txt
+++ echo '== split (want L2 marks 10000, pos about 8000-12000): L2 pos=10930 marks=10000 log=3; merged gone: '\'''\'''
+== split (want L2 marks 10000, pos about 8000-12000): L2 pos=10930 marks=10000 log=3; merged gone: ''
++ selfcheck quick-end.json
++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck quick-end.json
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck quick-end.json
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
++ sleep 5
++ adb pull /sdcard/Download/EmberTest/quick-end.json smoke-out/quick-end.json
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/quick-end.json smoke-out/quick-end.json
+/sdcard/Download/EmberTest/quick-end.json: 1 file pulled, 0 skipped. 0.1 MB/s (3242 bytes in 0.042s)
++ finish_logs
++ adb logcat -d
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb logcat -d
++ grep -E 'FATAL EXCEPTION|AndroidRuntime' -A 25 smoke-out/logcat.txt
++ grep -E 'ANR in app.ember' -A 4 smoke-out/logcat.txt
++ true
++ grep -iE 'ember|ExoPlayer|MediaSession|Room|SQLite' smoke-out/logcat.txt
++ grep -E ' E | W '
++ head -300
++ adb shell pidof app.ember.audiobooks
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell pidof app.ember.audiobooks
++ exit 0

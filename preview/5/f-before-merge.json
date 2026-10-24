@@ -1,0 +1,130 @@
+{
+  "libraryDbVersion": 5,
+  "podcastDbVersion": 3,
+  "books": 12,
+  "externalBooks": 1,
+  "inProgress": 7,
+  "finished": 2,
+  "rated": 2,
+  "bookmarks": 2,
+  "clips": 1,
+  "shelves": 1,
+  "shelfLinks": 2,
+  "listeningDays": 11,
+  "podcasts": 0,
+  "demo0PositionMs": 326543,
+  "pendingRestore": false,
+  "automaticBackups": 1,
+  "lastBackupAt": 1792815447608,
+  "torrents": "",
+  "torrentDebug": "",
+  "wifiHold": false,
+  "bookTitles": "Loose Two, Loose One, Pride and Prejudice, The Disc Test Book, Frankenstein, The Time Machine, Project Hail Mary, Dracula, Treasure Island, Little Women, Good Wives, The Hound of the Baskervilles",
+  "demo0Pdf": "file:\/\/\/data\/user\/0\/app.ember.audiobooks\/files\/docs\/pride-and-prejudice-companion.pdf",
+  "booksWithPdf": 1,
+  "listenLogEntries": 20,
+  "upNext": "",
+  "demo0Effects": "false,false,false",
+  "sleepLog": 0,
+  "dbSnapshots": "",
+  "playing": false,
+  "flipToPause": true,
+  "lastBookId": "95455b4e-5628-337a-a52d-3ed8ed9ff460",
+  "merges": 0,
+  "recentLog": [
+    {
+      "bookId": "95455b4e-5628-337a-a52d-3ed8ed9ff460",
+      "kind": 2,
+      "reason": 0,
+      "positionMs": 10930,
+      "toMs": -1
+    },
+    {
+      "bookId": "95455b4e-5628-337a-a52d-3ed8ed9ff460",
+      "kind": 4,
+      "reason": 0,
+      "positionMs": 3683,
+      "toMs": 8000
+    },
+    {
+      "bookId": "95455b4e-5628-337a-a52d-3ed8ed9ff460",
+      "kind": 1,
+      "reason": 0,
+      "positionMs": 0,
+      "toMs": -1
+    },
+    {
+      "bookId": "bc919567-fad0-31c3-ac0b-edf7c2767628",
+      "kind": 2,
+      "reason": 0,
+      "positionMs": 2671,
+      "toMs": -1
+    },
+    {
+      "bookId": "bc919567-fad0-31c3-ac0b-edf7c2767628",
+      "kind": 1,
+      "reason": 0,
+      "positionMs": 0,
+      "toMs": -1
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 2,
+      "reason": 0,
+      "positionMs": 326543,
+      "toMs": -1
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 1,
+      "reason": 5,
+      "positionMs": 317234,
+      "toMs": -1
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 2,
+      "reason": 5,
+      "positionMs": 317231,
+      "toMs": -1
+    }
+  ],
+  "library": [
+    {
+      "id": "95455b4e-5628-337a-a52d-3ed8ed9ff460",
+      "title": "Loose Two",
+      "durationMs": 40072,
+      "positionMs": 10930,
+      "status": 1,
+      "skips": "0,0",
+      "tracks": "Part 1 (20s) | Part 2 (20s)",
+      "chapters": "Part 1@0 | Part 2@20",
+      "bookmarks": "10000",
+      "log": 3
+    },
+    {
+      "id": "bc919567-fad0-31c3-ac0b-edf7c2767628",
+      "title": "Loose One",
+      "durationMs": 40072,
+      "positionMs": 2671,
+      "status": 1,
+      "skips": "0,0",
+      "tracks": "Part 1 (20s) | Part 2 (20s)",
+      "chapters": "Part 1@0 | Part 2@20",
+      "bookmarks": "",
+      "log": 2
+    },
+    {
+      "id": "6434bfca-ec22-3999-be35-c121e141cc82",
+      "title": "The Disc Test Book",
+      "durationMs": 150306,
+      "positionMs": 98776,
+      "status": 1,
+      "skips": "0,0",
+      "tracks": "Chapter 1 (25s) | Chapter 2 (25s) | Chapter 3 (25s) | Chapter 4 (25s) | Chapter 5 (25s) | Chapter 6 (25s)",
+      "chapters": "Chapter 1@0 | Chapter 2@25 | Chapter 3@50 | Chapter 4@75 | Chapter 5@100 | Chapter 6@125",
+      "bookmarks": "",
+      "log": 10
+    }
+  ]
+}
