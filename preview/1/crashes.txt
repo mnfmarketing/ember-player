@@ -1,0 +1,153 @@
+10-24 02:39:44.283  2575  2575 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-24 02:39:44.285  2575  2575 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.profilebootclasspath"
+10-24 02:39:44.285  2575  2575 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+10-24 02:39:44.285  2575  2575 I AndroidRuntime: Using default boot image
+10-24 02:39:44.285  2575  2575 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+10-24 02:39:44.285  2575  2575 I AndroidRuntime: Leaving lock profiling enabled
+10-24 02:39:44.285  2575  2575 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+10-24 02:39:44.286  2575  2575 I app_process: Core platform API reporting enabled, enforcing=false
+10-24 02:39:44.284  2575  2575 W app_process: type=1400 audit(0.0:33): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=1170 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-24 02:39:44.284  2575  2575 I chatty  : uid=2000(shell) app_process identical 2 lines
+10-24 02:39:44.284  2575  2575 W app_process: type=1400 audit(0.0:36): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=1170 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-24 02:39:44.319  2575  2575 D app_process: Time zone APEX ICU file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+10-24 02:39:44.319  2575  2575 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt66l.dat
+10-24 02:39:44.322  2575  2575 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+10-24 02:39:44.323  2575  2575 I app_process: The ClassLoaderContext is a special shared library.
+10-24 02:39:44.325  2575  2575 I app_process: The ClassLoaderContext is a special shared library.
+10-24 02:39:44.333  2575  2575 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+10-24 02:39:44.335   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:44.337  2575  2575 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-24 02:39:44.354  2575  2590 V UiAutomation: Init UiAutomation@34c1a34[id=1, flags=0]
+10-24 02:39:44.403   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:44.403   356   450 D AudioFlinger: mixer(0x7c3d8a8d0040) throttle end: throttle time(1553)
+10-24 02:39:44.432   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:44.434   698   698 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 02:39:44.434   698   698 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="Pride and Prejudice" artist="Jane Austen" album="Pride and Prejudice" duration=600000 trackPosition=1/1 }
+10-24 02:39:44.435   698   698 E AvrcpMediaPlayerWrapper:   └ Current Playstate: PlaybackState {state=3, position=277952, buffered position=383000, speed=1.0, updated=99976, actions=7340031, custom actions=[], active item id=0, error=null}
+10-24 02:39:44.435   698   698 E AvrcpMediaPlayerWrapper:   └ QueueItem(0): { mediaId="NowPlayingId0" title="Pride and Prejudice" artist="Chapter 1" album="" duration=0 trackPosition=1/1 }
+10-24 02:39:44.435   698   698 V AvrcpMediaPlayerWrapper: trySendMediaUpdate(): Metadata has been updated for app.ember.audiobooks
+10-24 02:39:44.435   698   698 D AvrcpMediaPlayerList: sendMediaUpdate
+10-24 02:39:44.435   698   698 D AvrcpMediaPlayerList: sendMediaUpdate state=PlaybackState {state=3, position=277953, buffered position=383000, speed=1.0, updated=99977, actions=7340031, custom actions=[], active item id=0, error=null}
+10-24 02:39:44.435   698   698 D AvrcpTargetService: onMediaUpdated: track_changed=false state=true queue=false
+10-24 02:39:44.435   698   698 D AvrcpNativeInterface: sendMediaUpdate: metadata=false playStatus=true queue=false
+10-24 02:39:44.435   698   698 D AvrcpTargetJni: sendMediaUpdateNative
+10-24 02:39:44.435   698   698 I bt_stack: [INFO:avrcp_service.cc(346)] virtual void bluetooth::avrcp::AvrcpService::SendMediaUpdate(bool, bool, bool) track_changed=0 :  play_state=1 :  queue=0
+10-24 02:39:44.442   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:45.137   285  1525 I chatty  : uid=1041(audioserver) HwBinder:285_2 identical 30 lines
+10-24 02:39:45.171   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:45.171   356   450 D AudioFlinger: mixer(0x7c3d8a8d0040) throttle end: throttle time(598)
+10-24 02:39:45.175   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:45.209   285  1525 I chatty  : uid=1041(audioserver) HwBinder:285_2 identical 2 lines
+10-24 02:39:45.231   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:45.233   412   412 I perfetto: probes_producer.cc:329  Producer stop (id=10)
+10-24 02:39:45.234   412   412 I perfetto: ftrace_procfs.cc:183    disabled ftrace
+10-24 02:39:45.235   413   413 I perfetto: ng_service_impl.cc:1948 Tracing session 10 ended, total sessions:0
+--
+10-24 02:39:45.483  2575  2575 D AndroidRuntime: Shutting down VM
+10-24 02:39:45.521   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:45.974   285  1525 I chatty  : uid=1041(audioserver) HwBinder:285_2 identical 18 lines
+10-24 02:39:45.986   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:46.002  2593  2593 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-24 02:39:46.003  2593  2593 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.profilebootclasspath"
+10-24 02:39:46.003  2593  2593 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+10-24 02:39:46.003  2593  2593 I AndroidRuntime: Using default boot image
+10-24 02:39:46.004  2593  2593 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+10-24 02:39:46.004  2593  2593 I AndroidRuntime: Leaving lock profiling enabled
+10-24 02:39:46.004  2593  2593 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+10-24 02:39:46.005  2593  2593 I app_process: Core platform API reporting enabled, enforcing=false
+10-24 02:39:46.000  2593  2593 W app_process: type=1400 audit(0.0:37): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=1170 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-24 02:39:46.000  2593  2593 I chatty  : uid=2000(shell) app_process identical 1 line
+10-24 02:39:46.000  2593  2593 W app_process: type=1400 audit(0.0:39): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=1170 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-24 02:39:46.036   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:46.000  2593  2593 W app_process: type=1400 audit(0.0:40): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=1170 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-24 02:39:46.039  2593  2593 D app_process: Time zone APEX ICU file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+10-24 02:39:46.039  2593  2593 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt66l.dat
+10-24 02:39:46.041  2593  2593 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+10-24 02:39:46.041  2593  2593 I app_process: The ClassLoaderContext is a special shared library.
+10-24 02:39:46.043   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:46.047  2593  2593 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+10-24 02:39:46.050  2593  2593 D AndroidRuntime: Calling main entry com.android.commands.input.Input
+10-24 02:39:46.060  2593  2593 D AndroidRuntime: Shutting down VM
+10-24 02:39:46.066   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:46.351   285  1525 I chatty  : uid=1041(audioserver) HwBinder:285_2 identical 11 lines
+10-24 02:39:46.382   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:46.396   356   450 D AudioFlinger: mixer(0x7c3d8a8d0040) throttle end: throttle time(911)
+10-24 02:39:46.454   356   450 D AudioFlinger: mixer(0x7c3d8a8d0040) throttle end: throttle time(14)
+10-24 02:39:46.457   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:46.480   285  1525 I chatty  : uid=1041(audioserver) HwBinder:285_2 identical 1 line
+10-24 02:39:46.515   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:46.525   299   332 D goldfish-address-space: claimShared: Ask to claim region [0x3f8a27000 0x3f940b000]
+10-24 02:39:46.537   163   163 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device manifest.
+10-24 02:39:46.537  2608  2608 I Gralloc4: mapper 4.x is not supported
+10-24 02:39:46.539   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:46.541  2608  2608 D HostConnection: createUnique: call
+10-24 02:39:46.542  2608  2608 D HostConnection: HostConnection::get() New Host Connection established 0x749fbfa3a190, tid 2608
+10-24 02:39:46.542  2608  2608 D goldfish-address-space: allocate: Ask for block of size 0x100
+10-24 02:39:46.542  2608  2608 D goldfish-address-space: allocate: ioctl allocate returned offset 0x3f7ffe000 size 0x2000
+10-24 02:39:46.550  2608  2608 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+10-24 02:39:46.563   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:47.021   285  1525 I chatty  : uid=1041(audioserver) HwBinder:285_2 identical 20 lines
+10-24 02:39:47.044   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:47.065   299   332 D goldfish-address-space: claimShared: Ask to claim region [0x3f8a27000 0x3f940b000]
+10-24 02:39:47.066   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:47.071   163   163 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device manifest.
+10-24 02:39:47.071  2612  2612 I Gralloc4: mapper 4.x is not supported
+10-24 02:39:47.077  2612  2612 D HostConnection: createUnique: call
+--
+10-24 02:39:54.095  2628  2628 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-24 02:39:54.096  2628  2628 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.profilebootclasspath"
+10-24 02:39:54.096  2628  2628 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+10-24 02:39:54.096  2628  2628 I AndroidRuntime: Using default boot image
+10-24 02:39:54.096  2628  2628 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+10-24 02:39:54.096  2628  2628 I AndroidRuntime: Leaving lock profiling enabled
+10-24 02:39:54.096  2628  2628 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+10-24 02:39:54.097  2628  2628 I app_process: Core platform API reporting enabled, enforcing=false
+10-24 02:39:54.096  2628  2628 W app_process: type=1400 audit(0.0:41): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=1170 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-24 02:39:54.112   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:54.119   285  1525 I chatty  : uid=1041(audioserver) HwBinder:285_2 identical 1 line
+10-24 02:39:54.144   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:54.148  2628  2628 D app_process: Time zone APEX ICU file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+10-24 02:39:54.148  2628  2628 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt66l.dat
+10-24 02:39:54.151  2628  2628 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+10-24 02:39:54.151  2628  2628 I app_process: The ClassLoaderContext is a special shared library.
+10-24 02:39:54.158  2628  2628 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+10-24 02:39:54.165  2628  2628 D AndroidRuntime: Calling main entry com.android.commands.input.Input
+10-24 02:39:54.167   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:54.096  2628  2628 W app_process: type=1400 audit(0.0:42): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=1170 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-24 02:39:54.096  2628  2628 W app_process: type=1400 audit(0.0:43): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=1170 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-24 02:39:54.188   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:54.096  2628  2628 W app_process: type=1400 audit(0.0:44): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=1170 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-24 02:39:54.211   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:54.455   285  1525 I chatty  : uid=1041(audioserver) HwBinder:285_2 identical 9 lines
+10-24 02:39:54.489   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:54.503   698   698 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=3, position=296627, buffered position=383000, speed=1.0, updated=110043, actions=7340031, custom actions=[], active item id=0, error=null}
+10-24 02:39:54.523   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:54.523   356   450 D AudioFlinger: mixer(0x7c3d8a8d0040) throttle end: throttle time(5832)
+10-24 02:39:54.529   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:54.531   715   715 V MediaTimeout: processState: PlaybackState {state=3, position=296627, buffered position=383000, speed=1.0, updated=110043, actions=7340031, custom actions=[], active item id=0, error=null}
+10-24 02:39:54.531  2628  2628 D AndroidRuntime: Shutting down VM
+10-24 02:39:54.541   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:54.853   285  1525 I chatty  : uid=1041(audioserver) HwBinder:285_2 identical 12 lines
+10-24 02:39:54.938   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:54.940   356   450 D AudioFlinger: mixer(0x7c3d8a8d0040) throttle end: throttle time(268)
+10-24 02:39:54.955   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:54.984   356   450 D AudioFlinger: mixer(0x7c3d8a8d0040) throttle end: throttle time(18)
+10-24 02:39:55.003   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:55.014   285  1525 I chatty  : uid=1041(audioserver) HwBinder:285_2 identical 1 line
+10-24 02:39:55.022   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:55.031   299   332 D goldfish-address-space: claimShared: Ask to claim region [0x3f8a27000 0x3f940b000]
+10-24 02:39:55.038   163   163 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device manifest.
+10-24 02:39:55.040  2643  2643 I Gralloc4: mapper 4.x is not supported
+10-24 02:39:55.046  2643  2643 D HostConnection: createUnique: call
+10-24 02:39:55.047  2643  2643 D HostConnection: HostConnection::get() New Host Connection established 0x7edb4a18f810, tid 2643
+10-24 02:39:55.047  2643  2643 D goldfish-address-space: allocate: Ask for block of size 0x100
+10-24 02:39:55.047   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:55.047  2643  2643 D goldfish-address-space: allocate: ioctl allocate returned offset 0x3f7ffe000 size 0x2000
+10-24 02:39:55.053  2643  2643 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+10-24 02:39:55.058   412   412 I perfetto: probes_producer.cc:329  Producer stop (id=11)
+10-24 02:39:55.061   413   413 I perfetto: ng_service_impl.cc:1948 Tracing session 11 ended, total sessions:0
+10-24 02:39:55.061   412   412 I perfetto: ftrace_procfs.cc:183    disabled ftrace
+10-24 02:39:55.306     0     0 W perfetto: disabled ftrace
+10-24 02:39:55.071   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-24 02:39:55.492   285  1525 I chatty  : uid=1041(audioserver) HwBinder:285_2 identical 19 lines
+10-24 02:39:55.515   285  1525 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
