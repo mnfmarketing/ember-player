@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="app.ember.util.NamesTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-24T03:04:00" hostname="runnervm8k3b6" time="0.015">
+<testsuite name="app.ember.util.NamesTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-24T03:50:40" hostname="runnervm8k3b6" time="0.019">
   <properties/>
-  <testcase name="fileStyleChapterNames" classname="app.ember.util.NamesTest" time="0.012"/>
-  <testcase name="shortTitles" classname="app.ember.util.NamesTest" time="0.0"/>
+  <testcase name="mergedNames" classname="app.ember.util.NamesTest" time="0.006"/>
+  <testcase name="fileStyleChapterNames" classname="app.ember.util.NamesTest" time="0.007"/>
+  <testcase name="shortTitles" classname="app.ember.util.NamesTest" time="0.001"/>
+  <testcase name="discFolderNames" classname="app.ember.util.NamesTest" time="0.004"/>
   <testcase name="realNamesStay" classname="app.ember.util.NamesTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
