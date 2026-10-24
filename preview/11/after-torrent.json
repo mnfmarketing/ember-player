@@ -1,0 +1,108 @@
+{
+  "libraryDbVersion": 5,
+  "podcastDbVersion": 3,
+  "books": 10,
+  "externalBooks": 1,
+  "inProgress": 4,
+  "finished": 2,
+  "rated": 2,
+  "bookmarks": 2,
+  "clips": 1,
+  "shelves": 1,
+  "shelfLinks": 2,
+  "listeningDays": 11,
+  "podcasts": 1,
+  "demo0PositionMs": 34364,
+  "pendingRestore": false,
+  "automaticBackups": 1,
+  "lastBackupAt": 1792874773477,
+  "torrents": "The Torrent Test Book: done 100% In your library",
+  "torrentDebug": "state=SEEDING flags=8 peers=0 conns=0 seeds=[http:\/\/10.0.2.2:8000\/] err=Success wanted=86405590 done=86405590",
+  "wifiHold": false,
+  "bookTitles": "Pride and Prejudice, Frankenstein, The Time Machine, Project Hail Mary, The Torrent Test Book, Dracula, Treasure Island, Little Women, Good Wives, The Hound of the Baskervilles",
+  "demo0Pdf": "file:\/\/\/data\/user\/0\/app.ember.audiobooks\/files\/docs\/pride-and-prejudice-companion.pdf",
+  "booksWithPdf": 1,
+  "listenLogEntries": 14,
+  "upNext": "demo-4,demo-2",
+  "demo0Effects": "false,false,false",
+  "sleepLog": 2,
+  "dbSnapshots": "ember-from-v21-1792874748046, media-from-v21-1792874748070",
+  "playing": true,
+  "flipToPause": false,
+  "lastBookId": "episode:ep-29af5566-ab4b-324f-8d2a-f282ea7db08a",
+  "merges": 0,
+  "profileName": "",
+  "profilePhoto": false,
+  "recentLog": [
+    {
+      "bookId": "episode:ep-29af5566-ab4b-324f-8d2a-f282ea7db08a",
+      "kind": 1,
+      "reason": 0,
+      "positionMs": 0,
+      "toMs": -1
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 2,
+      "reason": 1,
+      "positionMs": 34364,
+      "toMs": 562671
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 4,
+      "reason": 0,
+      "positionMs": 589867,
+      "toMs": 1000
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 1,
+      "reason": 0,
+      "positionMs": 562671,
+      "toMs": -1
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 2,
+      "reason": 1,
+      "positionMs": 565164,
+      "toMs": 556399
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 1,
+      "reason": 0,
+      "positionMs": 442659,
+      "toMs": -1
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 2,
+      "reason": 0,
+      "positionMs": 442650,
+      "toMs": -1
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 3,
+      "reason": 0,
+      "positionMs": 430618,
+      "toMs": 403555
+    }
+  ],
+  "library": [
+    {
+      "id": "c37aa5d3-aab8-3b27-8f97-f47286471a38",
+      "title": "The Torrent Test Book",
+      "durationMs": 5400138,
+      "positionMs": 0,
+      "status": 0,
+      "skips": "0,0",
+      "tracks": "Chapter 1 (1800s) | Chapter 2 (1800s) | Chapter 3 (1800s)",
+      "chapters": "Chapter 1@0 | Chapter 2@1800 | Chapter 3@3600",
+      "bookmarks": "",
+      "log": 0
+    }
+  ]
+}

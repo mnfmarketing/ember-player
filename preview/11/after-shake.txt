@@ -1,0 +1,3 @@
+      state=PlaybackState {state=2, position=565164, buffered position=600000, speed=0.0, updated=620920, actions=7340031, custom actions=[], active item id=0, error=null}
+sensor shake not seen; using the test hook
+      state=PlaybackState {state=3, position=565684, buffered position=600000, speed=1.0, updated=634551, actions=7340031, custom actions=[], active item id=0, error=null}

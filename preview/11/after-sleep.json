@@ -1,0 +1,95 @@
+{
+  "libraryDbVersion": 5,
+  "podcastDbVersion": 3,
+  "books": 9,
+  "externalBooks": 1,
+  "inProgress": 4,
+  "finished": 2,
+  "rated": 2,
+  "bookmarks": 2,
+  "clips": 1,
+  "shelves": 1,
+  "shelfLinks": 2,
+  "listeningDays": 11,
+  "podcasts": 0,
+  "demo0PositionMs": 575069,
+  "pendingRestore": false,
+  "automaticBackups": 1,
+  "lastBackupAt": 1792874773477,
+  "torrents": "",
+  "torrentDebug": "",
+  "wifiHold": false,
+  "bookTitles": "Pride and Prejudice, Frankenstein, The Time Machine, Project Hail Mary, Dracula, Treasure Island, Little Women, Good Wives, The Hound of the Baskervilles",
+  "demo0Pdf": "file:\/\/\/data\/user\/0\/app.ember.audiobooks\/files\/docs\/pride-and-prejudice-companion.pdf",
+  "booksWithPdf": 1,
+  "listenLogEntries": 11,
+  "upNext": "demo-4,demo-2",
+  "demo0Effects": "false,false,false",
+  "sleepLog": 1,
+  "dbSnapshots": "ember-from-v21-1792874748046, media-from-v21-1792874748070",
+  "playing": true,
+  "flipToPause": false,
+  "lastBookId": "demo-0",
+  "merges": 0,
+  "profileName": "",
+  "profilePhoto": false,
+  "recentLog": [
+    {
+      "bookId": "demo-0",
+      "kind": 1,
+      "reason": 0,
+      "positionMs": 562671,
+      "toMs": -1
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 2,
+      "reason": 1,
+      "positionMs": 565164,
+      "toMs": 556399
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 1,
+      "reason": 0,
+      "positionMs": 442659,
+      "toMs": -1
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 2,
+      "reason": 0,
+      "positionMs": 442650,
+      "toMs": -1
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 3,
+      "reason": 0,
+      "positionMs": 430618,
+      "toMs": 403555
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 4,
+      "reason": 0,
+      "positionMs": 345705,
+      "toMs": 400000
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 1,
+      "reason": 0,
+      "positionMs": 332022,
+      "toMs": -1
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 2,
+      "reason": 0,
+      "positionMs": 332006,
+      "toMs": -1
+    }
+  ],
+  "library": []
+}
