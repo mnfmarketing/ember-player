@@ -1,0 +1,36 @@
+10-24 20:10:25.226   696   696 W AvrcpMediaPlayerWrapper: onQueueChanged(): app.ember.audiobooks tried to update with no new data
+10-24 20:10:25.227   696   696 W AvrcpMediaPlayerWrapper: onQueueChanged(): app.ember.audiobooks tried to update with no new data
+10-24 20:10:25.229   696   696 W AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks tried to update with no new data
+10-24 20:10:27.264   696   696 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 20:10:30.274   696   696 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 20:10:33.276   696   696 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 20:10:36.290   696   696 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 20:10:39.286   696   696 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 20:10:42.284   696   696 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 20:10:45.287   696   696 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 20:10:48.287   696   696 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 20:10:51.327   696   696 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 20:10:54.381   696   696 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 20:10:57.378   696   696 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 20:11:00.379   696   696 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 20:11:03.397   696   696 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 20:11:06.392   696   696 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 20:11:09.393   696   696 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 20:11:12.396   696   696 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 20:11:15.398   696   696 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-24 20:11:16.912  2408  2408 E AndroidRuntime: Process: app.ember.audiobooks, PID: 2408
+10-24 20:11:16.912  2408  2408 E AndroidRuntime: 	at app.ember.ui.screens.YouScreenKt$PhotoCropDialog$1.invoke$lambda$3$lambda$2$lambda$1$lambda$0(YouScreen.kt:536)
+10-24 20:11:16.912  2408  2408 E AndroidRuntime: 	at app.ember.ui.screens.YouScreenKt$PhotoCropDialog$1.$r8$lambda$V0wWXKicm9iRZRIE6lOIMdmzitg(Unknown Source:0)
+10-24 20:11:16.912  2408  2408 E AndroidRuntime: 	at app.ember.ui.screens.YouScreenKt$PhotoCropDialog$1$$ExternalSyntheticLambda0.invoke(D8$$SyntheticClass:0)
+10-24 20:11:16.913   506  1138 W ActivityTaskManager:   Force finishing activity app.ember.audiobooks/app.ember.ui.MainActivity
+10-24 20:11:17.017   696   696 W AvrcpMediaPlayerList: app.ember.audiobooks is already the active player
+10-24 20:11:17.018   696   696 W AvrcpMediaPlayerWrapper: The session was destroyed app.ember.audiobooks
+10-24 20:11:17.021   506  2070 W InputDispatcher: Attempted to unregister already unregistered input channel '5818c4f app.ember.audiobooks/app.ember.ui.MainActivity (server)'
+10-24 20:11:17.066   506   640 W ActivityManager: Scheduling restart of crashed service app.ember.audiobooks/app.ember.playback.PlaybackService in 1000ms for start-requested
+10-24 20:11:17.413   506   539 W ActivityTaskManager: Activity top resumed state loss timeout for ActivityRecord{5aa73dc u0 app.ember.audiobooks/app.ember.ui.MainActivity t-1 f}}
+10-24 20:11:18.167   696   696 W AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks tried to update with no new data
+10-24 20:11:18.173  2763  2803 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+10-24 20:11:18.175  2763  2763 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+10-24 20:11:18.420  2763  2803 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+10-24 20:11:18.421  2763  2803 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+10-24 20:11:24.017   696   696 W AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks tried to update with no new data
