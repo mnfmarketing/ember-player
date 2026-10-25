@@ -181,14 +181,20 @@ private fun Choice(label: String, selected: Boolean, onClick: () -> Unit) {
 /** A small picture of a theme: its background, a card, text lines and its accent. */
 @Composable
 private fun ThemeTile(name: String, p: EmberPalette, selected: Boolean, onClick: () -> Unit) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.width(92.dp)) {
+    // The whole tile, name included, picks the theme.
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .width(92.dp)
+            .clip(RoundedCornerShape(14.dp))
+            .clickable(onClickLabel = "$name theme", onClick = onClick),
+    ) {
         Box(
             Modifier
                 .size(92.dp, 72.dp)
                 .clip(RoundedCornerShape(14.dp))
                 .background(p.background)
                 .border(if (selected) 3.dp else 1.dp, if (selected) MaterialTheme.colorScheme.primary else EmberColors.Outline, RoundedCornerShape(14.dp))
-                .clickable(onClickLabel = "$name theme", onClick = onClick)
                 .padding(10.dp),
         ) {
             Column(
