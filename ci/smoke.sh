@@ -358,6 +358,12 @@ adb shell wm density 380
 sleep 3
 tap_text "Exit car mode"; sleep 2
 
+# This batch's own checks run in the full run too.
+adb shell wm size reset
+adb shell wm density reset
+sleep 3
+source "$(dirname "$0")/focus.sh"
+
 # A missing file: the player should explain it in plain words.
 adb shell am force-stop $PKG
 adb shell am start -W -n "$ACT" --ez ember_delete_demo_audio true

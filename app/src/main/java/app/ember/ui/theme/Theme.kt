@@ -112,10 +112,10 @@ private fun tintedDark(hue: Float, sat: Float, accent: Color, success: Color = C
 /** A light palette tinted with [hue]: pale paper backgrounds, dark text. */
 private fun tintedLight(hue: Float, sat: Float, accent: Color, success: Color = Color(0xFF2E7D4F)) = EmberPalette(
     isDark = false,
-    background = hsl(hue, sat, 0.975f),
-    surface = hsl(hue, sat, 0.935f),
-    surfaceHigh = hsl(hue, sat * 0.95f, 0.895f),
-    surfaceHighest = hsl(hue, sat * 0.9f, 0.85f),
+    background = hsl(hue, sat, 0.965f),
+    surface = hsl(hue, sat, 0.92f),
+    surfaceHigh = hsl(hue, sat * 0.95f, 0.88f),
+    surfaceHighest = hsl(hue, sat * 0.9f, 0.835f),
     outline = hsl(hue, sat * 0.7f, 0.76f),
     text = hsl(hue, 0.20f, 0.10f),
     textMuted = hsl(hue, 0.08f, 0.35f),
@@ -134,12 +134,12 @@ class EmberThemeDef(val id: String, val name: String, val dark: EmberPalette, va
 
 val EmberThemes: List<EmberThemeDef> = listOf(
     EmberThemeDef("ember", "Ember", DarkPalette, LightPalette),
-    EmberThemeDef("paper", "Paper", tintedDark(32f, 0.22f, Color(0xFFE0B072)), tintedLight(40f, 0.48f, Color(0xFF8C5A26))),
-    EmberThemeDef("midnight", "Midnight", tintedDark(224f, 0.38f, Color(0xFF86A9FF)), tintedLight(220f, 0.40f, Color(0xFF2D59B5))),
-    EmberThemeDef("slate", "Slate", tintedDark(210f, 0.16f, Color(0xFF8DB4DA)), tintedLight(210f, 0.20f, Color(0xFF3D6890))),
+    EmberThemeDef("paper", "Paper", tintedDark(32f, 0.22f, Color(0xFFE0B072)), tintedLight(40f, 0.62f, Color(0xFF8C5A26))),
+    EmberThemeDef("midnight", "Midnight", tintedDark(224f, 0.38f, Color(0xFF86A9FF)), tintedLight(220f, 0.62f, Color(0xFF2D59B5))),
+    EmberThemeDef("slate", "Slate", tintedDark(210f, 0.16f, Color(0xFF8DB4DA)), tintedLight(210f, 0.30f, Color(0xFF3D6890))),
     EmberThemeDef("graphite", "Graphite", tintedDark(0f, 0f, Color(0xFFF0A04B)), tintedLight(0f, 0f, Color(0xFFB0560F))),
-    EmberThemeDef("forest", "Forest", tintedDark(150f, 0.26f, Color(0xFF7FCB9A), Color(0xFFA6D86E)), tintedLight(140f, 0.24f, Color(0xFF2E7D4F), Color(0xFF557A1F))),
-    EmberThemeDef("ocean", "Ocean", tintedDark(188f, 0.36f, Color(0xFF5CCBC9)), tintedLight(186f, 0.34f, Color(0xFF137C80))),
+    EmberThemeDef("forest", "Forest", tintedDark(150f, 0.26f, Color(0xFF7FCB9A), Color(0xFFA6D86E)), tintedLight(140f, 0.36f, Color(0xFF2E7D4F), Color(0xFF557A1F))),
+    EmberThemeDef("ocean", "Ocean", tintedDark(188f, 0.36f, Color(0xFF5CCBC9)), tintedLight(186f, 0.50f, Color(0xFF137C80))),
 )
 
 fun themeById(id: String): EmberThemeDef = EmberThemes.firstOrNull { it.id == id } ?: EmberThemes.first()
