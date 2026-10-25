@@ -72,6 +72,15 @@ data class Settings(
     val bedtimeTimerMin: Int = 30,
     /** Books to play next, in order (book ids). */
     val upNext: List<String> = emptyList(),
+    /** Appearance: "system" follows the phone's dark mode (and its night schedule), or "light" / "dark". */
+    val appearance: String = "system",
+    /** One of the themes in Theme.kt (each has a light and a dark version). */
+    val themeId: String = "ember",
+    /** Dark mode on pure black. */
+    val trueBlack: Boolean = false,
+    /** "book" (the playing book's cover color), "theme" (the theme's own) or "fixed" ([accentColor]). */
+    val accentMode: String = "book",
+    val accentColor: Int = 0xFFF2A65A.toInt(),
     /** Your name, for the profile circle ("" until you set it). */
     val profileName: String = "",
     /** When your profile photo was last changed (0 = no photo; the first letter of your name shows instead). */
@@ -116,6 +125,11 @@ class SettingsStore(private val context: Context) {
         val sleepFade = booleanPreferencesKey("sleep_fade")
         val flipToPause = booleanPreferencesKey("flip_to_pause")
         val profileName = stringPreferencesKey("profile_name")
+        val appearance = stringPreferencesKey("appearance")
+        val themeId = stringPreferencesKey("theme_id")
+        val trueBlack = booleanPreferencesKey("true_black")
+        val accentMode = stringPreferencesKey("accent_mode")
+        val accentColor = intPreferencesKey("accent_color")
         val profilePhotoAt = androidx.datastore.preferences.core.longPreferencesKey("profile_photo_at")
         val bedtimeOn = booleanPreferencesKey("bedtime_on")
         val bedtimeFrom = intPreferencesKey("bedtime_from")
@@ -164,6 +178,11 @@ class SettingsStore(private val context: Context) {
         sleepFade = this[Keys.sleepFade] ?: false,
         flipToPause = this[Keys.flipToPause] ?: false,
         profileName = this[Keys.profileName] ?: "",
+        appearance = this[Keys.appearance] ?: "system",
+        themeId = this[Keys.themeId] ?: "ember",
+        trueBlack = this[Keys.trueBlack] ?: false,
+        accentMode = this[Keys.accentMode] ?: "book",
+        accentColor = this[Keys.accentColor] ?: 0xFFF2A65A.toInt(),
         profilePhotoAt = this[Keys.profilePhotoAt] ?: 0L,
         bedtimeOn = this[Keys.bedtimeOn] ?: false,
         bedtimeFromMin = this[Keys.bedtimeFrom] ?: (22 * 60),
@@ -209,6 +228,13 @@ class SettingsStore(private val context: Context) {
     suspend fun setRateOnFinish(on: Boolean) = context.dataStore.edit { it[Keys.rateOnFinish] = on }
     suspend fun setSleepFade(on: Boolean) = context.dataStore.edit { it[Keys.sleepFade] = on }
     suspend fun setFlipToPause(on: Boolean) = context.dataStore.edit { it[Keys.flipToPause] = on }
+    suspend fun setAppearance(mode: String) = context.dataStore.edit { it[Keys.appearance] = mode }
+    suspend fun setTheme(id: String) = context.dataStore.edit { it[Keys.themeId] = id }
+    suspend fun setTrueBlack(on: Boolean) = context.dataStore.edit { it[Keys.trueBlack] = on }
+    suspend fun setAccent(mode: String, color: Int? = null) = context.dataStore.edit {
+        it[Keys.accentMode] = mode
+        if (color != null) it[Keys.accentColor] = color
+    }
     suspend fun setProfileName(name: String) = context.dataStore.edit { it[Keys.profileName] = name.trim() }
     suspend fun setProfilePhotoAt(at: Long) = context.dataStore.edit { it[Keys.profilePhotoAt] = at }
     suspend fun setBedtime(on: Boolean, fromMin: Int, toMin: Int, timerMin: Int) = context.dataStore.edit {
@@ -263,6 +289,11 @@ class SettingsStore(private val context: Context) {
         it[Keys.btnPrevious] = s.btnPrevious
         it[Keys.sleepFade] = s.sleepFade
         it[Keys.flipToPause] = s.flipToPause
+        it[Keys.appearance] = s.appearance
+        it[Keys.themeId] = s.themeId
+        it[Keys.trueBlack] = s.trueBlack
+        it[Keys.accentMode] = s.accentMode
+        it[Keys.accentColor] = s.accentColor
         it[Keys.bedtimeOn] = s.bedtimeOn
         it[Keys.bedtimeFrom] = s.bedtimeFromMin
         it[Keys.bedtimeTo] = s.bedtimeToMin

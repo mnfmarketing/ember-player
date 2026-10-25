@@ -414,6 +414,13 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     fun setBookEffects(bookId: String, custom: Boolean, trimSilence: Boolean, voiceBoost: Boolean) =
         updateBook(bookId) { it.copy(customEffects = custom, trimSilence = trimSilence, voiceBoost = voiceBoost) }
 
+    // ---- Appearance ----
+
+    fun setAppearance(mode: String) = viewModelScope.launch { c.settings.setAppearance(mode) }
+    fun setTheme(id: String) = viewModelScope.launch { c.settings.setTheme(id) }
+    fun setTrueBlack(on: Boolean) = viewModelScope.launch { c.settings.setTrueBlack(on) }
+    fun setAccent(mode: String, color: Int? = null) = viewModelScope.launch { c.settings.setAccent(mode, color) }
+
     // ---- Your profile (name and photo) ----
 
     fun setProfileName(name: String) {

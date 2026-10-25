@@ -77,6 +77,7 @@ object SelfCheck {
             .put("dbSnapshots", DbSnapshots.dir(context).list()?.sorted()?.joinToString() ?: "")
             .put("playing", app.ember.playback.PlaybackStatus.isPlaying.value)
             .put("flipToPause", c.settings.current().flipToPause)
+            .put("look", c.settings.current().let { "${it.appearance},${it.themeId},${it.trueBlack},${it.accentMode},${Integer.toHexString(it.accentColor)}" })
             .put("lastBookId", c.settings.current().lastBookId ?: "")
             .put("merges", dao.getMerges().size)
             .put("profileName", c.settings.current().profileName)

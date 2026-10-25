@@ -10,6 +10,10 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -78,6 +82,112 @@ val LightPalette = EmberPalette(
     glassBorder = Color.Black.copy(alpha = 0.08f),
     wash = Color.Black,
 )
+
+// ---------------------------------------------------------------------------------------------
+// Themes: each has a light and a dark version
+// ---------------------------------------------------------------------------------------------
+
+private fun hsl(h: Float, s: Float, l: Float): Color = Color(ColorUtils.HSLToColor(floatArrayOf(h, s.coerceIn(0f, 1f), l.coerceIn(0f, 1f))))
+
+/** A dark palette tinted with [hue] (at saturation [sat]): near-black backgrounds, soft light text. */
+private fun tintedDark(hue: Float, sat: Float, accent: Color, success: Color = Color(0xFF7FCB9A)) = EmberPalette(
+    isDark = true,
+    background = hsl(hue, sat, 0.065f),
+    surface = hsl(hue, sat, 0.095f),
+    surfaceHigh = hsl(hue, sat, 0.13f),
+    surfaceHighest = hsl(hue, sat * 0.9f, 0.165f),
+    outline = hsl(hue, sat * 0.7f, 0.23f),
+    text = hsl(hue, 0.18f, 0.93f),
+    textMuted = hsl(hue, 0.08f, 0.64f),
+    textFaint = hsl(hue, 0.06f, 0.43f),
+    defaultAccent = accent,
+    success = success,
+    glassText = Color(0xFFF7F4F0),
+    glassMuted = hsl(hue, 0.20f, 0.84f).copy(alpha = 0.85f),
+    glassFill = Color.White.copy(alpha = 0.10f),
+    glassBorder = Color.White.copy(alpha = 0.18f),
+    wash = Color.White,
+)
+
+/** A light palette tinted with [hue]: pale paper backgrounds, dark text. */
+private fun tintedLight(hue: Float, sat: Float, accent: Color, success: Color = Color(0xFF2E7D4F)) = EmberPalette(
+    isDark = false,
+    background = hsl(hue, sat, 0.975f),
+    surface = hsl(hue, sat, 0.935f),
+    surfaceHigh = hsl(hue, sat * 0.95f, 0.895f),
+    surfaceHighest = hsl(hue, sat * 0.9f, 0.85f),
+    outline = hsl(hue, sat * 0.7f, 0.76f),
+    text = hsl(hue, 0.20f, 0.10f),
+    textMuted = hsl(hue, 0.08f, 0.35f),
+    textFaint = hsl(hue, 0.06f, 0.54f),
+    defaultAccent = accent,
+    success = success,
+    glassText = hsl(hue, 0.20f, 0.10f),
+    glassMuted = hsl(hue, 0.08f, 0.29f),
+    glassFill = Color.White.copy(alpha = 0.62f),
+    glassBorder = Color.Black.copy(alpha = 0.08f),
+    wash = Color.Black,
+)
+
+/** A theme: its name, and the colors it uses in dark mode and in light mode. */
+class EmberThemeDef(val id: String, val name: String, val dark: EmberPalette, val light: EmberPalette)
+
+val EmberThemes: List<EmberThemeDef> = listOf(
+    EmberThemeDef("ember", "Ember", DarkPalette, LightPalette),
+    EmberThemeDef("paper", "Paper", tintedDark(32f, 0.22f, Color(0xFFE0B072)), tintedLight(40f, 0.48f, Color(0xFF8C5A26))),
+    EmberThemeDef("midnight", "Midnight", tintedDark(224f, 0.38f, Color(0xFF86A9FF)), tintedLight(220f, 0.40f, Color(0xFF2D59B5))),
+    EmberThemeDef("slate", "Slate", tintedDark(210f, 0.16f, Color(0xFF8DB4DA)), tintedLight(210f, 0.20f, Color(0xFF3D6890))),
+    EmberThemeDef("graphite", "Graphite", tintedDark(0f, 0f, Color(0xFFF0A04B)), tintedLight(0f, 0f, Color(0xFFB0560F))),
+    EmberThemeDef("forest", "Forest", tintedDark(150f, 0.26f, Color(0xFF7FCB9A), Color(0xFFA6D86E)), tintedLight(140f, 0.24f, Color(0xFF2E7D4F), Color(0xFF557A1F))),
+    EmberThemeDef("ocean", "Ocean", tintedDark(188f, 0.36f, Color(0xFF5CCBC9)), tintedLight(186f, 0.34f, Color(0xFF137C80))),
+)
+
+fun themeById(id: String): EmberThemeDef = EmberThemes.firstOrNull { it.id == id } ?: EmberThemes.first()
+
+/** Dark mode on pure black (saves battery on OLED screens); cards stay just visible. */
+fun trueBlack(p: EmberPalette): EmberPalette {
+    val tint = FloatArray(3)
+    ColorUtils.colorToHSL(p.surface.toArgb(), tint)
+    return EmberPalette(
+        isDark = true,
+        background = Color.Black,
+        surface = hsl(tint[0], tint[1], 0.06f),
+        surfaceHigh = hsl(tint[0], tint[1], 0.095f),
+        surfaceHighest = hsl(tint[0], tint[1], 0.13f),
+        outline = hsl(tint[0], tint[1] * 0.7f, 0.20f),
+        text = p.text,
+        textMuted = p.textMuted,
+        textFaint = p.textFaint,
+        defaultAccent = p.defaultAccent,
+        success = p.success,
+        glassText = p.glassText,
+        glassMuted = p.glassMuted,
+        glassFill = p.glassFill,
+        glassBorder = p.glassBorder,
+        wash = p.wash,
+    )
+}
+
+/** Fixed accent choices (bright; light mode darkens them so text on them stays readable). */
+val AccentSwatches: List<Pair<String, Color>> = listOf(
+    "Orange" to Color(0xFFF2A65A),
+    "Red" to Color(0xFFE5574C),
+    "Amber" to Color(0xFFF5B841),
+    "Gold" to Color(0xFFD4B04A),
+    "Green" to Color(0xFF6CC48A),
+    "Teal" to Color(0xFF3FBDB3),
+    "Blue" to Color(0xFF5B9BF0),
+    "Steel" to Color(0xFF93A6BB),
+)
+
+/** A custom accent from the hue slider (0-360). */
+fun accentFromHue(hue: Float): Color = hsl(hue, 0.72f, 0.62f)
+
+fun hueOf(color: Color): Float {
+    val out = FloatArray(3)
+    ColorUtils.colorToHSL(color.toArgb(), out)
+    return out[0]
+}
 
 /**
  * Current colors. Backed by Compose state, so everything redraws when the phone
@@ -157,11 +267,46 @@ private val EmberTypography = Typography(
     labelSmall = TextStyle(fontWeight = FontWeight.Medium, fontSize = 12.sp, lineHeight = 16.sp, letterSpacing = 0.3.sp),
 )
 
+/**
+ * Ember's look. [mode] is "system" (follow the phone's dark mode, including a night schedule),
+ * "light" or "dark". [accentMode] is "book" (the playing book's cover color), "theme" (the
+ * theme's own color) or "fixed" ([accentColor]).
+ */
 @Composable
-fun EmberTheme(accent: Color, content: @Composable () -> Unit) {
-    val dark = isSystemInDarkTheme()
-    val palette = if (dark) DarkPalette else LightPalette
+fun EmberTheme(
+    themeId: String,
+    mode: String,
+    trueBlackOn: Boolean,
+    accentMode: String,
+    accentColor: Int,
+    bookColor: Int?,
+    content: @Composable () -> Unit,
+) {
+    val systemDark = isSystemInDarkTheme()
+    val dark = when (mode) {
+        "light" -> false
+        "dark" -> true
+        else -> systemDark
+    }
+    val def = themeById(themeId)
+    val palette = remember(def, dark, trueBlackOn) { if (dark) (if (trueBlackOn) trueBlack(def.dark) else def.dark) else def.light }
     if (EmberColors.palette !== palette) EmberColors.palette = palette
+    val accent = when (accentMode) {
+        "fixed" -> readableAccent(Color(accentColor))
+        "theme" -> palette.defaultAccent
+        else -> bookColor?.let { readableAccent(Color(it)) } ?: palette.defaultAccent
+    }
+    // Status and navigation bar icons follow Ember's light or dark, not the phone's.
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as? android.app.Activity)?.window ?: return@SideEffect
+            WindowCompat.getInsetsController(window, view).apply {
+                isAppearanceLightStatusBars = !dark
+                isAppearanceLightNavigationBars = !dark
+            }
+        }
+    }
     val animated by animateColorAsState(accent, animationSpec = tween(700), label = "accent")
     val scheme = if (dark) {
         darkColorScheme(

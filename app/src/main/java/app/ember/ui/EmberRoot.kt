@@ -153,7 +153,15 @@ private val formRoutes = setOf("player", "edit/{id}", "chapters/{id}", "add_exte
 @Composable
 fun EmberRoot(vm: MainViewModel, routeRequest: String? = null, onRouteHandled: () -> Unit = {}) {
     val np by vm.nowPlaying.collectAsState()
-    EmberTheme(bookAccent(np?.book)) {
+    val look by vm.settings.collectAsState()
+    EmberTheme(
+        themeId = look.themeId,
+        mode = look.appearance,
+        trueBlackOn = look.trueBlack,
+        accentMode = look.accentMode,
+        accentColor = look.accentColor,
+        bookColor = np?.book?.coverColor,
+    ) {
         val config = LocalConfiguration.current
         val expanded = config.screenWidthDp >= 600
         val nav = rememberNavController()

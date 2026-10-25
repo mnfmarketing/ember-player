@@ -123,17 +123,18 @@ fun SettingsScreen(
         }
         val f = folders.size
         val index = when (section) {
-            "Library folders" -> 1
-            "Playback" -> 4 + f
-            "Sleep timer" -> 7 + f
-            "Car mode" -> 9 + f
-            "Headphone and car buttons" -> 11 + f
-            "Book info" -> 13 + f
-            "Podcasts" -> 15 + f
-            "Storage" -> 17 + f
-            "Backup and restore" -> 19 + f
-            "Goals" -> 21 + f
-            "Good to know" -> 24 + f
+            "Appearance" -> 1
+            "Library folders" -> 3
+            "Playback" -> 6 + f
+            "Sleep timer" -> 9 + f
+            "Car mode" -> 11 + f
+            "Headphone and car buttons" -> 13 + f
+            "Book info" -> 15 + f
+            "Podcasts" -> 17 + f
+            "Storage" -> 19 + f
+            "Backup and restore" -> 21 + f
+            "Goals" -> 23 + f
+            "Good to know" -> 26 + f
             else -> return@LaunchedEffect
         }
         listState.scrollToItem(index)
@@ -154,6 +155,9 @@ fun SettingsScreen(
                 Text("Settings", style = MaterialTheme.typography.headlineLarge, color = EmberColors.Text)
             }
         }
+
+        item { Group("Appearance") }
+        item { AppearanceSection(vm) }
 
         item { Group("Library folders") }
         items(folders, key = { it.id }) { f ->

@@ -255,6 +255,11 @@ class BackupManager(private val context: Context, private val c: AppContainer) {
                 .put("bedtimeToMin", s.bedtimeToMin)
                 .put("bedtimeTimerMin", s.bedtimeTimerMin)
                 .put("flipToPause", s.flipToPause)
+                .put("appearance", s.appearance)
+                .put("themeId", s.themeId)
+                .put("trueBlack", s.trueBlack)
+                .put("accentMode", s.accentMode)
+                .put("accentColor", s.accentColor)
                 .put("profileName", s.profileName)
                 .put("upNext", JSONArray(s.upNext)),
         )
@@ -686,6 +691,11 @@ class BackupManager(private val context: Context, private val c: AppContainer) {
                 bedtimeToMin = s.optInt("bedtimeToMin", cur.bedtimeToMin),
                 bedtimeTimerMin = s.optInt("bedtimeTimerMin", cur.bedtimeTimerMin),
                 flipToPause = s.optBoolean("flipToPause", cur.flipToPause),
+                appearance = s.optString("appearance", cur.appearance),
+                themeId = s.optString("themeId", cur.themeId),
+                trueBlack = s.optBoolean("trueBlack", cur.trueBlack),
+                accentMode = s.optString("accentMode", cur.accentMode),
+                accentColor = s.optInt("accentColor", cur.accentColor),
                 upNext = (cur.upNext + (s.optJSONArray("upNext")?.let { a -> (0 until a.length()).map { a.optString(it) } } ?: emptyList()))
                     .filter { it.isNotBlank() }.distinct(),
             ),

@@ -40,6 +40,7 @@ import androidx.compose.material.icons.rounded.DownloadForOffline
 import androidx.compose.material.icons.rounded.Folder
 import androidx.compose.material.icons.rounded.GraphicEq
 import androidx.compose.material.icons.rounded.LocalFireDepartment
+import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.PhotoCamera
 import androidx.compose.material.icons.rounded.PlayCircle
@@ -149,6 +150,7 @@ fun ProfileAvatar(vm: MainViewModel, size: Dp, selected: Boolean = false, modifi
 private data class Topic(val label: String, val sub: String, val icon: ImageVector, val section: String)
 
 private val topics = listOf(
+    Topic("Appearance", "Theme, light and dark, accent color", Icons.Rounded.Palette, "Appearance"),
     Topic("Playback", "Skip times, smart rewind, flip to pause", Icons.Rounded.PlayCircle, "Playback"),
     Topic("Sleep timer", "Bedtime, fade out, shake to restart", Icons.Rounded.Bedtime, "Sleep timer"),
     Topic("Sound and equalizer", "Presets and narration boost", Icons.Rounded.GraphicEq, "sound"),
