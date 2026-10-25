@@ -1,0 +1,708 @@
+++ dirname ci/quick.sh
++ source ci/lib.sh
+++ PKG=app.ember.audiobooks
+++ ACT=app.ember.audiobooks/app.ember.ui.MainActivity
+++ REPORTS=/sdcard/Download/EmberTest
+++ OUT=smoke-out
+++ mkdir -p smoke-out
++++ command -v adb
+++ ADB_BIN=/usr/local/lib/android/sdk/platform-tools/adb
++ adb shell settings put global hide_error_dialogs 1
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell settings put global hide_error_dialogs 1
++ adb shell settings put secure anr_show_background 0
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell settings put secure anr_show_background 0
++ adb install -r Ember-13.apk
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb install -r Ember-13.apk
+Performing Streamed Install
+Success
++ adb shell pm grant app.ember.audiobooks android.permission.POST_NOTIFICATIONS
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell pm grant app.ember.audiobooks android.permission.POST_NOTIFICATIONS
+
+Exception occurred while executing 'grant':
+java.lang.IllegalArgumentException: Unknown permission: android.permission.POST_NOTIFICATIONS
+	at com.android.server.pm.permission.PermissionManagerService.grantRuntimePermissionInternal(PermissionManagerService.java:1451)
+	at com.android.server.pm.permission.PermissionManagerService.grantRuntimePermission(PermissionManagerService.java:1410)
+	at com.android.server.pm.PackageManagerShellCommand.runGrantRevokePermission(PackageManagerShellCommand.java:2287)
+	at com.android.server.pm.PackageManagerShellCommand.onCommand(PackageManagerShellCommand.java:249)
+	at android.os.BasicShellCommandHandler.exec(BasicShellCommandHandler.java:98)
+	at android.os.ShellCommand.exec(ShellCommand.java:44)
+	at com.android.server.pm.PackageManagerService.onShellCommand(PackageManagerService.java:21646)
+	at android.os.Binder.shellCommand(Binder.java:929)
+	at android.os.Binder.onTransact(Binder.java:813)
+	at android.content.pm.IPackageManager$Stub.onTransact(IPackageManager.java:4603)
+	at com.android.server.pm.PackageManagerService.onTransact(PackageManagerService.java:4305)
+	at android.os.Binder.execTransactInternal(Binder.java:1159)
+	at android.os.Binder.execTransact(Binder.java:1123)
++ true
++ seed_files
++ adb shell am start -W -n app.ember.audiobooks/app.ember.ui.MainActivity
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -W -n app.ember.audiobooks/app.ember.ui.MainActivity
+Starting: Intent { cmp=app.ember.audiobooks/app.ember.ui.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: app.ember.audiobooks/app.ember.ui.MainActivity
+TotalTime: 1290
+WaitTime: 1299
+Complete
++ sleep 4
++ adb shell am force-stop app.ember.audiobooks
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am force-stop app.ember.audiobooks
++ adb shell am start -W -n app.ember.audiobooks/app.ember.ui.MainActivity --ez ember_demo true
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -W -n app.ember.audiobooks/app.ember.ui.MainActivity --ez ember_demo true
+Starting: Intent { cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras) }
+Status: ok
+LaunchState: COLD
+Activity: app.ember.audiobooks/app.ember.ui.MainActivity
+TotalTime: 1622
+WaitTime: 1625
+Complete
++ sleep 30
++ adb logcat -c
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb logcat -c
++ open_route home
++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
++ shot q01-home 5
++ sleep 5
++ adb exec-out screencap -p
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
++ open_route library
++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
++ shot q02-library 4
++ sleep 4
++ adb exec-out screencap -p
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_play demo-0
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_play demo-0
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
++ sleep 5
++ open_route player
++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
++ shot q03-player 4
++ sleep 4
++ adb exec-out screencap -p
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ dirname ci/quick.sh
++ source ci/focus.sh
+++ adb shell cmd uimode night no
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell cmd uimode night no
+Night mode: no
+++ sleep 2
+++ app
+++ open_route settings/Appearance
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 3
+++ shot f01-appearance 1
+++ sleep 1
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ open_route you
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route you
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route you
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f02-you-topics 3
+++ sleep 3
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ look f-start.json
+++ selfcheck f-start.json
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-start.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-start.json
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 5
+++ adb pull /sdcard/Download/EmberTest/f-start.json smoke-out/f-start.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/f-start.json smoke-out/f-start.json
+/sdcard/Download/EmberTest/f-start.json: 1 file pulled, 0 skipped. 0.0 MB/s (1178 bytes in 0.042s)
++++ grep -o '"look": "[^"]*"' smoke-out/f-start.json
+++ say 'f-start.json: "look": "system,ember,false,book,fff2a65a"'
+++ tee -a smoke-out/focus.txt
+++ echo '== f-start.json: "look": "system,ember,false,book,fff2a65a"'
+== f-start.json: "look": "system,ember,false,book,fff2a65a"
+++ app
+++ open_route settings/Appearance
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 3
+++ tap_text Midnight
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 12.0 MB/s (20765 bytes in 0.002s)
+++ python3 - Midnight
+tapped Midnight at 710,931
+++ sleep 2
+++ shot f03-midnight-light-settings 1
+++ sleep 1
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ tour f04-midnight-light
+++ open_route home
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f04-midnight-light-home 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ open_route library
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f04-midnight-light-library 3
+++ sleep 3
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ open_route player
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f04-midnight-light-player 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ adb shell input keyevent KEYCODE_BACK
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_BACK
+++ sleep 2
+++ open_route you
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route you
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route you
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f04-midnight-light-you 3
+++ sleep 3
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ app
+++ open_route settings/Appearance
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 3
+++ tap_text Dark
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 14.2 MB/s (20774 bytes in 0.001s)
+++ python3 - Dark
+tapped Dark at 637,254
+++ sleep 2
+++ shot f05-dark-settings 1
+++ sleep 1
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ tour f06-midnight-dark
+++ open_route home
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f06-midnight-dark-home 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ open_route library
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f06-midnight-dark-library 3
+++ sleep 3
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ open_route player
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f06-midnight-dark-player 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ adb shell input keyevent KEYCODE_BACK
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_BACK
+++ sleep 2
+++ open_route you
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route you
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route you
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f06-midnight-dark-you 3
+++ sleep 3
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ app
+++ open_route settings/Appearance
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 3
+++ tap_text 'True black'
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 14.5 MB/s (20716 bytes in 0.001s)
+++ python3 - 'True black'
+tapped True black at 154,349
+++ sleep 2
+++ tour f07-midnight-black
+++ open_route home
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f07-midnight-black-home 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ open_route library
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f07-midnight-black-library 3
+++ sleep 3
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ open_route player
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f07-midnight-black-player 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ adb shell input keyevent KEYCODE_BACK
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_BACK
+++ sleep 2
+++ open_route you
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route you
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route you
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f07-midnight-black-you 3
+++ sleep 3
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ app
+++ open_route settings/Appearance
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 3
+++ tap_text 'True black'
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 10.3 MB/s (20715 bytes in 0.002s)
+++ python3 - 'True black'
+tapped True black at 154,349
+++ sleep 1
+++ tap_text Forest
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 7.4 MB/s (20716 bytes in 0.003s)
+++ python3 - Forest
+tapped Forest at 710,1085
+++ sleep 2
+++ tour f08-forest-dark
+++ open_route home
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f08-forest-dark-home 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ open_route library
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f08-forest-dark-library 3
+++ sleep 3
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ open_route player
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f08-forest-dark-player 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ adb shell input keyevent KEYCODE_BACK
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_BACK
+++ sleep 2
+++ open_route you
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route you
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route you
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f08-forest-dark-you 3
+++ sleep 3
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ app
+++ open_route settings/Appearance
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 3
+++ adb shell input swipe 540 1700 540 1000 300
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input swipe 540 1700 540 1000 300
+++ sleep 1
+++ tap_text 'Blue accent'
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.4 MB/s (19560 bytes in 0.050s)
+++ python3 - 'Blue accent'
+tapped Blue accent at 892,1095
+++ sleep 2
+++ shot f09-blue-accent 1
+++ sleep 1
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ open_route home
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f10-forest-blue-home 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ app
+++ open_route settings/Appearance
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 3
+++ adb shell input swipe 540 1700 540 1000 300
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input swipe 540 1700 540 1000 300
+++ sleep 1
+++ tap_text 'Theme'\''s color'
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 11.7 MB/s (19800 bytes in 0.002s)
+++ python3 - 'Theme'\''s color'
+tapped Theme's color at 579,865
+++ sleep 2
+++ tap_text 'Custom accent'
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 13.6 MB/s (19151 bytes in 0.001s)
+++ python3 - 'Custom accent'
+tapped Custom accent at 237,1123
+++ sleep 2
+++ shot f11-custom-slider 1
+++ sleep 1
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ look f-accent.json
+++ selfcheck f-accent.json
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-accent.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-accent.json
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 5
+++ adb pull /sdcard/Download/EmberTest/f-accent.json smoke-out/f-accent.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/f-accent.json smoke-out/f-accent.json
+/sdcard/Download/EmberTest/f-accent.json: 1 file pulled, 0 skipped. 0.0 MB/s (1178 bytes in 0.042s)
++++ grep -o '"look": "[^"]*"' smoke-out/f-accent.json
+++ say 'f-accent.json: "look": "dark,forest,false,fixed,ff5894e4"'
+++ tee -a smoke-out/focus.txt
+++ echo '== f-accent.json: "look": "dark,forest,false,fixed,ff5894e4"'
+== f-accent.json: "look": "dark,forest,false,fixed,ff5894e4"
+++ app
+++ open_route settings/Appearance
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 3
+++ tap_text Light
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 13.6 MB/s (20636 bytes in 0.001s)
+++ python3 - Light
+tapped Light at 458,254
+++ sleep 1
+++ tap_text Paper
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 13.0 MB/s (20253 bytes in 0.001s)
+++ python3 - Paper
+tapped Paper at 442,629
+++ sleep 1
+++ adb shell input swipe 540 1700 540 1000 300
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input swipe 540 1700 540 1000 300
+++ sleep 1
+++ tap_text 'Match the book'
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 19.7 MB/s (21798 bytes in 0.001s)
+++ python3 - 'Match the book'
+tapped Match the book at 226,139
+++ sleep 2
+++ tour f12-paper-light
+++ open_route home
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f12-paper-light-home 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ open_route library
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f12-paper-light-library 3
+++ sleep 3
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ open_route player
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f12-paper-light-player 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ adb shell input keyevent KEYCODE_BACK
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_BACK
+++ sleep 2
+++ open_route you
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route you
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route you
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f12-paper-light-you 3
+++ sleep 3
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ app
+++ open_route settings/Appearance
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 3
+++ tap_text Ocean
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 13.9 MB/s (20311 bytes in 0.001s)
+++ python3 - Ocean
+tapped Ocean at 174,1161
+++ sleep 2
+++ tour f13-ocean-light
+++ open_route home
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f13-ocean-light-home 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ open_route library
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f13-ocean-light-library 3
+++ sleep 3
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ open_route player
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f13-ocean-light-player 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ adb shell input keyevent KEYCODE_BACK
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_BACK
+++ sleep 2
+++ open_route you
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route you
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route you
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f13-ocean-light-you 3
+++ sleep 3
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ app
+++ open_route settings/Appearance
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 3
+++ tap_text Slate
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 12.0 MB/s (20311 bytes in 0.002s)
+++ python3 - Slate
+tapped Slate at 174,895
+++ sleep 2
+++ open_route home
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f14-slate-light-home 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ app
+++ open_route settings/Appearance
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 3
+++ tap_text Graphite
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 13.7 MB/s (20310 bytes in 0.001s)
+++ python3 - Graphite
+tapped Graphite at 442,895
+++ sleep 2
+++ open_route home
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f15-graphite-light-home 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ app
+++ open_route settings/Appearance
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 3
+++ tap_text Paper
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 10.0 MB/s (20310 bytes in 0.002s)
+++ python3 - Paper
+tapped Paper at 442,629
+++ sleep 1
+++ tap_text 'Match phone'
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 12.4 MB/s (20310 bytes in 0.002s)
+++ python3 - 'Match phone'
+tapped Match phone at 204,254
+++ sleep 2
+++ open_route home
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f16-paper-phone-light 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ adb shell cmd uimode night yes
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell cmd uimode night yes
+Night mode: yes
+++ sleep 4
+++ open_route home
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f17-paper-phone-dark 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ open_route player
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f18-paper-phone-dark-player 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ adb shell input keyevent KEYCODE_BACK
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_BACK
+++ sleep 1
+++ look f-match-phone.json
+++ selfcheck f-match-phone.json
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-match-phone.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-match-phone.json
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 5
+++ adb pull /sdcard/Download/EmberTest/f-match-phone.json smoke-out/f-match-phone.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/f-match-phone.json smoke-out/f-match-phone.json
+/sdcard/Download/EmberTest/f-match-phone.json: 1 file pulled, 0 skipped. 1.1 MB/s (1178 bytes in 0.001s)
++++ grep -o '"look": "[^"]*"' smoke-out/f-match-phone.json
+++ say 'f-match-phone.json: "look": "system,paper,false,book,ff5894e4"'
+++ tee -a smoke-out/focus.txt
+++ echo '== f-match-phone.json: "look": "system,paper,false,book,ff5894e4"'
+== f-match-phone.json: "look": "system,paper,false,book,ff5894e4"
+++ adb shell cmd uimode night no
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell cmd uimode night no
+Night mode: no
+++ sleep 3
+++ open_route home
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f19-paper-phone-light-again 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ app
+++ open_route settings/Appearance
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Appearance
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 3
+++ tap_text Ember
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 9.1 MB/s (20767 bytes in 0.002s)
+++ python3 - Ember
+tapped Ember at 174,931
+++ sleep 1
++ selfcheck quick-end.json
++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck quick-end.json
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck quick-end.json
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
++ sleep 5
++ adb pull /sdcard/Download/EmberTest/quick-end.json smoke-out/quick-end.json
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/quick-end.json smoke-out/quick-end.json
+/sdcard/Download/EmberTest/quick-end.json: 1 file pulled, 0 skipped. 0.0 MB/s (1178 bytes in 0.041s)
++ finish_logs
++ adb logcat -d
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb logcat -d
++ grep -E 'FATAL EXCEPTION|AndroidRuntime' -A 25 smoke-out/logcat.txt
++ grep -E 'ANR in app.ember' -A 4 smoke-out/logcat.txt
++ true
++ grep -iE 'ember|ExoPlayer|MediaSession|Room|SQLite' smoke-out/logcat.txt
++ grep -E ' E | W '
++ head -300
++ adb shell pidof app.ember.audiobooks
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell pidof app.ember.audiobooks
++ exit 0
