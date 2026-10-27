@@ -1,1 +1,0 @@
-Ember/UI/SettingsView.swift:120:50: error: 'async' call in an autoclosure that does not support concurrency
