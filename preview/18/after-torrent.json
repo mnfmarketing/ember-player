@@ -1,0 +1,119 @@
+{
+  "libraryDbVersion": 6,
+  "podcastDbVersion": 3,
+  "books": 10,
+  "externalBooks": 1,
+  "inProgress": 5,
+  "finished": 1,
+  "rated": 2,
+  "bookmarks": 2,
+  "clips": 1,
+  "shelves": 1,
+  "shelfLinks": 2,
+  "listeningDays": 11,
+  "podcasts": 1,
+  "demo0PositionMs": 34376,
+  "pendingRestore": false,
+  "automaticBackups": 1,
+  "lastBackupAt": 1793131645247,
+  "torrents": "The Torrent Test Book: done 100% In your library",
+  "torrentDebug": "state=SEEDING flags=8 peers=0 conns=0 seeds=[http:\/\/10.0.2.2:8000\/] err=Success wanted=86405590 done=86405590",
+  "wifiHold": false,
+  "bookTitles": "Pride and Prejudice, Treasure Island, Frankenstein, The Time Machine, Project Hail Mary, The Torrent Test Book, Dracula, Little Women, Good Wives, The Hound of the Baskervilles",
+  "demo0Pdf": "file:\/\/\/data\/user\/0\/app.ember.audiobooks\/files\/docs\/pride-and-prejudice-companion.pdf",
+  "booksWithPdf": 1,
+  "listenLogEntries": 14,
+  "upNext": "demo-2",
+  "demo0Effects": "false,false,false",
+  "sleepLog": 2,
+  "dbSnapshots": "ember-from-v23-1793131619652, media-from-v23-1793131619679",
+  "playing": true,
+  "flipToPause": false,
+  "positions": "demo-0=34376, demo-4=36230, demo-1=108000, demo-3=426000, demo-ext=35, c37aa5d3-aab8-3b27-8f97-f47286471a38=0, demo-2=0, demo-5=600000, demo-6=0, demo-7=0",
+  "syncOn": false,
+  "syncLastAt": 0,
+  "syncError": "",
+  "syncDevices": "",
+  "syncFiles": "",
+  "syncState": "",
+  "syncPrompt": "",
+  "demo0Bookmarks": "180000:The ballroom scene. Come back to this., 440060:",
+  "demo0Log": "2@34376\/here, 4@39918\/here, 1@12398\/here, 2@14892\/here, 1@443040\/here, 2@443037\/here, 3@430951\/here, 4@345787\/here, 1@332116\/here, 2@332105\/here, 3@339048\/here, 3@272752\/here",
+  "look": "system,ember,false,book,fff2a65a",
+  "lastBookId": "episode:ep-29af5566-ab4b-324f-8d2a-f282ea7db08a",
+  "merges": 0,
+  "profileName": "",
+  "profilePhoto": false,
+  "recentLog": [
+    {
+      "bookId": "episode:ep-29af5566-ab4b-324f-8d2a-f282ea7db08a",
+      "kind": 1,
+      "reason": 0,
+      "positionMs": 0,
+      "toMs": -1
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 2,
+      "reason": 1,
+      "positionMs": 34376,
+      "toMs": 12398
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 4,
+      "reason": 0,
+      "positionMs": 39918,
+      "toMs": 1000
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 1,
+      "reason": 0,
+      "positionMs": 12398,
+      "toMs": -1
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 2,
+      "reason": 1,
+      "positionMs": 14892,
+      "toMs": 5834
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 1,
+      "reason": 0,
+      "positionMs": 443040,
+      "toMs": -1
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 2,
+      "reason": 0,
+      "positionMs": 443037,
+      "toMs": -1
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 3,
+      "reason": 0,
+      "positionMs": 430951,
+      "toMs": 403912
+    }
+  ],
+  "library": [
+    {
+      "id": "c37aa5d3-aab8-3b27-8f97-f47286471a38",
+      "title": "The Torrent Test Book",
+      "durationMs": 5400138,
+      "positionMs": 0,
+      "status": 0,
+      "skips": "0,0",
+      "tracks": "Chapter 1 (1800s) | Chapter 2 (1800s) | Chapter 3 (1800s)",
+      "chapters": "Chapter 1@0 | Chapter 2@1800 | Chapter 3@3600",
+      "bookmarks": "",
+      "log": 0
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+== turn sync on (test folder in place of Drive)
+   syncOn: True
+   syncError: 
+   syncDevices: 
+   syncFiles: log-fdc54b78cf605a394edd.json, state.json
+   syncPrompt: 
+   demo0PositionMs: 91306
+   positions: demo-0=91306, demo-4=36230, demo-1=108000, demo-3=426000, demo-ext=35, c37aa5d3-aab8-3b27-8f97-f47286471a38=0, demo-2=0, demo-5=600000, demo-6=0, demo-7=0
+   demo0Bookmarks: 180000:The ballroom scene. Come back to this., 440060:
+   demo0Log: 2@91306/here, 2@34376/here, 4@39918/here, 1@12398/here, 2@14892/here, 1@443040/here, 2@443037/here, 3@430951/here, 4@345787/here, 1@332116/here, 2@332105/here, 3@339048/here
+   libraryDbVersion: 6
+   devices: {'a-58fc66adae': 'Fold'}
+   b/dracula|bramstoker/pos  by a-58fc66adae  {"d":600,"lp":0,"p":0}
+   b/frankenstein|maryshelley/pos  by a-58fc66adae  {"d":600,"lp":1793128070332,"p":108000}
+   b/goodwives|louisamayalcott/pos  by a-58fc66adae  {"d":600,"lp":0,"p":0}
+   b/littlewomen|louisamayalcott/pos  by a-58fc66adae  {"d":600,"lp":0,"p":600000}
+   b/prideandprejudice|janeausten/pos  by a-58fc66adae  {"d":600,"lp":1793132706997,"p":91306}
+   b/thehoundofthebaskervilles|arthurconandoyle/pos  by a-58fc66adae  {"d":600,"lp":0,"p":0}
+   b/thetimemachine|hgwells/pos  by a-58fc66adae  {"d":600,"lp":1793120870332,"p":426000}
+   b/thetorrenttestbook|embertests/pos  by a-58fc66adae  {"d":5400,"lp":0,"p":0}
+   b/treasureisland|robertlouisstevenson/pos  by a-58fc66adae  {"d":600,"lp":1793132238177,"p":36230}
+   b/x|projecthailmary|andyweir/pos  by a-58fc66adae  {"d":0,"lp":1793045270332,"p":35}
+   day/20742/a-58fc66adae  by a-58fc66adae  {"v":2160000}
+   day/20743/a-58fc66adae  by a-58fc66adae  {"v":4800000}
+   day/20744/a-58fc66adae  by a-58fc66adae  {"v":2640000}
+   day/20745/a-58fc66adae  by a-58fc66adae  {"v":3720000}
+   day/20746/a-58fc66adae  by a-58fc66adae  {"v":6600000}
+   day/20747/a-58fc66adae  by a-58fc66adae  {"v":5640000}
+   day/20748/a-58fc66adae  by a-58fc66adae  {"v":3360000}
+   day/20749/a-58fc66adae  by a-58fc66adae  {"v":7320000}
+   day/20751/a-58fc66adae  by a-58fc66adae  {"v":4200000}
+   day/20752/a-58fc66adae  by a-58fc66adae  {"v":5040000}
+   day/20753/a-58fc66adae  by a-58fc66adae  {"v":2749746}
+   mark/1793131670578  by a-58fc66adae  {"b":"prideandprejudice|janeausten","c":"The Ball","n":"The ballroom scene. Come back to this.","p":180000}
+   mark/1793132039209  by a-58fc66adae  {"b":"prideandprejudice|janeausten","c":"Confessions","n":"","p":440060}
+== the iPhone is further along in the loaded book: Ember asks
+   syncOn: True
+   syncError: 
+   syncDevices: iPhone
+   syncFiles: log-fdc54b78cf605a394edd.json, state.json
+   syncPrompt: demo-0 at 600000 from iPhone
+   demo0PositionMs: 91306
+   positions: demo-0=91306, demo-4=36230, demo-1=108000, demo-3=426000, demo-ext=35, c37aa5d3-aab8-3b27-8f97-f47286471a38=0, demo-2=0, demo-5=600000, demo-6=0, demo-7=0
+   demo0Bookmarks: 180000:The ballroom scene. Come back to this., 440060:, 595000:Saved on the iPhone
+   demo0Log: 2@600000/test-iphone, 2@91306/here, 1@490000/test-iphone, 2@34376/here, 4@39918/here, 1@12398/here, 2@14892/here, 1@443040/here, 2@443037/here, 3@430951/here, 4@345787/here, 1@332116/here
+   libraryDbVersion: 6
+   syncOn: True
+   syncError: 
+   syncDevices: iPhone
+   syncFiles: log-fdc54b78cf605a394edd.json, state.json
+   syncPrompt: 
+   demo0PositionMs: 599500
+   positions: demo-0=599500, demo-4=36230, demo-1=108000, demo-3=426000, demo-ext=35, c37aa5d3-aab8-3b27-8f97-f47286471a38=0, demo-2=0, demo-5=600000, demo-6=0, demo-7=0
+   demo0Bookmarks: 180000:The ballroom scene. Come back to this., 440060:, 595000:Saved on the iPhone
+   demo0Log: 4@91313/here, 2@600000/test-iphone, 2@91306/here, 1@490000/test-iphone, 2@34376/here, 4@39918/here, 1@12398/here, 2@14892/here, 1@443040/here, 2@443037/here, 3@430951/here, 4@345787/here
+   libraryDbVersion: 6
+== the log shows both devices, and the iPhone's bookmark arrived
+== Stay here keeps this device's place and sends it out
+   syncOn: True
+   syncError: 
+   syncDevices: iPhone
+   syncFiles: log-fdc54b78cf605a394edd.json, state.json
+   syncPrompt: 
+   demo0PositionMs: 599500
+   positions: demo-0=599500, demo-4=36230, demo-1=108000, demo-3=426000, demo-ext=35, c37aa5d3-aab8-3b27-8f97-f47286471a38=0, demo-2=0, demo-5=600000, demo-6=0, demo-7=0
+   demo0Bookmarks: 180000:The ballroom scene. Come back to this., 440060:, 595000:Saved on the iPhone, 295000:Saved on the iPhone
+   demo0Log: 2@600000/test-iphone, 4@91313/here, 2@91306/here, 1@490000/test-iphone, 2@34376/here, 4@39918/here, 1@12398/here, 2@14892/here, 1@443040/here, 2@443037/here, 3@430951/here, 4@345787/here
+   libraryDbVersion: 6
+   devices: {'test-iphone': 'iPhone', 'a-58fc66adae': 'Fold'}
+   b/dracula|bramstoker/pos  by a-58fc66adae  {"d":600,"lp":0,"p":0}
+   b/frankenstein|maryshelley/pos  by a-58fc66adae  {"d":600,"lp":1793128070332,"p":108000}
+   b/goodwives|louisamayalcott/pos  by a-58fc66adae  {"d":600,"lp":0,"p":0}
+   b/littlewomen|louisamayalcott/pos  by a-58fc66adae  {"d":600,"lp":0,"p":600000}
+   b/prideandprejudice|janeausten/pos  by a-58fc66adae  {"d":600,"lp":1793132794427,"p":599500}
+   b/thehoundofthebaskervilles|arthurconandoyle/pos  by a-58fc66adae  {"d":600,"lp":0,"p":0}
+   b/thetimemachine|hgwells/pos  by a-58fc66adae  {"d":600,"lp":1793120870332,"p":426000}
+   b/thetorrenttestbook|embertests/pos  by a-58fc66adae  {"d":5400,"lp":0,"p":0}
+   b/treasureisland|robertlouisstevenson/pos  by a-58fc66adae  {"d":600,"lp":1793132238177,"p":36230}
+   b/x|projecthailmary|andyweir/pos  by a-58fc66adae  {"d":0,"lp":1793045270332,"p":35}
+   day/20742/a-58fc66adae  by a-58fc66adae  {"v":2160000}
+   day/20743/a-58fc66adae  by a-58fc66adae  {"v":4800000}
+   day/20744/a-58fc66adae  by a-58fc66adae  {"v":2640000}
+   day/20745/a-58fc66adae  by a-58fc66adae  {"v":3720000}
+   day/20746/a-58fc66adae  by a-58fc66adae  {"v":6600000}
+   day/20747/a-58fc66adae  by a-58fc66adae  {"v":5640000}
+   day/20748/a-58fc66adae  by a-58fc66adae  {"v":3360000}
+   day/20749/a-58fc66adae  by a-58fc66adae  {"v":7320000}
+   day/20751/a-58fc66adae  by a-58fc66adae  {"v":4200000}
+   day/20752/a-58fc66adae  by a-58fc66adae  {"v":5040000}
+   day/20753/a-58fc66adae  by a-58fc66adae  {"v":2749746}
+   mark/1793131670578  by a-58fc66adae  {"b":"prideandprejudice|janeausten","c":"The Ball","n":"The ballroom scene. Come back to this.","p":180000}
+   mark/1793132039209  by a-58fc66adae  {"b":"prideandprejudice|janeausten","c":"Confessions","n":"","p":440060}
+   mark/1793132734750  by test-iphone  {"b":"prideandprejudice|janeausten","c":"","n":"Saved on the iPhone","p":595000}
+   mark/1793132777406  by test-iphone  {"b":"prideandprejudice|janeausten","c":"","n":"Saved on the iPhone","p":295000}
+== a book that isn't loaded just moves, without asking
+   syncOn: True
+   syncError: 
+   syncDevices: iPhone
+   syncFiles: log-33353b0012211050afe4.json, log-fdc54b78cf605a394edd.json, state.json
+   syncPrompt: 
+   demo0PositionMs: 599500
+   positions: demo-1=420000, demo-0=599500, demo-4=36230, demo-3=426000, demo-ext=35, c37aa5d3-aab8-3b27-8f97-f47286471a38=0, demo-2=0, demo-5=600000, demo-6=0, demo-7=0
+   demo0Bookmarks: 180000:The ballroom scene. Come back to this., 440060:, 595000:Saved on the iPhone, 295000:Saved on the iPhone
+   demo0Log: 2@600000/test-iphone, 4@91313/here, 2@91306/here, 1@490000/test-iphone, 2@34376/here, 4@39918/here, 1@12398/here, 2@14892/here, 1@443040/here, 2@443037/here, 3@430951/here, 4@345787/here
+   libraryDbVersion: 6
+== a bookmark made here goes out
+   devices: {'test-iphone': 'iPhone', 'a-58fc66adae': 'Fold'}
+   b/dracula|bramstoker/pos  by a-58fc66adae  {"d":600,"lp":0,"p":0}
+   b/frankenstein|maryshelley/pos  by test-iphone  {"d":600,"lp":1793132814929,"p":420000}
+   b/goodwives|louisamayalcott/pos  by a-58fc66adae  {"d":600,"lp":0,"p":0}
+   b/littlewomen|louisamayalcott/pos  by a-58fc66adae  {"d":600,"lp":0,"p":600000}
+   b/prideandprejudice|janeausten/pos  by a-58fc66adae  {"d":600,"lp":1793132794427,"p":599500}
+   b/thehoundofthebaskervilles|arthurconandoyle/pos  by a-58fc66adae  {"d":600,"lp":0,"p":0}
+   b/thetimemachine|hgwells/pos  by a-58fc66adae  {"d":600,"lp":1793120870332,"p":426000}
+   b/thetorrenttestbook|embertests/pos  by a-58fc66adae  {"d":5400,"lp":0,"p":0}
+   b/treasureisland|robertlouisstevenson/pos  by a-58fc66adae  {"d":600,"lp":1793132238177,"p":36230}
+   b/x|projecthailmary|andyweir/pos  by a-58fc66adae  {"d":0,"lp":1793045270332,"p":35}
+   day/20742/a-58fc66adae  by a-58fc66adae  {"v":2160000}
+   day/20743/a-58fc66adae  by a-58fc66adae  {"v":4800000}
+   day/20744/a-58fc66adae  by a-58fc66adae  {"v":2640000}
+   day/20745/a-58fc66adae  by a-58fc66adae  {"v":3720000}
+   day/20746/a-58fc66adae  by a-58fc66adae  {"v":6600000}
+   day/20747/a-58fc66adae  by a-58fc66adae  {"v":5640000}
+   day/20748/a-58fc66adae  by a-58fc66adae  {"v":3360000}
+   day/20749/a-58fc66adae  by a-58fc66adae  {"v":7320000}
+   day/20751/a-58fc66adae  by a-58fc66adae  {"v":4200000}
+   day/20752/a-58fc66adae  by a-58fc66adae  {"v":5040000}
+   day/20753/a-58fc66adae  by a-58fc66adae  {"v":2749746}
+   mark/1793131670578  by a-58fc66adae  {"b":"prideandprejudice|janeausten","c":"The Ball","n":"The ballroom scene. Come back to this.","p":180000}
+   mark/1793132039209  by a-58fc66adae  {"b":"prideandprejudice|janeausten","c":"Confessions","n":"","p":440060}
+   mark/1793132734750  by test-iphone  {"b":"prideandprejudice|janeausten","c":"","n":"Saved on the iPhone","p":595000}
+   mark/1793132777406  by test-iphone  {"b":"prideandprejudice|janeausten","c":"","n":"Saved on the iPhone","p":295000}
+   mark/1793132814929  by test-iphone  {"b":"frankenstein|maryshelley","c":"","n":"Saved on the iPhone","p":415000}
+   mark/1793132835260  by a-58fc66adae  {"b":"prideandprejudice|janeausten","c":"","n":"test","p":123000}
+== settings after syncing with the iPhone
+PASS sync turned on and ran
+PASS state.json and a log file on 'Drive'
+PASS database is version 6
+PASS loaded book: asked 'Go there?'
+PASS Go there moved to 10:00
+PASS the iPhone's bookmark arrived
+PASS the iPhone's log entries arrived
+PASS Stay here kept 10:00
+PASS Stay here sent this device's place out
+PASS a book not loaded moved without asking
+PASS a bookmark made here went out

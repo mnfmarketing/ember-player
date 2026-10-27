@@ -1,0 +1,92 @@
+{
+  "libraryDbVersion": 6,
+  "podcastDbVersion": 3,
+  "books": 9,
+  "externalBooks": 1,
+  "inProgress": 4,
+  "finished": 2,
+  "rated": 2,
+  "bookmarks": 1,
+  "clips": 1,
+  "shelves": 1,
+  "shelfLinks": 2,
+  "listeningDays": 11,
+  "podcasts": 0,
+  "demo0PositionMs": 425285,
+  "pendingRestore": false,
+  "automaticBackups": 1,
+  "lastBackupAt": 1793131645247,
+  "torrents": "",
+  "torrentDebug": "",
+  "wifiHold": false,
+  "bookTitles": "Pride and Prejudice, Frankenstein, The Time Machine, Project Hail Mary, Dracula, Treasure Island, Little Women, Good Wives, The Hound of the Baskervilles",
+  "demo0Pdf": "file:\/\/\/data\/user\/0\/app.ember.audiobooks\/files\/docs\/pride-and-prejudice-companion.pdf",
+  "booksWithPdf": 1,
+  "listenLogEntries": 6,
+  "upNext": "",
+  "demo0Effects": "false,false,false",
+  "sleepLog": 0,
+  "dbSnapshots": "ember-from-v23-1793131619652, media-from-v23-1793131619679",
+  "playing": true,
+  "flipToPause": false,
+  "positions": "demo-0=425285, demo-1=108000, demo-3=426000, demo-ext=35, demo-2=0, demo-4=600000, demo-5=600000, demo-6=0, demo-7=0",
+  "syncOn": false,
+  "syncLastAt": 0,
+  "syncError": "",
+  "syncDevices": "",
+  "syncFiles": "",
+  "syncState": "",
+  "syncPrompt": "",
+  "demo0Bookmarks": "180000:The ballroom scene. Come back to this.",
+  "demo0Log": "4@345787\/here, 1@332116\/here, 2@332105\/here, 3@339048\/here, 3@272752\/here, 1@252000\/here",
+  "look": "system,ember,false,book,fff2a65a",
+  "lastBookId": "demo-0",
+  "merges": 0,
+  "profileName": "",
+  "profilePhoto": false,
+  "recentLog": [
+    {
+      "bookId": "demo-0",
+      "kind": 4,
+      "reason": 0,
+      "positionMs": 345787,
+      "toMs": 400000
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 1,
+      "reason": 0,
+      "positionMs": 332116,
+      "toMs": -1
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 2,
+      "reason": 0,
+      "positionMs": 332105,
+      "toMs": -1
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 3,
+      "reason": 0,
+      "positionMs": 339048,
+      "toMs": 324048
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 3,
+      "reason": 0,
+      "positionMs": 272752,
+      "toMs": 335922
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 1,
+      "reason": 0,
+      "positionMs": 252000,
+      "toMs": -1
+    }
+  ],
+  "library": []
+}

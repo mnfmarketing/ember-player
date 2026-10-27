@@ -1,0 +1,119 @@
+{
+  "libraryDbVersion": 6,
+  "podcastDbVersion": 3,
+  "books": 10,
+  "externalBooks": 1,
+  "inProgress": 5,
+  "finished": 1,
+  "rated": 2,
+  "bookmarks": 3,
+  "clips": 1,
+  "shelves": 1,
+  "shelfLinks": 2,
+  "listeningDays": 11,
+  "podcasts": 1,
+  "demo0PositionMs": 599500,
+  "pendingRestore": false,
+  "automaticBackups": 1,
+  "lastBackupAt": 1793131645247,
+  "torrents": "The Torrent Test Book: done 100% In your library",
+  "torrentDebug": "state=SEEDING flags=8 peers=0 conns=0 seeds=[http:\/\/10.0.2.2:8000\/] err=Success wanted=86405590 done=86405590",
+  "wifiHold": false,
+  "bookTitles": "Pride and Prejudice, Treasure Island, Frankenstein, The Time Machine, Project Hail Mary, The Torrent Test Book, Dracula, Little Women, Good Wives, The Hound of the Baskervilles",
+  "demo0Pdf": "file:\/\/\/data\/user\/0\/app.ember.audiobooks\/files\/docs\/pride-and-prejudice-companion.pdf",
+  "booksWithPdf": 1,
+  "listenLogEntries": 18,
+  "upNext": "demo-2",
+  "demo0Effects": "false,false,false",
+  "sleepLog": 2,
+  "dbSnapshots": "ember-from-v23-1793131619652, media-from-v23-1793131619679",
+  "playing": false,
+  "flipToPause": false,
+  "positions": "demo-0=599500, demo-4=36230, demo-1=108000, demo-3=426000, demo-ext=35, c37aa5d3-aab8-3b27-8f97-f47286471a38=0, demo-2=0, demo-5=600000, demo-6=0, demo-7=0",
+  "syncOn": true,
+  "syncLastAt": 1793132758808,
+  "syncError": "",
+  "syncDevices": "iPhone",
+  "syncFiles": "log-fdc54b78cf605a394edd.json, state.json",
+  "syncState": "{\"app\":\"Ember\",\"sync\":1,\"items\":{\"b\\\/dracula|bramstoker\\\/pos\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"dracula|bramstoker\",\"v\":\"{\\\"d\\\":600,\\\"lp\\\":0,\\\"p\\\":0}\"},\"b\\\/dracula|bramstoker\\\/rating\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"dracula|bramstoker\",\"v\":\"{\\\"v\\\":0}\"},\"b\\\/dracula|bramstoker\\\/sound\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"dracula|bramstoker\",\"v\":\"{\\\"ce\\\":false,\\\"si\\\":0,\\\"so\\\":0,\\\"ts\\\":false,\\\"vb\\\":false}\"},\"b\\\/dracula|bramstoker\\\/speed\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"dracula|bramstoker\",\"v\":\"{\\\"v\\\":100}\"},\"b\\\/dracula|bramstoker\\\/status\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"dracula|bramstoker\",\"v\":\"{\\\"f\\\":0,\\\"s\\\":0}\"},\"b\\\/frankenstein|maryshelley\\\/pos\":{\"t\":1793128070332,\"d\":\"a-58fc66adae\",\"o\":\"frankenstein|maryshelley\",\"v\":\"{\\\"d\\\":600,\\\"lp\\\":1793128070332,\\\"p\\\":108000}\"},\"b\\\/frankenstein|maryshelley\\\/rating\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"frankenstein|maryshelley\",\"v\":\"{\\\"v\\\":0}\"},\"b\\\/frankenstein|maryshelley\\\/sound\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"frankenstein|maryshelley\",\"v\":\"{\\\"ce\\\":false,\\\"si\\\":0,\\\"so\\\":0,\\\"ts\\\":false,\\\"vb\\\":false}\"},\"b\\\/frankenstein|maryshelley\\\/speed\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"frankenstein|maryshelley\",\"v\":\"{\\\"v\\\":100}\"},\"b\\\/frankenstein|maryshelley\\\/status\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"frankenstein|maryshelley\",\"v\":\"{\\\"f\\\":0,\\\"s\\\":1}\"},\"b\\\/goodwives|louisamayalcott\\\/pos\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"goodwives|louisamayalcott\",\"v\":\"{\\\"d\\\":600,\\\"lp\\\":0,\\\"p\\\":0}\"},\"b\\\/goodwives|louisamayalcott\\\/rating\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"goodwives|louisamayalcott\",\"v\":\"{\\\"v\\\":0}\"},\"b\\\/goodwives|louisamayalcott\\\/sound\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"goodwives|louisamayalcott\",\"v\":\"{\\\"ce\\\":false,\\\"si\\\":0,\\\"so\\\":0,\\\"ts\\\":false,\\\"vb\\\":false}\"},\"b\\\/goodwives|louisamayalcott\\\/speed\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"goodwives|louisamayalcott\",\"v\":\"{\\\"v\\\":100}\"},\"b\\\/goodwives|louisamayalcott\\\/status\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"goodwives|louisamayalcott\",\"v\":\"{\\\"f\\\":0,\\\"s\\\":0}\"},\"b\\\/littlewomen|louisamayalcott\\\/pos\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"littlewomen|louisamayalcott\",\"v\":\"{\\\"d\\\":600,\\\"lp\\\":0,\\\"p\\\":600000}\"},\"b\\\/littlewomen|louisamayalcott\\\/rating\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"littlewomen|louisamayalcott\",\"v\":\"{\\\"v\\\":5}\"},\"b\\\/littlewomen|louisamayalcott\\\/sound\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"littlewomen|louisamayalcott\",\"v\":\"{\\\"ce\\\":false,\\\"si\\\":0,\\\"so\\\":0,\\\"ts\\\":false,\\\"vb\\\":false}\"},\"b\\\/littlewomen|louisamayalcott\\\/speed\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"littlewomen|louisamayalcott\",\"v\":\"{\\\"v\\\":100}\"},\"b\\\/littlewomen|louisamayalcott\\\/status\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"littlewomen|louisamayalcott\",\"v\":\"{\\\"f\\\":1790971670332,\\\"s\\\":2}\"},\"b\\\/prideandprejudice|janeausten\\\/pos\":{\"t\":1793132756817,\"d\":\"a-58fc66adae\",\"o\":\"prideandprejudice|janeausten\",\"v\":\"{\\\"d\\\":600,\\\"lp\\\":1793132756817,\\\"p\\\":599500}\"},\"b\\\/prideandprejudice|janeausten\\\/rating\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"prideandprejudice|janeausten\",\"v\":\"{\\\"v\\\":0}\"},\"b\\\/prideandprejudice|janeausten\\\/sound\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"prideandprejudice|janeausten\",\"v\":\"{\\\"ce\\\":false,\\\"si\\\":0,\\\"so\\\":0,\\\"ts\\\":false,\\\"vb\\\":false}\"},\"b\\\/prideandprejudice|janeausten\\\/speed\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"prideandprejudice|janeausten\",\"v\":\"{\\\"v\\\":100}\"},\"b\\\/prideandprejudice|janeausten\\\/status\":{\"t\":1793132734750,\"d\":\"test-iphone\",\"o\":\"prideandprejudice|janeausten\",\"v\":\"{\\\"f\\\":0,\\\"s\\\":1}\"},\"b\\\/thehoundofthebaskervilles|arthurconandoyle\\\/pos\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"thehoundofthebaskervilles|arthurconandoyle\",\"v\":\"{\\\"d\\\":600,\\\"lp\\\":0,\\\"p\\\":0}\"},\"b\\\/thehoundofthebaskervilles|arthurconandoyle\\\/rating\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"thehoundofthebaskervilles|arthurconandoyle\",\"v\":\"{\\\"v\\\":0}\"},\"b\\\/thehoundofthebaskervilles|arthurconandoyle\\\/sound\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"thehoundofthebaskervilles|arthurconandoyle\",\"v\":\"{\\\"ce\\\":false,\\\"si\\\":0,\\\"so\\\":0,\\\"ts\\\":false,\\\"vb\\\":false}\"},\"b\\\/thehoundofthebaskervilles|arthurconandoyle\\\/speed\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"thehoundofthebaskervilles|arthurconandoyle\",\"v\":\"{\\\"v\\\":100}\"},\"b\\\/thehoundofthebaskervilles|arthurconandoyle\\\/status\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"thehoundofthebaskervilles|arthurconandoyle\",\"v\":\"{\\\"f\\\":0,\\\"s\\\":0}\"},\"b\\\/thetimemachine|hgwells\\\/pos\":{\"t\":1793120870332,\"d\":\"a-58fc66adae\",\"o\":\"thetimemachine|hgwells\",\"v\":\"{\\\"d\\\":600,\\\"lp\\\":1793120870332,\\\"p\\\":426000}\"},\"b\\\/thetimemachine|hgwells\\\/rating\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"thetimemachine|hgwells\",\"v\":\"{\\\"v\\\":0}\"},\"b\\\/thetimemachine|hgwells\\\/sound\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"thetimemachine|hgwells\",\"v\":\"{\\\"ce\\\":false,\\\"si\\\":0,\\\"so\\\":0,\\\"ts\\\":false,\\\"vb\\\":false}\"},\"b\\\/thetimemachine|hgwells\\\/speed\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"thetimemachine|hgwells\",\"v\":\"{\\\"v\\\":100}\"},\"b\\\/thetimemachine|hgwells\\\/status\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"thetimemachine|hgwells\",\"v\":\"{\\\"f\\\":0,\\\"s\\\":1}\"},\"b\\\/thetorrenttestbook|embertests\\\/pos\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"thetorrenttestbook|embertests\",\"v\":\"{\\\"d\\\":5400,\\\"lp\\\":0,\\\"p\\\":0}\"},\"b\\\/thetorrenttestbook|embertests\\\/rating\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"thetorrenttestbook|embertests\",\"v\":\"{\\\"v\\\":0}\"},\"b\\\/thetorrenttestbook|embertests\\\/sound\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"thetorrenttestbook|embertests\",\"v\":\"{\\\"ce\\\":false,\\\"si\\\":0,\\\"so\\\":0,\\\"ts\\\":false,\\\"vb\\\":false}\"},\"b\\\/thetorrenttestbook|embertests\\\/speed\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"thetorrenttestbook|embertests\",\"v\":\"{\\\"v\\\":100}\"},\"b\\\/thetorrenttestbook|embertests\\\/status\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"thetorrenttestbook|embertests\",\"v\":\"{\\\"f\\\":0,\\\"s\\\":0}\"},\"b\\\/treasureisland|robertlouisstevenson\\\/pos\":{\"t\":1793132238177,\"d\":\"a-58fc66adae\",\"o\":\"treasureisland|robertlouisstevenson\",\"v\":\"{\\\"d\\\":600,\\\"lp\\\":1793132238177,\\\"p\\\":36230}\"},\"b\\\/treasureisland|robertlouisstevenson\\\/rating\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"treasureisland|robertlouisstevenson\",\"v\":\"{\\\"v\\\":4}\"},\"b\\\/treasureisland|robertlouisstevenson\\\/sound\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"treasureisland|robertlouisstevenson\",\"v\":\"{\\\"ce\\\":false,\\\"si\\\":0,\\\"so\\\":0,\\\"ts\\\":false,\\\"vb\\\":false}\"},\"b\\\/treasureisland|robertlouisstevenson\\\/speed\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"treasureisland|robertlouisstevenson\",\"v\":\"{\\\"v\\\":100}\"},\"b\\\/treasureisland|robertlouisstevenson\\\/status\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"treasureisland|robertlouisstevenson\",\"v\":\"{\\\"f\\\":1791403670332,\\\"s\\\":1}\"},\"b\\\/x|projecthailmary|andyweir\\\/pos\":{\"t\":1793045270332,\"d\":\"a-58fc66adae\",\"o\":\"x|projecthailmary|andyweir\",\"v\":\"{\\\"d\\\":0,\\\"lp\\\":1793045270332,\\\"p\\\":35}\"},\"b\\\/x|projecthailmary|andyweir\\\/rating\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"x|projecthailmary|andyweir\",\"v\":\"{\\\"v\\\":0}\"},\"b\\\/x|projecthailmary|andyweir\\\/sound\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"x|projecthailmary|andyweir\",\"v\":\"{\\\"ce\\\":false,\\\"si\\\":0,\\\"so\\\":0,\\\"ts\\\":false,\\\"vb\\\":false}\"},\"b\\\/x|projecthailmary|andyweir\\\/speed\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"x|projecthailmary|andyweir\",\"v\":\"{\\\"v\\\":100}\"},\"b\\\/x|projecthailmary|andyweir\\\/status\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"x|projecthailmary|andyweir\",\"v\":\"{\\\"f\\\":0,\\\"s\\\":1}\"},\"clip\\\/1793131670580\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"prideandprejudice|janeausten\",\"v\":\"{\\\"b\\\":\\\"prideandprejudice|janeausten\\\",\\\"c\\\":\\\"The Ball\\\",\\\"e\\\":270000,\\\"n\\\":\\\"It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.\\\",\\\"s\\\":240000,\\\"su\\\":\\\"Jane Austen\\\",\\\"ti\\\":\\\"Pride and Prejudice\\\"}\"},\"day\\\/20742\\\/a-58fc66adae\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"*\",\"v\":\"{\\\"v\\\":2160000}\"},\"day\\\/20743\\\/a-58fc66adae\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"*\",\"v\":\"{\\\"v\\\":4800000}\"},\"day\\\/20744\\\/a-58fc66adae\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"*\",\"v\":\"{\\\"v\\\":2640000}\"},\"day\\\/20745\\\/a-58fc66adae\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"*\",\"v\":\"{\\\"v\\\":3720000}\"},\"day\\\/20746\\\/a-58fc66adae\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"*\",\"v\":\"{\\\"v\\\":6600000}\"},\"day\\\/20747\\\/a-58fc66adae\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"*\",\"v\":\"{\\\"v\\\":5640000}\"},\"day\\\/20748\\\/a-58fc66adae\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"*\",\"v\":\"{\\\"v\\\":3360000}\"},\"day\\\/20749\\\/a-58fc66adae\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"*\",\"v\":\"{\\\"v\\\":7320000}\"},\"day\\\/20751\\\/a-58fc66adae\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"*\",\"v\":\"{\\\"v\\\":4200000}\"},\"day\\\/20752\\\/a-58fc66adae\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"*\",\"v\":\"{\\\"v\\\":5040000}\"},\"day\\\/20753\\\/a-58fc66adae\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"*\",\"v\":\"{\\\"v\\\":2749746}\"},\"ep\\\/https:\\\/\\\/feeds.npr.org\\\/510289\\\/podcast.xml|a6b63a1f-36c3-49e5-96db-8ac77ff0014a\":{\"t\":1793132645937,\"d\":\"a-58fc66adae\",\"o\":\"f|https:\\\/\\\/feeds.npr.org\\\/510289\\\/podcast.xml\",\"v\":\"{\\\"f\\\":\\\"https:\\\/\\\/feeds.npr.org\\\/510289\\\/podcast.xml\\\",\\\"g\\\":\\\"a6b63a1f-36c3-49e5-96db-8ac77ff0014a\\\",\\\"lp\\\":1793132645937,\\\"p\\\":251708,\\\"pa\\\":0,\\\"pl\\\":false}\"},\"epa\\\/https:\\\/\\\/feeds.npr.org\\\/510289\\\/podcast.xml|a6b63a1f-36c3-49e5-96db-8ac77ff0014a\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"f|https:\\\/\\\/feeds.npr.org\\\/510289\\\/podcast.xml\",\"v\":\"{\\\"f\\\":\\\"https:\\\/\\\/feeds.npr.org\\\/510289\\\/podcast.xml\\\",\\\"g\\\":\\\"a6b63a1f-36c3-49e5-96db-8ac77ff0014a\\\",\\\"v\\\":false}\"},\"goal\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"*\",\"v\":\"{\\\"d\\\":30,\\\"y\\\":24}\"},\"mark\\\/1793131670578\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"prideandprejudice|janeausten\",\"v\":\"{\\\"b\\\":\\\"prideandprejudice|janeausten\\\",\\\"c\\\":\\\"The Ball\\\",\\\"n\\\":\\\"The ballroom scene. Come back to this.\\\",\\\"p\\\":180000}\"},\"mark\\\/1793132039209\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"prideandprejudice|janeausten\",\"v\":\"{\\\"b\\\":\\\"prideandprejudice|janeausten\\\",\\\"c\\\":\\\"Confessions\\\",\\\"n\\\":\\\"\\\",\\\"p\\\":440060}\"},\"mark\\\/1793132734750\":{\"t\":1793132734750,\"d\":\"test-iphone\",\"o\":\"prideandprejudice|janeausten\",\"v\":\"{\\\"b\\\":\\\"prideandprejudice|janeausten\\\",\\\"c\\\":\\\"\\\",\\\"n\\\":\\\"Saved on the iPhone\\\",\\\"p\\\":595000}\"},\"name\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"*\",\"v\":\"{\\\"v\\\":\\\"\\\"}\"},\"photo\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"*\",\"v\":\"{\\\"at\\\":0}\"},\"podq\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"*\",\"v\":\"{\\\"v\\\":[]}\"},\"shelf\\\/comfort rereads\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"*\",\"v\":\"{\\\"n\\\":\\\"Comfort rereads\\\"}\"},\"shelfbook\\\/comfort rereads\\\/littlewomen|louisamayalcott\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"littlewomen|louisamayalcott\",\"v\":\"{\\\"b\\\":\\\"littlewomen|louisamayalcott\\\",\\\"s\\\":\\\"comfort rereads\\\"}\"},\"shelfbook\\\/comfort rereads\\\/prideandprejudice|janeausten\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"prideandprejudice|janeausten\",\"v\":\"{\\\"b\\\":\\\"prideandprejudice|janeausten\\\",\\\"s\\\":\\\"comfort rereads\\\"}\"},\"show\\\/https:\\\/\\\/feeds.npr.org\\\/510289\\\/podcast.xml\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"*\",\"v\":\"{\\\"aa\\\":true,\\\"ad\\\":false,\\\"aq\\\":false,\\\"ce\\\":false,\\\"nt\\\":true,\\\"si\\\":0,\\\"so\\\":0,\\\"sp\\\":100,\\\"ts\\\":false,\\\"vb\\\":false}\"},\"upnext\":{\"t\":0,\"d\":\"a-58fc66adae\",\"o\":\"*\",\"v\":\"{\\\"v\\\":[\\\"dracula|bramstoker\\\"]}\"}},\"devices\":{\"test-iphone\":{\"name\":\"iPhone\",\"seen\":1793132734750},\"a-58fc66adae\":{\"name\":\"Fold\",\"seen\":1793132758804}}}",
+  "syncPrompt": "",
+  "demo0Bookmarks": "180000:The ballroom scene. Come back to this., 440060:, 595000:Saved on the iPhone",
+  "demo0Log": "4@91313\/here, 2@600000\/test-iphone, 2@91306\/here, 1@490000\/test-iphone, 2@34376\/here, 4@39918\/here, 1@12398\/here, 2@14892\/here, 1@443040\/here, 2@443037\/here, 3@430951\/here, 4@345787\/here",
+  "look": "system,ember,false,book,fff2a65a",
+  "lastBookId": "demo-0",
+  "merges": 0,
+  "profileName": "",
+  "profilePhoto": false,
+  "recentLog": [
+    {
+      "bookId": "demo-0",
+      "kind": 4,
+      "reason": 0,
+      "positionMs": 91313,
+      "toMs": 599500
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 2,
+      "reason": 2,
+      "positionMs": 600000,
+      "toMs": -1
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 2,
+      "reason": 0,
+      "positionMs": 91306,
+      "toMs": -1
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 1,
+      "reason": 0,
+      "positionMs": 490000,
+      "toMs": -1
+    },
+    {
+      "bookId": "episode:ep-29af5566-ab4b-324f-8d2a-f282ea7db08a",
+      "kind": 1,
+      "reason": 0,
+      "positionMs": 0,
+      "toMs": -1
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 2,
+      "reason": 1,
+      "positionMs": 34376,
+      "toMs": 12398
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 4,
+      "reason": 0,
+      "positionMs": 39918,
+      "toMs": 1000
+    },
+    {
+      "bookId": "demo-0",
+      "kind": 1,
+      "reason": 0,
+      "positionMs": 12398,
+      "toMs": -1
+    }
+  ],
+  "library": [
+    {
+      "id": "c37aa5d3-aab8-3b27-8f97-f47286471a38",
+      "title": "The Torrent Test Book",
+      "durationMs": 5400138,
+      "positionMs": 0,
+      "status": 0,
+      "skips": "0,0",
+      "tracks": "Chapter 1 (1800s) | Chapter 2 (1800s) | Chapter 3 (1800s)",
+      "chapters": "Chapter 1@0 | Chapter 2@1800 | Chapter 3@3600",
+      "bookmarks": "",
+      "log": 0
+    }
+  ]
+}
