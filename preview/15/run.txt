@@ -1,0 +1,427 @@
+++ dirname ci/quick.sh
++ source ci/lib.sh
+++ PKG=app.ember.audiobooks
+++ ACT=app.ember.audiobooks/app.ember.ui.MainActivity
+++ REPORTS=/sdcard/Download/EmberTest
+++ OUT=smoke-out
+++ mkdir -p smoke-out
++++ command -v adb
+++ ADB_BIN=/usr/local/lib/android/sdk/platform-tools/adb
++ adb shell settings put global hide_error_dialogs 1
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell settings put global hide_error_dialogs 1
++ adb shell settings put secure anr_show_background 0
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell settings put secure anr_show_background 0
++ adb install -r Ember-15.apk
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb install -r Ember-15.apk
+Performing Streamed Install
+Success
++ adb shell pm grant app.ember.audiobooks android.permission.POST_NOTIFICATIONS
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell pm grant app.ember.audiobooks android.permission.POST_NOTIFICATIONS
+
+Exception occurred while executing 'grant':
+java.lang.IllegalArgumentException: Unknown permission: android.permission.POST_NOTIFICATIONS
+	at com.android.server.pm.permission.PermissionManagerService.grantRuntimePermissionInternal(PermissionManagerService.java:1451)
+	at com.android.server.pm.permission.PermissionManagerService.grantRuntimePermission(PermissionManagerService.java:1410)
+	at com.android.server.pm.PackageManagerShellCommand.runGrantRevokePermission(PackageManagerShellCommand.java:2287)
+	at com.android.server.pm.PackageManagerShellCommand.onCommand(PackageManagerShellCommand.java:249)
+	at android.os.BasicShellCommandHandler.exec(BasicShellCommandHandler.java:98)
+	at android.os.ShellCommand.exec(ShellCommand.java:44)
+	at com.android.server.pm.PackageManagerService.onShellCommand(PackageManagerService.java:21646)
+	at android.os.Binder.shellCommand(Binder.java:929)
+	at android.os.Binder.onTransact(Binder.java:813)
+	at android.content.pm.IPackageManager$Stub.onTransact(IPackageManager.java:4603)
+	at com.android.server.pm.PackageManagerService.onTransact(PackageManagerService.java:4305)
+	at android.os.Binder.execTransactInternal(Binder.java:1159)
+	at android.os.Binder.execTransact(Binder.java:1123)
++ true
++ seed_files
++ adb shell am start -W -n app.ember.audiobooks/app.ember.ui.MainActivity
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -W -n app.ember.audiobooks/app.ember.ui.MainActivity
+Starting: Intent { cmp=app.ember.audiobooks/app.ember.ui.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: app.ember.audiobooks/app.ember.ui.MainActivity
+TotalTime: 1776
+WaitTime: 1778
+Complete
++ sleep 4
++ adb shell am force-stop app.ember.audiobooks
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am force-stop app.ember.audiobooks
++ adb shell am start -W -n app.ember.audiobooks/app.ember.ui.MainActivity --ez ember_demo true
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -W -n app.ember.audiobooks/app.ember.ui.MainActivity --ez ember_demo true
+Starting: Intent { cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras) }
+Status: ok
+LaunchState: COLD
+Activity: app.ember.audiobooks/app.ember.ui.MainActivity
+TotalTime: 1079
+WaitTime: 1082
+Complete
++ sleep 30
++ adb logcat -c
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb logcat -c
++ open_route home
++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
++ shot q01-home 5
++ sleep 5
++ adb exec-out screencap -p
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
++ open_route library
++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
++ shot q02-library 4
++ sleep 4
++ adb exec-out screencap -p
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_play demo-0
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_play demo-0
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
++ sleep 5
++ open_route player
++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
++ shot q03-player 4
++ sleep 4
++ adb exec-out screencap -p
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ dirname ci/quick.sh
++ source ci/focus.sh
+++ adb shell input keyevent 127
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent 127
+++ sleep 3
+++ say 'turn sync on (test folder in place of Drive)'
+++ echo '== turn sync on (test folder in place of Drive)'
+++ tee -a smoke-out/focus.txt
+== turn sync on (test folder in place of Drive)
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --ez ember_sync_test true
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --ez ember_sync_test true
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 2
+++ sync_now
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --ez ember_sync_now true
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --ez ember_sync_now true
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 8
+++ report f-first-sync.json
+++ selfcheck f-first-sync.json
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-first-sync.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-first-sync.json
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 5
+++ adb pull /sdcard/Download/EmberTest/f-first-sync.json smoke-out/f-first-sync.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/f-first-sync.json smoke-out/f-first-sync.json
+/sdcard/Download/EmberTest/f-first-sync.json: 1 file pulled, 0 skipped. 2.3 MB/s (1720 bytes in 0.001s)
+++ python3 - smoke-out/f-first-sync.json
+++ tee -a smoke-out/focus.txt
+   syncOn: True
+   syncError: 
+   syncDevices: 
+   syncFiles: log-fdc54b78cf605a394edd.json, state.json
+   syncPrompt: 
+   demo0PositionMs: 261989
+   positions: demo-0=261989, demo-1=108000, demo-3=426000, demo-ext=35, demo-2=0, demo-4=600000, demo-5=600000, demo-6=0, demo-7=0
+   demo0Bookmarks: 180000:The ballroom scene. Come back to this.
+   demo0Log: 2@261989/here, 1@252000/here
+   libraryDbVersion: 6
+++ pull_sync f-files-1
+++ mkdir -p smoke-out/f-files-1
+++ adb pull /sdcard/Android/data/app.ember.audiobooks/files/sync-test/. smoke-out/f-files-1
+++ say 'could not pull the sync folder'
+++ echo '== could not pull the sync folder'
+++ tee -a smoke-out/focus.txt
+== could not pull the sync folder
+++ ls smoke-out/f-files-1
+++ tee -a smoke-out/focus.txt
+++ places f-files-1
+++ python3 - smoke-out/f-files-1/state.json
+++ tee -a smoke-out/focus.txt
+Traceback (most recent call last):
+  File "<stdin>", line 2, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: 'smoke-out/f-files-1/state.json'
+++ open_route settings/Sync
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Sync
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Sync
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f01-sync-settings 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ say 'the iPhone is further along in the loaded book: Ember asks'
+++ echo '== the iPhone is further along in the loaded book: Ember asks'
+++ tee -a smoke-out/focus.txt
+== the iPhone is further along in the loaded book: Ember asks
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_sync_fake demo-0,600000
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_sync_fake demo-0,600000
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 3
+++ sync_now
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --ez ember_sync_now true
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --ez ember_sync_now true
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 8
+++ open_route player
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f02-go-there-prompt 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ report f-prompt.json
+++ selfcheck f-prompt.json
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-prompt.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-prompt.json
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 5
+++ adb pull /sdcard/Download/EmberTest/f-prompt.json smoke-out/f-prompt.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/f-prompt.json smoke-out/f-prompt.json
+/sdcard/Download/EmberTest/f-prompt.json: 1 file pulled, 0 skipped. 0.0 MB/s (2068 bytes in 0.041s)
+++ python3 - smoke-out/f-prompt.json
+++ tee -a smoke-out/focus.txt
+   syncOn: True
+   syncError: 
+   syncDevices: iPhone
+   syncFiles: log-fdc54b78cf605a394edd.json, state.json
+   syncPrompt: demo-0 at 600000 from iPhone
+   demo0PositionMs: 261989
+   positions: demo-0=261989, demo-1=108000, demo-3=426000, demo-ext=35, demo-2=0, demo-4=600000, demo-5=600000, demo-6=0, demo-7=0
+   demo0Bookmarks: 180000:The ballroom scene. Come back to this., 595000:Saved on the iPhone
+   demo0Log: 2@600000/test-iphone, 2@261989/here, 1@252000/here, 1@490000/test-iphone
+   libraryDbVersion: 6
+++ tap_text 'Go there'
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 5.1 MB/s (5450 bytes in 0.001s)
+++ python3 - 'Go there'
+tapped Go there at 790,1363
+++ sleep 4
+++ shot f03-after-go-there 2
+++ sleep 2
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ report f-went-there.json
+++ selfcheck f-went-there.json
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-went-there.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-went-there.json
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 5
+++ adb pull /sdcard/Download/EmberTest/f-went-there.json smoke-out/f-went-there.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/f-went-there.json smoke-out/f-went-there.json
+/sdcard/Download/EmberTest/f-went-there.json: 1 file pulled, 0 skipped. 0.1 MB/s (2180 bytes in 0.041s)
+++ python3 - smoke-out/f-went-there.json
+++ tee -a smoke-out/focus.txt
+   syncOn: True
+   syncError: 
+   syncDevices: iPhone
+   syncFiles: log-fdc54b78cf605a394edd.json, state.json
+   syncPrompt: 
+   demo0PositionMs: 599500
+   positions: demo-0=599500, demo-1=108000, demo-3=426000, demo-ext=35, demo-2=0, demo-4=600000, demo-5=600000, demo-6=0, demo-7=0
+   demo0Bookmarks: 180000:The ballroom scene. Come back to this., 595000:Saved on the iPhone
+   demo0Log: 4@261990/here, 2@600000/test-iphone, 2@261989/here, 1@252000/here, 1@490000/test-iphone
+   libraryDbVersion: 6
+++ say 'the log shows both devices, and the iPhone'\''s bookmark arrived'
+++ tee -a smoke-out/focus.txt
+++ echo '== the log shows both devices, and the iPhone'\''s bookmark arrived'
+== the log shows both devices, and the iPhone's bookmark arrived
+++ tap_text 'Listening log'
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.5 MB/s (20904 bytes in 0.041s)
+++ python3 - 'Listening log'
+tapped Listening log at 350,1370
+++ shot f04-log-two-devices 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ adb shell input keyevent KEYCODE_BACK
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_BACK
+++ sleep 2
+++ say 'Stay here keeps this device'\''s place and sends it out'
+++ echo '== Stay here keeps this device'\''s place and sends it out'
+++ tee -a smoke-out/focus.txt
+== Stay here keeps this device's place and sends it out
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_sync_fake demo-0,300000
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_sync_fake demo-0,300000
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 3
+++ sync_now
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --ez ember_sync_now true
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --ez ember_sync_now true
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 8
+++ open_route player
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f05-prompt-again 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ tap_text 'Stay here'
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.1 MB/s (5457 bytes in 0.042s)
+++ python3 - 'Stay here'
+tapped Stay here at 547,1363
+++ sleep 10
+++ report f-stayed.json
+++ selfcheck f-stayed.json
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-stayed.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-stayed.json
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 5
+++ adb pull /sdcard/Download/EmberTest/f-stayed.json smoke-out/f-stayed.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/f-stayed.json smoke-out/f-stayed.json
+/sdcard/Download/EmberTest/f-stayed.json: 1 file pulled, 0 skipped. 0.1 MB/s (2208 bytes in 0.042s)
+++ python3 - smoke-out/f-stayed.json
+++ tee -a smoke-out/focus.txt
+   syncOn: True
+   syncError: 
+   syncDevices: iPhone
+   syncFiles: log-fdc54b78cf605a394edd.json, state.json
+   syncPrompt: 
+   demo0PositionMs: 599500
+   positions: demo-0=599500, demo-1=108000, demo-3=426000, demo-ext=35, demo-2=0, demo-4=600000, demo-5=600000, demo-6=0, demo-7=0
+   demo0Bookmarks: 180000:The ballroom scene. Come back to this., 595000:Saved on the iPhone, 295000:Saved on the iPhone
+   demo0Log: 2@600000/test-iphone, 4@261990/here, 2@261989/here, 1@252000/here, 1@490000/test-iphone
+   libraryDbVersion: 6
+++ pull_sync f-files-2
+++ mkdir -p smoke-out/f-files-2
+++ adb pull /sdcard/Android/data/app.ember.audiobooks/files/sync-test/. smoke-out/f-files-2
+++ say 'could not pull the sync folder'
+++ echo '== could not pull the sync folder'
+++ tee -a smoke-out/focus.txt
+== could not pull the sync folder
+++ ls smoke-out/f-files-2
+++ tee -a smoke-out/focus.txt
+++ places f-files-2
+++ python3 - smoke-out/f-files-2/state.json
+++ tee -a smoke-out/focus.txt
+Traceback (most recent call last):
+  File "<stdin>", line 2, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: 'smoke-out/f-files-2/state.json'
+++ say 'a book that isn'\''t loaded just moves, without asking'
+++ echo '== a book that isn'\''t loaded just moves, without asking'
+++ tee -a smoke-out/focus.txt
+== a book that isn't loaded just moves, without asking
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_sync_fake demo-1,420000
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_sync_fake demo-1,420000
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 3
+++ sync_now
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --ez ember_sync_now true
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --ez ember_sync_now true
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 8
+++ report f-moved.json
+++ selfcheck f-moved.json
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-moved.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck f-moved.json
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 5
+++ adb pull /sdcard/Download/EmberTest/f-moved.json smoke-out/f-moved.json
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/f-moved.json smoke-out/f-moved.json
+/sdcard/Download/EmberTest/f-moved.json: 1 file pulled, 0 skipped. 0.1 MB/s (2479 bytes in 0.041s)
+++ python3 - smoke-out/f-moved.json
+++ tee -a smoke-out/focus.txt
+   syncOn: True
+   syncError: 
+   syncDevices: iPhone
+   syncFiles: log-33353b0012211050afe4.json, log-fdc54b78cf605a394edd.json, state.json
+   syncPrompt: 
+   demo0PositionMs: 599500
+   positions: demo-1=420000, demo-0=599500, demo-3=426000, demo-ext=35, demo-2=0, demo-4=600000, demo-5=600000, demo-6=0, demo-7=0
+   demo0Bookmarks: 180000:The ballroom scene. Come back to this., 595000:Saved on the iPhone, 295000:Saved on the iPhone
+   demo0Log: 2@600000/test-iphone, 4@261990/here, 2@261989/here, 1@252000/here, 1@490000/test-iphone
+   libraryDbVersion: 6
+++ open_route home
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route home
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f06-home-after-sync 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ say 'a bookmark made here goes out'
+++ echo '== a bookmark made here goes out'
+++ tee -a smoke-out/focus.txt
+== a bookmark made here goes out
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_add_bookmark demo-0,123000
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_add_bookmark demo-0,123000
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 2
+++ sync_now
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --ez ember_sync_now true
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --ez ember_sync_now true
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ sleep 8
+++ pull_sync f-files-3
+++ mkdir -p smoke-out/f-files-3
+++ adb pull /sdcard/Android/data/app.ember.audiobooks/files/sync-test/. smoke-out/f-files-3
+++ say 'could not pull the sync folder'
+++ echo '== could not pull the sync folder'
+++ tee -a smoke-out/focus.txt
+== could not pull the sync folder
+++ ls smoke-out/f-files-3
+++ tee -a smoke-out/focus.txt
+++ places f-files-3
+++ python3 - smoke-out/f-files-3/state.json
+++ tee -a smoke-out/focus.txt
+Traceback (most recent call last):
+  File "<stdin>", line 2, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: 'smoke-out/f-files-3/state.json'
+++ say 'settings after syncing with the iPhone'
+++ echo '== settings after syncing with the iPhone'
+++ tee -a smoke-out/focus.txt
+== settings after syncing with the iPhone
+++ open_route settings/Sync
+++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Sync
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route settings/Sync
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+++ shot f07-sync-settings-after 4
+++ sleep 4
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ python3 - smoke-out
+++ tee -a smoke-out/focus.txt
+PASS sync turned on and ran
+PASS state.json and a log file on 'Drive'
+PASS database is version 6
+PASS loaded book: asked 'Go there?'
+PASS Go there moved to 10:00
+PASS the iPhone's bookmark arrived
+PASS the iPhone's log entries arrived
+PASS Stay here kept 10:00
+FAIL Stay here sent this device's place out
+PASS a book not loaded moved without asking
+FAIL a bookmark made here went out
++ selfcheck quick-end.json
++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck quick-end.json
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_selfcheck quick-end.json
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
++ sleep 5
++ adb pull /sdcard/Download/EmberTest/quick-end.json smoke-out/quick-end.json
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/quick-end.json smoke-out/quick-end.json
+/sdcard/Download/EmberTest/quick-end.json: 1 file pulled, 0 skipped. 0.1 MB/s (2492 bytes in 0.041s)
++ finish_logs
++ adb logcat -d
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb logcat -d
++ grep -E 'FATAL EXCEPTION|AndroidRuntime' -A 25 smoke-out/logcat.txt
++ grep -E 'ANR in app.ember' -A 4 smoke-out/logcat.txt
++ true
++ grep -iE 'ember|ExoPlayer|MediaSession|Room|SQLite' smoke-out/logcat.txt
++ grep -E ' E | W '
++ head -300
++ adb shell pidof app.ember.audiobooks
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell pidof app.ember.audiobooks
++ exit 0
