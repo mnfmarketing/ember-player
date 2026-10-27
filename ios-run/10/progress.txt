@@ -1,0 +1,19 @@
+demo ready on 77AA4492-C787-4EEE-A772-05D4B3E9ECCD after 3s
+demo ready on 7E28B4AB-81E4-41C6-BD7E-2F4EC285FB95 after 3s
+p-d-01-home
+p-d-02-books
+TIMED OUT: xcrun simctl io 77AA4492-C787-4EEE-A772-05D4B3E9ECCD screenshot ios-out/p-d-02-books.png
+p-d-03-book
+p-d-04-player
+TIMED OUT: xcrun simctl io 77AA4492-C787-4EEE-A772-05D4B3E9ECCD screenshot ios-out/p-d-04-player.png
+p-d-05-podcasts
+p-d-06-show
+p-d-07-profile
+p-d-08-search
+t-d-01-home
+t-d-02-player
+t-d-03-books
+t-d-04-book
+p-l-01-home
+p-l-02-books
+p-l-03-book
