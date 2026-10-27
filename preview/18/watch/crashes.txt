@@ -1,0 +1,55 @@
+10-27 20:05:08.689   905  1069 E AndroidRuntime: FATAL EXCEPTION: [com.google.android.gms.chimera.container.intentoperation.GmsIntentOperationChimeraService-Executor] idle
+10-27 20:05:08.689   905  1069 E AndroidRuntime: Process: com.google.android.gms, PID: 905
+10-27 20:05:08.689   905  1069 E AndroidRuntime: java.lang.NullPointerException: NfcAdapter is null
+10-27 20:05:08.689   905  1069 E AndroidRuntime: 	at android.nfc.cardemulation.CardEmulation.getInstance(CardEmulation.java:150)
+10-27 20:05:08.689   905  1069 E AndroidRuntime: 	at olp.<init>(:com.google.android.gms@224814082@22.48.14 (220704-493411920):1)
+10-27 20:05:08.689   905  1069 E AndroidRuntime: 	at olq.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):4)
+10-27 20:05:08.689   905  1069 E AndroidRuntime: 	at dagger.internal.DoubleCheck.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):1)
+10-27 20:05:08.689   905  1069 E AndroidRuntime: 	at mnl.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):2)
+10-27 20:05:08.689   905  1069 E AndroidRuntime: 	at dagger.internal.DoubleCheck.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):1)
+10-27 20:05:08.689   905  1069 E AndroidRuntime: 	at msh.c(:com.google.android.gms@224814082@22.48.14 (220704-493411920):0)
+10-27 20:05:08.689   905  1069 E AndroidRuntime: 	at com.google.android.gms.dck.service.BleActionStateIntentOperation.onHandleIntent(:com.google.android.gms@224814082@22.48.14 (220704-493411920):3)
+10-27 20:05:08.689   905  1069 E AndroidRuntime: 	at com.google.android.chimera.IntentOperation.onHandleIntent(:com.google.android.gms@224814082@22.48.14 (220704-493411920):2)
+10-27 20:05:08.689   905  1069 E AndroidRuntime: 	at jsn.onHandleIntent(:com.google.android.gms@224814082@22.48.14 (220704-493411920):4)
+10-27 20:05:08.689   905  1069 E AndroidRuntime: 	at emb.run(:com.google.android.gms@224814082@22.48.14 (220704-493411920):3)
+10-27 20:05:08.689   905  1069 E AndroidRuntime: 	at ema.run(:com.google.android.gms@224814082@22.48.14 (220704-493411920):11)
+10-27 20:05:08.689   905  1069 E AndroidRuntime: 	at aztn.run(:com.google.android.gms@224814082@22.48.14 (220704-493411920):2)
+10-27 20:05:08.689   905  1069 E AndroidRuntime: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
+10-27 20:05:08.689   905  1069 E AndroidRuntime: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
+10-27 20:05:08.689   905  1069 E AndroidRuntime: 	at java.lang.Thread.run(Thread.java:923)
+10-27 20:05:08.690   461   481 I Telecom : PhoneAccountRegistrar: Modify account: [ComponentInfo{com.android.phone/com.android.services.telephony.TelephonyConnectionService}, ***, UserHandle{0}]: TSI.rPA@ACM
+10-27 20:05:08.690   461   481 I Telecom : CallsManager: handlePhoneAccountChanged: phoneAccount=[[X] PhoneAccount: ComponentInfo{com.android.phone/com.android.services.telephony.TelephonyConnectionService}, ***, UserHandle{0} Capabilities: CallProvider MultiUser PlaceEmerg SimSub  Audio Routes: BESW Schemes: tel voicemail  Extras: Bundle[{android.telecom.extra.SUPPORTS_VIDEO_CALLING_FALLBACK=true}] GroupId: ***]: TSI.rPA@ACM
+10-27 20:05:08.696   461   481 I Telecom : PhoneAccountRegistrar: Modify account: [ComponentInfo{com.android.phone/com.android.services.telephony.TelephonyConnectionService}, ***, UserHandle{0}]: TSI.rPA@ACU
+10-27 20:05:08.696   461   481 I Telecom : CallsManager: handlePhoneAccountChanged: phoneAccount=[[X] PhoneAccount: ComponentInfo{com.android.phone/com.android.services.telephony.TelephonyConnectionService}, ***, UserHandle{0} Capabilities: CallProvider MultiUser PlaceEmerg SimSub  Audio Routes: BESW Schemes: tel voicemail  Extras: Bundle[{android.telecom.extra.SUPPORTS_VIDEO_CALLING_FALLBACK=true}] GroupId: ***]: TSI.rPA@ACU
+10-27 20:05:08.698   461  1057 W StorageManagerService: Reporting emulated;0 unmounted due to system locked
+10-27 20:05:08.700   461  1057 I DropBoxManagerService: add tag=system_app_crash isTagEnabled=true flags=0x2
+10-27 20:05:08.703   461   665 D PowerManagerService: scheduleUserInactivityTimeout timeMs=2147498511
+10-27 20:05:08.704   461   665 I PreBootBroadcaster: Pre-boot of {com.google.android.apps.wearable.settings/com.google.android.clockwork.settings.LeGserviceFlagsOverrideReceiver} for user 0
+--
+10-27 20:05:10.707  1963  2119 E AndroidRuntime: FATAL EXCEPTION: [com.google.android.gms.chimera.container.intentoperation.GmsIntentOperationChimeraService-Executor] idle
+10-27 20:05:10.707  1963  2119 E AndroidRuntime: Process: com.google.android.gms, PID: 1963
+10-27 20:05:10.707  1963  2119 E AndroidRuntime: java.lang.NullPointerException: NfcAdapter is null
+10-27 20:05:10.707  1963  2119 E AndroidRuntime: 	at android.nfc.cardemulation.CardEmulation.getInstance(CardEmulation.java:150)
+10-27 20:05:10.707  1963  2119 E AndroidRuntime: 	at olp.<init>(:com.google.android.gms@224814082@22.48.14 (220704-493411920):1)
+10-27 20:05:10.707  1963  2119 E AndroidRuntime: 	at olq.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):4)
+10-27 20:05:10.707  1963  2119 E AndroidRuntime: 	at dagger.internal.DoubleCheck.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):1)
+10-27 20:05:10.707  1963  2119 E AndroidRuntime: 	at mnl.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):2)
+10-27 20:05:10.707  1963  2119 E AndroidRuntime: 	at dagger.internal.DoubleCheck.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):1)
+10-27 20:05:10.707  1963  2119 E AndroidRuntime: 	at msh.c(:com.google.android.gms@224814082@22.48.14 (220704-493411920):0)
+10-27 20:05:10.707  1963  2119 E AndroidRuntime: 	at com.google.android.gms.dck.service.BleActionStateIntentOperation.onHandleIntent(:com.google.android.gms@224814082@22.48.14 (220704-493411920):3)
+10-27 20:05:10.707  1963  2119 E AndroidRuntime: 	at com.google.android.chimera.IntentOperation.onHandleIntent(:com.google.android.gms@224814082@22.48.14 (220704-493411920):2)
+10-27 20:05:10.707  1963  2119 E AndroidRuntime: 	at jsn.onHandleIntent(:com.google.android.gms@224814082@22.48.14 (220704-493411920):4)
+10-27 20:05:10.707  1963  2119 E AndroidRuntime: 	at emb.run(:com.google.android.gms@224814082@22.48.14 (220704-493411920):3)
+10-27 20:05:10.707  1963  2119 E AndroidRuntime: 	at ema.run(:com.google.android.gms@224814082@22.48.14 (220704-493411920):11)
+10-27 20:05:10.707  1963  2119 E AndroidRuntime: 	at aztn.run(:com.google.android.gms@224814082@22.48.14 (220704-493411920):2)
+10-27 20:05:10.707  1963  2119 E AndroidRuntime: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
+10-27 20:05:10.707  1963  2119 E AndroidRuntime: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
+10-27 20:05:10.707  1963  2119 E AndroidRuntime: 	at java.lang.Thread.run(Thread.java:923)
+10-27 20:05:10.806   461   481 D PowerManagerService: scheduleUserInactivityTimeout timeMs=2147501167
+10-27 20:05:10.806   461  1302 D PowerManagerService: scheduleUserInactivityTimeout timeMs=2147501167
+10-27 20:05:10.807   461   481 D PowerManagerService: scheduleUserInactivityTimeout timeMs=2147501167
+10-27 20:05:10.837   461   481 I DropBoxManagerService: add tag=system_app_crash isTagEnabled=true flags=0x2
+10-27 20:05:10.842   461  1302 D PowerManagerService: scheduleUserInactivityTimeout timeMs=2147501167
+10-27 20:05:10.848   461   610 D PowerManagerService: scheduleUserInactivityTimeout timeMs=2147501167
+10-27 20:05:10.848   461  1871 D PowerManagerService: scheduleUserInactivityTimeout timeMs=2147501167
+10-27 20:05:10.850   461  1268 D PowerManagerService: scheduleUserInactivityTimeout timeMs=2147501167
