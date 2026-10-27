@@ -82,6 +82,12 @@ struct RootView: View {
         case "search": app.selectedTab = .search
         case "player": app.playerOpen = true
         case "profile": app.profileOpen = true
+        case "book":
+            app.selectedTab = .home
+            app.openBook = BookRoute(id: app.settings.lastBookID ?? "demo-0")
+        case "show":
+            app.selectedTab = .podcasts
+            if let p = app.podcasts.podcasts().first { app.openShow = ShowRoute(id: p.id) }
         default: app.selectedTab = .home
         }
     }

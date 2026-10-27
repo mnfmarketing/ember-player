@@ -71,6 +71,7 @@ struct PodcastsView: View {
             }
         }
         .navigationDestination(for: ShowRoute.self) { ShowView(podcastID: $0.id) }
+        .navigationDestination(item: Binding(get: { app.openShow }, set: { app.openShow = $0 })) { ShowView(podcastID: $0.id) }
     }
 
     @ViewBuilder

@@ -20,6 +20,9 @@ final class AppModel {
     var playerOpen = false
     var profileOpen = false
     var selectedTab: AppTab = .home
+    /// Pages opened from elsewhere (and by the simulator checks).
+    var openBook: BookRoute?
+    var openShow: ShowRoute?
     /// "New shelf…" from a book's menu: the book to put on it.
     var newShelfFor: String?
     /// Screens opened by the simulator checks (launch argument -EmberRoute).
@@ -28,6 +31,8 @@ final class AppModel {
     init() {
         let schema = Schema([Book.self, Track.self, Chapter.self, Bookmark.self, ListenEvent.self, DayListening.self,
                              Shelf.self, LibraryFolder.self, Podcast.self, Episode.self, QueueItem.self])
+        // SwiftData keeps the library in Application Support; make sure the folder is there first.
+        try? FileManager.default.createDirectory(at: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0], withIntermediateDirectories: true)
         let config = ModelConfiguration(schema: schema)
         do {
             container = try ModelContainer(for: schema, configurations: [config])

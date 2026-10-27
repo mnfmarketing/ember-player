@@ -45,6 +45,7 @@ struct HomeView: View {
         .toolbar { ToolbarItem(placement: .topBarTrailing) { ProfileButton() } }
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: BookRoute.self) { BookView(bookID: $0.id) }
+        .navigationDestination(item: Binding(get: { app.openBook }, set: { app.openBook = $0 })) { BookView(bookID: $0.id) }
     }
 
     private var continueBook: Book? {
