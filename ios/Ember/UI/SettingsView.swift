@@ -117,7 +117,9 @@ private struct LibrarySection: View {
             Button {
                 Task {
                     guard let drive = app.library.drive else { return }
-                    if drive.connected || (await drive.connect()) { pickingDrive = true }
+                    var ok = drive.connected
+                    if !ok { ok = await drive.connect() }
+                    if ok { pickingDrive = true }
                 }
             } label: { Label("Add a Google Drive folder", systemImage: "externaldrive.badge.plus") }
             if let e = app.google.lastError { Text(e).font(.caption).foregroundStyle(.red) }
