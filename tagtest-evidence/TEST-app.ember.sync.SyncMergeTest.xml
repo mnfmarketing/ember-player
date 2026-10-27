@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="app.ember.sync.SyncMergeTest" tests="22" skipped="0" failures="0" errors="0" timestamp="2026-10-27T19:36:17" hostname="runnervmtai0g" time="0.06">
+<testsuite name="app.ember.sync.SyncMergeTest" tests="22" skipped="0" failures="0" errors="0" timestamp="2026-10-27T19:49:20" hostname="runnervmtai0g" time="0.059">
   <properties/>
   <testcase name="aBookThatJustAppearedTakesTheOtherDevicesPlace" classname="app.ember.sync.SyncMergeTest" time="0.016"/>
   <testcase name="firstSyncUploadsEverything" classname="app.ember.sync.SyncMergeTest" time="0.002"/>
   <testcase name="newerPlaceOnTheOtherDeviceComesHere" classname="app.ember.sync.SyncMergeTest" time="0.001"/>
   <testcase name="stateFileRoundTrips" classname="app.ember.sync.SyncMergeTest" time="0.002"/>
-  <testcase name="listeningHereEarlierLosesEvenIfSyncedLater" classname="app.ember.sync.SyncMergeTest" time="0.002"/>
-  <testcase name="sameValueDoesNotBounceBackAndForth" classname="app.ember.sync.SyncMergeTest" time="0.0"/>
-  <testcase name="bookmarksFromBothDevicesAreKept" classname="app.ember.sync.SyncMergeTest" time="0.001"/>
-  <testcase name="logKeepsTheNewest400" classname="app.ember.sync.SyncMergeTest" time="0.01"/>
+  <testcase name="listeningHereEarlierLosesEvenIfSyncedLater" classname="app.ember.sync.SyncMergeTest" time="0.001"/>
+  <testcase name="sameValueDoesNotBounceBackAndForth" classname="app.ember.sync.SyncMergeTest" time="0.001"/>
+  <testcase name="bookmarksFromBothDevicesAreKept" classname="app.ember.sync.SyncMergeTest" time="0.0"/>
+  <testcase name="logKeepsTheNewest400" classname="app.ember.sync.SyncMergeTest" time="0.011"/>
   <testcase name="oldDeletionsAreForgotten" classname="app.ember.sync.SyncMergeTest" time="0.0"/>
   <testcase name="aMergedSkipKeepsItsLatestVersion" classname="app.ember.sync.SyncMergeTest" time="0.0"/>
   <testcase name="logFileRoundTrips" classname="app.ember.sync.SyncMergeTest" time="0.003"/>
-  <testcase name="logsFromBothDevicesInterleave" classname="app.ember.sync.SyncMergeTest" time="0.0"/>
+  <testcase name="logsFromBothDevicesInterleave" classname="app.ember.sync.SyncMergeTest" time="0.001"/>
   <testcase name="placesAreNeverDeleted" classname="app.ember.sync.SyncMergeTest" time="0.001"/>
-  <testcase name="bookKeysIgnoreCaseAccentsAndPunctuation" classname="app.ember.sync.SyncMergeTest" time="0.01"/>
-  <testcase name="aBookmarkDeletedElsewhereIsDeletedHere" classname="app.ember.sync.SyncMergeTest" time="0.001"/>
-  <testcase name="clearAllOnEitherDeviceClearsBoth" classname="app.ember.sync.SyncMergeTest" time="0.001"/>
+  <testcase name="bookKeysIgnoreCaseAccentsAndPunctuation" classname="app.ember.sync.SyncMergeTest" time="0.011"/>
+  <testcase name="aBookmarkDeletedElsewhereIsDeletedHere" classname="app.ember.sync.SyncMergeTest" time="0.0"/>
+  <testcase name="clearAllOnEitherDeviceClearsBoth" classname="app.ember.sync.SyncMergeTest" time="0.0"/>
   <testcase name="markingFinishedMovesThePlaceToo" classname="app.ember.sync.SyncMergeTest" time="0.002"/>
-  <testcase name="canonicalTextIsTheSameWhateverTheOrder" classname="app.ember.sync.SyncMergeTest" time="0.001"/>
+  <testcase name="canonicalTextIsTheSameWhateverTheOrder" classname="app.ember.sync.SyncMergeTest" time="0.002"/>
   <testcase name="anUnansweredQuestionDoesNotOverwriteTheOtherDevice" classname="app.ember.sync.SyncMergeTest" time="0.001"/>
   <testcase name="bookmarksOfABookNotHereAreNeverDeleted" classname="app.ember.sync.SyncMergeTest" time="0.0"/>
   <testcase name="deletingABookmarkHereDeletesItEverywhere" classname="app.ember.sync.SyncMergeTest" time="0.0"/>
