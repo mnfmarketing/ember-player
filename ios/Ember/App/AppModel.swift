@@ -70,7 +70,6 @@ final class AppModel {
             if parts.count == 2, let pos = Int64(parts[1]) { await sync.testFakeOtherDevice(bookID: String(parts[0]), positionMs: pos) }
         }
         sync.request("open", delay: 1)
-        _ = try? await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound])
         await library.scanAll()
     }
 

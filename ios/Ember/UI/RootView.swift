@@ -26,9 +26,7 @@ struct RootView: View {
         }
         .tabViewStyle(.sidebarAdaptable)
         .tabBarMinimizeBehavior(.onScrollDown)
-        .tabViewBottomAccessory {
-            if !wide { MiniPlayer() }
-        }
+        .miniPlayer(!wide && app.player.loaded != nil)
         // iPad: the player stays open beside the library, like the Fold unfolded.
         .inspector(isPresented: .constant(wide && app.player.loaded != nil)) {
             PlayerView(column: true)
@@ -232,5 +230,19 @@ struct Avatar: View {
         }
         .frame(width: size, height: size)
         .clipShape(Circle())
+    }
+}
+
+private extension View {
+    /// The mini player above the tab bar. Hidden (not an empty glass bar) when nothing is loaded or the iPad shows the player column.
+    @ViewBuilder
+    func miniPlayer(_ show: Bool) -> some View {
+        if #available(iOS 26.1, *) {
+            tabViewBottomAccessory(isEnabled: show) { MiniPlayer() }
+        } else if show {
+            tabViewBottomAccessory { MiniPlayer() }
+        } else {
+            self
+        }
     }
 }

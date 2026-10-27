@@ -89,7 +89,13 @@ final class PodcastStore {
         for e in feed.episodes { insert(e, podcastID: id) }
         changed()
         await fetchArtwork(p)
+        if p.notify { await Self.askForAlerts() }
         return id
+    }
+
+    /// Asks once, when alerts first matter (following a show or turning its alerts on), not at launch.
+    static func askForAlerts() async {
+        _ = try? await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound])
     }
 
     private func insert(_ e: ParsedEpisode, podcastID: String) {

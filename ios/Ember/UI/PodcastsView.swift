@@ -231,7 +231,11 @@ struct ShowView: View {
                     Text([p.author, p.category].filter { !$0.isEmpty }.joined(separator: " · ")).font(.subheadline).foregroundStyle(.secondary)
                     HStack(spacing: 22) {
                         RoundAction(title: "Following", icon: "checkmark", on: true) { }
-                        RoundAction(title: "Alerts", icon: p.notify ? "bell.fill" : "bell", on: p.notify) { p.notify.toggle(); done() }
+                        RoundAction(title: "Alerts", icon: p.notify ? "bell.fill" : "bell", on: p.notify) {
+                            p.notify.toggle()
+                            if p.notify { Task { await PodcastStore.askForAlerts() } }
+                            done()
+                        }
                         RoundAction(title: "Auto-get", icon: "arrow.down.circle", on: p.autoDownload) { p.autoDownload.toggle(); done() }
                         RoundAction(title: "Settings", icon: "gearshape", on: false) { settings = true }
                     }
@@ -307,6 +311,7 @@ struct ShowSettingsView: View {
             Form {
                 Section {
                     Toggle("New episode alerts", isOn: $podcast.notify)
+                        .onChange(of: podcast.notify) { _, on in if on { Task { await PodcastStore.askForAlerts() } } }
                     Toggle("Auto download new episodes", isOn: $podcast.autoDownload)
                     Toggle("Add new episodes to Up Next", isOn: $podcast.autoQueue)
                     Toggle("Archive played episodes", isOn: $podcast.autoArchive)
