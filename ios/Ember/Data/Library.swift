@@ -12,6 +12,10 @@ final class Library {
     private(set) var version = 0
     var scanning: String?
     var folderProblems: [String: String] = [:]
+    /// Google Drive books (set by the app once sign-in exists).
+    @ObservationIgnored var drive: DriveFiles?
+    /// Drive books being saved for offline listening: book id → files done / total.
+    var saving: [String: (Int, Int)] = [:]
 
     init(context: ModelContext, settings: Settings) {
         self.context = context
@@ -162,7 +166,10 @@ final class Library {
     func removeFolder(_ folder: LibraryFolder) {
         let fid: String? = folder.id
         let d = FetchDescriptor<Book>(predicate: #Predicate { $0.folderID == fid })
-        for b in (try? context.fetch(d)) ?? [] { deleteBook(b.id) }
+        for b in (try? context.fetch(d)) ?? [] {
+            if folder.driveID != nil { removeDownload(b.id) }
+            deleteBook(b.id)
+        }
         context.delete(folder)
         changed()
     }
@@ -177,17 +184,19 @@ final class Library {
         return url
     }
 
-    /// Where a book's file is now (local books).
+    /// Where a book's file is now: the local file, a downloaded Drive copy, or a Drive stream.
     func fileURL(book: Book, track: Track) -> URL? {
+        if let d = DriveTrack(track.path) { return d.local ?? d.stream }
         guard let fid = book.folderID, let folder = folders().first(where: { $0.id == fid }), let root = open(folder) else { return nil }
         return root.appendingPathComponent(track.path)
     }
 
     func scanAll() async {
-        for f in folders() where f.driveID == nil && f.id != "demo" { await scan(f) }
+        for f in folders() where f.id != "demo" { await scan(f) }
     }
 
     func scan(_ folder: LibraryFolder) async {
+        if folder.driveID != nil { return await scanDrive(folder) }
         guard let root = open(folder) else {
             folderProblems[folder.id] = "Ember can't open this folder any more. Remove it and add it again."
             return
@@ -223,6 +232,90 @@ final class Library {
                 if let f = self.folders().first(where: { $0.id == fid }) { await self.scan(f) }
             }
         }
+    }
+
+    // MARK: Google Drive
+
+    func addDriveFolder(id: String, name: String) async {
+        if let have = folders().first(where: { $0.driveID == id }) { return await scan(have) }
+        let folder = LibraryFolder(name: name, driveID: id)
+        context.insert(folder)
+        changed()
+        await scan(folder)
+    }
+
+    private func scanDrive(_ folder: LibraryFolder) async {
+        guard let drive, let rootID = folder.driveID else { return }
+        guard drive.connected else {
+            folderProblems[folder.id] = "Google Drive needs you to sign in again (Settings → Library folders)."
+            return
+        }
+        scanning = folder.name
+        defer { scanning = nil }
+        var found: [Scanner.Found] = []
+        do {
+            try await Scanner.walkDrive(drive, folderID: rootID, name: folder.name, into: &found)
+        } catch {
+            folderProblems[folder.id] = "Couldn't reach this Drive folder. Check your connection, or that it's still in your Drive."
+            return
+        }
+        folderProblems[folder.id] = nil
+        var keep = Set<String>()
+        for f in found {
+            let id = Ids.nameUUID("drive:" + f.key)
+            keep.insert(id)
+            if book(id) != nil, tracks(id).count == f.files.count { continue }
+            var s = await Scanner.read(f, root: URL(fileURLWithPath: "/"))
+            // Tracks point at Drive files ("drive:<id>/<name>").
+            for (i, url) in f.files.enumerated() where i < s.tracks.count {
+                s.tracks[i].path = "drive:" + (url.host ?? "") + url.path
+            }
+            if s.art == nil, book(id)?.coverFile == nil, let c = f.cover, let cid = DriveStream.fileID(c) {
+                s.art = try? await drive.download(cid)
+            }
+            importBook(id: id, folder: folder, found: f, scanned: s)
+            book(id)?.source = Book.sourceDrive
+            changed()
+        }
+        if !found.isEmpty {
+            let fid: String? = folder.id
+            let d = FetchDescriptor<Book>(predicate: #Predicate { $0.folderID == fid })
+            for b in (try? context.fetch(d)) ?? [] where !keep.contains(b.id) { removeDownload(b.id); deleteBook(b.id) }
+        }
+        folder.lastScanAt = Date()
+        try? context.save()
+        changed()
+    }
+
+    /// Whether every file of a Drive book is saved on this device (nil: not a Drive book).
+    func isDownloaded(_ bookID: String) -> Bool? {
+        let ts = tracks(bookID).compactMap { DriveTrack($0.path) }
+        guard !ts.isEmpty else { return nil }
+        return ts.allSatisfy { $0.local != nil }
+    }
+
+    /// Saves a Drive book on this device so it plays without a connection.
+    func download(_ bookID: String) async {
+        guard let drive, saving[bookID] == nil else { return }
+        let ts = tracks(bookID).compactMap { DriveTrack($0.path) }
+        saving[bookID] = (0, ts.count)
+        defer { saving[bookID] = nil; changed() }
+        for (i, t) in ts.enumerated() {
+            if t.local == nil {
+                do { _ = try await drive.save(t.id, ext: t.ext) } catch {
+                    folderProblems["download"] = "Couldn't download all of this book. Check your connection and try again."
+                    return
+                }
+            }
+            saving[bookID] = (i + 1, ts.count)
+        }
+    }
+
+    func removeDownload(_ bookID: String) {
+        for t in tracks(bookID).compactMap({ DriveTrack($0.path) }) {
+            try? FileManager.default.removeItem(at: DriveFiles.localURL(t.id, ext: t.ext))
+        }
+        changed()
     }
 
     private func importBook(id: String, folder: LibraryFolder, found: Scanner.Found, scanned s: Scanner.Scanned) {
@@ -285,4 +378,26 @@ final class Library {
         }
         return s
     }
+}
+
+/// A track stored in Google Drive: "drive:<file id>/<file name>".
+struct DriveTrack {
+    var id: String
+    var name: String
+    var ext: String { (name as NSString).pathExtension.lowercased() }
+
+    init?(_ path: String) {
+        guard path.hasPrefix("drive:") else { return nil }
+        let rest = path.dropFirst(6)
+        guard let slash = rest.firstIndex(of: "/") else { return nil }
+        id = String(rest[..<slash])
+        name = String(rest[rest.index(after: slash)...])
+    }
+
+    var local: URL? {
+        let u = DriveFiles.localURL(id, ext: ext)
+        return FileManager.default.fileExists(atPath: u.path) ? u : nil
+    }
+
+    var stream: URL { DriveFiles.streamURL(.init(id: id, name: name, mimeType: "", size: 0)) }
 }

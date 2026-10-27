@@ -166,7 +166,7 @@ final class Player {
         var idx = 0
         for (i, o) in l.offsets.enumerated() where o <= global { idx = i }
         index = idx
-        let item = AVPlayerItem(url: l.urls[idx])
+        let item = AVPlayerItem(asset: DriveStream.asset(l.urls[idx]))
         item.audioTimePitchAlgorithm = .spectral
         av.replaceCurrentItem(with: item)
         let inTrack = max(global - l.offsets[idx], 0)

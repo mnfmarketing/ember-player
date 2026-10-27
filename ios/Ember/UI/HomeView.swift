@@ -20,6 +20,9 @@ struct HomeView: View {
 
                 if let b = continueBook {
                     ContinueCard(book: b)
+                        // The mini player would repeat this card, so it steps aside while the card shows.
+                        .onScrollVisibilityChange(threshold: 0.4) { app.continueCardShowing = $0 && player.loaded?.id == b.id }
+                        .onDisappear { app.continueCardShowing = false }
                 } else {
                     EmptyHome()
                 }

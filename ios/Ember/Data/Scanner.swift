@@ -73,6 +73,47 @@ struct Scanner {
         for d in dirs { walk(d.url, root: root, depth: depth + 1, into: &out) }
     }
 
+    /// The same rules for a Google Drive folder. Keys are Drive ids (the book's folder, or its single file).
+    @MainActor
+    static func walkDrive(_ drive: DriveFiles, folderID: String, name: String, depth: Int = 0, into out: inout [Found]) async throws {
+        guard depth <= 8 else { return }
+        let kids = try await drive.list(folderID)
+        let audio = kids.filter(\.isAudio).sorted { Names.naturalLess($0.name, $1.name) }
+        let images = kids.filter(\.isImage)
+        let dirs = kids.filter(\.isFolder).sorted { Names.naturalLess($0.name, $1.name) }
+        func cover(_ list: [DriveFiles.File]) -> DriveFiles.File? {
+            let preferred = ["cover", "folder", "front", "art", "poster"]
+            return list.min { a, b in
+                (preferred.firstIndex { a.base.lowercased().contains($0) } ?? 99) < (preferred.firstIndex { b.base.lowercased().contains($0) } ?? 99)
+            }
+        }
+        let folderCover = cover(images)
+        if audio.isEmpty, dirs.count >= 2, dirs.allSatisfy({ Names.isDiscName($0.name) }) {
+            var discs: [[DriveFiles.File]] = []
+            for d in dirs { discs.append(try await drive.list(d.id)) }
+            if discs.allSatisfy({ k in !k.contains(where: \.isFolder) && k.contains(where: \.isAudio) }) {
+                let parts = discs.map { $0.filter(\.isAudio).sorted { Names.naturalLess($0.name, $1.name) } }
+                let c = folderCover ?? discs.lazy.compactMap { cover($0.filter(\.isImage)) }.first
+                out.append(Found(key: folderID, files: parts.flatMap { $0.map(DriveFiles.streamURL) }, fallbackTitle: name,
+                                 cover: c.map(DriveFiles.streamURL), parts: parts.map(\.count)))
+                return
+            }
+        }
+        if !audio.isEmpty {
+            let allContainers = audio.allSatisfy { Scanner.containerExt.contains($0.ext) }
+            let loose = (depth == 0 && (!dirs.isEmpty || allContainers)) || (allContainers && audio.count > 1)
+            if loose {
+                for f in audio {
+                    let c = images.first { $0.base.lowercased() == f.base.lowercased() } ?? (audio.count == 1 ? folderCover : nil)
+                    out.append(Found(key: f.id, files: [DriveFiles.streamURL(f)], fallbackTitle: f.base, cover: c.map(DriveFiles.streamURL)))
+                }
+            } else {
+                out.append(Found(key: folderID, files: audio.map(DriveFiles.streamURL), fallbackTitle: name, cover: folderCover.map(DriveFiles.streamURL)))
+            }
+        }
+        for d in dirs { try await walkDrive(drive, folderID: d.id, name: d.name, depth: depth + 1, into: &out) }
+    }
+
     struct Entry {
         var url: URL
         var name: String
@@ -129,7 +170,7 @@ struct Scanner {
         var chapters: [(String, Int64, Int64)] = []
         var offset: Int64 = 0
         for (i, url) in f.files.enumerated() {
-            let asset = AVURLAsset(url: url)
+            let asset = DriveStream.asset(url)
             let duration = (try? await asset.load(.duration)).map { Int64(($0.seconds.isFinite ? $0.seconds : 0) * 1000) } ?? 0
             let common = (try? await asset.load(.commonMetadata)) ?? []
             let all = (try? await asset.load(.metadata)) ?? []
@@ -172,7 +213,7 @@ struct Scanner {
         var bookTitle = f.fallbackTitle
         if let t = title?.trimmingCharacters(in: .whitespaces), !t.isEmpty { bookTitle = f.parts.isEmpty ? t : Names.stripDisc(t) }
         if !f.parts.isEmpty { renumberAcrossDiscs(&chapters, &tracks, bookTitle: bookTitle) }
-        if art == nil, let cover = f.cover { art = try? Data(contentsOf: cover) }
+        if art == nil, let cover = f.cover, cover.isFileURL { art = try? Data(contentsOf: cover) }
         return Scanned(
             title: bookTitle,
             author: (author ?? "").trimmingCharacters(in: .whitespaces),

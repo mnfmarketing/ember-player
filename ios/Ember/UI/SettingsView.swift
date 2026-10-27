@@ -95,6 +95,7 @@ private struct LibrarySection: View {
     @Environment(AppModel.self) private var app
     @Query(sort: \LibraryFolder.name) private var folders: [LibraryFolder]
     @State private var picking = false
+    @State private var pickingDrive = false
 
     var body: some View {
         Section {
@@ -113,16 +114,26 @@ private struct LibrarySection: View {
                 }
             }
             Button { picking = true } label: { Label("Add a folder", systemImage: "plus") }
+            Button {
+                Task {
+                    guard let drive = app.library.drive else { return }
+                    if drive.connected || (await drive.connect()) { pickingDrive = true }
+                }
+            } label: { Label("Add a Google Drive folder", systemImage: "externaldrive.badge.plus") }
+            if let e = app.google.lastError { Text(e).font(.caption).foregroundStyle(.red) }
             if !folders.isEmpty {
                 Button { Task { await app.library.scanAll() } } label: { Label("Look for new books", systemImage: "arrow.clockwise") }
             }
         } header: {
             Text("Library folders")
         } footer: {
-            Text("Folders from the Files app: On My iPhone, iCloud Drive or other places. Books in iCloud that aren't downloaded yet are fetched and added a little later. Removing a folder only removes its books from Ember, never the files.")
+            Text("Folders from the Files app: On My iPhone, iCloud Drive or other places. Books in iCloud that aren't downloaded yet are fetched and added a little later. Google Drive folders stream (read-only), and any book can be downloaded from its page. Removing a folder only removes its books from Ember, never the files.")
         }
         .fileImporter(isPresented: $picking, allowedContentTypes: [.folder]) { r in
             if case .success(let url) = r { Task { await app.library.addFolder(url) } }
+        }
+        .sheet(isPresented: $pickingDrive) {
+            NavigationStack { DriveFolderPicker(folderID: nil, name: "Google Drive") { pickingDrive = false } }
         }
     }
 }
@@ -213,7 +224,7 @@ private struct BackupSection: View {
         } header: {
             Text("Backup and restore")
         } footer: {
-            Text("The same backup file as Ember on Android: a backup from your Fold restores here, and the other way round. Restoring adds to your library rather than replacing it.")
+            Text("Ember also saves a backup each day in the Files app (On My iPhone › Ember › Backups) and keeps the last 14. The same backup file as Ember on Android: a backup from your Fold restores here, and the other way round. Restoring adds to your library rather than replacing it.")
         }
         .fileExporter(isPresented: $exporting, document: doc, contentType: .json, defaultFilename: "Ember backup \(Date().formatted(.iso8601.year().month().day()))") { _ in }
         .fileImporter(isPresented: $importing, allowedContentTypes: [.json, .data]) { r in
@@ -301,4 +312,55 @@ struct SearchView: View {
     }
 
     private func fold(_ s: String) -> String { s.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: nil).trimmingCharacters(in: .whitespaces) }
+}
+
+/// Browse Google Drive folders and pick the one your books are in.
+struct DriveFolderPicker: View {
+    @Environment(AppModel.self) private var app
+    @Environment(\.dismiss) private var dismiss
+    /// nil: the top (My Drive and Shared with me).
+    let folderID: String?
+    let name: String
+    /// Closes the whole picker.
+    let done: () -> Void
+    @State private var folders: [DriveFiles.File]?
+    @State private var failed = false
+
+    var body: some View {
+        List {
+            if folderID == nil {
+                NavigationLink { DriveFolderPicker(folderID: "root", name: "My Drive", done: done) } label: { Label("My Drive", systemImage: "externaldrive") }
+                NavigationLink { DriveFolderPicker(folderID: "shared", name: "Shared with me", done: done) } label: { Label("Shared with me", systemImage: "person.2") }
+            } else if let folders {
+                if folders.isEmpty { Text("No folders in here.").foregroundStyle(.secondary) }
+                ForEach(folders) { f in
+                    NavigationLink { DriveFolderPicker(folderID: f.id, name: f.name, done: done) } label: { Label(f.name, systemImage: "folder") }
+                }
+            } else if failed {
+                Text("Couldn't reach Google Drive. Check your connection and try again.").foregroundStyle(.secondary)
+            } else {
+                ProgressView().frame(maxWidth: .infinity)
+            }
+        }
+        .navigationTitle(name)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            if folderID == nil {
+                ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
+            } else if folderID != "shared" {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Use this folder") {
+                        guard let id = folderID else { return }
+                        Task { await app.library.addDriveFolder(id: id, name: name) }
+                        done()
+                    }
+                    .buttonStyle(.glassProminent)
+                }
+            }
+        }
+        .task {
+            guard let folderID, folders == nil, let drive = app.library.drive else { return }
+            do { folders = try await drive.list(folderID, foldersOnly: true) } catch { failed = true }
+        }
+    }
 }

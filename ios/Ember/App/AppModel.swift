@@ -23,6 +23,8 @@ final class AppModel {
     /// Pages opened from elsewhere (and by the simulator checks).
     var openBook: BookRoute?
     var openShow: ShowRoute?
+    /// Home's Continue listening card is on screen (the mini player hides meanwhile).
+    var continueCardShowing = false
     /// "New shelf…" from a book's menu: the book to put on it.
     var newShelfFor: String?
     /// Screens opened by the simulator checks (launch argument -EmberRoute).
@@ -49,6 +51,7 @@ final class AppModel {
         player = Player(library: library, settings: settings)
         sync = SyncService(library: library, podcasts: podcasts, settings: settings, auth: google)
         player.podcasts = podcasts
+        library.drive = DriveFiles(auth: google)
         sync.player = player
         player.onSyncWorthy = { [weak self] reason in self?.sync.request(reason, delay: reason == "playing" ? 1 : 4) }
         player.sleep.onShakeAfterExpiry = { [weak self] in
@@ -79,6 +82,7 @@ final class AppModel {
 
     func background() {
         player.saveProgress()
+        Backup.daily(self)
         sync.request("background", delay: 0)
         scheduleRefresh()
     }

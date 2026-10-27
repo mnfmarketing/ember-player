@@ -43,14 +43,14 @@ for mode in dark light; do
   shot "$PHONE" "p-$m-07-profile" profile 6
   shot "$PHONE" "p-$m-08-search" search 6
   shot "$PAD" "t-$m-01-home" home 8
-  shot "$PAD" "t-$m-02-player" player 7
-  shot "$PAD" "t-$m-03-books" books 6
+  shot "$PAD" "t-$m-02-player" player 9
+  shot "$PAD" "t-$m-03-books" books 9
+  shot "$PAD" "t-$m-04-book" book 9
 done
 
 # Sync: another device moved this book on, so Ember asks before jumping.
 xcrun simctl ui "$PHONE" appearance dark
 shot "$PHONE" "p-sync-prompt" home 10 -EmberSyncTest YES -EmberSyncFake demo-0,360000
-xcrun simctl spawn "$PHONE" log show --last 3m --style compact --predicate 'subsystem == "app.ember.audiobooks"' > "$OUT/app-log.txt" 2>&1 || true
 mkdir -p "$OUT/crashes"
-find ~/Library/Logs/DiagnosticReports -name 'Ember*' -newer "$APP" -exec cp {} "$OUT/crashes/" \; 2>/dev/null || true
+cp ~/Library/Logs/DiagnosticReports/Ember* "$OUT/crashes/" 2>/dev/null || true
 ls -la "$OUT" "$OUT/crashes"

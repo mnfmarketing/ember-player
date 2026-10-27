@@ -52,6 +52,26 @@ enum Backup {
         return String(decoding: data, as: UTF8.self)
     }
 
+    /// Ember's folder in the Files app (On My iPhone › Ember › Backups).
+    static var folder: URL {
+        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("Backups", isDirectory: true)
+    }
+
+    /// Once a day (when Ember goes to the background): a backup in Ember's folder, keeping the newest 14.
+    static func daily(_ app: AppModel) {
+        if let last = app.settings.lastAutoBackupAt, Date().timeIntervalSince(last) < 20 * 3600 { return }
+        guard !app.library.books().isEmpty || !app.podcasts.podcasts().isEmpty else { return }
+        let fm = FileManager.default
+        try? fm.createDirectory(at: folder, withIntermediateDirectories: true)
+        let name = "Ember backup \(Date().formatted(.iso8601.year().month().day())).json"
+        guard (try? Data(export(app).utf8).write(to: folder.appendingPathComponent(name), options: .atomic)) != nil else { return }
+        app.settings.lastAutoBackupAt = Date()
+        let all = ((try? fm.contentsOfDirectory(at: folder, includingPropertiesForKeys: nil)) ?? [])
+            .filter { $0.lastPathComponent.hasPrefix("Ember backup ") && $0.pathExtension == "json" }
+            .sorted { $0.lastPathComponent > $1.lastPathComponent }
+        for old in all.dropFirst(14) { try? fm.removeItem(at: old) }
+    }
+
     private static func key(_ title: String, _ author: String) -> String {
         func n(_ s: String) -> String { s.lowercased().filter { $0.isASCII && ($0.isLetter || $0.isNumber) } }
         return n(title) + "|" + n(author)

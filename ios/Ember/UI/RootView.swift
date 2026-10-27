@@ -26,11 +26,11 @@ struct RootView: View {
         }
         .tabViewStyle(.sidebarAdaptable)
         .tabBarMinimizeBehavior(.onScrollDown)
-        .miniPlayer(!wide && app.player.loaded != nil)
+        .miniPlayer(!wide && app.player.loaded != nil && !(app.selectedTab == .home && app.continueCardShowing))
         // iPad: the player stays open beside the library, like the Fold unfolded.
         .inspector(isPresented: .constant(wide && app.player.loaded != nil)) {
             PlayerView(column: true)
-                .inspectorColumnWidth(min: 340, ideal: 400, max: 520)
+                .inspectorColumnWidth(min: 320, ideal: 360, max: 520)
         }
         .fullScreenCover(isPresented: $app.playerOpen) { PlayerView() }
         .sheet(isPresented: $app.profileOpen) { ProfileView() }

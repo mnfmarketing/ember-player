@@ -28,6 +28,7 @@ final class Settings {
     /// Books to play next, in order (book ids).
     var upNext: [String] { didSet { d.set(upNext, forKey: "upNext") } }
     var lastBackupAt: Date? { didSet { d.set(lastBackupAt, forKey: "lastBackupAt") } }
+    var lastAutoBackupAt: Date? { didSet { d.set(lastAutoBackupAt, forKey: "lastAutoBackupAt") } }
     /// Podcasts: most unplayed episodes kept downloaded per show by auto-download.
     var autoDownloadCount: Int { didSet { d.set(autoDownloadCount, forKey: "autoDownloadCount") } }
     var podcastSpeedDefault: Double { didSet { d.set(podcastSpeedDefault, forKey: "podcastSpeedDefault") } }
@@ -53,6 +54,7 @@ final class Settings {
         profilePhotoAt = Int64(d.integer(forKey: "profilePhotoAt"))
         upNext = d.stringArray(forKey: "upNext") ?? []
         lastBackupAt = d.object(forKey: "lastBackupAt") as? Date
+        lastAutoBackupAt = d.object(forKey: "lastAutoBackupAt") as? Date
         autoDownloadCount = int("autoDownloadCount", 2)
         podcastSpeedDefault = d.object(forKey: "podcastSpeedDefault") == nil ? 1 : d.double(forKey: "podcastSpeedDefault")
     }

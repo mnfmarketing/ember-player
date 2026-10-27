@@ -74,11 +74,16 @@ struct BookView: View {
                     .accessibilityLabel(app.settings.upNext.contains(b.id) ? "In Up Next" : "Add to Up Next")
                 }
 
-                HStack(spacing: 8) {
-                    Pill(title: "Listening log", icon: "clock.arrow.circlepath") { showLog = true }
-                    Pill(title: "Bookmarks", icon: "bookmark") { showMarks = true }
-                    Pill(title: "Sound", icon: "slider.horizontal.3") { showSound = true }
+                ScrollView(.horizontal) {
+                    HStack(spacing: 8) {
+                        Pill(title: "Listening log", icon: "clock.arrow.circlepath") { showLog = true }
+                        Pill(title: "Bookmarks", icon: "bookmark") { showMarks = true }
+                        Pill(title: "Sound", icon: "slider.horizontal.3") { showSound = true }
+                    }
+                    .padding(.horizontal, 2)
                 }
+                .scrollIndicators(.hidden)
+                .scrollBounceBehavior(.basedOnSize)
 
                 HStack(spacing: 0) {
                     Fact(label: "LENGTH", value: Fmt.duration(b.durationMs), soft: soft)
@@ -107,6 +112,10 @@ struct BookView: View {
                     .frame(maxWidth: .infinity)
                 }
                 .foregroundStyle(.white)
+
+                if let saved = app.library.isDownloaded(b.id) {
+                    DriveRow(bookID: b.id, saved: saved, soft: soft)
+                }
 
                 if !b.desc.isEmpty {
                     Text(b.desc).font(.subheadline).foregroundStyle(soft).frame(maxWidth: .infinity, alignment: .leading)
@@ -198,7 +207,7 @@ struct Pill: View {
 
     var body: some View {
         Button(action: action) {
-            Label(title, systemImage: icon).font(.subheadline.weight(.medium)).padding(.horizontal, 4)
+            Label(title, systemImage: icon).font(.subheadline.weight(.medium)).lineLimit(1).fixedSize().padding(.horizontal, 4)
         }
         .buttonStyle(.glass)
         .controlSize(.small)
@@ -245,5 +254,40 @@ struct BookSoundView: View {
             .navigationBarTitleDisplayMode(.inline)
             .onDisappear { app.library.changed() }
         }
+    }
+}
+
+/// Drive books: stream by default, or save on this device for listening offline.
+private struct DriveRow: View {
+    @Environment(AppModel.self) private var app
+    let bookID: String
+    let saved: Bool
+    let soft: Color
+
+    var body: some View {
+        let _ = app.library.version
+        HStack(spacing: 12) {
+            Image(systemName: saved ? "checkmark.icloud.fill" : "icloud").font(.title3)
+            VStack(alignment: .leading, spacing: 2) {
+                if let p = app.library.saving[bookID] {
+                    Text("Downloading… \(p.0) of \(p.1)").font(.subheadline.weight(.semibold))
+                    ProgressView(value: Double(p.0), total: Double(max(p.1, 1))).tint(.white)
+                } else {
+                    Text(saved ? "Downloaded" : "Streams from Google Drive").font(.subheadline.weight(.semibold))
+                    Text(saved ? "Plays without a connection." : "Download it to listen offline.").font(.caption).foregroundStyle(soft)
+                }
+            }
+            Spacer()
+            if app.library.saving[bookID] == nil {
+                if saved {
+                    Button("Remove", role: .destructive) { app.library.removeDownload(bookID) }.buttonStyle(.glass)
+                } else {
+                    Button("Download") { Task { await app.library.download(bookID) } }.buttonStyle(.glass)
+                }
+            }
+        }
+        .foregroundStyle(.white)
+        .padding(14)
+        .background(.white.opacity(0.08), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 }
