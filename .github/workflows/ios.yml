@@ -1,0 +1,91 @@
+name: iOS
+
+# Ember for iPhone and iPad, built on GitHub's Mac machines.
+#  - ios branch: unit tests, then the app on iPhone and iPad simulators with screenshots (saved to ci-logs).
+#  - main (only when ios/ changed): an unsigned Ember-iOS-N.ipa under Releases, for SideStore to sign and install.
+on:
+  push:
+    branches: [ios, main]
+    paths: ['ios/**', '.github/workflows/ios.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  ios:
+    runs-on: macos-26
+    timeout-minutes: 80
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Newest Xcode
+        run: |
+          ls -d /Applications/Xcode*.app
+          X=$(ls -d /Applications/Xcode_*.app | grep -v -i beta | sort -V | tail -1)
+          sudo xcode-select -s "$X"
+          xcodebuild -version
+
+      - name: Make the Xcode project
+        run: |
+          brew install xcodegen > /dev/null
+          cd ios && xcodegen generate
+
+      - name: Pick simulators
+        run: |
+          xcrun simctl list devices available -j > /tmp/sims.json
+          python3 ios/ci/pick_sims.py /tmp/sims.json >> "$GITHUB_ENV"
+          cat "$GITHUB_ENV"
+
+      - name: Unit tests
+        run: |
+          set -o pipefail
+          mkdir -p ios-out
+          cd ios
+          xcodebuild test -project Ember.xcodeproj -scheme Ember -destination "id=$PHONE" \
+            -derivedDataPath build CODE_SIGNING_ALLOWED=NO 2>&1 | tee ../ios-out/build.log \
+            | grep -E "error:|Test Case .* (passed|failed)|Executed|\*\* (BUILD|TEST)" | head -400
+
+      - name: Screenshots on iPhone and iPad
+        if: github.ref_name == 'ios'
+        run: bash ios/ci/shots.sh
+
+      - name: Unsigned app for SideStore
+        if: github.ref_name == 'main'
+        run: |
+          set -o pipefail
+          N=$(( $(git ls-remote --tags origin 'refs/tags/ios-*' | wc -l | tr -d ' ') + 1 ))
+          echo "IOS_BUILD=$N" >> "$GITHUB_ENV"
+          cd ios
+          xcodebuild -project Ember.xcodeproj -scheme Ember -configuration Release -sdk iphoneos \
+            -derivedDataPath build-device CURRENT_PROJECT_VERSION=$N CODE_SIGNING_ALLOWED=NO build 2>&1 | tee ../ios-out/release.log | grep -E "error:|\*\* BUILD" | head -100
+          mkdir -p Payload
+          cp -R build-device/Build/Products/Release-iphoneos/Ember.app Payload/
+          zip -qry "../Ember-iOS-$N.ipa" Payload
+          ls -la ../Ember-iOS-$N.ipa
+
+      - name: Publish release
+        if: github.ref_name == 'main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ios-${{ env.IOS_BUILD }}
+          name: Ember for iPhone and iPad ${{ env.IOS_BUILD }}
+          files: Ember-iOS-${{ env.IOS_BUILD }}.ipa
+          make_latest: false
+          body: Install with SideStore on your iPhone or iPad (Sideload, then pick this file).
+
+      - name: Save results
+        if: always()
+        run: |
+          git config user.name "ember-ci"
+          git config user.email "ci@users.noreply.github.com"
+          grep -E "error:" ios-out/build.log | head -60 > ios-out/errors.txt || true
+          mkdir -p /tmp/ios && cp -r ios-out/. /tmp/ios/ 2>/dev/null || true
+          git fetch -q origin ci-logs || true
+          git stash -u -q || true
+          if git rev-parse -q --verify origin/ci-logs > /dev/null; then git checkout -q -B ci-logs origin/ci-logs; else git checkout -q --orphan ci-logs; git rm -rfq --cached . ; fi
+          git clean -fdq
+          rm -rf ios-run && mkdir -p ios-run/${{ github.run_number }} && cp -r /tmp/ios/. ios-run/${{ github.run_number }}/
+          git add ios-run
+          git commit -qm "iOS run ${{ github.run_number }}" || true
+          git push -q origin ci-logs || (git pull -q --rebase origin ci-logs && git push -q origin ci-logs) || true

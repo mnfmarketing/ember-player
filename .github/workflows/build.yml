@@ -6,6 +6,8 @@ name: Build Ember
 on:
   push:
     branches: [main]
+    # The iPhone app has its own workflow (ios.yml).
+    paths-ignore: ['ios/**', '.github/workflows/ios.yml']
   workflow_dispatch:
 
 permissions:

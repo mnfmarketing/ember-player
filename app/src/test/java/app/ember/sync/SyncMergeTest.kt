@@ -35,6 +35,8 @@ class SyncMergeTest {
         assertNull(SyncKeys.book("  ", "Someone", false))
         assertEquals(SyncKeys.logFile("a|b"), SyncKeys.logFile("a|b"))
         assertTrue(SyncKeys.logFile("a|b").matches(Regex("log-[0-9a-f]{20}\\.json")))
+        // The iPhone app computes the same name (SyncModelTests).
+        assertEquals("log-88393465741aa111be93.json", SyncKeys.logFile("thelanternthief|adawren"))
     }
 
     private fun SyncKeys.book(t: String, a: String) = book(t, a, false)
