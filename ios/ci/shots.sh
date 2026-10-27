@@ -9,24 +9,24 @@ mkdir -p "$OUT"
 shot() {  # device name route [wait] [extra args...]
   local dev=$1 name=$2 route=$3 wait=${4:-6}
   shift 4 2>/dev/null || shift $#
-  xcrun simctl launch --terminate-running-process "$dev" $BID -EmberDemo YES -EmberRoute "$route" "$@" > /dev/null
+  xcrun simctl launch --terminate-running-process "$dev" $BID -EmberDemo YES -EmberRoute "$route" "$@" < /dev/null > /dev/null 2>&1
   sleep "$wait"
   xcrun simctl io "$dev" screenshot "$OUT/$name.png" > /dev/null
 }
 
 for dev in "$PHONE" "$PAD"; do
-  xcrun simctl boot "$dev" || true
+  xcrun simctl boot "$dev" < /dev/null > /dev/null 2>&1 || true
 done
 xcrun simctl bootstatus "$PHONE" -b
 xcrun simctl bootstatus "$PAD" -b
 for dev in "$PHONE" "$PAD"; do
   xcrun simctl install "$dev" "$APP"
-  xcrun simctl status_bar "$dev" override --time 9:41 --batteryState charged --batteryLevel 100 || true
+  xcrun simctl status_bar "$dev" override --time 9:41 --batteryState charged --batteryLevel 100 > /dev/null 2>&1 < /dev/null || true
 done
 
 # Warm-up: the first launch builds the demo library (audio and covers), so give it time before any screenshot.
 for dev in "$PHONE" "$PAD"; do
-  xcrun simctl launch "$dev" $BID -EmberDemo YES > /dev/null
+  xcrun simctl launch "$dev" $BID -EmberDemo YES < /dev/null > /dev/null 2>&1
 done
 sleep 30
 
@@ -54,3 +54,5 @@ shot "$PHONE" "p-sync-prompt" home 10 -EmberSyncTest YES -EmberSyncFake demo-0,3
 mkdir -p "$OUT/crashes"
 cp ~/Library/Logs/DiagnosticReports/Ember* "$OUT/crashes/" 2>/dev/null || true
 ls -la "$OUT" "$OUT/crashes"
+# Nothing left holding this step's output open.
+xcrun simctl shutdown all > /dev/null 2>&1 < /dev/null || true
