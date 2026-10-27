@@ -1,12 +1,12 @@
 Command line invocation:
-    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild test -project Ember.xcodeproj -scheme Ember -destination id=E839A11B-51B4-4AD3-ACF4-A53B95B7C957 -derivedDataPath build CODE_SIGNING_ALLOWED=NO
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild test -project Ember.xcodeproj -scheme Ember -destination id=77AA4492-C787-4EEE-A772-05D4B3E9ECCD -derivedDataPath build CODE_SIGNING_ALLOWED=NO
 
 Build settings from command line:
     CODE_SIGNING_ALLOWED = NO
 
 --- xcodebuild: WARNING: Using the first of multiple matching destinations:
-{ platform:iOS Simulator, arch:arm64, id:E839A11B-51B4-4AD3-ACF4-A53B95B7C957, OS:26.5, name:iPhone 17 Pro }
-{ platform:iOS Simulator, arch:x86_64, id:E839A11B-51B4-4AD3-ACF4-A53B95B7C957, OS:26.5, name:iPhone 17 Pro }
+{ platform:iOS Simulator, arch:arm64, id:77AA4492-C787-4EEE-A772-05D4B3E9ECCD, OS:26.5, name:iPhone 17 Pro }
+{ platform:iOS Simulator, arch:x86_64, id:77AA4492-C787-4EEE-A772-05D4B3E9ECCD, OS:26.5, name:iPhone 17 Pro }
 ComputePackagePrebuildTargetDependencyGraph
 
 Prepare packages
@@ -38,8 +38,8 @@ ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/X
 
 ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/actool --version --output-format xml1
 
-Build description signature: 9d3ac5fe6c0b9565b6ea6ef277e9e3cf
-Build description path: /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/XCBuildData/9d3ac5fe6c0b9565b6ea6ef277e9e3cf.xcbuilddata
+Build description signature: 3564c8001b43d8b8101ff6b4c827c00b
+Build description path: /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/XCBuildData/3564c8001b43d8b8101ff6b4c827c00b.xcbuilddata
 ClangStatCache /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk /Users/runner/work/ember-player/ember-player/ios/build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-688ef53f1462e2c8f657fdc38a81448ff45c64a1807a658693f2a61704f17a36.sdkstatcache
     cd /Users/runner/work/ember-player/ember-player/ios/Ember.xcodeproj
     /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -o /Users/runner/work/ember-player/ember-player/ios/build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-688ef53f1462e2c8f657fdc38a81448ff45c64a1807a658693f2a61704f17a36.sdkstatcache
@@ -275,45 +275,45 @@ SwiftDriver Ember normal arm64 com.apple.xcode.tools.swift.compiler (in target '
     cd /Users/runner/work/ember-player/ember-player/ios
     builtin-SwiftDriver -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Ember -Onone @/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target arm64-apple-ios26.0-simulator -g -module-cache-path /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/work/ember-player/ember-player/ios/build/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator -F /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/work/ember-player/ember-player/ios/build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-688ef53f1462e2c8f657fdc38a81448ff45c64a1807a658693f2a61704f17a36.sdkstatcache -output-file-map /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex -sdk-module-cache-path /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Ember-generated-files.hmap -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Ember-own-target-headers.hmap -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Ember-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Ember-project-headers.hmap -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember-Swift.h -working-directory /Users/runner/work/ember-player/ember-player/ios -experimental-emit-module-separately -disable-cmo
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_stdarg-89NKD4EM5EK6TR2JQAO4NWJE7.pcm
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/SwiftShims-ATCUSJT4J8QIGZ3RTSQIU7473.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/DeveloperToolsSupport-CSYNET52CFNM2V3WFUNYLJEFT.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_stdbool-EIMJ96Y08MKQ8D2VJMXBVCC5.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_stddef-7MAZRLXIKTUJTIZZGY2HHPK8F.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_AvailabilityInternal-73VGY7KD431ITQ1HRPHJHCU8I.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/ptrcheck-1JU1F85V75BDN5VM6P8OVM2Z3.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/ptrauth-34JYIJ2C4MPRULPV1NRT174YZ.pcm
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_stdbool-EIMJ96Y08MKQ8D2VJMXBVCC5.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_SwiftConcurrencyShims-4PCEDKSOYQKTOD1TQX7XB8UM1.pcm
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/ptrauth-34JYIJ2C4MPRULPV1NRT174YZ.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_DarwinFoundation1-EU8N3SPEXM7WBHI90XY29BNBQ.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_float-6RODQ7V4CKAIT3ETKZBESWQC9.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/SwiftShims-ATCUSJT4J8QIGZ3RTSQIU7473.pcm
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_stdarg-89NKD4EM5EK6TR2JQAO4NWJE7.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/ExtensionFoundation-8DOTEC6WPLMY3HRGK882TZ2M1.pcm
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_SwiftConcurrencyShims-4PCEDKSOYQKTOD1TQX7XB8UM1.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_limits-2A461IPLIEMRH5R5NBDGJ3BZZ.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_DarwinFoundation2-CDY2XJZCMEKOX5ONPICSE1SEC.pcm
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_stddef-7MAZRLXIKTUJTIZZGY2HHPK8F.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_tgmath-8OCSR68HB938CB27RS9PHFIWK.pcm
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/ExtensionFoundation-8DOTEC6WPLMY3HRGK882TZ2M1.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_DarwinFoundation2-CDY2XJZCMEKOX5ONPICSE1SEC.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/sys_types-4JWBQDCVND1JFFQDMWDEJXTSI.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_stdint-B0IRQVJKLXLPJVZ95KWSVW7DN.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_intrinsics-A3B7746W6WVHS99ZA40RZGZVX.pcm
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_tgmath-8OCSR68HB938CB27RS9PHFIWK.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_DarwinFoundation3-5LY5WWUQFSID0IC98FIXTKWE.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_stdatomic-3J7PGRPKR8QDSDI153RX46M4O.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_intrinsics-A3B7746W6WVHS99ZA40RZGZVX.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_inttypes-27HVCQTXVURT1JNTYDFQU7C17.pcm
 
@@ -325,99 +325,83 @@ SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-p
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/ObjectiveC-66I5Q7YKK48WE7SJQHJ9B3DVJ.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Spatial-1Y5LOLX0YOQ2O89O5B3DSQ64L.pcm
-
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/os_object-CFLYTHGYSSGIBAXGELCC7R3RN.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/os_workgroup-45R4AL5UT4YYPXBN9CUMLNICB.pcm
 
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Spatial-1Y5LOLX0YOQ2O89O5B3DSQ64L.pcm
+
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Dispatch-DIRUS29UJUORE0E6M9FRWW7BV.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/XPC-EDME7WFWPQ5CB45YUAC0AVS8F.pcm
-
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/dnssd-74UORIM4NNHQAIE1PKZ3K0O8H.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/XPC-EDME7WFWPQ5CB45YUAC0AVS8F.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreFoundation-DZMOX7ZMX7PVHHSZY3MIF8O51.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/os-EH6S0R4R535WRHCFEJ7MGJUMN.pcm
 
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreGraphics-1A24Y37ENNS5P4YFCOYHWCS9Y.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Security-41I4ZM32823H9GJSNKVDGJWXT.pcm
+
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreAudioTypes-3WL3PPA324LMW0QIHMPIR5Z2.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CFNetwork-D3I9BNFVG00L0O4Z9DDI8TTYV.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Security-41I4ZM32823H9GJSNKVDGJWXT.pcm
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreText-F24PSRMLRK8442GW6Z00V62WD.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreAudio-7K4NE8Z90USY1CVPEJZ9ZQL8Y.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreGraphics-1A24Y37ENNS5P4YFCOYHWCS9Y.pcm
-
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Foundation-95YDDDNDFDX4ET0DBHBYQAS40.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreText-F24PSRMLRK8442GW6Z00V62WD.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/ImageIO-EL81QUB698F3BJME3AJA4XBUN.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreMIDI-4XO2KVYXDNMFURH1L6W3IPVLJ.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/OpenGLES-E55NT8ZYMHXCPZVURS1RNNQDK.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/UIUtilities-JPB10XCYX3L3YHHRPZU3907G.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/IOSurface-A1510GEIG0048BXK7UYVMBLE5.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Network-95GDJ7ZCB193S2P6JRIPW9JUL.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Symbols-MOMERH7LL77TE2SHYKYA0V25.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Metal-AZWXSA4DCSY9W0W9D5JM9P18L.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/MediaAccessibility-EBGSTQS4T4E434XQXEG8967JF.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreData-4YMQ9HX2P5TIF7TUGKTXC91LX.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/AVRouting-6LEDLUBCQ54H72WL0EOQPDYF1.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/BackgroundTasks-E5GCNWSZURW5LBYYWQT90RWM7.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_LocationEssentials-AB2UGVGGMPR9JKT0XC7NTLYXO.pcm
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/DataDetection-9FFX4P66H2KAKIJ9KASKCIN31.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/OSLog-1N6J2477DPK35MA4D1NYSK6FP.pcm
 
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreTransferable-D6U6UQESSHDGG9AG9BXS9QVCF.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/UniformTypeIdentifiers-5KH3QLTW3Y9STM4Y51OHM20FV.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/OpenGLES-E55NT8ZYMHXCPZVURS1RNNQDK.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/FileProvider-4BNDBJPTG4MMMDUFEAZAFA6QB.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/IOSurface-A1510GEIG0048BXK7UYVMBLE5.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/UserNotifications-8V45D3VNTEQP8QD1L2H3UA9A0.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreMIDI-4XO2KVYXDNMFURH1L6W3IPVLJ.pcm
+
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/LocalAuthentication-29V4G80FBPSKNFJW7OBT7F69H.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Network-95GDJ7ZCB193S2P6JRIPW9JUL.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/MediaAccessibility-EBGSTQS4T4E434XQXEG8967JF.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Symbols-MOMERH7LL77TE2SHYKYA0V25.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/AVRouting-6LEDLUBCQ54H72WL0EOQPDYF1.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreData-4YMQ9HX2P5TIF7TUGKTXC91LX.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/BackgroundTasks-E5GCNWSZURW5LBYYWQT90RWM7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/AudioToolbox-C513YBI3T2SLFFG0D95C3UCVY.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/UIUtilities-JPB10XCYX3L3YHHRPZU3907G.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_LocationEssentials-AB2UGVGGMPR9JKT0XC7NTLYXO.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Metal-AZWXSA4DCSY9W0W9D5JM9P18L.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Accessibility-4YLX2072ORB1WK2RUX2AML8C7.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreLocation-D1ZPEAF3GAE206WN0HISE13G9.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreVideo-ACS5APMGR6WU14OEM13TDS7HI.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/AudioToolbox-C513YBI3T2SLFFG0D95C3UCVY.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/UniformTypeIdentifiers-5KH3QLTW3Y9STM4Y51OHM20FV.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreMedia-4ZBDLY9OTS0O3XO4TRDELV1BH.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/QuartzCore-AGDQ96ZWEYMODBG5XJKCIE3WL.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/DataDetection-9FFX4P66H2KAKIJ9KASKCIN31.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/SwiftUICore-DNKLYGHX855JPFM9A5I5Z6WHM.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/MediaToolbox-4OB7D5HS0GEN06K73C5X6QPM0.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/AVFAudio-DB9M2O7GP6Z4JHTFOC20YYZ4Z.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreImage-7D5QYA1RFFCMKKCWE1NLCQ8DN.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/UserNotifications-8V45D3VNTEQP8QD1L2H3UA9A0.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/AVFoundation-EATDMDWGOC8P2ZGEZNM6E1CF7.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/FileProvider-4BNDBJPTG4MMMDUFEAZAFA6QB.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreTransferable-D6U6UQESSHDGG9AG9BXS9QVCF.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/UIKit-3UHJO1XG58XV8T3PFWQ3OH00I.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Accessibility-4YLX2072ORB1WK2RUX2AML8C7.pcm
 
 LinkAssetCatalog /Users/runner/work/ember-player/ember-player/ios/Ember/Assets.xcassets (in target 'Ember' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
@@ -426,21 +410,37 @@ note: Emplaced /Users/runner/work/ember-player/ember-player/ios/build/Build/Prod
 note: Emplaced /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/AppIcon60x60@2x.png (in target 'Ember' from project 'Ember')
 note: Emplaced /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/AppIcon76x76@2x~ipad.png (in target 'Ember' from project 'Ember')
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Photos-25T6I1K1U04IY9BPDWC2COO5P.pcm
-
 ProcessInfoPlistFile /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Info.plist /Users/runner/work/ember-player/ember-player/ios/Ember/Info.plist (in target 'Ember' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
     builtin-infoPlistUtility /Users/runner/work/ember-player/ember-player/ios/Ember/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/assetcatalog_generated_info.plist -o /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Info.plist
 
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/QuartzCore-AGDQ96ZWEYMODBG5XJKCIE3WL.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreMedia-4ZBDLY9OTS0O3XO4TRDELV1BH.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreImage-7D5QYA1RFFCMKKCWE1NLCQ8DN.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/SwiftUICore-DNKLYGHX855JPFM9A5I5Z6WHM.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/AVFAudio-DB9M2O7GP6Z4JHTFOC20YYZ4Z.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/MediaToolbox-4OB7D5HS0GEN06K73C5X6QPM0.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/UIKit-3UHJO1XG58XV8T3PFWQ3OH00I.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/AVFoundation-EATDMDWGOC8P2ZGEZNM6E1CF7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Photos-25T6I1K1U04IY9BPDWC2COO5P.pcm
+
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/MediaPlayer-30EX2AUHR4UER99UB4N8W58MY.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/SwiftUI-EKRFF7PGKWAV3WWKNK8ERYLQK.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/PhotosUI-BCVI2Y5HF1XK8HVV3BJHPX1H7.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/AuthenticationServices-7EPOSWM9D32I8ZZG3E1D5U3ME.pcm
 
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/PhotosUI-BCVI2Y5HF1XK8HVV3BJHPX1H7.pcm
+
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/AVKit-34O5FYNS5HOVBWSEK4CGUR35M.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/SwiftUI-EKRFF7PGKWAV3WWKNK8ERYLQK.pcm
 
 SwiftEmitModule normal arm64 Emitting\ module\ for\ Ember (in target 'Ember' from project 'Ember')
 
@@ -448,7 +448,49 @@ EmitSwiftModule normal arm64 (in target 'Ember' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
     
 
+SwiftCompile normal arm64 Compiling\ Library.swift,\ ListenLogView.swift,\ Models.swift,\ Names.swift,\ Player.swift,\ PlayerView.swift,\ PodcastStore.swift,\ PodcastsView.swift,\ ProfileView.swift,\ RootView.swift /Users/runner/work/ember-player/ember-player/ios/Ember/Data/Library.swift /Users/runner/work/ember-player/ember-player/ios/Ember/UI/ListenLogView.swift /Users/runner/work/ember-player/ember-player/ios/Ember/Data/Models.swift /Users/runner/work/ember-player/ember-player/ios/Ember/Data/Names.swift /Users/runner/work/ember-player/ember-player/ios/Ember/Playback/Player.swift /Users/runner/work/ember-player/ember-player/ios/Ember/UI/PlayerView.swift /Users/runner/work/ember-player/ember-player/ios/Ember/Podcasts/PodcastStore.swift /Users/runner/work/ember-player/ember-player/ios/Ember/UI/PodcastsView.swift /Users/runner/work/ember-player/ember-player/ios/Ember/UI/ProfileView.swift /Users/runner/work/ember-player/ember-player/ios/Ember/UI/RootView.swift (in target 'Ember' from project 'Ember')
+SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/Ember/Data/Library.swift (in target 'Ember' from project 'Ember')
+    cd /Users/runner/work/ember-player/ember-player/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/Ember/UI/ListenLogView.swift (in target 'Ember' from project 'Ember')
+    cd /Users/runner/work/ember-player/ember-player/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/Ember/Data/Models.swift (in target 'Ember' from project 'Ember')
+    cd /Users/runner/work/ember-player/ember-player/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/Ember/Data/Names.swift (in target 'Ember' from project 'Ember')
+    cd /Users/runner/work/ember-player/ember-player/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/Ember/Playback/Player.swift (in target 'Ember' from project 'Ember')
+    cd /Users/runner/work/ember-player/ember-player/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/Ember/UI/PlayerView.swift (in target 'Ember' from project 'Ember')
+    cd /Users/runner/work/ember-player/ember-player/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/Ember/Podcasts/PodcastStore.swift (in target 'Ember' from project 'Ember')
+    cd /Users/runner/work/ember-player/ember-player/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/Ember/UI/PodcastsView.swift (in target 'Ember' from project 'Ember')
+    cd /Users/runner/work/ember-player/ember-player/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/Ember/UI/ProfileView.swift (in target 'Ember' from project 'Ember')
+    cd /Users/runner/work/ember-player/ember-player/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/Ember/UI/RootView.swift (in target 'Ember' from project 'Ember')
+    cd /Users/runner/work/ember-player/ember-player/ios
+    
+
 SwiftCompile normal arm64 Compiling\ AppModel.swift,\ Backup.swift,\ BookView.swift,\ BooksView.swift,\ Covers.swift,\ Demo.swift,\ EmberApp.swift,\ Feeds.swift,\ GoogleAuth.swift,\ HomeView.swift /Users/runner/work/ember-player/ember-player/ios/Ember/App/AppModel.swift /Users/runner/work/ember-player/ember-player/ios/Ember/Data/Backup.swift /Users/runner/work/ember-player/ember-player/ios/Ember/UI/BookView.swift /Users/runner/work/ember-player/ember-player/ios/Ember/UI/BooksView.swift /Users/runner/work/ember-player/ember-player/ios/Ember/Data/Covers.swift /Users/runner/work/ember-player/ember-player/ios/Ember/App/Demo.swift /Users/runner/work/ember-player/ember-player/ios/Ember/App/EmberApp.swift /Users/runner/work/ember-player/ember-player/ios/Ember/Podcasts/Feeds.swift /Users/runner/work/ember-player/ember-player/ios/Ember/Drive/GoogleAuth.swift /Users/runner/work/ember-player/ember-player/ios/Ember/UI/HomeView.swift (in target 'Ember' from project 'Ember')
+
 SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/Ember/App/AppModel.swift (in target 'Ember' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
     
@@ -493,6 +535,7 @@ SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/Ember
     
 
 SwiftCompile normal arm64 Compiling\ Scanner.swift,\ Settings.swift,\ SettingsView.swift,\ SleepTimer.swift,\ SyncModel.swift,\ SyncRemote.swift,\ SyncService.swift,\ Theme.swift,\ GeneratedAssetSymbols.swift /Users/runner/work/ember-player/ember-player/ios/Ember/Data/Scanner.swift /Users/runner/work/ember-player/ember-player/ios/Ember/Data/Settings.swift /Users/runner/work/ember-player/ember-player/ios/Ember/UI/SettingsView.swift /Users/runner/work/ember-player/ember-player/ios/Ember/Playback/SleepTimer.swift /Users/runner/work/ember-player/ember-player/ios/Ember/Sync/SyncModel.swift /Users/runner/work/ember-player/ember-player/ios/Ember/Sync/SyncRemote.swift /Users/runner/work/ember-player/ember-player/ios/Ember/Sync/SyncService.swift /Users/runner/work/ember-player/ember-player/ios/Ember/UI/Theme.swift /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'Ember' from project 'Ember')
+
 SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/Ember/Data/Scanner.swift (in target 'Ember' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
     
@@ -559,54 +602,11 @@ SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/build
     cd /Users/runner/work/ember-player/ember-player/ios
     
 
-SwiftCompile normal arm64 Compiling\ Library.swift,\ ListenLogView.swift,\ Models.swift,\ Names.swift,\ Player.swift,\ PlayerView.swift,\ PodcastStore.swift,\ PodcastsView.swift,\ ProfileView.swift,\ RootView.swift /Users/runner/work/ember-player/ember-player/ios/Ember/Data/Library.swift /Users/runner/work/ember-player/ember-player/ios/Ember/UI/ListenLogView.swift /Users/runner/work/ember-player/ember-player/ios/Ember/Data/Models.swift /Users/runner/work/ember-player/ember-player/ios/Ember/Data/Names.swift /Users/runner/work/ember-player/ember-player/ios/Ember/Playback/Player.swift /Users/runner/work/ember-player/ember-player/ios/Ember/UI/PlayerView.swift /Users/runner/work/ember-player/ember-player/ios/Ember/Podcasts/PodcastStore.swift /Users/runner/work/ember-player/ember-player/ios/Ember/UI/PodcastsView.swift /Users/runner/work/ember-player/ember-player/ios/Ember/UI/ProfileView.swift /Users/runner/work/ember-player/ember-player/ios/Ember/UI/RootView.swift (in target 'Ember' from project 'Ember')
-SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/Ember/Data/Library.swift (in target 'Ember' from project 'Ember')
-    cd /Users/runner/work/ember-player/ember-player/ios
-    
-
-SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/Ember/UI/ListenLogView.swift (in target 'Ember' from project 'Ember')
-    cd /Users/runner/work/ember-player/ember-player/ios
-    
-
-SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/Ember/Data/Models.swift (in target 'Ember' from project 'Ember')
-    cd /Users/runner/work/ember-player/ember-player/ios
-    
-
-SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/Ember/Data/Names.swift (in target 'Ember' from project 'Ember')
-    cd /Users/runner/work/ember-player/ember-player/ios
-    
-
-SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/Ember/Playback/Player.swift (in target 'Ember' from project 'Ember')
-    cd /Users/runner/work/ember-player/ember-player/ios
-    
-
-SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/Ember/UI/PlayerView.swift (in target 'Ember' from project 'Ember')
-    cd /Users/runner/work/ember-player/ember-player/ios
-    
-
-SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/Ember/Podcasts/PodcastStore.swift (in target 'Ember' from project 'Ember')
-    cd /Users/runner/work/ember-player/ember-player/ios
-    
-
-SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/Ember/UI/PodcastsView.swift (in target 'Ember' from project 'Ember')
-    cd /Users/runner/work/ember-player/ember-player/ios
-    
-
-SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/Ember/UI/ProfileView.swift (in target 'Ember' from project 'Ember')
-    cd /Users/runner/work/ember-player/ember-player/ios
-    
-
-SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/Ember/UI/RootView.swift (in target 'Ember' from project 'Ember')
-    cd /Users/runner/work/ember-player/ember-player/ios
-    
-
 SwiftDriverJobDiscovery normal arm64 Emitting module for Ember (in target 'Ember' from project 'Ember')
 
 SwiftDriver\ Compilation\ Requirements Ember normal arm64 com.apple.xcode.tools.swift.compiler (in target 'Ember' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
     builtin-Swift-Compilation-Requirements -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Ember -Onone @/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target arm64-apple-ios26.0-simulator -g -module-cache-path /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/work/ember-player/ember-player/ios/build/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator -F /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/work/ember-player/ember-player/ios/build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-688ef53f1462e2c8f657fdc38a81448ff45c64a1807a658693f2a61704f17a36.sdkstatcache -output-file-map /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex -sdk-module-cache-path /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Ember-generated-files.hmap -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Ember-own-target-headers.hmap -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Ember-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Ember-project-headers.hmap -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember-Swift.h -working-directory /Users/runner/work/ember-player/ember-player/ios -experimental-emit-module-separately -disable-cmo
-
-SwiftDriverJobDiscovery normal arm64 Compiling AppModel.swift, Backup.swift, BookView.swift, BooksView.swift, Covers.swift, Demo.swift, EmberApp.swift, Feeds.swift, GoogleAuth.swift, HomeView.swift (in target 'Ember' from project 'Ember')
 
 SwiftDriverJobDiscovery normal arm64 Compiling Scanner.swift, Settings.swift, SettingsView.swift, SleepTimer.swift, SyncModel.swift, SyncRemote.swift, SyncService.swift, Theme.swift, GeneratedAssetSymbols.swift (in target 'Ember' from project 'Ember')
 
@@ -634,11 +634,13 @@ SwiftDriver EmberTests normal arm64 com.apple.xcode.tools.swift.compiler (in tar
     cd /Users/runner/work/ember-player/ember-player/ios
     builtin-SwiftDriver -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name EmberTests -Onone @/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests.SwiftFileList -DDEBUG -plugin-path /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target arm64-apple-ios26.0-simulator -g -module-cache-path /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/work/ember-player/ember-player/ios/build/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator -F /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk/Developer/Library/Frameworks -parse-as-library -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/work/ember-player/ember-player/ios/build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-688ef53f1462e2c8f657fdc38a81448ff45c64a1807a658693f2a61704f17a36.sdkstatcache -output-file-map /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex -sdk-module-cache-path /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/EmberTests-generated-files.hmap -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/EmberTests-own-target-headers.hmap -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/EmberTests-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/EmberTests-project-headers.hmap -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests-Swift.h -working-directory /Users/runner/work/ember-player/ember-player/ios -experimental-emit-module-separately -disable-cmo
 
+SwiftDriverJobDiscovery normal arm64 Compiling AppModel.swift, Backup.swift, BookView.swift, BooksView.swift, Covers.swift, Demo.swift, EmberApp.swift, Feeds.swift, GoogleAuth.swift, HomeView.swift (in target 'Ember' from project 'Ember')
+
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/XCUIAutomation-48ZI4ZUJWR3PO88X3EOIXAXAV.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/XCTest-392H59FO8A6XWU2TYFUPN91LP.pcm
-
 SwiftExplicitDependencyCompileModuleFromInterface arm64 /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/XCUIAutomation-1QM09KW0MB72U.swiftmodule
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/XCTest-392H59FO8A6XWU2TYFUPN91LP.pcm
 
 SwiftExplicitDependencyCompileModuleFromInterface arm64 /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/XCTest-16MH81BEY0QCT.swiftmodule
 
@@ -649,7 +651,6 @@ SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/Ember
     
 
 SwiftCompile normal arm64 Compiling\ SyncModelTests.swift /Users/runner/work/ember-player/ember-player/ios/EmberTests/SyncModelTests.swift (in target 'EmberTests' from project 'Ember')
-
 SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/EmberTests/SyncModelTests.swift (in target 'EmberTests' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
     
@@ -680,12 +681,6 @@ Copy /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug
     cd /Users/runner/work/ember-player/ember-player/ios
     builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests.swiftsourceinfo /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/EmberTests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
 
-SwiftDriverJobDiscovery normal arm64 Compiling SyncModelTests.swift (in target 'EmberTests' from project 'Ember')
-
-SwiftDriver\ Compilation EmberTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'EmberTests' from project 'Ember')
-    cd /Users/runner/work/ember-player/ember-player/ios
-    builtin-Swift-Compilation -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name EmberTests -Onone @/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests.SwiftFileList -DDEBUG -plugin-path /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target arm64-apple-ios26.0-simulator -g -module-cache-path /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/work/ember-player/ember-player/ios/build/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator -F /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk/Developer/Library/Frameworks -parse-as-library -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/work/ember-player/ember-player/ios/build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-688ef53f1462e2c8f657fdc38a81448ff45c64a1807a658693f2a61704f17a36.sdkstatcache -output-file-map /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex -sdk-module-cache-path /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/EmberTests-generated-files.hmap -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/EmberTests-own-target-headers.hmap -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/EmberTests-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/EmberTests-project-headers.hmap -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests-Swift.h -working-directory /Users/runner/work/ember-player/ember-player/ios -experimental-emit-module-separately -disable-cmo
-
 SwiftDriverJobDiscovery normal arm64 Compiling Library.swift, ListenLogView.swift, Models.swift, Names.swift, Player.swift, PlayerView.swift, PodcastStore.swift, PodcastsView.swift, ProfileView.swift, RootView.swift (in target 'Ember' from project 'Ember')
 
 SwiftDriver\ Compilation Ember normal arm64 com.apple.xcode.tools.swift.compiler (in target 'Ember' from project 'Ember')
@@ -695,6 +690,12 @@ SwiftDriver\ Compilation Ember normal arm64 com.apple.xcode.tools.swift.compiler
 Ld /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Ember.debug.dylib normal (in target 'Ember' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
     /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios26.0-simulator -dynamiclib -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -O0 -L/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator -F/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator -filelist /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember.LinkFileList -install_name @rpath/Ember.debug.dylib -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember.swiftmodule @/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember-linker-args.resp -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point -o /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Ember.debug.dylib
+
+SwiftDriverJobDiscovery normal arm64 Compiling SyncModelTests.swift (in target 'EmberTests' from project 'Ember')
+
+SwiftDriver\ Compilation EmberTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'EmberTests' from project 'Ember')
+    cd /Users/runner/work/ember-player/ember-player/ios
+    builtin-Swift-Compilation -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name EmberTests -Onone @/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests.SwiftFileList -DDEBUG -plugin-path /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target arm64-apple-ios26.0-simulator -g -module-cache-path /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/work/ember-player/ember-player/ios/build/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator -F /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk/Developer/Library/Frameworks -parse-as-library -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/work/ember-player/ember-player/ios/build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-688ef53f1462e2c8f657fdc38a81448ff45c64a1807a658693f2a61704f17a36.sdkstatcache -output-file-map /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex -sdk-module-cache-path /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/EmberTests-generated-files.hmap -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/EmberTests-own-target-headers.hmap -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/EmberTests-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/EmberTests-project-headers.hmap -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests-Swift.h -working-directory /Users/runner/work/ember-player/ember-player/ios -experimental-emit-module-separately -disable-cmo
 
 ConstructStubExecutorLinkFileList /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Ember-ExecutorLinkFileList-normal-arm64.txt (in target 'Ember' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
@@ -707,21 +708,21 @@ Ld /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-i
 
 ExtractAppIntentsMetadata (in target 'Ember' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
-    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.ixcgHn/Metal.xctoolchain --module-name Ember --sdk-root /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk --xcode-version 17F113 --platform-family iOS --deployment-target 26.0 --bundle-identifier app.ember.audiobooks --output /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app --target-triple arm64-apple-ios26.0-simulator --binary-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Ember --dependency-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember_dependency_info.dat --stringsdata-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember.SwiftFileList --metadata-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Ember.DependencyMetadataFileList --static-metadata-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Ember.DependencyStaticMetadataFileList --swift-const-vals-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
-2026-10-27 20:01:13.673 appintentsmetadataprocessor[2311:10240] Starting appintentsmetadataprocessor export
-2026-10-27 20:01:13.684 appintentsmetadataprocessor[2311:10240] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.9JwlN1/Metal.xctoolchain --module-name Ember --sdk-root /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk --xcode-version 17F113 --platform-family iOS --deployment-target 26.0 --bundle-identifier app.ember.audiobooks --output /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app --target-triple arm64-apple-ios26.0-simulator --binary-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Ember --dependency-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember_dependency_info.dat --stringsdata-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember.SwiftFileList --metadata-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Ember.DependencyMetadataFileList --static-metadata-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Ember.DependencyStaticMetadataFileList --swift-const-vals-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-10-27 20:08:23.391 appintentsmetadataprocessor[2170:10383] Starting appintentsmetadataprocessor export
+2026-10-27 20:08:23.407 appintentsmetadataprocessor[2170:10383] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
 
 CopySwiftLibs /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app (in target 'Ember' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
-    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Ember.debug.dylib --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Frameworks --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/SystemExtensions --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Extensions --platform iphonesimulator --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.ixcgHn/Metal.xctoolchain --toolchain /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Ember.debug.dylib --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Frameworks --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/SystemExtensions --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Extensions --platform iphonesimulator --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.9JwlN1/Metal.xctoolchain --toolchain /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
 Ignoring --strip-bitcode because --sign was not passed
 
 AppIntentsSSUTraining (in target 'Ember' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
     /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsnltrainingprocessor --infoplist-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Info.plist --temp-dir-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/ssu --bundle-id app.ember.audiobooks --product-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app --extracted-metadata-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Metadata.appintents --metadata-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Ember.DependencyMetadataFileList --source-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Info.plist --archive-ssu-assets
-2026-10-27 20:01:13.717 appintentsnltrainingprocessor[2312:10243] Parsing options for appintentsnltrainingprocessor
-2026-10-27 20:01:13.718 appintentsnltrainingprocessor[2312:10243] Starting AppIntents SSU YAML Generation
-2026-10-27 20:01:13.723 appintentsnltrainingprocessor[2312:10243] No AppShortcuts found - Skipping.
+2026-10-27 20:08:23.446 appintentsnltrainingprocessor[2173:10393] Parsing options for appintentsnltrainingprocessor
+2026-10-27 20:08:23.447 appintentsnltrainingprocessor[2173:10393] Starting AppIntents SSU YAML Generation
+2026-10-27 20:08:23.453 appintentsnltrainingprocessor[2173:10393] No AppShortcuts found - Skipping.
 
 ProcessInfoPlistFile /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/Info.plist /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/empty-EmberTests.plist (in target 'EmberTests' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
@@ -733,21 +734,21 @@ Ld /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-i
 
 ExtractAppIntentsMetadata (in target 'EmberTests' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
-    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.ixcgHn/Metal.xctoolchain --module-name EmberTests --sdk-root /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk --xcode-version 17F113 --platform-family iOS --deployment-target 26.0 --bundle-identifier app.ember.audiobooks.tests --output /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest --target-triple arm64-apple-ios26.0-simulator --binary-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/EmberTests --dependency-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests_dependency_info.dat --stringsdata-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests.SwiftFileList --metadata-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/EmberTests.DependencyMetadataFileList --static-metadata-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/EmberTests.DependencyStaticMetadataFileList --swift-const-vals-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
-2026-10-27 20:01:14.139 appintentsmetadataprocessor[2318:10280] Starting appintentsmetadataprocessor export
-2026-10-27 20:01:14.140 appintentsmetadataprocessor[2318:10280] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.9JwlN1/Metal.xctoolchain --module-name EmberTests --sdk-root /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk --xcode-version 17F113 --platform-family iOS --deployment-target 26.0 --bundle-identifier app.ember.audiobooks.tests --output /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest --target-triple arm64-apple-ios26.0-simulator --binary-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/EmberTests --dependency-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests_dependency_info.dat --stringsdata-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests.SwiftFileList --metadata-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/EmberTests.DependencyMetadataFileList --static-metadata-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/EmberTests.DependencyStaticMetadataFileList --swift-const-vals-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-10-27 20:08:23.910 appintentsmetadataprocessor[2176:10400] Starting appintentsmetadataprocessor export
+2026-10-27 20:08:23.912 appintentsmetadataprocessor[2176:10400] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
 
 CopySwiftLibs /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest (in target 'EmberTests' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
-    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/EmberTests --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/Frameworks --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/PlugIns --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/SystemExtensions --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/Extensions --platform iphonesimulator --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.ixcgHn/Metal.xctoolchain --toolchain /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/EmberTests --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/Frameworks --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/PlugIns --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/SystemExtensions --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/Extensions --platform iphonesimulator --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.9JwlN1/Metal.xctoolchain --toolchain /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
 Ignoring --strip-bitcode because --sign was not passed
 
 AppIntentsSSUTraining (in target 'EmberTests' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
     /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsnltrainingprocessor --infoplist-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/Info.plist --temp-dir-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/ssu --bundle-id app.ember.audiobooks.tests --product-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest --extracted-metadata-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/Metadata.appintents --metadata-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/EmberTests.DependencyMetadataFileList --source-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/Info.plist --archive-ssu-assets
-2026-10-27 20:01:14.161 appintentsnltrainingprocessor[2319:10281] Parsing options for appintentsnltrainingprocessor
-2026-10-27 20:01:14.162 appintentsnltrainingprocessor[2319:10281] Starting AppIntents SSU YAML Generation
-2026-10-27 20:01:14.162 appintentsnltrainingprocessor[2319:10281] No AppShortcuts found - Skipping.
+2026-10-27 20:08:23.933 appintentsnltrainingprocessor[2177:10401] Parsing options for appintentsnltrainingprocessor
+2026-10-27 20:08:23.934 appintentsnltrainingprocessor[2177:10401] Starting AppIntents SSU YAML Generation
+2026-10-27 20:08:23.934 appintentsnltrainingprocessor[2177:10401] No AppShortcuts found - Skipping.
 
 RegisterExecutionPolicyException /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest (in target 'EmberTests' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
@@ -769,950 +770,61 @@ Touch /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debu
     cd /Users/runner/work/ember-player/ember-player/ios
     /usr/bin/touch -c /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app
 
-2026-10-27 20:03:20.786158+0000 Ember[3130:14714] [error] CoreData: error: Failed to stat path '/Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/1DBE3572-B141-482F-8FD2-14CCCC827D03/Library/Application Support/default.store', errno 2 / No such file or directory.
-CoreData: error: Failed to stat path '/Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/1DBE3572-B141-482F-8FD2-14CCCC827D03/Library/Application Support/default.store', errno 2 / No such file or directory.
-2026-10-27 20:03:20.787566+0000 Ember[3130:14714] [error] CoreData: error: Executing as effective user 501
-CoreData: error: Executing as effective user 501
-2026-10-27 20:03:20.787672+0000 Ember[3130:14714] [error] CoreData: error:   Sandbox access to file-write-create denied
-CoreData: error:   Sandbox access to file-write-create denied
-2026-10-27 20:03:20.787738+0000 Ember[3130:14714] [error] CoreData: error: Failed to statfs file; errno 2 / No such file or directory.
-CoreData: error: Failed to statfs file; errno 2 / No such file or directory.
-2026-10-27 20:03:20.822540+0000 Ember[3130:14714] [error] CoreData: error: Information for file system
-CoreData: error: Information for file system
-2026-10-27 20:03:20.822649+0000 Ember[3130:14714] [error] CoreData: error: ---------------------------
-CoreData: error: ---------------------------
-2026-10-27 20:03:20.822734+0000 Ember[3130:14714] [error] CoreData: error:   File system type: 		0
-CoreData: error:   File system type: 		0
-2026-10-27 20:03:20.822808+0000 Ember[3130:14714] [error] CoreData: error:   File system flags: 		0
-CoreData: error:   File system flags: 		0
-2026-10-27 20:03:20.822867+0000 Ember[3130:14714] [error] CoreData: error:   Total data blocks: 		0
-CoreData: error:   Total data blocks: 		0
-2026-10-27 20:03:20.822919+0000 Ember[3130:14714] [error] CoreData: error:   Free data blocks: 		0
-CoreData: error:   Free data blocks: 		0
-2026-10-27 20:03:20.822977+0000 Ember[3130:14714] [error] CoreData: error:   Free blocks for nonsuperuser:	0
-CoreData: error:   Free blocks for nonsuperuser:	0
-2026-10-27 20:03:20.838138+0000 Ember[3130:14714] [error] CoreData: error:   Total i-nodes: 			0
-CoreData: error:   Total i-nodes: 			0
-2026-10-27 20:03:20.838259+0000 Ember[3130:14714] [error] CoreData: error:   File system ID: 		0, 0
-CoreData: error:   File system ID: 		0, 0
-2026-10-27 20:03:20.838321+0000 Ember[3130:14714] [error] CoreData: error:   Free i-nodes: 			0
-CoreData: error:   Free i-nodes: 			0
-2026-10-27 20:03:20.838379+0000 Ember[3130:14714] [error] CoreData: error:   Owner UID: 			0
-CoreData: error:   Owner UID: 			0
-2026-10-27 20:03:20.838433+0000 Ember[3130:14714] [error] CoreData: error:   Filesystem type name:
-CoreData: error:   Filesystem type name: 		
-2026-10-27 20:03:20.838506+0000 Ember[3130:14714] [error] CoreData: error:   Mount on name:
-CoreData: error:   Mount on name: 			
-2026-10-27 20:03:20.838557+0000 Ember[3130:14714] [error] CoreData: error:   Mount from name: 		\M-D\M-|\^C\M^@\^A
-CoreData: error:   Mount from name: 		ƒ¸Ä
-2026-10-27 20:03:20.839386+0000 Ember[3130:14714] [error] CoreData: error: Failed to stat path '/Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/1DBE3572-B141-482F-8FD2-14CCCC827D03/Library/Application Support', errno 2 / No such file or directory.
-CoreData: error: Failed to stat path '/Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/1DBE3572-B141-482F-8FD2-14CCCC827D03/Library/Application Support', errno 2 / No such file or directory.
-2026-10-27 20:03:20.839497+0000 Ember[3130:14714] [error] CoreData: error: Executing as effective user 501
-CoreData: error: Executing as effective user 501
-2026-10-27 20:03:20.839612+0000 Ember[3130:14714] [error] CoreData: error:   Sandbox access to file-write-create denied
-CoreData: error:   Sandbox access to file-write-create denied
-2026-10-27 20:03:20.839699+0000 Ember[3130:14714] [error] CoreData: error: Failed to statfs file; errno 2 / No such file or directory.
-CoreData: error: Failed to statfs file; errno 2 / No such file or directory.
-2026-10-27 20:03:20.840924+0000 Ember[3130:14714] [error] CoreData: error: Information for file system
-CoreData: error: Information for file system
-2026-10-27 20:03:20.841025+0000 Ember[3130:14714] [error] CoreData: error: ---------------------------
-CoreData: error: ---------------------------
-2026-10-27 20:03:20.841096+0000 Ember[3130:14714] [error] CoreData: error:   File system type: 		0
-CoreData: error:   File system type: 		0
-2026-10-27 20:03:20.841154+0000 Ember[3130:14714] [error] CoreData: error:   File system flags: 		0
-CoreData: error:   File system flags: 		0
-2026-10-27 20:03:20.841207+0000 Ember[3130:14714] [error] CoreData: error:   Total data blocks: 		0
-CoreData: error:   Total data blocks: 		0
-2026-10-27 20:03:20.841256+0000 Ember[3130:14714] [error] CoreData: error:   Free data blocks: 		0
-CoreData: error:   Free data blocks: 		0
-2026-10-27 20:03:20.847234+0000 Ember[3130:14714] [error] CoreData: error:   Free blocks for nonsuperuser:	0
-CoreData: error:   Free blocks for nonsuperuser:	0
-2026-10-27 20:03:20.847475+0000 Ember[3130:14714] [error] CoreData: error:   Total i-nodes: 			0
-CoreData: error:   Total i-nodes: 			0
-2026-10-27 20:03:20.847610+0000 Ember[3130:14714] [error] CoreData: error:   File system ID: 		0, 0
-CoreData: error:   File system ID: 		0, 0
-2026-10-27 20:03:20.847727+0000 Ember[3130:14714] [error] CoreData: error:   Free i-nodes: 			0
-CoreData: error:   Free i-nodes: 			0
-2026-10-27 20:03:20.847821+0000 Ember[3130:14714] [error] CoreData: error:   Owner UID: 			0
-CoreData: error:   Owner UID: 			0
-2026-10-27 20:03:20.848021+0000 Ember[3130:14714] [error] CoreData: error:   Filesystem type name:
-CoreData: error:   Filesystem type name: 		
-2026-10-27 20:03:20.848188+0000 Ember[3130:14714] [error] CoreData: error:   Mount on name:
-CoreData: error:   Mount on name: 			
-2026-10-27 20:03:20.848647+0000 Ember[3130:14714] [error] CoreData: error:   Mount from name: 		\M-D\M-|\^C\M^@\^A
-CoreData: error:   Mount from name: 		ƒ¸Ä
-2026-10-27 20:03:20.850116+0000 Ember[3130:14714] [error] CoreData: error: Executing as effective user 501
-CoreData: error: Executing as effective user 501
-2026-10-27 20:03:20.850202+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/1DBE3572-B141-482F-8FD2-14CCCC827D03/Library
-CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/1DBE3572-B141-482F-8FD2-14CCCC827D03/Library
-2026-10-27 20:03:20.850266+0000 Ember[3130:14714] [error] CoreData: error: ---------------------------
-CoreData: error: ---------------------------
-2026-10-27 20:03:20.850318+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.850648+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.850711+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		160 bytes
-CoreData: error:   File Size: 		160 bytes
-2026-10-27 20:03:20.850762+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		3001859
-CoreData: error:   File inode: 		3001859
-2026-10-27 20:03:20.850810+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		501
-CoreData: error:   File user ID: 		501
-2026-10-27 20:03:20.850859+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		20
-CoreData: error:   File group ID: 		20
-2026-10-27 20:03:20.850905+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.850952+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.851015+0000 Ember[3130:14714] [error] CoreData: error:   755
-CoreData: error:   755
-2026-10-27 20:03:20.851587+0000 Ember[3130:14714] [error] CoreData: error:   file is not a symbolic link
-CoreData: error:   file is not a symbolic link
-2026-10-27 20:03:20.851693+0000 Ember[3130:14714] [error] CoreData: error:   Sandbox access to file-write-create allowed
-CoreData: error:   Sandbox access to file-write-create allowed
-2026-10-27 20:03:20.851759+0000 Ember[3130:14714] [error] CoreData: error: Information for file system
-CoreData: error: Information for file system
-2026-10-27 20:03:20.851805+0000 Ember[3130:14714] [error] CoreData: error: ---------------------------
-CoreData: error: ---------------------------
-2026-10-27 20:03:20.851850+0000 Ember[3130:14714] [error] CoreData: error:   File system type: 		0x1a
-CoreData: error:   File system type: 		0x1a
-2026-10-27 20:03:20.851897+0000 Ember[3130:14714] [error] CoreData: error:   File system flags: 		0x4909000
-CoreData: error:   File system flags: 		0x4909000
-2026-10-27 20:03:20.851942+0000 Ember[3130:14714] [error] CoreData: error:   MNT_JOURNALED
-CoreData: error:   MNT_JOURNALED
-2026-10-27 20:03:20.852214+0000 Ember[3130:14714] [error] CoreData: error:   Total data blocks: 		83758080
-CoreData: error:   Total data blocks: 		83758080
-2026-10-27 20:03:20.852265+0000 Ember[3130:14714] [error] CoreData: error:   Free data blocks: 		24659366
-CoreData: error:   Free data blocks: 		24659366
-2026-10-27 20:03:20.852311+0000 Ember[3130:14714] [error] CoreData: error:   Free blocks for nonsuperuser:	24659366
-CoreData: error:   Free blocks for nonsuperuser:	24659366
-2026-10-27 20:03:20.852359+0000 Ember[3130:14714] [error] CoreData: error:   Total i-nodes: 			988293571
-CoreData: error:   Total i-nodes: 			988293571
-2026-10-27 20:03:20.852427+0000 Ember[3130:14714] [error] CoreData: error:   File system ID: 		0x100000e, 0x1a
-CoreData: error:   File system ID: 		0x100000e, 0x1a
-2026-10-27 20:03:20.852480+0000 Ember[3130:14714] [error] CoreData: error:   Free i-nodes: 			986374640
-CoreData: error:   Free i-nodes: 			986374640
-2026-10-27 20:03:20.852527+0000 Ember[3130:14714] [error] CoreData: error:   Owner UID: 			0
-CoreData: error:   Owner UID: 			0
-2026-10-27 20:03:20.852788+0000 Ember[3130:14714] [error] CoreData: error:   Filesystem type name: 		apfs
-CoreData: error:   Filesystem type name: 		apfs
-2026-10-27 20:03:20.852838+0000 Ember[3130:14714] [error] CoreData: error:   Mount on name: 			/System/Volumes/Data
-CoreData: error:   Mount on name: 			/System/Volumes/Data
-2026-10-27 20:03:20.852888+0000 Ember[3130:14714] [error] CoreData: error:   Mount from name: 		/dev/disk2s5
-CoreData: error:   Mount from name: 		/dev/disk2s5
-2026-10-27 20:03:20.852969+0000 Ember[3130:14714] [error] CoreData: error: Executing as effective user 501
-CoreData: error: Executing as effective user 501
-2026-10-27 20:03:20.853016+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/1DBE3572-B141-482F-8FD2-14CCCC827D03
-CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/1DBE3572-B141-482F-8FD2-14CCCC827D03
-2026-10-27 20:03:20.853408+0000 Ember[3130:14714] [error] CoreData: error: ---------------------------
-CoreData: error: ---------------------------
-2026-10-27 20:03:20.853484+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.853538+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.853593+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		224 bytes
-CoreData: error:   File Size: 		224 bytes
-2026-10-27 20:03:20.853646+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		3001857
-CoreData: error:   File inode: 		3001857
-2026-10-27 20:03:20.853693+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		501
-CoreData: error:   File user ID: 		501
-2026-10-27 20:03:20.853890+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		20
-CoreData: error:   File group ID: 		20
-2026-10-27 20:03:20.853948+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.853996+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.854046+0000 Ember[3130:14714] [error] CoreData: error:   755
-CoreData: error:   755
-2026-10-27 20:03:20.854093+0000 Ember[3130:14714] [error] CoreData: error:   file is not a symbolic link
-CoreData: error:   file is not a symbolic link
-2026-10-27 20:03:20.854181+0000 Ember[3130:14714] [error] CoreData: error:   Sandbox access to file-write-create allowed
-CoreData: error:   Sandbox access to file-write-create allowed
-2026-10-27 20:03:20.854265+0000 Ember[3130:14714] [error] CoreData: error: Executing as effective user 501
-CoreData: error: Executing as effective user 501
-2026-10-27 20:03:20.854314+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application
-CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application
-2026-10-27 20:03:20.854557+0000 Ember[3130:14714] [error] CoreData: error: ---------------------------
-CoreData: error: ---------------------------
-2026-10-27 20:03:20.854608+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.854654+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.854700+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		4768 bytes
-CoreData: error:   File Size: 		4768 bytes
-2026-10-27 20:03:20.854748+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		2992231
-CoreData: error:   File inode: 		2992231
-2026-10-27 20:03:20.854792+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		501
-CoreData: error:   File user ID: 		501
-2026-10-27 20:03:20.855274+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		20
-CoreData: error:   File group ID: 		20
-2026-10-27 20:03:20.855336+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.855389+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.855435+0000 Ember[3130:14714] [error] CoreData: error:   755
-CoreData: error:   755
-2026-10-27 20:03:20.855493+0000 Ember[3130:14714] [error] CoreData: error:   file is not a symbolic link
-CoreData: error:   file is not a symbolic link
-2026-10-27 20:03:20.855581+0000 Ember[3130:14714] [error] CoreData: error:   Sandbox access to file-write-create allowed
-CoreData: error:   Sandbox access to file-write-create allowed
-2026-10-27 20:03:20.855650+0000 Ember[3130:14714] [error] CoreData: error: Executing as effective user 501
-CoreData: error: Executing as effective user 501
-2026-10-27 20:03:20.855989+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data
-CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data
-2026-10-27 20:03:20.856042+0000 Ember[3130:14714] [error] CoreData: error: ---------------------------
-CoreData: error: ---------------------------
-2026-10-27 20:03:20.856089+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.856136+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.856182+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		192 bytes
-CoreData: error:   File Size: 		192 bytes
-2026-10-27 20:03:20.856233+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		2992064
-CoreData: error:   File inode: 		2992064
-2026-10-27 20:03:20.856491+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		501
-CoreData: error:   File user ID: 		501
-2026-10-27 20:03:20.856540+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		20
-CoreData: error:   File group ID: 		20
-2026-10-27 20:03:20.856583+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.856643+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.856694+0000 Ember[3130:14714] [error] CoreData: error:   755
-CoreData: error:   755
-2026-10-27 20:03:20.856740+0000 Ember[3130:14714] [error] CoreData: error:   file is not a symbolic link
-CoreData: error:   file is not a symbolic link
-2026-10-27 20:03:20.856820+0000 Ember[3130:14714] [error] CoreData: error:   Sandbox access to file-write-create allowed
-CoreData: error:   Sandbox access to file-write-create allowed
-2026-10-27 20:03:20.857113+0000 Ember[3130:14714] [error] CoreData: error: Executing as effective user 501
-CoreData: error: Executing as effective user 501
-2026-10-27 20:03:20.857173+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers
-CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers
-2026-10-27 20:03:20.857231+0000 Ember[3130:14714] [error] CoreData: error: ---------------------------
-CoreData: error: ---------------------------
-2026-10-27 20:03:20.857279+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.857328+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.857375+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		224 bytes
-CoreData: error:   File Size: 		224 bytes
-2026-10-27 20:03:20.857736+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		2992048
-CoreData: error:   File inode: 		2992048
-2026-10-27 20:03:20.857790+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		501
-CoreData: error:   File user ID: 		501
-2026-10-27 20:03:20.857837+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		20
-CoreData: error:   File group ID: 		20
-2026-10-27 20:03:20.857883+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.857940+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.857984+0000 Ember[3130:14714] [error] CoreData: error:   755
-CoreData: error:   755
-2026-10-27 20:03:20.858029+0000 Ember[3130:14714] [error] CoreData: error:   file is not a symbolic link
-CoreData: error:   file is not a symbolic link
-2026-10-27 20:03:20.858107+0000 Ember[3130:14714] [error] CoreData: error:   Sandbox access to file-write-create allowed
-CoreData: error:   Sandbox access to file-write-create allowed
-2026-10-27 20:03:20.858507+0000 Ember[3130:14714] [error] CoreData: error: Executing as effective user 501
-CoreData: error: Executing as effective user 501
-2026-10-27 20:03:20.858563+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data
-CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data
-2026-10-27 20:03:20.858612+0000 Ember[3130:14714] [error] CoreData: error: ---------------------------
-CoreData: error: ---------------------------
-2026-10-27 20:03:20.858655+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.858703+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.858786+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		384 bytes
-CoreData: error:   File Size: 		384 bytes
-2026-10-27 20:03:20.859291+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		2324552
-CoreData: error:   File inode: 		2324552
-2026-10-27 20:03:20.859348+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		501
-CoreData: error:   File user ID: 		501
-2026-10-27 20:03:20.859437+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		20
-CoreData: error:   File group ID: 		20
-2026-10-27 20:03:20.859488+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.859535+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.859583+0000 Ember[3130:14714] [error] CoreData: error:   775
-CoreData: error:   775
-2026-10-27 20:03:20.859641+0000 Ember[3130:14714] [error] CoreData: error:   file is not a symbolic link
-CoreData: error:   file is not a symbolic link
-2026-10-27 20:03:20.859757+0000 Ember[3130:14714] [error] CoreData: error:   Sandbox access to file-write-create allowed
-CoreData: error:   Sandbox access to file-write-create allowed
-2026-10-27 20:03:20.860410+0000 Ember[3130:14714] [error] CoreData: error: Executing as effective user 501
-CoreData: error: Executing as effective user 501
-2026-10-27 20:03:20.860477+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957
-CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957
-2026-10-27 20:03:20.860532+0000 Ember[3130:14714] [error] CoreData: error: ---------------------------
-CoreData: error: ---------------------------
-2026-10-27 20:03:20.860578+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.860624+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.861124+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		160 bytes
-CoreData: error:   File Size: 		160 bytes
-2026-10-27 20:03:20.861196+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		2324551
-CoreData: error:   File inode: 		2324551
-2026-10-27 20:03:20.861246+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		501
-CoreData: error:   File user ID: 		501
-2026-10-27 20:03:20.861291+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		20
-CoreData: error:   File group ID: 		20
-2026-10-27 20:03:20.861337+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.861381+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.861568+0000 Ember[3130:14714] [error] CoreData: error:   755
-CoreData: error:   755
-2026-10-27 20:03:20.861688+0000 Ember[3130:14714] [error] CoreData: error:   file is not a symbolic link
-CoreData: error:   file is not a symbolic link
-2026-10-27 20:03:20.862546+0000 Ember[3130:14714] [error] CoreData: error:   Sandbox access to file-write-create allowed
-CoreData: error:   Sandbox access to file-write-create allowed
-2026-10-27 20:03:20.862633+0000 Ember[3130:14714] [error] CoreData: error: Executing as effective user 501
-CoreData: error: Executing as effective user 501
-2026-10-27 20:03:20.862688+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices
-CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices
-2026-10-27 20:03:20.862775+0000 Ember[3130:14714] [error] CoreData: error: ---------------------------
-CoreData: error: ---------------------------
-2026-10-27 20:03:20.862833+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.862883+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.863163+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		2016 bytes
-CoreData: error:   File Size: 		2016 bytes
-2026-10-27 20:03:20.863230+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		2302267
-CoreData: error:   File inode: 		2302267
-2026-10-27 20:03:20.863284+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		501
-CoreData: error:   File user ID: 		501
-2026-10-27 20:03:20.863484+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		20
-CoreData: error:   File group ID: 		20
-2026-10-27 20:03:20.863602+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.863689+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.863802+0000 Ember[3130:14714] [error] CoreData: error:   755
-CoreData: error:   755
-2026-10-27 20:03:20.863902+0000 Ember[3130:14714] [error] CoreData: error:   file is not a symbolic link
-CoreData: error:   file is not a symbolic link
-2026-10-27 20:03:20.864577+0000 Ember[3130:14714] [error] CoreData: error:   Sandbox access to file-write-create allowed
-CoreData: error:   Sandbox access to file-write-create allowed
-2026-10-27 20:03:20.864727+0000 Ember[3130:14714] [error] CoreData: error: Executing as effective user 501
-CoreData: error: Executing as effective user 501
-2026-10-27 20:03:20.864816+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator
-CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator
-2026-10-27 20:03:20.864899+0000 Ember[3130:14714] [error] CoreData: error: ---------------------------
-CoreData: error: ---------------------------
-2026-10-27 20:03:20.864976+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.865057+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.865128+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		160 bytes
-CoreData: error:   File Size: 		160 bytes
-2026-10-27 20:03:20.867331+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		2302205
-CoreData: error:   File inode: 		2302205
-2026-10-27 20:03:20.867443+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		501
-CoreData: error:   File user ID: 		501
-2026-10-27 20:03:20.867522+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		20
-CoreData: error:   File group ID: 		20
-2026-10-27 20:03:20.867604+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.867687+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.867762+0000 Ember[3130:14714] [error] CoreData: error:   755
-CoreData: error:   755
-2026-10-27 20:03:20.867827+0000 Ember[3130:14714] [error] CoreData: error:   file is not a symbolic link
-CoreData: error:   file is not a symbolic link
-2026-10-27 20:03:20.868572+0000 Ember[3130:14714] [error] CoreData: error:   Sandbox access to file-write-create allowed
-CoreData: error:   Sandbox access to file-write-create allowed
-2026-10-27 20:03:20.868660+0000 Ember[3130:14714] [error] CoreData: error: Executing as effective user 501
-CoreData: error: Executing as effective user 501
-2026-10-27 20:03:20.868714+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users/runner/Library/Developer
-CoreData: error: Information for /Users/runner/Library/Developer
-2026-10-27 20:03:20.868765+0000 Ember[3130:14714] [error] CoreData: error: ---------------------------
-CoreData: error: ---------------------------
-2026-10-27 20:03:20.868813+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.868855+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.868899+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		160 bytes
-CoreData: error:   File Size: 		160 bytes
-2026-10-27 20:03:20.869184+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		2302196
-CoreData: error:   File inode: 		2302196
-2026-10-27 20:03:20.869243+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		501
-CoreData: error:   File user ID: 		501
-2026-10-27 20:03:20.869290+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		20
-CoreData: error:   File group ID: 		20
-2026-10-27 20:03:20.869337+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.869382+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.869429+0000 Ember[3130:14714] [error] CoreData: error:   755
-CoreData: error:   755
-2026-10-27 20:03:20.869474+0000 Ember[3130:14714] [error] CoreData: error:   file is not a symbolic link
-CoreData: error:   file is not a symbolic link
-2026-10-27 20:03:20.869553+0000 Ember[3130:14714] [error] CoreData: error:   Sandbox access to file-write-create allowed
-CoreData: error:   Sandbox access to file-write-create allowed
-2026-10-27 20:03:20.869849+0000 Ember[3130:14714] [error] CoreData: error: Executing as effective user 501
-CoreData: error: Executing as effective user 501
-2026-10-27 20:03:20.869904+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users/runner/Library
-CoreData: error: Information for /Users/runner/Library
-2026-10-27 20:03:20.869951+0000 Ember[3130:14714] [error] CoreData: error: ---------------------------
-CoreData: error: ---------------------------
-2026-10-27 20:03:20.869995+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.870040+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.870081+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		2688 bytes
-CoreData: error:   File Size: 		2688 bytes
-2026-10-27 20:03:20.870288+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		36534
-CoreData: error:   File inode: 		36534
-2026-10-27 20:03:20.870346+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		501
-CoreData: error:   File user ID: 		501
-2026-10-27 20:03:20.870393+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		20
-CoreData: error:   File group ID: 		20
-2026-10-27 20:03:20.870440+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.870483+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.870535+0000 Ember[3130:14714] [error] CoreData: error:   700
-CoreData: error:   700
-2026-10-27 20:03:20.870585+0000 Ember[3130:14714] [error] CoreData: error:   file is not a symbolic link
-CoreData: error:   file is not a symbolic link
-2026-10-27 20:03:20.870650+0000 Ember[3130:14714] [error] CoreData: error:   Sandbox access to file-write-create allowed
-CoreData: error:   Sandbox access to file-write-create allowed
-2026-10-27 20:03:20.870966+0000 Ember[3130:14714] [error] CoreData: error: Executing as effective user 501
-CoreData: error: Executing as effective user 501
-2026-10-27 20:03:20.871042+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users/runner
-CoreData: error: Information for /Users/runner
-2026-10-27 20:03:20.871093+0000 Ember[3130:14714] [error] CoreData: error: ---------------------------
-CoreData: error: ---------------------------
-2026-10-27 20:03:20.871139+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.871186+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.871240+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		1312 bytes
-CoreData: error:   File Size: 		1312 bytes
-2026-10-27 20:03:20.871288+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		36527
-CoreData: error:   File inode: 		36527
-2026-10-27 20:03:20.871587+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		501
-CoreData: error:   File user ID: 		501
-2026-10-27 20:03:20.871635+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		20
-CoreData: error:   File group ID: 		20
-2026-10-27 20:03:20.871683+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.871728+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.871776+0000 Ember[3130:14714] [error] CoreData: error:   750
-CoreData: error:   750
-2026-10-27 20:03:20.871824+0000 Ember[3130:14714] [error] CoreData: error:   file is not a symbolic link
-CoreData: error:   file is not a symbolic link
-2026-10-27 20:03:20.871885+0000 Ember[3130:14714] [error] CoreData: error:   Sandbox access to file-write-create allowed
-CoreData: error:   Sandbox access to file-write-create allowed
-2026-10-27 20:03:20.871940+0000 Ember[3130:14714] [error] CoreData: error: Executing as effective user 501
-CoreData: error: Executing as effective user 501
-2026-10-27 20:03:20.872220+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users
-CoreData: error: Information for /Users
-2026-10-27 20:03:20.872268+0000 Ember[3130:14714] [error] CoreData: error: ---------------------------
-CoreData: error: ---------------------------
-2026-10-27 20:03:20.872314+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.872358+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.872403+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		160 bytes
-CoreData: error:   File Size: 		160 bytes
-2026-10-27 20:03:20.872446+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		18483
-CoreData: error:   File inode: 		18483
-2026-10-27 20:03:20.872489+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		0
-CoreData: error:   File user ID: 		0
-2026-10-27 20:03:20.872800+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		80
-CoreData: error:   File group ID: 		80
-2026-10-27 20:03:20.872853+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.872901+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.872948+0000 Ember[3130:14714] [error] CoreData: error:   755
-CoreData: error:   755
-2026-10-27 20:03:20.872997+0000 Ember[3130:14714] [error] CoreData: error:   file is not a symbolic link
-CoreData: error:   file is not a symbolic link
-2026-10-27 20:03:20.873130+0000 Ember[3130:14714] [error] CoreData: error:   Sandbox access to file-write-create allowed
-CoreData: error:   Sandbox access to file-write-create allowed
-2026-10-27 20:03:20.873214+0000 Ember[3130:14714] [error] CoreData: error: Executing as effective user 501
-CoreData: error: Executing as effective user 501
-2026-10-27 20:03:20.873517+0000 Ember[3130:14714] [error] CoreData: error: Information for /
-CoreData: error: Information for /
-2026-10-27 20:03:20.873594+0000 Ember[3130:14714] [error] CoreData: error: ---------------------------
-CoreData: error: ---------------------------
-2026-10-27 20:03:20.873660+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.873722+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.873782+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		704 bytes
-CoreData: error:   File Size: 		704 bytes
-2026-10-27 20:03:20.873849+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		2
-CoreData: error:   File inode: 		2
-2026-10-27 20:03:20.874010+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		0
-CoreData: error:   File user ID: 		0
-2026-10-27 20:03:20.874060+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		0
-CoreData: error:   File group ID: 		0
-2026-10-27 20:03:20.874972+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.875042+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.875095+0000 Ember[3130:14714] [error] CoreData: error:   755
-CoreData: error:   755
-2026-10-27 20:03:20.875143+0000 Ember[3130:14714] [error] CoreData: error:   file is not a symbolic link
-CoreData: error:   file is not a symbolic link
-2026-10-27 20:03:20.875235+0000 Ember[3130:14714] [error] CoreData: error:   Sandbox access to file-write-create allowed
-CoreData: error:   Sandbox access to file-write-create allowed
-2026-10-27 20:03:20.875483+0000 Ember[3130:14714] [error] CoreData: error: Logging status information for directory path: /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/1DBE3572-B141-482F-8FD2-14CCCC827D03/Library/Application Support
-CoreData: error: Logging status information for directory path: /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/1DBE3572-B141-482F-8FD2-14CCCC827D03/Library/Application Support
-2026-10-27 20:03:20.877131+0000 Ember[3130:14714] [error] CoreData: error: Executing as effective user 501
-CoreData: error: Executing as effective user 501
-2026-10-27 20:03:20.877310+0000 Ember[3130:14714] [error] CoreData: error: Information for /
-CoreData: error: Information for /
-2026-10-27 20:03:20.877408+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.877484+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.877561+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		704 bytes
-CoreData: error:   File Size: 		704 bytes
-2026-10-27 20:03:20.877643+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		2
-CoreData: error:   File inode: 		2
-2026-10-27 20:03:20.878698+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		0
-CoreData: error:   File user ID: 		0
-2026-10-27 20:03:20.878888+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		0
-CoreData: error:   File group ID: 		0
-2026-10-27 20:03:20.879035+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.879211+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.879307+0000 Ember[3130:14714] [error] CoreData: error:   755
-CoreData: error:   755
-2026-10-27 20:03:20.879404+0000 Ember[3130:14714] [error] CoreData: error:   component is not a symbolic link
-CoreData: error:   component is not a symbolic link
-2026-10-27 20:03:20.879625+0000 Ember[3130:14714] [error] CoreData: error:   component is readable
-CoreData: error:   component is readable
-2026-10-27 20:03:20.879766+0000 Ember[3130:14714] [error] CoreData: error:   component is not writeable with errno 30
-CoreData: error:   component is not writeable with errno 30
-2026-10-27 20:03:20.881461+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users
-CoreData: error: Information for /Users
-2026-10-27 20:03:20.881590+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.881684+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.881764+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		160 bytes
-CoreData: error:   File Size: 		160 bytes
-2026-10-27 20:03:20.881853+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		18483
-CoreData: error:   File inode: 		18483
-2026-10-27 20:03:20.881936+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		0
-CoreData: error:   File user ID: 		0
-2026-10-27 20:03:20.882017+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		80
-CoreData: error:   File group ID: 		80
-2026-10-27 20:03:20.882791+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.882872+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.882943+0000 Ember[3130:14714] [error] CoreData: error:   755
-CoreData: error:   755
-2026-10-27 20:03:20.883090+0000 Ember[3130:14714] [error] CoreData: error:   component is not a symbolic link
-CoreData: error:   component is not a symbolic link
-2026-10-27 20:03:20.883167+0000 Ember[3130:14714] [error] CoreData: error:   component is readable
-CoreData: error:   component is readable
-2026-10-27 20:03:20.883270+0000 Ember[3130:14714] [error] CoreData: error:   component is not writeable with errno 13
-CoreData: error:   component is not writeable with errno 13
-2026-10-27 20:03:20.883372+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users/runner
-CoreData: error: Information for /Users/runner
-2026-10-27 20:03:20.884484+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.884594+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.884656+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		1312 bytes
-CoreData: error:   File Size: 		1312 bytes
-2026-10-27 20:03:20.884733+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		36527
-CoreData: error:   File inode: 		36527
-2026-10-27 20:03:20.884815+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		501
-CoreData: error:   File user ID: 		501
-2026-10-27 20:03:20.884863+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		20
-CoreData: error:   File group ID: 		20
-2026-10-27 20:03:20.884909+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.884955+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.885648+0000 Ember[3130:14714] [error] CoreData: error:   750
-CoreData: error:   750
-2026-10-27 20:03:20.885776+0000 Ember[3130:14714] [error] CoreData: error:   component is not a symbolic link
-CoreData: error:   component is not a symbolic link
-2026-10-27 20:03:20.885979+0000 Ember[3130:14714] [error] CoreData: error:   component is readable
-CoreData: error:   component is readable
-2026-10-27 20:03:20.886091+0000 Ember[3130:14714] [error] CoreData: error:   component is writeable
-CoreData: error:   component is writeable
-2026-10-27 20:03:20.886268+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users/runner/Library
-CoreData: error: Information for /Users/runner/Library
-2026-10-27 20:03:20.886342+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.886406+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.887030+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		2688 bytes
-CoreData: error:   File Size: 		2688 bytes
-2026-10-27 20:03:20.887170+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		36534
-CoreData: error:   File inode: 		36534
-2026-10-27 20:03:20.887226+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		501
-CoreData: error:   File user ID: 		501
-2026-10-27 20:03:20.887285+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		20
-CoreData: error:   File group ID: 		20
-2026-10-27 20:03:20.887338+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.887384+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.887432+0000 Ember[3130:14714] [error] CoreData: error:   700
-CoreData: error:   700
-2026-10-27 20:03:20.887491+0000 Ember[3130:14714] [error] CoreData: error:   component is not a symbolic link
-CoreData: error:   component is not a symbolic link
-2026-10-27 20:03:20.887965+0000 Ember[3130:14714] [error] CoreData: error:   component is readable
-CoreData: error:   component is readable
-2026-10-27 20:03:20.888068+0000 Ember[3130:14714] [error] CoreData: error:   component is writeable
-CoreData: error:   component is writeable
-2026-10-27 20:03:20.888148+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users/runner/Library/Developer
-CoreData: error: Information for /Users/runner/Library/Developer
-2026-10-27 20:03:20.888206+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.888252+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.888297+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		160 bytes
-CoreData: error:   File Size: 		160 bytes
-2026-10-27 20:03:20.888342+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		2302196
-CoreData: error:   File inode: 		2302196
-2026-10-27 20:03:20.888946+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		501
-CoreData: error:   File user ID: 		501
-2026-10-27 20:03:20.889033+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		20
-CoreData: error:   File group ID: 		20
-2026-10-27 20:03:20.889090+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.889151+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.889198+0000 Ember[3130:14714] [error] CoreData: error:   755
-CoreData: error:   755
-2026-10-27 20:03:20.889243+0000 Ember[3130:14714] [error] CoreData: error:   component is not a symbolic link
-CoreData: error:   component is not a symbolic link
-2026-10-27 20:03:20.889314+0000 Ember[3130:14714] [error] CoreData: error:   component is readable
-CoreData: error:   component is readable
-2026-10-27 20:03:20.889374+0000 Ember[3130:14714] [error] CoreData: error:   component is writeable
-CoreData: error:   component is writeable
-2026-10-27 20:03:20.889922+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator
-CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator
-2026-10-27 20:03:20.889990+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.890036+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.890083+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		160 bytes
-CoreData: error:   File Size: 		160 bytes
-2026-10-27 20:03:20.890129+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		2302205
-CoreData: error:   File inode: 		2302205
-2026-10-27 20:03:20.890173+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		501
-CoreData: error:   File user ID: 		501
-2026-10-27 20:03:20.890218+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		20
-CoreData: error:   File group ID: 		20
-2026-10-27 20:03:20.890702+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.890754+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.890801+0000 Ember[3130:14714] [error] CoreData: error:   755
-CoreData: error:   755
-2026-10-27 20:03:20.890847+0000 Ember[3130:14714] [error] CoreData: error:   component is not a symbolic link
-CoreData: error:   component is not a symbolic link
-2026-10-27 20:03:20.890910+0000 Ember[3130:14714] [error] CoreData: error:   component is readable
-CoreData: error:   component is readable
-2026-10-27 20:03:20.890967+0000 Ember[3130:14714] [error] CoreData: error:   component is writeable
-CoreData: error:   component is writeable
-2026-10-27 20:03:20.891020+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices
-CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices
-2026-10-27 20:03:20.891463+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.891526+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.891576+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		2016 bytes
-CoreData: error:   File Size: 		2016 bytes
-2026-10-27 20:03:20.891624+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		2302267
-CoreData: error:   File inode: 		2302267
-2026-10-27 20:03:20.891672+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		501
-CoreData: error:   File user ID: 		501
-2026-10-27 20:03:20.891718+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		20
-CoreData: error:   File group ID: 		20
-2026-10-27 20:03:20.891761+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.892081+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.892140+0000 Ember[3130:14714] [error] CoreData: error:   755
-CoreData: error:   755
-2026-10-27 20:03:20.892187+0000 Ember[3130:14714] [error] CoreData: error:   component is not a symbolic link
-CoreData: error:   component is not a symbolic link
-2026-10-27 20:03:20.892257+0000 Ember[3130:14714] [error] CoreData: error:   component is readable
-CoreData: error:   component is readable
-2026-10-27 20:03:20.892314+0000 Ember[3130:14714] [error] CoreData: error:   component is writeable
-CoreData: error:   component is writeable
-2026-10-27 20:03:20.892382+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957
-CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957
-2026-10-27 20:03:20.892439+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.892905+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.892958+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		160 bytes
-CoreData: error:   File Size: 		160 bytes
-2026-10-27 20:03:20.893003+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		2324551
-CoreData: error:   File inode: 		2324551
-2026-10-27 20:03:20.893061+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		501
-CoreData: error:   File user ID: 		501
-2026-10-27 20:03:20.893109+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		20
-CoreData: error:   File group ID: 		20
-2026-10-27 20:03:20.893155+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.893200+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.893245+0000 Ember[3130:14714] [error] CoreData: error:   755
-CoreData: error:   755
-2026-10-27 20:03:20.894678+0000 Ember[3130:14714] [error] CoreData: error:   component is not a symbolic link
-CoreData: error:   component is not a symbolic link
-2026-10-27 20:03:20.894825+0000 Ember[3130:14714] [error] CoreData: error:   component is readable
-CoreData: error:   component is readable
-2026-10-27 20:03:20.894906+0000 Ember[3130:14714] [error] CoreData: error:   component is writeable
-CoreData: error:   component is writeable
-2026-10-27 20:03:20.894983+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data
-CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data
-2026-10-27 20:03:20.895222+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.895358+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.896354+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		384 bytes
-CoreData: error:   File Size: 		384 bytes
-2026-10-27 20:03:20.896443+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		2324552
-CoreData: error:   File inode: 		2324552
-2026-10-27 20:03:20.896500+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		501
-CoreData: error:   File user ID: 		501
-2026-10-27 20:03:20.896555+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		20
-CoreData: error:   File group ID: 		20
-2026-10-27 20:03:20.896604+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.896655+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.896731+0000 Ember[3130:14714] [error] CoreData: error:   775
-CoreData: error:   775
-2026-10-27 20:03:20.896792+0000 Ember[3130:14714] [error] CoreData: error:   component is not a symbolic link
-CoreData: error:   component is not a symbolic link
-2026-10-27 20:03:20.897495+0000 Ember[3130:14714] [error] CoreData: error:   component is readable
-CoreData: error:   component is readable
-2026-10-27 20:03:20.897565+0000 Ember[3130:14714] [error] CoreData: error:   component is writeable
-CoreData: error:   component is writeable
-2026-10-27 20:03:20.897643+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers
-CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers
-2026-10-27 20:03:20.897706+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.897754+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.897800+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		224 bytes
-CoreData: error:   File Size: 		224 bytes
-2026-10-27 20:03:20.898221+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		2992048
-CoreData: error:   File inode: 		2992048
-2026-10-27 20:03:20.898279+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		501
-CoreData: error:   File user ID: 		501
-2026-10-27 20:03:20.898331+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		20
-CoreData: error:   File group ID: 		20
-2026-10-27 20:03:20.898376+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.898442+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.898494+0000 Ember[3130:14714] [error] CoreData: error:   755
-CoreData: error:   755
-2026-10-27 20:03:20.898539+0000 Ember[3130:14714] [error] CoreData: error:   component is not a symbolic link
-CoreData: error:   component is not a symbolic link
-2026-10-27 20:03:20.898922+0000 Ember[3130:14714] [error] CoreData: error:   component is readable
-CoreData: error:   component is readable
-2026-10-27 20:03:20.898993+0000 Ember[3130:14714] [error] CoreData: error:   component is writeable
-CoreData: error:   component is writeable
-2026-10-27 20:03:20.899053+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data
-CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data
-2026-10-27 20:03:20.899106+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.899150+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.899206+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		192 bytes
-CoreData: error:   File Size: 		192 bytes
-2026-10-27 20:03:20.899460+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		2992064
-CoreData: error:   File inode: 		2992064
-2026-10-27 20:03:20.899518+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		501
-CoreData: error:   File user ID: 		501
-2026-10-27 20:03:20.899565+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		20
-CoreData: error:   File group ID: 		20
-2026-10-27 20:03:20.899610+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.899655+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.899709+0000 Ember[3130:14714] [error] CoreData: error:   755
-CoreData: error:   755
-2026-10-27 20:03:20.899757+0000 Ember[3130:14714] [error] CoreData: error:   component is not a symbolic link
-CoreData: error:   component is not a symbolic link
-2026-10-27 20:03:20.899827+0000 Ember[3130:14714] [error] CoreData: error:   component is readable
-CoreData: error:   component is readable
-2026-10-27 20:03:20.900087+0000 Ember[3130:14714] [error] CoreData: error:   component is writeable
-CoreData: error:   component is writeable
-2026-10-27 20:03:20.900157+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application
-CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application
-2026-10-27 20:03:20.900214+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.900263+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.900311+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		4768 bytes
-CoreData: error:   File Size: 		4768 bytes
-2026-10-27 20:03:20.900367+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		2992231
-CoreData: error:   File inode: 		2992231
-2026-10-27 20:03:20.900686+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		501
-CoreData: error:   File user ID: 		501
-2026-10-27 20:03:20.900739+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		20
-CoreData: error:   File group ID: 		20
-2026-10-27 20:03:20.900784+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.900842+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.900888+0000 Ember[3130:14714] [error] CoreData: error:   755
-CoreData: error:   755
-2026-10-27 20:03:20.900946+0000 Ember[3130:14714] [error] CoreData: error:   component is not a symbolic link
-CoreData: error:   component is not a symbolic link
-2026-10-27 20:03:20.901011+0000 Ember[3130:14714] [error] CoreData: error:   component is readable
-CoreData: error:   component is readable
-2026-10-27 20:03:20.901070+0000 Ember[3130:14714] [error] CoreData: error:   component is writeable
-CoreData: error:   component is writeable
-2026-10-27 20:03:20.901475+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/1DBE3572-B141-482F-8FD2-14CCCC827D03
-CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/1DBE3572-B141-482F-8FD2-14CCCC827D03
-2026-10-27 20:03:20.901585+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.901692+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.901861+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		224 bytes
-CoreData: error:   File Size: 		224 bytes
-2026-10-27 20:03:20.901975+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		3001857
-CoreData: error:   File inode: 		3001857
-2026-10-27 20:03:20.902539+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		501
-CoreData: error:   File user ID: 		501
-2026-10-27 20:03:20.902635+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		20
-CoreData: error:   File group ID: 		20
-2026-10-27 20:03:20.902721+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.902798+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.902878+0000 Ember[3130:14714] [error] CoreData: error:   755
-CoreData: error:   755
-2026-10-27 20:03:20.902949+0000 Ember[3130:14714] [error] CoreData: error:   component is not a symbolic link
-CoreData: error:   component is not a symbolic link
-2026-10-27 20:03:20.903177+0000 Ember[3130:14714] [error] CoreData: error:   component is readable
-CoreData: error:   component is readable
-2026-10-27 20:03:20.903251+0000 Ember[3130:14714] [error] CoreData: error:   component is writeable
-CoreData: error:   component is writeable
-2026-10-27 20:03:20.903911+0000 Ember[3130:14714] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/1DBE3572-B141-482F-8FD2-14CCCC827D03/Library
-CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/1DBE3572-B141-482F-8FD2-14CCCC827D03/Library
-2026-10-27 20:03:20.903996+0000 Ember[3130:14714] [error] CoreData: error:   File Device ID: 	0
-CoreData: error:   File Device ID: 	0
-2026-10-27 20:03:20.904060+0000 Ember[3130:14714] [error] CoreData: error:   Device ID: 		16777230
-CoreData: error:   Device ID: 		16777230
-2026-10-27 20:03:20.904120+0000 Ember[3130:14714] [error] CoreData: error:   File Size: 		160 bytes
-CoreData: error:   File Size: 		160 bytes
-2026-10-27 20:03:20.904196+0000 Ember[3130:14714] [error] CoreData: error:   File inode: 		3001859
-CoreData: error:   File inode: 		3001859
-2026-10-27 20:03:20.904532+0000 Ember[3130:14714] [error] CoreData: error:   File user ID: 		501
-CoreData: error:   File user ID: 		501
-2026-10-27 20:03:20.904625+0000 Ember[3130:14714] [error] CoreData: error:   File group ID: 		20
-CoreData: error:   File group ID: 		20
-2026-10-27 20:03:20.904692+0000 Ember[3130:14714] [error] CoreData: error:   File Permissions:
-CoreData: error:   File Permissions: 	
-2026-10-27 20:03:20.904740+0000 Ember[3130:14714] [error] CoreData: error: d
-CoreData: error: d
-2026-10-27 20:03:20.904814+0000 Ember[3130:14714] [error] CoreData: error:   755
-CoreData: error:   755
-2026-10-27 20:03:20.904883+0000 Ember[3130:14714] [error] CoreData: error:   component is not a symbolic link
-CoreData: error:   component is not a symbolic link
-2026-10-27 20:03:20.904965+0000 Ember[3130:14714] [error] CoreData: error:   component is readable
-CoreData: error:   component is readable
-2026-10-27 20:03:20.906338+0000 Ember[3130:14714] [error] CoreData: error:   component is writeable
-CoreData: error:   component is writeable
-2026-10-27 20:03:20.906540+0000 Ember[3130:14714] [error] CoreData: error: Failed to stat path '/Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/1DBE3572-B141-482F-8FD2-14CCCC827D03/Library/Application Support', errno 2 / No such file or directory.
-CoreData: error: Failed to stat path '/Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/1DBE3572-B141-482F-8FD2-14CCCC827D03/Library/Application Support', errno 2 / No such file or directory.
-2026-10-27 20:03:20.906656+0000 Ember[3130:14714] [error] CoreData: error:   Sandbox access to file-write-create denied
-CoreData: error:   Sandbox access to file-write-create denied
-2026-10-27 20:03:20.909032+0000 Ember[3130:14714] [error] CoreData: error: addPersistentStoreWithType:configuration:URL:options:error: returned error NSCocoaErrorDomain (512)
-CoreData: error: addPersistentStoreWithType:configuration:URL:options:error: returned error NSCocoaErrorDomain (512)
-2026-10-27 20:03:20.909439+0000 Ember[3130:14714] [error] CoreData: error: userInfo:
-CoreData: error: userInfo:
-2026-10-27 20:03:20.909642+0000 Ember[3130:14714] [error] CoreData: error: 	reason : Failed to create file; code = 2
-CoreData: error: 	reason : Failed to create file; code = 2
-2026-10-27 20:03:20.909716+0000 Ember[3130:14714] [error] CoreData: error: storeType: SQLite
-CoreData: error: storeType: SQLite
-2026-10-27 20:03:20.909785+0000 Ember[3130:14714] [error] CoreData: error: configuration: default
-CoreData: error: configuration: default
-2026-10-27 20:03:20.909883+0000 Ember[3130:14714] [error] CoreData: error: URL: file:///Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/1DBE3572-B141-482F-8FD2-14CCCC827D03/Library/Application%20Support/default.store
-CoreData: error: URL: file:///Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/1DBE3572-B141-482F-8FD2-14CCCC827D03/Library/Application%20Support/default.store
-CoreData: annotation: options:
-CoreData: annotation: 	NSMigratePersistentStoresAutomaticallyOption : 1
-CoreData: annotation: 	NSInferMappingModelAutomaticallyOption : 1
-CoreData: annotation: 	NSPersistentStoreRemoteChangeNotificationOptionKey : 1
-CoreData: annotation: 	NSPersistentHistoryTrackingKey : 1
-2026-10-27 20:03:20.916324+0000 Ember[3130:14714] [error] CoreData: error: <NSPersistentStoreCoordinator: 0x103a68380>: Attempting recovery from error encountered during addPersistentStore: 0x10386ca50 Error Domain=NSCocoaErrorDomain Code=512 "The file couldn’t be saved." UserInfo={reason=Failed to create file; code = 2}
-CoreData: error: <NSPersistentStoreCoordinator: 0x103a68380>: Attempting recovery from error encountered during addPersistentStore: 0x10386ca50 Error Domain=NSCocoaErrorDomain Code=512 "The file couldn’t be saved." UserInfo={reason=Failed to create file; code = 2}
-2026-10-27 20:03:20.916912+0000 Ember[3130:14714] [error] CoreData: error: During recovery, parent directory path reported as missing
-CoreData: error: During recovery, parent directory path reported as missing
-2026-10-27 20:03:20.934190+0000 Ember[3130:14714] [error] CoreData: error: Recovery attempt while adding <NSPersistentStoreDescription: 0x10386ca50> (type: SQLite, url: file:///Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/1DBE3572-B141-482F-8FD2-14CCCC827D03/Library/Application%20Support/default.store) was successful!
-CoreData: error: Recovery attempt while adding <NSPersistentStoreDescription: 0x10386ca50> (type: SQLite, url: file:///Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/1DBE3572-B141-482F-8FD2-14CCCC827D03/Library/Application%20Support/default.store) was successful!
-Test Suite 'All tests' started at 2026-10-27 20:03:24.433.
-Test Suite 'EmberTests.xctest' started at 2026-10-27 20:03:24.434.
-Test Suite 'SyncModelTests' started at 2026-10-27 20:03:24.434.
+Test Suite 'All tests' started at 2026-10-27 20:13:35.015.
+Test Suite 'EmberTests.xctest' started at 2026-10-27 20:13:35.016.
+Test Suite 'SyncModelTests' started at 2026-10-27 20:13:35.017.
 Test Case '-[EmberTests.SyncModelTests testABookThatJustAppearedTakesTheOtherDevicesPlace]' started.
-Test Case '-[EmberTests.SyncModelTests testABookThatJustAppearedTakesTheOtherDevicesPlace]' passed (0.008 seconds).
+Test Case '-[EmberTests.SyncModelTests testABookThatJustAppearedTakesTheOtherDevicesPlace]' passed (0.010 seconds).
 Test Case '-[EmberTests.SyncModelTests testAnUnansweredQuestionDoesNotOverwriteTheOtherDevice]' started.
 Test Case '-[EmberTests.SyncModelTests testAnUnansweredQuestionDoesNotOverwriteTheOtherDevice]' passed (0.001 seconds).
 Test Case '-[EmberTests.SyncModelTests testBookKeysIgnoreCaseAccentsAndPunctuation]' started.
 Test Case '-[EmberTests.SyncModelTests testBookKeysIgnoreCaseAccentsAndPunctuation]' passed (0.008 seconds).
 Test Case '-[EmberTests.SyncModelTests testBookmarksFromBothDevicesAreKept]' started.
-Test Case '-[EmberTests.SyncModelTests testBookmarksFromBothDevicesAreKept]' passed (0.001 seconds).
+Test Case '-[EmberTests.SyncModelTests testBookmarksFromBothDevicesAreKept]' passed (0.036 seconds).
 Test Case '-[EmberTests.SyncModelTests testBookmarksOfABookNotHereAreNeverDeleted]' started.
-Test Case '-[EmberTests.SyncModelTests testBookmarksOfABookNotHereAreNeverDeleted]' passed (0.000 seconds).
+Test Case '-[EmberTests.SyncModelTests testBookmarksOfABookNotHereAreNeverDeleted]' passed (0.001 seconds).
 Test Case '-[EmberTests.SyncModelTests testCanonicalTextIsTheSameWhateverTheOrder]' started.
-Test Case '-[EmberTests.SyncModelTests testCanonicalTextIsTheSameWhateverTheOrder]' passed (0.005 seconds).
+Test Case '-[EmberTests.SyncModelTests testCanonicalTextIsTheSameWhateverTheOrder]' passed (0.004 seconds).
 Test Case '-[EmberTests.SyncModelTests testClearAllOnEitherDeviceClearsBoth]' started.
 Test Case '-[EmberTests.SyncModelTests testClearAllOnEitherDeviceClearsBoth]' passed (0.001 seconds).
 Test Case '-[EmberTests.SyncModelTests testDeletingABookmarkHereDeletesItEverywhere]' started.
-Test Case '-[EmberTests.SyncModelTests testDeletingABookmarkHereDeletesItEverywhere]' passed (0.001 seconds).
+Test Case '-[EmberTests.SyncModelTests testDeletingABookmarkHereDeletesItEverywhere]' passed (0.275 seconds).
 Test Case '-[EmberTests.SyncModelTests testFirstSyncUploadsEverything]' started.
-Test Case '-[EmberTests.SyncModelTests testFirstSyncUploadsEverything]' passed (0.000 seconds).
+Test Case '-[EmberTests.SyncModelTests testFirstSyncUploadsEverything]' passed (0.001 seconds).
 Test Case '-[EmberTests.SyncModelTests testListeningHereEarlierLosesEvenIfSyncedLater]' started.
 Test Case '-[EmberTests.SyncModelTests testListeningHereEarlierLosesEvenIfSyncedLater]' passed (0.001 seconds).
 Test Case '-[EmberTests.SyncModelTests testListeningHereLaterBeatsTheOtherDevice]' started.
 Test Case '-[EmberTests.SyncModelTests testListeningHereLaterBeatsTheOtherDevice]' passed (0.001 seconds).
 Test Case '-[EmberTests.SyncModelTests testLogFileNameMatchesAndroid]' started.
-Test Case '-[EmberTests.SyncModelTests testLogFileNameMatchesAndroid]' passed (1.569 seconds).
+Test Case '-[EmberTests.SyncModelTests testLogFileNameMatchesAndroid]' passed (0.001 seconds).
 Test Case '-[EmberTests.SyncModelTests testLogFileRoundTrips]' started.
-Test Case '-[EmberTests.SyncModelTests testLogFileRoundTrips]' passed (0.001 seconds).
+Test Case '-[EmberTests.SyncModelTests testLogFileRoundTrips]' passed (0.008 seconds).
 Test Case '-[EmberTests.SyncModelTests testLogKeepsTheNewest400]' started.
-Test Case '-[EmberTests.SyncModelTests testLogKeepsTheNewest400]' passed (0.002 seconds).
+Test Case '-[EmberTests.SyncModelTests testLogKeepsTheNewest400]' passed (0.004 seconds).
 Test Case '-[EmberTests.SyncModelTests testLogsFromBothDevicesInterleave]' started.
 Test Case '-[EmberTests.SyncModelTests testLogsFromBothDevicesInterleave]' passed (0.001 seconds).
 Test Case '-[EmberTests.SyncModelTests testMarkingFinishedMovesThePlaceToo]' started.
 Test Case '-[EmberTests.SyncModelTests testMarkingFinishedMovesThePlaceToo]' passed (0.001 seconds).
 Test Case '-[EmberTests.SyncModelTests testNewerPlaceOnTheOtherDeviceComesHere]' started.
-Test Case '-[EmberTests.SyncModelTests testNewerPlaceOnTheOtherDeviceComesHere]' passed (1.464 seconds).
+Test Case '-[EmberTests.SyncModelTests testNewerPlaceOnTheOtherDeviceComesHere]' passed (0.001 seconds).
 Test Case '-[EmberTests.SyncModelTests testOldDeletionsAreForgotten]' started.
-Test Case '-[EmberTests.SyncModelTests testOldDeletionsAreForgotten]' passed (0.001 seconds).
+Test Case '-[EmberTests.SyncModelTests testOldDeletionsAreForgotten]' passed (0.002 seconds).
 Test Case '-[EmberTests.SyncModelTests testSameTextAsAndroid]' started.
-Test Case '-[EmberTests.SyncModelTests testSameTextAsAndroid]' passed (0.001 seconds).
+Test Case '-[EmberTests.SyncModelTests testSameTextAsAndroid]' passed (0.002 seconds).
 Test Case '-[EmberTests.SyncModelTests testStateFileRoundTripsAndReadsAndroidsFormat]' started.
-Test Case '-[EmberTests.SyncModelTests testStateFileRoundTripsAndReadsAndroidsFormat]' passed (0.001 seconds).
-Test Suite 'SyncModelTests' passed at 2026-10-27 20:03:27.520.
-	 Executed 20 tests, with 0 failures (0 unexpected) in 3.067 (3.086) seconds
-Test Suite 'EmberTests.xctest' passed at 2026-10-27 20:03:27.522.
-	 Executed 20 tests, with 0 failures (0 unexpected) in 3.067 (3.088) seconds
-Test Suite 'All tests' passed at 2026-10-27 20:03:27.522.
-	 Executed 20 tests, with 0 failures (0 unexpected) in 3.067 (3.089) seconds
-2026-10-27 20:03:32.275 xcodebuild[1523:8049] [MT] IDETestOperationsObserverDebug: 137.988 elapsed -- Testing started completed.
-2026-10-27 20:03:32.275 xcodebuild[1523:8049] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
-2026-10-27 20:03:32.275 xcodebuild[1523:8049] [MT] IDETestOperationsObserverDebug: 137.988 sec, +137.988 sec -- end
+Test Case '-[EmberTests.SyncModelTests testStateFileRoundTripsAndReadsAndroidsFormat]' passed (0.003 seconds).
+Test Suite 'SyncModelTests' passed at 2026-10-27 20:13:35.767.
+	 Executed 20 tests, with 0 failures (0 unexpected) in 0.360 (0.751) seconds
+Test Suite 'EmberTests.xctest' passed at 2026-10-27 20:13:35.768.
+	 Executed 20 tests, with 0 failures (0 unexpected) in 0.360 (0.752) seconds
+Test Suite 'All tests' passed at 2026-10-27 20:13:35.775.
+	 Executed 20 tests, with 0 failures (0 unexpected) in 0.360 (0.760) seconds
+2026-10-27 20:13:37.130 xcodebuild[1640:8629] [MT] IDETestOperationsObserverDebug: 313.036 elapsed -- Testing started completed.
+2026-10-27 20:13:37.130 xcodebuild[1640:8629] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-27 20:13:37.130 xcodebuild[1640:8629] [MT] IDETestOperationsObserverDebug: 313.036 sec, +313.036 sec -- end
 
 Test session results, code coverage, and logs:
-	/Users/runner/work/ember-player/ember-player/ios/build/Logs/Test/Test-Ember-2026.10.27_20-00-44-+0000.xcresult
+	/Users/runner/work/ember-player/ember-player/ios/build/Logs/Test/Test-Ember-2026.10.27_20-07-45-+0000.xcresult
 
 ** TEST SUCCEEDED **
 
