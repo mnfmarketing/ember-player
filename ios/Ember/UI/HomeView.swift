@@ -65,6 +65,9 @@ private struct ContinueCard: View {
         let playing = player.loaded?.id == book.id
         let pos = playing ? player.positionMs : book.positionMs
         let chapter = app.library.chapters(book.id).last { $0.startMs <= pos }
+        // Time left at the listening speed, the same as the mini player and player.
+        let speed = max(playing ? player.speed : book.speed, 0.5)
+        let real = { (ms: Int64) -> Int64 in Int64(Double(max(ms, 0)) / speed) }
         HStack(alignment: .top, spacing: 16) {
             NavigationLink(value: BookRoute(id: book.id)) {
                 CoverView(file: book.coverFile, title: book.displayTitle, color: book.coverColor)
@@ -75,7 +78,7 @@ private struct ContinueCard: View {
                 Text("CONTINUE LISTENING").font(.caption.weight(.semibold)).foregroundStyle(Theme.soft(book.coverColor))
                 Text(book.displayTitle).font(.title3.weight(.semibold)).lineLimit(2).foregroundStyle(.white)
                 if let chapter {
-                    Text("\(chapter.title) · \(Fmt.duration(max(chapter.endMs - pos, 0))) left")
+                    Text("\(chapter.title) · \(Fmt.duration(real(chapter.endMs - pos))) left")
                         .font(.subheadline).foregroundStyle(Theme.soft(book.coverColor)).lineLimit(1)
                 }
                 ProgressLine(value: book.durationMs > 0 ? Double(pos) / Double(book.durationMs) : 0, tint: .white)
@@ -90,7 +93,7 @@ private struct ContinueCard: View {
                     .tint(.white)
                     .foregroundStyle(Theme.deep(book.coverColor))
                     Spacer()
-                    Text("\(Fmt.duration(max(book.durationMs - pos, 0))) left").font(.caption).foregroundStyle(Theme.soft(book.coverColor))
+                    Text("\(Fmt.duration(real(book.durationMs - pos))) left").font(.caption).foregroundStyle(Theme.soft(book.coverColor))
                 }
             }
         }
