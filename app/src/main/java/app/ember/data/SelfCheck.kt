@@ -83,6 +83,7 @@ object SelfCheck {
             .put("syncError", c.sync.status.value.error ?: "")
             .put("syncDevices", c.sync.status.value.otherDevices.joinToString())
             .put("syncFiles", c.sync.testDir().list()?.sorted()?.joinToString() ?: "")
+            .put("syncState", java.io.File(c.sync.testDir(), "state.json").takeIf { it.exists() }?.readText() ?: "")
             .put("syncPrompt", c.sync.prompt.value?.let { "${it.bookId} at ${it.positionMs} from ${it.deviceName}" } ?: "")
             .put("demo0Bookmarks", dao.getBookmarks("demo-0").joinToString { "${it.positionMs}:${it.note}" })
             .put("demo0Log", dao.getListenLog("demo-0").sortedByDescending { it.at }.take(12).joinToString { "${it.kind}@${it.positionMs}/${it.device.ifEmpty { "here" }}" })

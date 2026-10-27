@@ -11,8 +11,9 @@ for k in ("syncOn", "syncError", "syncDevices", "syncFiles", "syncPrompt", "demo
     print(f"   {k}: {r.get(k)}")
 PY
 }
-pull_sync() { mkdir -p "$OUT/$1"; adb pull /sdcard/Android/data/$PKG/files/sync-test/. "$OUT/$1" > /dev/null 2>&1 || say "could not pull the sync folder"; ls "$OUT/$1" | tee -a "$OUT/focus.txt"; }
-# Prints the place items in a pulled state.json: who wrote each one and where it is.
+# Saves the "Drive" state.json from a self-check report (Android doesn't let adb read Ember's folder).
+pull_sync() { mkdir -p "$OUT/$1"; selfcheck "$1.json"; python3 -c "import json,sys; open(sys.argv[2],'w').write(json.load(open(sys.argv[1]))['syncState'])" "$OUT/$1.json" "$OUT/$1/state.json" || say "no state.json"; }
+# Prints the place items in a saved state.json: who wrote each one and where it is.
 places() { python3 - "$OUT/$1/state.json" <<'PY' | tee -a "$OUT/focus.txt"
 import json, sys
 s = json.load(open(sys.argv[1]))

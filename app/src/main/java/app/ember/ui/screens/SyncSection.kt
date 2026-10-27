@@ -80,7 +80,7 @@ fun SyncSection(vm: MainViewModel) {
                         !status.on -> "Keeps your place, bookmarks, stats, podcasts and listening log the same on your other devices with Ember (an iPhone or iPad)."
                         status.running -> "Syncing…"
                         status.error != null -> "Couldn't sync: ${status.error}"
-                        status.lastSyncAt > 0 -> "On · last synced " + DateUtils.getRelativeTimeSpanString(status.lastSyncAt, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS)
+                        status.lastSyncAt > 0 -> "On · last synced " + ago(status.lastSyncAt)
                         else -> "On · syncing for the first time"
                     },
                     style = MaterialTheme.typography.bodySmall,
@@ -166,7 +166,7 @@ fun SyncPromptDialog(vm: MainViewModel) {
     val np by vm.nowPlaying.collectAsState()
     val prompt = p ?: return
     val chapters = np?.takeIf { it.book.id == prompt.bookId }?.chapters.orEmpty()
-    val ago = if (prompt.at > 0) DateUtils.getRelativeTimeSpanString(prompt.at, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS).toString() else ""
+    val ago = if (prompt.at > 0) ago(prompt.at) else ""
     AlertDialog(
         onDismissRequest = {},
         containerColor = EmberColors.SurfaceHigh,
@@ -181,4 +181,10 @@ fun SyncPromptDialog(vm: MainViewModel) {
         confirmButton = { TextButton(onClick = { vm.answerSyncPrompt(true) }) { Text("Go there") } },
         dismissButton = { TextButton(onClick = { vm.answerSyncPrompt(false) }) { Text("Stay here") } },
     )
+}
+
+/** "just now", "3 minutes ago", "yesterday". */
+private fun ago(at: Long): String {
+    val now = System.currentTimeMillis()
+    return if (now - at < 60_000) "just now" else DateUtils.getRelativeTimeSpanString(at, now, DateUtils.MINUTE_IN_MILLIS).toString()
 }
