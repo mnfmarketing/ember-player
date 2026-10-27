@@ -133,8 +133,9 @@ fun SettingsScreen(
             "Podcasts" -> 17 + f
             "Storage" -> 19 + f
             "Backup and restore" -> 21 + f
-            "Goals" -> 23 + f
-            "Good to know" -> 26 + f
+            "Sync" -> 23 + f
+            "Goals" -> 24 + f
+            "Good to know" -> 27 + f
             else -> return@LaunchedEffect
         }
         listState.scrollToItem(index)
@@ -468,6 +469,7 @@ fun SettingsScreen(
 
         item { Group("Backup and restore") }
         item { BackupSection(vm) }
+        item { SyncSection(vm) }
 
         item { Group("Goals") }
         item {

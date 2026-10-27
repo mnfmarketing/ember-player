@@ -27,6 +27,7 @@ class EmberApp : Application() {
         container = AppContainer(this)
         PodcastRepository.schedule(this)
         app.ember.data.BackupManager.schedule(this)
+        if (container.sync.isOn) app.ember.sync.SyncManager.schedule(this)
         app.ember.playback.ResumeOnConnect.watch(this)
         container.torrents.init()
         app.ember.ui.Shortcuts.watch(this)
@@ -74,6 +75,7 @@ class AppContainer(context: Context) {
     val player = PlayerConnection(appContext)
     val backup = app.ember.data.BackupManager(appContext, this)
     val torrents = app.ember.torrent.TorrentEngine(appContext)
+    val sync = app.ember.sync.SyncManager(appContext, this)
 
     init {
         // Books from a restored backup are matched as soon as their folder is scanned.

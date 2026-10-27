@@ -35,7 +35,7 @@ jobs:
       - name: Test database upgrades
         run: |
           set -o pipefail
-          gradle :app:testDebugUnitTest --tests 'app.ember.data.DbMigrationTest' --tests 'app.ember.util.NamesTest' --no-daemon --console=plain 2>&1 | tee -a build.log
+          gradle :app:testDebugUnitTest --tests 'app.ember.data.DbMigrationTest' --tests 'app.ember.util.NamesTest' --tests 'app.ember.sync.SyncMergeTest' --no-daemon --console=plain 2>&1 | tee -a build.log
           mkdir -p /tmp/evidence && cp app/build/test-results/testDebugUnitTest/*.xml /tmp/evidence/
 
       - name: Test M4B tag and chapter writing on real files

@@ -47,6 +47,22 @@ abstract class LibraryDao {
     @Query("UPDATE books SET speed = :speed WHERE id = :id")
     abstract suspend fun updateSpeed(id: String, speed: Float)
 
+    // One field at a time, for changes arriving from your other devices (sync).
+    @Query("UPDATE books SET positionMs = :positionMs, lastPlayedAt = :playedAt WHERE id = :id")
+    abstract suspend fun setPlace(id: String, positionMs: Long, playedAt: Long)
+
+    @Query("UPDATE books SET lastPlayedAt = :playedAt WHERE id = :id")
+    abstract suspend fun setLastPlayed(id: String, playedAt: Long)
+
+    @Query("UPDATE books SET status = :status, finishedAt = :finishedAt WHERE id = :id")
+    abstract suspend fun setStatus(id: String, status: Int, finishedAt: Long)
+
+    @Query("UPDATE books SET rating = :rating WHERE id = :id")
+    abstract suspend fun setRating(id: String, rating: Int)
+
+    @Query("UPDATE books SET customEffects = :custom, trimSilence = :trim, voiceBoost = :boost, skipIntroSec = :intro, skipOutroSec = :outro WHERE id = :id")
+    abstract suspend fun setSound(id: String, custom: Boolean, trim: Boolean, boost: Boolean, intro: Int, outro: Int)
+
     @Query("DELETE FROM books WHERE id = :id")
     abstract suspend fun deleteBookRow(id: String)
 
@@ -130,6 +146,12 @@ abstract class LibraryDao {
     @Query("DELETE FROM bookmarks WHERE id = :id")
     abstract suspend fun deleteBookmark(id: Long)
 
+    @Update
+    abstract suspend fun updateBookmark(bookmark: BookmarkEntity)
+
+    @Query("SELECT * FROM bookmarks WHERE createdAt = :at")
+    abstract suspend fun getBookmarksCreatedAt(at: Long): List<BookmarkEntity>
+
     @Query("DELETE FROM bookmarks WHERE bookId = :bookId")
     abstract suspend fun deleteBookmarksFor(bookId: String)
 
@@ -140,8 +162,21 @@ abstract class LibraryDao {
     @Update
     abstract suspend fun updateListenEvent(e: ListenEventEntity)
 
-    @Query("SELECT * FROM listen_log WHERE bookId = :bookId ORDER BY at DESC, id DESC LIMIT 1")
+    /** This device's latest entry (entries synced from other devices never merge with new ones). */
+    @Query("SELECT * FROM listen_log WHERE bookId = :bookId AND device = '' ORDER BY at DESC, id DESC LIMIT 1")
     abstract suspend fun lastListenEvent(bookId: String): ListenEventEntity?
+
+    @Query("SELECT * FROM listen_log WHERE bookId = :bookId")
+    abstract suspend fun getListenLog(bookId: String): List<ListenEventEntity>
+
+    @Query("SELECT COUNT(*) AS n, IFNULL(MAX(at), 0) AS maxAt, IFNULL(MAX(id), 0) AS maxId FROM listen_log WHERE bookId = :bookId")
+    abstract suspend fun listenLogSignature(bookId: String): LogSignature
+
+    @Insert
+    abstract suspend fun insertListenEvents(e: List<ListenEventEntity>)
+
+    @Query("DELETE FROM listen_log WHERE id IN (:ids)")
+    abstract suspend fun deleteListenEvents(ids: List<Long>)
 
     @Query("SELECT * FROM listen_log WHERE bookId = :bookId ORDER BY at DESC, id DESC LIMIT 400")
     abstract fun observeListenLog(bookId: String): Flow<List<ListenEventEntity>>
@@ -178,6 +213,9 @@ abstract class LibraryDao {
 
     @Query("SELECT * FROM clips WHERE id = :id")
     abstract suspend fun getClip(id: Long): ClipEntity?
+
+    @Query("SELECT * FROM clips WHERE createdAt = :at")
+    abstract suspend fun getClipsCreatedAt(at: Long): List<ClipEntity>
 
     @Insert
     abstract suspend fun insertClip(clip: ClipEntity): Long
@@ -303,6 +341,11 @@ abstract class LibraryDao {
     abstract suspend fun deleteFolder(id: Long)
 }
 
+/** How a book's listening log looks right now, to tell whether it changed since the last sync. */
+data class LogSignature(val n: Int, val maxAt: Long, val maxId: Long) {
+    override fun toString() = "$n:$maxAt:$maxId"
+}
+
 @Database(
     entities = [
         BookEntity::class,
@@ -317,7 +360,7 @@ abstract class LibraryDao {
         ListenEventEntity::class,
         BookMergeEntity::class,
     ],
-    version = 5,
+    version = 6,
     exportSchema = true,
 )
 abstract class EmberDatabase : RoomDatabase() {

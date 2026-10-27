@@ -118,6 +118,9 @@ object SleepMarks {
 object PlaybackStatus {
     val isPlaying = MutableStateFlow(false)
 
+    /** The book (or "episode:<id>") loaded in the player, playing or paused. Sync asks before moving it. */
+    val loadedId = MutableStateFlow<String?>(null)
+
     /** While previewing a clip: pause when the book reaches the end of this range. */
     val clipRange = MutableStateFlow<Pair<Long, Long>?>(null)
 

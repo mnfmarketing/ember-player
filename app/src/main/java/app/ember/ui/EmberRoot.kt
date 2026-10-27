@@ -811,6 +811,8 @@ fun EmberRoot(vm: MainViewModel, routeRequest: String? = null, onRouteHandled: (
             }
         }
 
+        // Another device is further along in the book you have open (not while driving).
+        if (route != "car") app.ember.ui.screens.SyncPromptDialog(vm)
         // Finished a book: rate it, log it.
         // Never while driving: in car mode it waits until car mode closes.
         val finishedId by vm.finishedPrompt.collectAsState()

@@ -174,6 +174,9 @@ data class ListenEventEntity(
     val speed: Float = 1f,
     /** Why it paused: see the REASON_ constants. */
     val reason: Int = 0,
+    /** For entries from another device (sync): its id for the entry, and which device. Empty for this device's own. */
+    @ColumnInfo(defaultValue = "") val uid: String = "",
+    @ColumnInfo(defaultValue = "") val device: String = "",
 ) {
     companion object {
         const val PLAY = 1

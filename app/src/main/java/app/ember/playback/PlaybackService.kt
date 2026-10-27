@@ -356,6 +356,7 @@ class PlaybackService : MediaLibraryService() {
         castServer?.stop()
         CastStatus.device.value = null
         PlaybackStatus.isPlaying.value = false
+        PlaybackStatus.loadedId.value = null
         session?.release()
         session = null
         exo.removeListener(listener)
@@ -399,6 +400,8 @@ class PlaybackService : MediaLibraryService() {
                 captureListening()
                 flushListening()
                 if (active.playbackState != Player.STATE_ENDED) scope.launch { saveProgress() }
+                // Your other devices get your place a few seconds after you pause.
+                container.sync.request("pause", 4_000)
             }
             scope.launch { refreshWidget(applicationContext) }
             publishWear()
@@ -486,6 +489,8 @@ class PlaybackService : MediaLibraryService() {
                 captureListening()
                 ticks++
                 if (ticks % 5 == 0) saveProgress()
+                // And every 5 minutes while playing.
+                if (ticks % 300 == 0) container.sync.request("playing", 1_000)
                 // Keep the home-screen widget's progress and time left current.
                 if (ticks % 30 == 0) refreshWidget(applicationContext)
                 if (ticks % 10 == 0) publishWear()
@@ -1066,6 +1071,7 @@ class PlaybackService : MediaLibraryService() {
 
     private fun applyTrackState(id: String, tracks: List<TrackEntity>) {
         bookId = id
+        PlaybackStatus.loadedId.value = id
         trackDurations = LongArray(tracks.size) { tracks[it].durationMs }
         var acc = 0L
         offsets = LongArray(tracks.size) { i ->
@@ -1122,6 +1128,7 @@ class PlaybackService : MediaLibraryService() {
         val ep = media.getEpisode(epId) ?: return null
         val show = media.getPodcast(ep.podcastId)
         bookId = EPISODE_PREFIX + epId
+        PlaybackStatus.loadedId.value = EPISODE_PREFIX + epId
         trackDurations = longArrayOf(ep.durationMs)
         offsets = longArrayOf(0L)
         active.setPlaybackSpeed(show?.speed ?: 1f)

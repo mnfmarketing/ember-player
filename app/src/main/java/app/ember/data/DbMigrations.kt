@@ -66,6 +66,12 @@ object DbMigrations {
             "PRIMARY KEY(`mergedKey`, `idx`))",
     )
 
+    /** Library database, version 5 to 6: listening log entries from your other devices (sync). */
+    val EMBER_5_6 = listOf(
+        "ALTER TABLE `listen_log` ADD COLUMN `uid` TEXT NOT NULL DEFAULT ''",
+        "ALTER TABLE `listen_log` ADD COLUMN `device` TEXT NOT NULL DEFAULT ''",
+    )
+
     /** Podcast database (media.db), version 1 to 2: adds podcast chapters. */
     val MEDIA_1_2 = listOf(
         "ALTER TABLE `episodes` ADD COLUMN `chaptersUrl` TEXT NOT NULL DEFAULT ''",
@@ -99,7 +105,7 @@ object DbMigrations {
     )
 
     /** All library steps, keyed by (from, to). Kept as plain SQL so tests can run them without Android. */
-    val emberSteps: Map<Pair<Int, Int>, List<String>> = mapOf((1 to 2) to EMBER_1_2, (2 to 3) to EMBER_2_3, (3 to 4) to EMBER_3_4, (4 to 5) to EMBER_4_5)
+    val emberSteps: Map<Pair<Int, Int>, List<String>> = mapOf((1 to 2) to EMBER_1_2, (2 to 3) to EMBER_2_3, (3 to 4) to EMBER_3_4, (4 to 5) to EMBER_4_5, (5 to 6) to EMBER_5_6)
     val mediaSteps: Map<Pair<Int, Int>, List<String>> = mapOf((1 to 2) to MEDIA_1_2, (2 to 3) to MEDIA_2_3)
 
     val ember: Array<Migration> = emberSteps.map { (k, sql) -> step(k.first, k.second, sql) }.toTypedArray()

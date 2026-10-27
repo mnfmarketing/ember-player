@@ -24,9 +24,14 @@ import java.net.URLEncoder
 
 /**
  * Google Drive access using Google's authorization API.
- * Read-only: Ember never changes anything in your Drive.
+ * For books: read-only, Ember never changes anything in your Drive. Sync asks separately for
+ * Ember's own hidden app folder ([SCOPE_APPDATA]), which can't see or change your files.
  */
-class DriveAuth(private val context: Context) {
+class DriveAuth(
+    private val context: Context,
+    private val scope: String = SCOPE,
+    prefsName: String = "drive",
+) {
 
     enum class Status { DISCONNECTED, CONNECTED, NEEDS_CONSENT, ERROR }
 
@@ -35,7 +40,7 @@ class DriveAuth(private val context: Context) {
     private val _lastError = MutableStateFlow<String?>(null)
     val lastError: StateFlow<String?> = _lastError
 
-    private val prefs = context.getSharedPreferences("drive", Context.MODE_PRIVATE)
+    private val prefs = context.getSharedPreferences(prefsName, Context.MODE_PRIVATE)
     private val lock = Mutex()
     @Volatile private var token: String? = null
     @Volatile private var tokenAt = 0L
@@ -47,7 +52,7 @@ class DriveAuth(private val context: Context) {
     val isConnected: Boolean get() = prefs.getBoolean("connected", false)
 
     private val request: AuthorizationRequest =
-        AuthorizationRequest.builder().setRequestedScopes(listOf(Scope(SCOPE))).build()
+        AuthorizationRequest.builder().setRequestedScopes(listOf(Scope(scope))).build()
 
     /**
      * Starts sign-in. Returns a PendingIntent to show Google's consent screen,
@@ -124,6 +129,7 @@ class DriveAuth(private val context: Context) {
 
     companion object {
         const val SCOPE = "https://www.googleapis.com/auth/drive.readonly"
+        const val SCOPE_APPDATA = "https://www.googleapis.com/auth/drive.appdata"
     }
 }
 

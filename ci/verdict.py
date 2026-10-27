@@ -27,7 +27,7 @@ def check(label, report, expected):
             problems.append(f"{label}: {k} expected {v}, got {got}")
 
 up = load("after-upgrade.json")
-check("after upgrade", up, {**library, "libraryDbVersion": 5, "podcastDbVersion": 3})
+check("after upgrade", up, {**library, "libraryDbVersion": 6, "podcastDbVersion": 3})
 if up is not None and not up.get("dbSnapshots"):
     problems.append("after upgrade: no pre-upgrade database copy was made")
 else:

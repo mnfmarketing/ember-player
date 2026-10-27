@@ -213,6 +213,12 @@ class MainActivity : ComponentActivity() {
             }
         }
         intent.getStringExtra("ember_finish_prompt")?.let { app.ember.playback.PlaybackStatus.finished.value = app.ember.playback.PlaybackStatus.Finished(it) }
+        // Sync checks use a plain folder in place of Google Drive, and stand in for an iPhone.
+        if (intent.getBooleanExtra("ember_sync_test", false)) container.sync.enableTestFolder()
+        intent.getStringExtra("ember_sync_fake")?.split(',')?.takeIf { it.size == 2 }?.let { p ->
+            container.appScope.launch { container.sync.testFakeOtherDevice(p[0], p[1].toLong()) }
+        }
+        if (intent.getBooleanExtra("ember_sync_now", false)) container.appScope.launch { container.sync.syncNow("test") }
         intent.getStringExtra("ember_route")?.let { routeRequest.value = it }
         intent.getStringExtra("ember_play")?.let { container.player.playBook(it) }
     }
@@ -221,12 +227,15 @@ class MainActivity : ComponentActivity() {
         super.onStart()
         app.ember.playback.CarMode.appVisible = true
         container.player.connect()
+        // Pick up changes from your other devices.
+        container.sync.request("open", 1_500)
         // Carry on with any torrent downloads that were interrupted.
         container.torrents.startIfNeeded(applicationContext)
     }
 
     override fun onStop() {
         app.ember.playback.CarMode.appVisible = false
+        container.sync.request("background", 0)
         container.player.release()
         super.onStop()
     }

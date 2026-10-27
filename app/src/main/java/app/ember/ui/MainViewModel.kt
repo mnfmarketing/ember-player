@@ -890,6 +890,13 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     init {
         SleepMarks.load(getApplication())
+        // Pressing play on the book that's asking "Go there?" means you're staying here.
+        viewModelScope.launch {
+            PlaybackStatus.isPlaying.collect { playing ->
+                val p = c.sync.prompt.value
+                if (playing && p != null && PlaybackStatus.loadedId.value == p.bookId) c.sync.answer(false)
+            }
+        }
         // A book played to its end: ask for a rating (and offer StoryGraph / Goodreads).
         viewModelScope.launch {
             PlaybackStatus.finished.collect { f ->
@@ -1519,6 +1526,52 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun setAutoDownloadCount(n: Int) = viewModelScope.launch { c.settings.setAutoDownloadCount(n) }
+
+    // ---- Sync between devices ----
+
+    val syncStatus: StateFlow<app.ember.sync.SyncManager.Status> = c.sync.status
+    val syncPrompt: StateFlow<app.ember.sync.SyncManager.Prompt?> = c.sync.prompt
+
+    /** Starts turning sync on. Returns Google's consent screen when it needs showing, or null when it's already on. */
+    suspend fun syncBegin(activity: Activity): PendingIntent? {
+        val pi = c.sync.auth.begin(activity)
+        if (pi == null && c.sync.auth.isConnected) c.sync.turnOn()
+        return pi
+    }
+
+    fun syncComplete(data: Intent?): Boolean {
+        val ok = c.sync.auth.complete(data)
+        if (ok) c.sync.turnOn()
+        return ok
+    }
+
+    val syncAuthError: StateFlow<String?> = c.sync.auth.lastError
+
+    fun turnSyncOff() = c.sync.turnOff()
+
+    fun syncNow() {
+        viewModelScope.launch { c.sync.syncNow("tapped") }
+    }
+
+    fun renameThisDevice(name: String) {
+        if (name.isNotBlank()) c.sync.setDeviceName(name)
+    }
+
+    /** "Go there" moves the player to the other device's place; "Stay here" keeps yours (and sends it). */
+    fun answerSyncPrompt(go: Boolean) {
+        val p = c.sync.prompt.value ?: return
+        if (go) {
+            val np = nowPlaying.value
+            if (np != null && np.loaded && np.book.id == p.bookId) seekGlobal(p.positionMs)
+            else viewModelScope.launch { dao.setPlace(p.bookId, p.positionMs, System.currentTimeMillis()) }
+        }
+        c.sync.answer(go)
+    }
+
+    /** The device a log entry came from ("iPhone"), shown once the log has entries from more than one. */
+    fun logDeviceName(e: app.ember.data.ListenEventEntity): String = c.sync.nameOf(e.device)
+
+    fun isOtherDevice(e: app.ember.data.ListenEventEntity): Boolean = e.device.isNotEmpty() && e.device != c.sync.deviceId
 
     // ---- Google Drive ----
 

@@ -119,6 +119,8 @@ fun ListenLogSheet(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     var lastDay = ""
+                    // Entries from your other devices (sync) show which device they came from.
+                    val manyDevices = list.any { vm.isOtherDevice(it) }
                     list.forEach { e ->
                         val day = dayLabel(e.at)
                         if (day != lastDay) {
@@ -138,6 +140,7 @@ fun ListenLogSheet(
                                 e,
                                 chapters,
                                 durationMs,
+                                device = if (manyDevices) vm.logDeviceName(e) else null,
                                 onAwake = {
                                     vm.goToLogEntry(e.copy(positionMs = e.toMs))
                                     Toast.makeText(context, "Back to " + vm.describeSpot(chapters, e.toMs), Toast.LENGTH_SHORT).show()
@@ -173,7 +176,7 @@ fun ListenLogSheet(
 }
 
 @Composable
-private fun LogRow(vm: MainViewModel, e: ListenEventEntity, chapters: List<ChapterEntity>, durationMs: Long, onAwake: () -> Unit = {}, onClick: () -> Unit) {
+private fun LogRow(vm: MainViewModel, e: ListenEventEntity, chapters: List<ChapterEntity>, durationMs: Long, device: String? = null, onAwake: () -> Unit = {}, onClick: () -> Unit) {
     val delta = e.toMs - e.positionMs
     val toChapter = if (e.kind == ListenEventEntity.JUMP) chapters.firstOrNull { abs(it.startMs - e.toMs) < 1_500 } else null
     val (icon, title) = when (e.kind) {
@@ -222,7 +225,7 @@ private fun LogRow(vm: MainViewModel, e: ListenEventEntity, chapters: List<Chapt
                 overflow = TextOverflow.Ellipsis,
             )
             Text(
-                DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(e.at)),
+                DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(e.at)) + (device?.let { " · $it" } ?: ""),
                 style = MaterialTheme.typography.bodySmall,
                 color = EmberColors.TextMuted,
             )
