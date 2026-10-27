@@ -42,11 +42,16 @@ for dev in "$PHONE" "$PAD"; do
   xcrun simctl status_bar "$dev" override --time 9:41 --batteryState charged --batteryLevel 100 > /dev/null 2>&1 < /dev/null || true
 done
 
-# Warm-up: the first launch builds the demo library (audio and covers), so give it time before any screenshot.
+# Warm-up: the first launch builds the demo library (audio and covers). One device at a time, until it says it's ready.
 for dev in "$PHONE" "$PAD"; do
   limit 60 xcrun simctl launch "$dev" $BID -EmberDemo YES
+  DATA=$(xcrun simctl get_app_container "$dev" $BID data 2>/dev/null)
+  for i in $(seq 1 60); do
+    [ -f "$DATA/Documents/Demo/.ready" ] && break
+    sleep 3
+  done
+  echo "demo ready on $dev after $((i * 3))s" >> "$OUT/progress.txt"
 done
-sleep 30
 
 for mode in dark light; do
   for dev in "$PHONE" "$PAD"; do xcrun simctl ui "$dev" appearance $mode; done

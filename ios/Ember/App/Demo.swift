@@ -36,6 +36,19 @@ enum Demo {
         let folder = LibraryFolder(id: "demo", name: "Demo", bookmarkData: try? root.bookmarkData())
         lib.context.insert(folder)
         let now = Clock.now
+        // The audio first, off the main thread and in parallel (it takes a while on a simulator).
+        var jobs: [(URL, Int, Double)] = []
+        for (i, d) in books.enumerated() {
+            let dir = root.appendingPathComponent(d.title, isDirectory: true)
+            try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+            for f in 0..<d.files {
+                let url = dir.appendingPathComponent(String(format: "%02d Chapter %d.m4a", f + 1, f + 1))
+                if !FileManager.default.fileExists(atPath: url.path) { jobs.append((url, 120 + 30 * f, 180 + Double(i * 30 + f * 15))) }
+            }
+        }
+        await withTaskGroup(of: Void.self) { group in
+            for j in jobs { group.addTask { Demo.tone(j.0, seconds: j.1, freq: j.2) } }
+        }
         for (i, d) in books.enumerated() {
             let id = "demo-\(i)"
             let dir = root.appendingPathComponent(d.title, isDirectory: true)
@@ -55,9 +68,7 @@ enum Demo {
             }
             for f in 0..<d.files {
                 let name = String(format: "%02d Chapter %d.m4a", f + 1, f + 1)
-                let url = dir.appendingPathComponent(name)
                 let secs = 120 + 30 * f
-                if !FileManager.default.fileExists(atPath: url.path) { tone(url, seconds: secs, freq: 180 + Double(i * 30 + f * 15)) }
                 let ms = Int64(secs) * 1000
                 lib.context.insert(Track(bookID: id, idx: f, path: "\(d.title)/\(name)", title: "Chapter \(f + 1)", durationMs: ms))
                 lib.context.insert(Chapter(bookID: id, idx: f, title: ["The Night Market", "Lanterns", "A Borrowed Key", "The Tide Gate"][f % 4], startMs: offset, endMs: offset + ms))
@@ -103,6 +114,8 @@ enum Demo {
         seedPodcast(app)
         try? lib.context.save()
         lib.changed()
+        // For the simulator checks: the demo library is ready.
+        FileManager.default.createFile(atPath: root.appendingPathComponent(".ready").path, contents: Data())
     }
 
     private static func seedPodcast(_ app: AppModel) {
@@ -134,16 +147,23 @@ enum Demo {
         }
     }
 
+    nonisolated private static func tone(_ final: URL, seconds: Int, freq: Double) {
+        // Written beside the real name and moved into place, so a stopped launch never leaves half a file.
+        let temp = final.deletingLastPathComponent().appendingPathComponent(".partial-" + final.lastPathComponent)
+        try? FileManager.default.removeItem(at: temp)
+        if writeTone(temp, seconds: seconds, freq: freq) { try? FileManager.default.moveItem(at: temp, to: final) }
+    }
+
     /// Writes a short tone as AAC (so the demo books really play).
-    private static func tone(_ url: URL, seconds: Int, freq: Double) {
+    nonisolated private static func writeTone(_ url: URL, seconds: Int, freq: Double) -> Bool {
         let rate = 22_050.0
-        guard let format = AVAudioFormat(standardFormatWithSampleRate: rate, channels: 1) else { return }
+        guard let format = AVAudioFormat(standardFormatWithSampleRate: rate, channels: 1) else { return false }
         let settings: [String: Any] = [AVFormatIDKey: kAudioFormatMPEG4AAC, AVSampleRateKey: rate, AVNumberOfChannelsKey: 1, AVEncoderBitRateKey: 32_000]
-        guard let file = try? AVAudioFile(forWriting: url, settings: settings, commonFormat: .pcmFormatFloat32, interleaved: false) else { return }
+        guard let file = try? AVAudioFile(forWriting: url, settings: settings, commonFormat: .pcmFormatFloat32, interleaved: false) else { return false }
         let chunk: AVAudioFrameCount = 22_050
         var t = 0.0
         for _ in 0..<seconds {
-            guard let buf = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: chunk) else { return }
+            guard let buf = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: chunk) else { return false }
             buf.frameLength = chunk
             let p = buf.floatChannelData![0]
             for i in 0..<Int(chunk) {
@@ -152,6 +172,8 @@ enum Demo {
             }
             try? file.write(from: buf)
         }
+        file.close()
+        return true
     }
 
     private static func cover(_ d: DemoBook) -> UIImage {
