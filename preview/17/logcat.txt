@@ -1,0 +1,864 @@
+--------- beginning of kernel
+10-27 20:05:46.771     0     0 D logd    : Skipping 18446744073709540325 entries from slow reader, pid 349, from LogBuffer::kickMe()
+--------- beginning of main
+10-27 20:05:47.593   502   535 D EventSequenceValidator: Transition from ACTIVITY_FINISHED to INTENT_STARTED
+--------- beginning of system
+10-27 20:05:47.593   502  2447 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+10-27 20:05:47.594   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 6, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:1, uid:1071 session name: ""
+10-27 20:05:47.594   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=6)
+10-27 20:05:47.596  2454  2456 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:05:47.597   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:05:47.611   397   397 I perfetto: ftrace_procfs.cc:176    enabled ftrace
+10-27 20:05:47.844     0     0 W perfetto: enabled ftrace
+10-27 20:05:49.984     0     0 W healthd : battery l=100 v=5000 t=25.0 h=2 st=2 c=900000 fc=300000 cc=10 chg=a
+10-27 20:05:51.116   465   465 E netmgr  : qemu_pipe_open_ns:62: Could not connect to the 'pipe:qemud:network' service: Invalid argument
+10-27 20:05:51.116   465   465 E netmgr  : Failed to open QEMU pipe 'qemud:network': Invalid argument
+10-27 20:05:51.129   472   472 E wifi_forwarder: qemu_pipe_open_ns:62: Could not connect to the 'pipe:qemud:wififorward' service: Invalid argument
+10-27 20:05:51.129   472   472 E wifi_forwarder: RemoteConnection failed to initialize: RemoteConnection failed to open pipe
+10-27 20:05:52.600   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=6)
+10-27 20:05:52.600   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 6 ended, total sessions:0
+10-27 20:05:52.834     0     0 W perfetto: disabled ftrace
+10-27 20:05:52.601   397   397 I perfetto: ftrace_procfs.cc:183    disabled ftrace
+10-27 20:05:52.635   299  1920 D goldfish-address-space: claimShared: Ask to claim region [0x3f8000000 0x3f89e4000]
+10-27 20:05:52.791   162   162 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device manifest.
+10-27 20:05:52.791  2464  2464 I Gralloc4: mapper 4.x is not supported
+10-27 20:05:52.795  2464  2464 D HostConnection: createUnique: call
+10-27 20:05:52.795  2464  2464 D HostConnection: HostConnection::get() New Host Connection established 0x78acfdc8e450, tid 2464
+10-27 20:05:52.795  2464  2464 D goldfish-address-space: allocate: Ask for block of size 0x100
+10-27 20:05:52.796  2464  2464 D goldfish-address-space: allocate: ioctl allocate returned offset 0x3f7ffe000 size 0x2000
+10-27 20:05:52.802  2464  2464 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+10-27 20:05:53.177   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:05:53.177   502  1185 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+10-27 20:05:53.180   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 7, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:1, uid:1071 session name: ""
+10-27 20:05:53.180   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=7)
+10-27 20:05:53.182   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:05:53.199   397   397 I perfetto: ftrace_procfs.cc:176    enabled ftrace
+10-27 20:05:53.432     0     0 W perfetto: enabled ftrace
+10-27 20:05:53.404  2383  2394 I mber.audiobook: Compiler allocated 6951KB to compile void app.ember.ui.screens.LibraryScreenKt.LibraryScreen(app.ember.ui.MainViewModel, kotlin.jvm.functions.Function1, kotlin.jvm.functions.Function2, kotlin.jvm.functions.Function0, kotlin.jvm.functions.Function0, kotlin.jvm.functions.Function0, kotlin.jvm.functions.Function0, androidx.compose.runtime.Composer, int, int)
+10-27 20:05:53.439  2383  2394 I mber.audiobook: Compiler allocated 7748KB to compile void app.ember.ui.screens.LibraryScreenKt.LibraryScreen(app.ember.ui.MainViewModel, kotlin.jvm.functions.Function1, kotlin.jvm.functions.Function2, kotlin.jvm.functions.Function0, kotlin.jvm.functions.Function0, kotlin.jvm.functions.Function0, kotlin.jvm.functions.Function0, androidx.compose.runtime.Composer, int, int)
+10-27 20:05:53.501   299  1920 D goldfish-address-space: claimShared: Ask to claim region [0x3fbc08000 0x3fbc9c000]
+10-27 20:05:53.502  2383  2436 D HostConnection: HostConnection::get() New Host Connection established 0x711affd06850, tid 2436
+10-27 20:05:53.504  2383  2436 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+10-27 20:05:53.505  2383  2436 D EGL_emulation: eglCreateContext: 0x711aefda9d00: maj 3 min 0 rcv 3
+10-27 20:05:53.508   299  1920 D goldfish-address-space: claimShared: Ask to claim region [0x3fbc9c000 0x3fbd32000]
+10-27 20:05:53.509  2383  2436 D EGL_emulation: eglMakeCurrent: 0x711aefda9d00: ver 3 0 (tinfo 0x711a8fd4e680) (first time)
+10-27 20:05:53.512   299  1920 D goldfish-address-space: claimShared: Ask to claim region [0x3fbd32000 0x3fbdb4000]
+10-27 20:05:53.515  2383  2448 D HostConnection: HostConnection::get() New Host Connection established 0x711affcff650, tid 2448
+10-27 20:05:53.516  2383  2449 D HostConnection: HostConnection::get() New Host Connection established 0x711affcf1250, tid 2449
+10-27 20:05:53.519   299  1920 D goldfish-address-space: claimShared: Ask to claim region [0x3fbdb4000 0x3fbe41000]
+10-27 20:05:53.520  2383  2448 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+10-27 20:05:53.521  2383  2449 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+10-27 20:05:53.528   299  1920 D goldfish-address-space: claimShared: Ask to claim region [0x3fbe41000 0x3fbed4000]
+10-27 20:05:57.028   502  2478 I system_server: The ClassLoaderContext is a special shared library.
+10-27 20:05:57.038   502  2478 I chatty  : uid=1000(system) Binder:502_3 identical 18 lines
+10-27 20:05:57.038   502  2478 I system_server: The ClassLoaderContext is a special shared library.
+10-27 20:05:57.040   416   429 V installd: DexInv: --- BEGIN '/apex/com.android.os.statsd/javalib/service-statsd.jar' ---
+10-27 20:05:57.048  2479  2479 W dex2oat32: Unexpected CPU variant for X86 using defaults: x86_64
+10-27 20:05:57.048  2479  2479 I dex2oat32: /apex/com.android.art/bin/dex2oat32 --input-vdex-fd=-1 --output-vdex-fd=9 --updatable-bcp-packages-file=/system/etc/updatable-bcp-packages.txt --resolve-startup-const-strings=true --max-image-block-size=524288 --compiler-filter=verify --classpath-dir=/apex/com.android.os.statsd/javalib --class-loader-context=PCL[];PCL[/system/framework/com.android.location.provider.jar:/system/framework/services.jar:/system/framework/ethernet-service.jar:/apex/com.android.permission/javalib/service-permission.jar:/apex/com.android.wifi/javalib/service-wifi.jar:/apex/com.android.ipsec/javalib/android.net.ipsec.ike.jar] --generate-mini-debug-info --compact-dex-level=none --compilation-reason=boot
+10-27 20:05:57.049  2479  2479 I dex2oat32: setting boot class path to /apex/com.android.art/javalib/core-oj.jar:/apex/com.android.art/javalib/core-libart.jar:/apex/com.android.art/javalib/core-icu4j.jar:/apex/com.android.art/javalib/okhttp.jar:/apex/com.android.art/javalib/bouncycastle.jar:/apex/com.android.art/javalib/apache-xml.jar:/system/framework/framework.jar:/system/framework/ext.jar:/system/framework/telephony-common.jar:/system/framework/voip-common.jar:/system/framework/ims-common.jar:/system/framework/framework-atb-backward-compatibility.jar
+10-27 20:05:57.062   502  1185 D WifiNl80211Manager: Scan result ready event
+10-27 20:05:57.062   502  1185 D WifiNative: Scan result ready event
+10-27 20:05:57.076  2479  2479 I dex2oat32: dex2oat took 28.422ms (27.027ms cpu) (threads: 2) arena alloc=0B (0B) java alloc=33KB (34600B) native alloc=1005KB (1030064B) free=1501KB (1537344B)
+10-27 20:05:57.077   416   429 V installd: DexInv: --- END '/apex/com.android.os.statsd/javalib/service-statsd.jar' (success) ---
+10-27 20:05:57.078   502  2478 I system_server: The ClassLoaderContext is a special shared library.
+10-27 20:05:57.115   502  2478 I chatty  : uid=1000(system) Binder:502_3 identical 69 lines
+10-27 20:05:57.116   502  2478 I system_server: The ClassLoaderContext is a special shared library.
+10-27 20:05:57.116   502  2478 I BackgroundDexOptService: Pinning optimized code {android}
+10-27 20:05:57.116   502  2478 D IorapForwardingService: onPackagesUpdated: android
+10-27 20:05:57.224   299  1920 D goldfish-address-space: claimShared: Ask to claim region [0x3f8000000 0x3f89e4000]
+10-27 20:05:57.236   162   162 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device manifest.
+10-27 20:05:57.236  2485  2485 I Gralloc4: mapper 4.x is not supported
+10-27 20:05:57.239  2485  2485 D HostConnection: createUnique: call
+10-27 20:05:57.240  2485  2485 D HostConnection: HostConnection::get() New Host Connection established 0x71670e514550, tid 2485
+10-27 20:05:57.240  2485  2485 D goldfish-address-space: allocate: Ask for block of size 0x100
+10-27 20:05:57.240  2485  2485 D goldfish-address-space: allocate: ioctl allocate returned offset 0x3f7ffe000 size 0x2000
+10-27 20:05:57.247  2485  2485 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+10-27 20:05:57.633   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:05:57.635  2489  2491 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:05:57.636   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 8, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:2, uid:1071 session name: ""
+10-27 20:05:57.636   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=8)
+10-27 20:05:57.636   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:05:57.664   502  1185 I MediaFocusControl: requestAudioFocus() from uid/pid 10130/2383 clientId=android.media.AudioManager@227d606androidx.media3.exoplayer.AudioFocusManager$AudioFocusListener@cd024c7 callingPack=app.ember.audiobooks req=1 flags=0x2 sdk=35
+10-27 20:05:57.666   285   315 E android.hardware.audio.service.ranchu: device/generic/goldfish/audio/primary_device.cpp:getParameters:234 failure: Result::NOT_SUPPORTED
+10-27 20:05:57.688   355  1655 D AudioFlinger: Client defaulted notificationFrames to 1000 for frameCount 2000
+10-27 20:05:57.688   355  1655 D AF::TrackHandle: OpPlayAudio: track:55 usage:1 not muted
+10-27 20:05:57.690   502  1990 I system_server: oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:05:57.690   502  1990 I chatty  : uid=1000(system) Binder:502_10 identical 2 lines
+10-27 20:05:57.690   502  1990 I system_server: oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:05:57.690   502   502 D MediaSessionService: Media button session is changed to app.ember.audiobooks/androidx.media3.session.id. (userId=0)
+10-27 20:05:57.691   355  1655 W APM::AudioPolicyEngine: getDevicesForStrategy() unknown strategy: -1
+10-27 20:05:57.691   355  1655 W APM::AudioPolicyEngine: getDevicesForStrategy() unknown strategy: -1
+10-27 20:05:57.692   694   694 I AvrcpMediaPlayerList: onMediaKeyEventSessionChanged: token=app.ember.audiobooks
+10-27 20:05:57.692   694   694 D AvrcpMediaPlayerList: setActivePlayer(): setting player to app.ember.audiobooks
+10-27 20:05:57.693   694   694 W AvrcpMediaPlayerList: setActivePlayer(): Metadata not synced on new player
+10-27 20:05:57.693   694   694 V AvrcpMediaPlayerList: onActiveSessionsChanged: number of controllers: 1
+10-27 20:05:57.693   694   694 D AvrcpMediaPlayerList: onActiveSessionsChanged: controller: app.ember.audiobooks
+10-27 20:05:57.693   694   694 D AvrcpMediaPlayerList: Already have a controller for the player: app.ember.audiobooks, updating instead
+10-27 20:05:57.693   694   694 D AvrcpMediaPlayerList: sendMediaUpdate
+10-27 20:05:57.693   694   694 D AvrcpMediaPlayerList: sendMediaUpdate state=PlaybackState {state=6, position=252000, buffered position=252000, speed=0.0, updated=81180, actions=7339775, custom actions=[], active item id=0, error=null}
+10-27 20:05:57.693   694   694 D AvrcpTargetService: onMediaUpdated: track_changed=true state=true queue=true
+10-27 20:05:57.693   694   694 D AvrcpNativeInterface: sendMediaUpdate: metadata=true playStatus=true queue=true
+10-27 20:05:57.693   694   694 D AvrcpTargetJni: sendMediaUpdateNative
+10-27 20:05:57.693   694   694 I bt_stack: [INFO:avrcp_service.cc(346)] virtual void bluetooth::avrcp::AvrcpService::SendMediaUpdate(bool, bool, bool) track_changed=1 :  play_state=1 :  queue=1
+10-27 20:05:57.703   694   694 V AvrcpMediaPlayerWrapper: onQueueChanged(): app.ember.audiobooks
+10-27 20:05:57.703   694   694 W AvrcpMediaPlayerWrapper: onQueueChanged(): app.ember.audiobooks tried to update with no new data
+10-27 20:05:57.705   694   694 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=6, position=252000, buffered position=309200, speed=0.0, updated=81219, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:05:57.705   694   694 W AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks tried to update with no new data
+10-27 20:05:57.707  2383  2383 V MediaRouter: Selecting route: RouteInfo{ name=Phone, description=null, status=null, category=RouteCategory{ name=System types=ROUTE_TYPE_LIVE_AUDIO ROUTE_TYPE_LIVE_VIDEO  groupable=false }, supportedTypes=ROUTE_TYPE_LIVE_AUDIO ROUTE_TYPE_LIVE_VIDEO , presentationDisplay=null }
+10-27 20:05:57.736   502   530 I system_server: oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:05:57.737   285   315 E FMQ     : grantorIdx must be less than 3
+10-27 20:05:57.737   285   315 E FMQ     : grantorIdx must be less than 3
+10-27 20:05:57.738   694   694 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=3, position=252000, buffered position=383000, speed=1.0, updated=81252, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:05:57.738   355   451 E FMQ     : grantorIdx must be less than 3
+10-27 20:05:57.738   355   451 E FMQ     : grantorIdx must be less than 3
+10-27 20:05:57.739   694   694 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=3, position=252000, buffered position=383000, speed=1.0, updated=81253, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:05:57.766  2383  2423 D AudioTrack: getTimestamp_l(15): device stall time corrected using current time 81281538661
+10-27 20:05:57.634   502  1185 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+10-27 20:05:57.880   502   502 D NotificationService: 0|app.ember.audiobooks|1001|null|10130: granting content://settings/system/notification_sound
+10-27 20:05:57.880   502   502 I chatty  : uid=1000(system) Binder:502_3 identical 1 line
+10-27 20:05:57.880   502   502 D NotificationService: 0|app.ember.audiobooks|1001|null|10130: granting content://settings/system/notification_sound
+10-27 20:05:57.881   502   502 W NotificationHistory: Attempted to add notif for locked/gone/disabled user 0
+10-27 20:05:57.886   712   712 D InterruptionStateProvider: No alerting: filtered notification: 0|app.ember.audiobooks|1001|null|10130
+10-27 20:05:57.886   712   712 D InterruptionStateProvider: No alerting: filtered notification: 0|app.ember.audiobooks|1001|null|10130
+10-27 20:05:57.893   712   712 V MediaTimeout: processState: PlaybackState {state=3, position=252155, buffered position=383000, speed=1.0, updated=81408, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:05:57.893   712   712 D MediaResumeListener: Checking for service component for app.ember.audiobooks
+10-27 20:05:57.897   694  2299 D BluetoothDatabase: getBondedDevicesOrdered: Invalid address for device LocalStorage
+10-27 20:05:57.906   712   780 D MediaResumeListener: Testing if we can connect to ComponentInfo{app.ember.audiobooks/app.ember.playback.PlaybackService}
+10-27 20:05:57.912   712   712 W ConstraintSet: id unknown center_vertical_guideline
+10-27 20:05:57.913   712   712 W ConstraintSet: id unknown media_action_barrier
+10-27 20:05:57.913   712   712 W ConstraintSet: id unknown qs_media_controls_options
+10-27 20:05:57.920   712   780 D ResumeMediaBrowser: connected
+10-27 20:05:57.920   712   780 D MediaResumeListener: yes we can resume with ComponentInfo{app.ember.audiobooks/app.ember.playback.PlaybackService}
+10-27 20:05:57.930   712   712 W ConstraintSet: id unknown center_vertical_guideline
+10-27 20:05:57.930   712   712 W ConstraintSet: id unknown media_action_barrier
+10-27 20:05:57.931   712   712 W ConstraintSet: id unknown qs_media_controls_options
+10-27 20:05:57.937   712   712 W ConstraintSet: id unknown center_vertical_guideline
+10-27 20:05:57.937   712   712 W ConstraintSet: id unknown media_action_barrier
+10-27 20:05:57.937   712   712 W ConstraintSet: id unknown qs_media_controls_options
+10-27 20:05:57.942   712   712 W ConstraintSet: id unknown center_vertical_guideline
+10-27 20:05:57.943   712   712 W ConstraintSet: id unknown media_action_barrier
+10-27 20:05:57.943   712   712 W ConstraintSet: id unknown qs_media_controls_options
+10-27 20:05:57.951   712   712 D InterruptionStateProvider: No alerting: filtered notification: 0|app.ember.audiobooks|1001|null|10130
+10-27 20:05:57.961   712   712 I chatty  : uid=10121(com.android.systemui) identical 4 lines
+10-27 20:05:57.962   712   712 D InterruptionStateProvider: No alerting: filtered notification: 0|app.ember.audiobooks|1001|null|10130
+10-27 20:05:57.962   712   712 W ConstraintSet: id unknown center_vertical_guideline
+10-27 20:05:57.962   712   712 W ConstraintSet: id unknown media_action_barrier
+10-27 20:05:57.962   712   712 W ConstraintSet: id unknown qs_media_controls_options
+10-27 20:05:57.968   712   712 W ConstraintSet: id unknown center_vertical_guideline
+10-27 20:05:57.968   712   712 W ConstraintSet: id unknown media_action_barrier
+10-27 20:05:57.968   712   712 W ConstraintSet: id unknown qs_media_controls_options
+10-27 20:05:57.977   712   712 W ConstraintSet: id unknown center_vertical_guideline
+10-27 20:05:57.977   712   712 W ConstraintSet: id unknown media_action_barrier
+10-27 20:05:57.977   712   712 W ConstraintSet: id unknown qs_media_controls_options
+10-27 20:05:58.181   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=7)
+10-27 20:05:58.182   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 7 ended, total sessions:1
+10-27 20:05:59.742   694   694 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-27 20:05:59.742   694   694 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="Pride and Prejudice" artist="Jane Austen" album="Pride and Prejudice" duration=600000 trackPosition=1/1 }
+10-27 20:05:59.743   694   694 E AvrcpMediaPlayerWrapper:   └ Current Playstate: PlaybackState {state=3, position=254004, buffered position=383000, speed=1.0, updated=83257, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:05:59.743   694   694 E AvrcpMediaPlayerWrapper:   └ QueueItem(0): { mediaId="NowPlayingId0" title="Pride and Prejudice" artist="Chapter 1" album="" duration=0 trackPosition=1/1 }
+10-27 20:05:59.743   694   694 V AvrcpMediaPlayerWrapper: trySendMediaUpdate(): Metadata has been updated for app.ember.audiobooks
+10-27 20:05:59.743   694   694 D AvrcpMediaPlayerList: sendMediaUpdate
+10-27 20:05:59.743   694   694 D AvrcpMediaPlayerList: sendMediaUpdate state=PlaybackState {state=3, position=254005, buffered position=383000, speed=1.0, updated=83258, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:05:59.743   694   694 D AvrcpTargetService: onMediaUpdated: track_changed=false state=true queue=false
+10-27 20:05:59.743   694   694 D AvrcpNativeInterface: sendMediaUpdate: metadata=false playStatus=true queue=false
+10-27 20:05:59.743   694   694 D AvrcpTargetJni: sendMediaUpdateNative
+10-27 20:05:59.743   694   694 I bt_stack: [INFO:avrcp_service.cc(346)] virtual void bluetooth::avrcp::AvrcpService::SendMediaUpdate(bool, bool, bool) track_changed=0 :  play_state=1 :  queue=0
+10-27 20:06:00.001   712   712 D KeyguardClockSwitch: Updating clock: 806
+10-27 20:06:00.696   502   530 I system_server: oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:06:00.756   694   694 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=3, position=255009, buffered position=383000, speed=1.0, updated=84270, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:06:00.757   712   712 V MediaTimeout: processState: PlaybackState {state=3, position=255009, buffered position=383000, speed=1.0, updated=84270, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:06:02.641   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=8)
+10-27 20:06:02.642   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 8 ended, total sessions:0
+10-27 20:06:02.643   397   397 I perfetto: ftrace_procfs.cc:183    disabled ftrace
+10-27 20:06:02.875     0     0 W perfetto: disabled ftrace
+10-27 20:06:02.654   502   530 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+10-27 20:06:02.654   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:06:02.656  2506  2508 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:06:02.656   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:06:02.657   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 9, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:1, uid:1071 session name: ""
+10-27 20:06:02.759   694   694 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-27 20:06:02.759   694   694 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="Pride and Prejudice" artist="Jane Austen" album="Pride and Prejudice" duration=600000 trackPosition=1/1 }
+10-27 20:06:02.759   694   694 E AvrcpMediaPlayerWrapper:   └ Current Playstate: PlaybackState {state=3, position=257013, buffered position=383000, speed=1.0, updated=86274, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:06:02.759   694   694 E AvrcpMediaPlayerWrapper:   └ QueueItem(0): { mediaId="NowPlayingId0" title="Pride and Prejudice" artist="Chapter 1" album="" duration=0 trackPosition=1/1 }
+10-27 20:06:02.760   694   694 V AvrcpMediaPlayerWrapper: trySendMediaUpdate(): Metadata has been updated for app.ember.audiobooks
+10-27 20:06:02.760   694   694 D AvrcpMediaPlayerList: sendMediaUpdate
+10-27 20:06:02.760   694   694 D AvrcpMediaPlayerList: sendMediaUpdate state=PlaybackState {state=3, position=257013, buffered position=383000, speed=1.0, updated=86274, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:06:02.760   694   694 D AvrcpTargetService: onMediaUpdated: track_changed=false state=true queue=false
+10-27 20:06:02.760   694   694 D AvrcpNativeInterface: sendMediaUpdate: metadata=false playStatus=true queue=false
+10-27 20:06:02.760   694   694 D AvrcpTargetJni: sendMediaUpdateNative
+10-27 20:06:02.760   694   694 I bt_stack: [INFO:avrcp_service.cc(346)] virtual void bluetooth::avrcp::AvrcpService::SendMediaUpdate(bool, bool, bool) track_changed=0 :  play_state=1 :  queue=0
+10-27 20:06:02.785   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=9)
+10-27 20:06:02.800   397   397 I perfetto: ftrace_procfs.cc:176    enabled ftrace
+10-27 20:06:03.033     0     0 W perfetto: enabled ftrace
+10-27 20:06:02.939   355   451 D AudioFlinger: mixer(0x72ef0aacd040) throttle end: throttle time(4)
+10-27 20:06:02.964   285  2501 W android.hardware.audio.service.ranchu: TinyalsaSink::write:125 pcm_write was late reading frames, dropping 22131 us of audio
+10-27 20:06:03.603   355   451 D AudioFlinger: mixer(0x72ef0aacd040) throttle end: throttle time(84)
+10-27 20:06:03.759   694   694 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=3, position=258013, buffered position=383000, speed=1.0, updated=87273, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:06:03.759   712   712 V MediaTimeout: processState: PlaybackState {state=3, position=258013, buffered position=383000, speed=1.0, updated=87273, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:06:04.378  1410  1855 I Dialer  : OmtpVvmCarrierCfgHlpr - OmtpEvent:CONFIG_STATUS_SMS_TIME_OUT
+10-27 20:06:04.379  1410  1410 I Dialer  : RetryPolicy - discarding deferred status: configuration_state=4
+10-27 20:06:04.379  1410  1410 I Dialer  : VvmTaskExecutor - no more tasks, stopping service if no task are added in 5000 millis
+10-27 20:06:04.380  1410  1410 I Dialer  : VvmTaskReceiver - task received
+10-27 20:06:04.380  1410  1410 I Dialer  : VvmTaskReceiver - TaskExecutor already running
+10-27 20:06:04.380  1410  1410 I Dialer  : Task.createTask - create task:com.android.voicemail.impl.ActivationTask
+10-27 20:06:04.380  1410  1410 I Dialer  : RetryPolicy - retry #1 for com.android.voicemail.impl.ActivationTask@da3fa52 queued, executing in 5000
+10-27 20:06:04.380  1410  1410 I Dialer  : VvmTaskExecutor - com.android.voicemail.impl.ActivationTask@da3fa52 added
+10-27 20:06:04.380  1410  1410 I Dialer  : VvmTaskExecutor - minimal wait time:4999
+10-27 20:06:04.380  1410  1410 I Dialer  : VvmTaskExecutor - sleep for 4999 millis
+10-27 20:06:05.762   694   694 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-27 20:06:05.762   694   694 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="Pride and Prejudice" artist="Jane Austen" album="Pride and Prejudice" duration=600000 trackPosition=1/1 }
+10-27 20:06:05.762   694   694 E AvrcpMediaPlayerWrapper:   └ Current Playstate: PlaybackState {state=3, position=260017, buffered position=383000, speed=1.0, updated=89277, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:06:05.762   694   694 E AvrcpMediaPlayerWrapper:   └ QueueItem(0): { mediaId="NowPlayingId0" title="Pride and Prejudice" artist="Chapter 1" album="" duration=0 trackPosition=1/1 }
+10-27 20:06:05.763   694   694 V AvrcpMediaPlayerWrapper: trySendMediaUpdate(): Metadata has been updated for app.ember.audiobooks
+10-27 20:06:05.763   694   694 D AvrcpMediaPlayerList: sendMediaUpdate
+10-27 20:06:05.763   694   694 D AvrcpMediaPlayerList: sendMediaUpdate state=PlaybackState {state=3, position=260017, buffered position=383000, speed=1.0, updated=89277, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:06:05.763   694   694 D AvrcpTargetService: onMediaUpdated: track_changed=false state=true queue=false
+10-27 20:06:05.763   694   694 D AvrcpNativeInterface: sendMediaUpdate: metadata=false playStatus=true queue=false
+10-27 20:06:05.763   694   694 D AvrcpTargetJni: sendMediaUpdateNative
+10-27 20:06:05.763   694   694 I bt_stack: [INFO:avrcp_service.cc(346)] virtual void bluetooth::avrcp::AvrcpService::SendMediaUpdate(bool, bool, bool) track_changed=0 :  play_state=1 :  queue=0
+10-27 20:06:06.710   299  1920 D goldfish-address-space: claimShared: Ask to claim region [0x3f8000000 0x3f89e4000]
+10-27 20:06:06.745   162   162 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device manifest.
+10-27 20:06:06.748  2516  2516 I Gralloc4: mapper 4.x is not supported
+10-27 20:06:06.755  2516  2516 D HostConnection: createUnique: call
+10-27 20:06:06.757  2516  2516 D HostConnection: HostConnection::get() New Host Connection established 0x794012ed5510, tid 2516
+10-27 20:06:06.757  2516  2516 D goldfish-address-space: allocate: Ask for block of size 0x100
+10-27 20:06:06.758  2516  2516 D goldfish-address-space: allocate: ioctl allocate returned offset 0x3f7ffe000 size 0x2000
+10-27 20:06:06.769   694   694 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=3, position=261012, buffered position=383000, speed=1.0, updated=90281, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:06:06.769   712   712 V MediaTimeout: processState: PlaybackState {state=3, position=261012, buffered position=383000, speed=1.0, updated=90281, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:06:06.770  2516  2516 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+10-27 20:06:07.533  2518  2518 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-27 20:06:07.535  2518  2518 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.profilebootclasspath"
+10-27 20:06:07.535  2518  2518 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+10-27 20:06:07.535  2518  2518 I AndroidRuntime: Using default boot image
+10-27 20:06:07.535  2518  2518 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+10-27 20:06:07.535  2518  2518 I AndroidRuntime: Leaving lock profiling enabled
+10-27 20:06:07.535  2518  2518 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+10-27 20:06:07.536  2518  2518 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 20:06:07.532  2518  2518 W app_process: type=1400 audit(0.0:31): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8677 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-27 20:06:07.532  2518  2518 I chatty  : uid=2000(shell) app_process identical 2 lines
+10-27 20:06:07.532  2518  2518 W app_process: type=1400 audit(0.0:34): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8677 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-27 20:06:07.569  2518  2518 D app_process: Time zone APEX ICU file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+10-27 20:06:07.569  2518  2518 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt66l.dat
+10-27 20:06:07.571  2518  2518 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+10-27 20:06:07.571  2518  2518 I app_process: The ClassLoaderContext is a special shared library.
+10-27 20:06:07.578  2518  2518 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+10-27 20:06:07.580  2518  2518 D AndroidRuntime: Calling main entry com.android.commands.input.Input
+10-27 20:06:07.583   502  2447 D MediaSessionService: Sending KeyEvent { action=ACTION_DOWN, keyCode=KEYCODE_MEDIA_PAUSE, scanCode=0, metaState=0, flags=0x0, repeatCount=0, eventTime=91095, downTime=91095, deviceId=-1, source=0x0, displayId=-1 } to app.ember.audiobooks/androidx.media3.session.id. (userId=0)
+10-27 20:06:07.585   694   694 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=2, position=261834, buffered position=383000, speed=0.0, updated=91099, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:06:07.587   712   712 V MediaTimeout: processState: PlaybackState {state=2, position=261834, buffered position=383000, speed=0.0, updated=91099, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:06:07.587   712   712 V MediaTimeout: schedule timeout for 0|app.ember.audiobooks|1001|null|10130
+10-27 20:06:07.587   712   712 V MediaTimeout: processState: PlaybackState {state=2, position=261834, buffered position=383000, speed=0.0, updated=91100, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:06:07.588   694   694 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=2, position=261834, buffered position=383000, speed=0.0, updated=91100, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:06:07.595   502  1185 D MediaSessionService: Sending KeyEvent { action=ACTION_UP, keyCode=KEYCODE_MEDIA_PAUSE, scanCode=0, metaState=0, flags=0x0, repeatCount=0, eventTime=91095, downTime=91095, deviceId=-1, source=0x0, displayId=-1 } to app.ember.audiobooks/androidx.media3.session.id. (userId=0)
+10-27 20:06:07.596  2518  2518 D AndroidRuntime: Shutting down VM
+10-27 20:06:07.599   712   712 D InterruptionStateProvider: No alerting: filtered notification: 0|app.ember.audiobooks|1001|null|10130
+10-27 20:06:07.600   712   712 D InterruptionStateProvider: No alerting: filtered notification: 0|app.ember.audiobooks|1001|null|10130
+10-27 20:06:07.612   712   712 W ConstraintSet: id unknown center_vertical_guideline
+10-27 20:06:07.612   712   712 W ConstraintSet: id unknown media_action_barrier
+10-27 20:06:07.613   712   712 W ConstraintSet: id unknown qs_media_controls_options
+10-27 20:06:07.632   355   440 W APM::AudioPolicyEngine: getDevicesForStrategy() unknown strategy: -1
+10-27 20:06:07.632   355   440 W APM::AudioPolicyEngine: getDevicesForStrategy() unknown strategy: -1
+10-27 20:06:07.632   502  1990 I system_server: oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:06:07.901     0     0 W perfetto: disabled ftrace
+10-27 20:06:07.666   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=9)
+10-27 20:06:07.669   397   397 I perfetto: ftrace_procfs.cc:183    disabled ftrace
+10-27 20:06:07.670   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 9 ended, total sessions:0
+10-27 20:06:07.795   502   502 W NotificationHistory: Attempted to add notif for locked/gone/disabled user 0
+10-27 20:06:07.800   712   712 D InterruptionStateProvider: No alerting: filtered notification: 0|app.ember.audiobooks|1001|null|10130
+10-27 20:06:07.800   712   712 D InterruptionStateProvider: No alerting: filtered notification: 0|app.ember.audiobooks|1001|null|10130
+10-27 20:06:07.814   712   712 W ConstraintSet: id unknown center_vertical_guideline
+10-27 20:06:07.814   712   712 W ConstraintSet: id unknown media_action_barrier
+10-27 20:06:07.814   712   712 W ConstraintSet: id unknown qs_media_controls_options
+10-27 20:06:09.416  1410  1855 I Dialer  : VvmTaskExecutor - executing task com.android.voicemail.impl.ActivationTask@da3fa52
+10-27 20:06:09.416  1410  1855 I Dialer  : PreOMigrationHandler - ComponentInfo{com.android.phone/com.android.services.telephony.TelephonyConnectionService}, ***, UserHandle{0} already migrated
+10-27 20:06:09.425  1449  2290 I VoicemailNotifier: receivers for android.intent.action.PROVIDER_CHANGED :[]
+10-27 20:06:09.426  1410  1855 I Dialer  : VvmActivationTask - VVM content provider configured - vvm_type_cvvm
+10-27 20:06:09.426  1410  1855 I Dialer  : OmtpVvmCarrierCfgHlpr - OmtpEvent:CONFIG_ACTIVATING
+10-27 20:06:09.428  1449  2290 I VoicemailNotifier: receivers for android.intent.action.PROVIDER_CHANGED :[]
+10-27 20:06:09.433  1037  1320 D SmsNumberUtils: enter filterDestAddr. destAddr="[BajqU4K5_YhSYbs-7QUn0dOwcmI]"
+10-27 20:06:09.434  1037  1320 D SmsNumberUtils: destAddr is not formatted.
+10-27 20:06:09.434  1037  1320 D SmsNumberUtils: leave filterDestAddr, new destAddr="[BajqU4K5_YhSYbs-7QUn0dOwcmI]"
+10-27 20:06:09.590   694   694 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-27 20:06:09.590   694   694 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="Pride and Prejudice" artist="Jane Austen" album="Pride and Prejudice" duration=600000 trackPosition=1/1 }
+10-27 20:06:09.590   694   694 E AvrcpMediaPlayerWrapper:   └ Current Playstate: PlaybackState {state=2, position=261834, buffered position=383000, speed=0.0, updated=91100, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:06:09.591   694   694 E AvrcpMediaPlayerWrapper:   └ QueueItem(0): { mediaId="NowPlayingId0" title="Pride and Prejudice" artist="Chapter 1" album="" duration=0 trackPosition=1/1 }
+10-27 20:06:09.591   694   694 V AvrcpMediaPlayerWrapper: trySendMediaUpdate(): Metadata has been updated for app.ember.audiobooks
+10-27 20:06:09.591   694   694 D AvrcpMediaPlayerList: sendMediaUpdate
+10-27 20:06:09.591   694   694 D AvrcpMediaPlayerList: sendMediaUpdate state=PlaybackState {state=2, position=261834, buffered position=383000, speed=0.0, updated=91100, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:06:09.591   694   694 D AvrcpTargetService: onMediaUpdated: track_changed=false state=true queue=false
+10-27 20:06:09.591   694   694 D AvrcpNativeInterface: sendMediaUpdate: metadata=false playStatus=true queue=false
+10-27 20:06:09.591   694   694 D AvrcpTargetJni: sendMediaUpdateNative
+10-27 20:06:09.591   694   694 I bt_stack: [INFO:avrcp_service.cc(346)] virtual void bluetooth::avrcp::AvrcpService::SendMediaUpdate(bool, bool, bool) track_changed=0 :  play_state=1 :  queue=0
+10-27 20:06:10.598   502  1990 I system_server: oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:06:11.031   502  1990 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+10-27 20:06:11.031   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:06:11.032   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 10, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:1, uid:1071 session name: ""
+10-27 20:06:11.032   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=10)
+10-27 20:06:11.034   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:06:11.034  2533  2535 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:06:11.057   397   397 I perfetto: ftrace_procfs.cc:176    enabled ftrace
+10-27 20:06:11.290     0     0 W perfetto: enabled ftrace
+10-27 20:06:13.051   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:06:13.053  2543  2545 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:06:13.053   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:06:13.054   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 11, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:2, uid:1071 session name: ""
+10-27 20:06:13.054   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=11)
+10-27 20:06:16.036   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=10)
+10-27 20:06:16.036   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 10 ended, total sessions:1
+10-27 20:06:18.056   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=11)
+10-27 20:06:18.056   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 11 ended, total sessions:0
+10-27 20:06:18.057   397   397 I perfetto: ftrace_procfs.cc:183    disabled ftrace
+10-27 20:06:18.290     0     0 W perfetto: disabled ftrace
+10-27 20:06:13.051   502  1990 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+10-27 20:06:21.070   502   530 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+10-27 20:06:21.070   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:06:21.071   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 12, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:1, uid:1071 session name: ""
+10-27 20:06:21.071   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=12)
+10-27 20:06:21.072   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:06:21.081   397   397 I perfetto: ftrace_procfs.cc:176    enabled ftrace
+10-27 20:06:21.314     0     0 W perfetto: enabled ftrace
+10-27 20:06:21.091   502   819 D CompatibilityChangeReporter: Compat change id reported: 149924527; UID 10130; state: ENABLED
+10-27 20:06:21.091   502   819 D CompatibilityChangeReporter: Compat change id reported: 132649864; UID 10130; state: DISABLED
+10-27 20:06:21.094  1660  1705 I MediaProvider: Deleted 0 items on external due to app.ember.audiobooks
+10-27 20:06:21.116  1660  1705 I MediaProvider: Using lower FS for /storage/emulated/0/Download/EmberTest/f-first-sync.json
+10-27 20:06:26.074   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=12)
+10-27 20:06:26.075   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 12 ended, total sessions:0
+10-27 20:06:26.076   397   397 I perfetto: ftrace_procfs.cc:183    disabled ftrace
+10-27 20:06:26.309     0     0 W perfetto: disabled ftrace
+10-27 20:06:26.121   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:06:26.121   502  1185 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+10-27 20:06:26.122   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 13, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:1, uid:1071 session name: ""
+10-27 20:06:26.122   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:06:26.123  2566  2568 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:06:26.156  1660  1705 I MediaProvider: Deleted 0 items on external due to app.ember.audiobooks
+10-27 20:06:26.163  1660  1703 I MediaProvider: Using lower FS for /storage/emulated/0/Download/EmberTest/f-files-1.json
+10-27 20:06:26.164  2383  2394 I mber.audiobook: JIT allocated 51KB for compiled code of java.lang.Object app.ember.data.SelfCheck.summary(android.content.Context, kotlin.coroutines.Continuation)
+10-27 20:06:26.226   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=13)
+10-27 20:06:26.251   397   397 I perfetto: ftrace_procfs.cc:176    enabled ftrace
+10-27 20:06:26.484     0     0 W perfetto: enabled ftrace
+10-27 20:06:31.123   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=13)
+10-27 20:06:31.123   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 13 ended, total sessions:0
+10-27 20:06:31.124   397   397 I perfetto: ftrace_procfs.cc:183    disabled ftrace
+10-27 20:06:31.357     0     0 W perfetto: disabled ftrace
+10-27 20:06:31.190   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:06:31.190   502   529 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+10-27 20:06:31.191   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 14, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:1, uid:1071 session name: ""
+10-27 20:06:31.192   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:06:31.192  2577  2579 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:06:31.267   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=14)
+10-27 20:06:31.283   397   397 I perfetto: ftrace_procfs.cc:176    enabled ftrace
+10-27 20:06:31.516     0     0 W perfetto: enabled ftrace
+10-27 20:06:35.232   299  1920 D goldfish-address-space: claimShared: Ask to claim region [0x3f8000000 0x3f89e4000]
+10-27 20:06:35.244   162   162 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device manifest.
+10-27 20:06:35.244  2587  2587 I Gralloc4: mapper 4.x is not supported
+10-27 20:06:35.247  2587  2587 D HostConnection: createUnique: call
+10-27 20:06:35.248  2587  2587 D HostConnection: HostConnection::get() New Host Connection established 0x7fa10f24ebd0, tid 2587
+10-27 20:06:35.248  2587  2587 D goldfish-address-space: allocate: Ask for block of size 0x100
+10-27 20:06:35.248  2587  2587 D goldfish-address-space: allocate: ioctl allocate returned offset 0x3f7ffe000 size 0x2000
+10-27 20:06:35.254  2587  2587 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+10-27 20:06:35.451   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:06:35.452   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 15, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:2, uid:1071 session name: ""
+10-27 20:06:35.452   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=15)
+10-27 20:06:35.453  2591  2593 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:06:35.454   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:06:36.192   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=14)
+10-27 20:06:36.192   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 14 ended, total sessions:1
+10-27 20:06:37.062   502   529 D WifiNl80211Manager: Scan result ready event
+10-27 20:06:37.062   502   529 D WifiNative: Scan result ready event
+10-27 20:06:38.471   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:06:38.472   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 16, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:2, uid:1071 session name: ""
+10-27 20:06:38.473   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=16)
+10-27 20:06:38.473   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:06:38.474  2601  2603 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:06:38.537   299  1920 D goldfish-address-space: claimShared: Ask to claim region [0x3fa923000 0x3fac40000]
+10-27 20:06:38.551   299  1920 D goldfish-address-space: claimShared: Ask to claim region [0x3fac40000 0x3faf5d000]
+10-27 20:06:38.556   299  1920 D goldfish-address-space: claimShared: Ask to claim region [0x3faf5d000 0x3fb27a000]
+10-27 20:06:40.454   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=15)
+10-27 20:06:40.455   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 15 ended, total sessions:1
+10-27 20:06:43.476   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=16)
+10-27 20:06:43.476   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 16 ended, total sessions:0
+10-27 20:06:43.477   397   397 I perfetto: ftrace_procfs.cc:183    disabled ftrace
+10-27 20:06:43.710     0     0 W perfetto: disabled ftrace
+10-27 20:06:46.493   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:06:46.494   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 17, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:1, uid:1071 session name: ""
+10-27 20:06:46.494   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=17)
+10-27 20:06:46.495  2611  2613 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:06:46.496   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:06:46.512   397   397 I perfetto: ftrace_procfs.cc:176    enabled ftrace
+10-27 20:06:46.745     0     0 W perfetto: enabled ftrace
+10-27 20:06:49.984     0     0 W healthd : battery l=100 v=5000 t=25.0 h=2 st=2 c=900000 fc=300000 cc=10 chg=a
+10-27 20:06:50.534   299  1920 D goldfish-address-space: claimShared: Ask to claim region [0x3f8000000 0x3f89e4000]
+10-27 20:06:50.579   162   162 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device manifest.
+10-27 20:06:50.579  2621  2621 I Gralloc4: mapper 4.x is not supported
+10-27 20:06:50.583  2621  2621 D HostConnection: createUnique: call
+10-27 20:06:50.583  2621  2621 D HostConnection: HostConnection::get() New Host Connection established 0x7875a8bc8fd0, tid 2621
+10-27 20:06:50.583  2621  2621 D goldfish-address-space: allocate: Ask for block of size 0x100
+10-27 20:06:50.583  2621  2621 D goldfish-address-space: allocate: ioctl allocate returned offset 0x3f7ffe000 size 0x2000
+10-27 20:06:50.588  2621  2621 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+10-27 20:06:50.994   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:06:38.471   502   529 I chatty  : uid=1000(system) Binder:502_1 identical 2 lines
+10-27 20:06:46.493   502   529 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+10-27 20:06:50.994   502  2447 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+10-27 20:06:50.995   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 18, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:2, uid:1071 session name: ""
+10-27 20:06:50.995   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=18)
+10-27 20:06:50.997   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:06:50.998  2625  2627 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:06:51.035  1660  1703 I MediaProvider: Deleted 0 items on external due to app.ember.audiobooks
+10-27 20:06:51.041  1660  1703 I MediaProvider: Using lower FS for /storage/emulated/0/Download/EmberTest/f-prompt.json
+10-27 20:06:51.125   465   465 E netmgr  : qemu_pipe_open_ns:62: Could not connect to the 'pipe:qemud:network' service: Invalid argument
+10-27 20:06:51.125   465   465 E netmgr  : Failed to open QEMU pipe 'qemud:network': Invalid argument
+10-27 20:06:51.186   472   472 E wifi_forwarder: qemu_pipe_open_ns:62: Could not connect to the 'pipe:qemud:wififorward' service: Invalid argument
+10-27 20:06:51.186   472   472 E wifi_forwarder: RemoteConnection failed to initialize: RemoteConnection failed to open pipe
+10-27 20:06:51.496   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=17)
+10-27 20:06:51.496   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 17 ended, total sessions:1
+10-27 20:06:56.001   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=18)
+10-27 20:06:56.001   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 18 ended, total sessions:0
+10-27 20:06:56.002   397   397 I perfetto: ftrace_procfs.cc:183    disabled ftrace
+10-27 20:06:56.235     0     0 W perfetto: disabled ftrace
+10-27 20:06:56.077  2634  2634 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-27 20:06:56.078  2634  2634 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.profilebootclasspath"
+10-27 20:06:56.078  2634  2634 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+10-27 20:06:56.078  2634  2634 I AndroidRuntime: Using default boot image
+10-27 20:06:56.078  2634  2634 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+10-27 20:06:56.078  2634  2634 I AndroidRuntime: Leaving lock profiling enabled
+10-27 20:06:56.078  2634  2634 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+10-27 20:06:56.079  2634  2634 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 20:06:56.076  2634  2634 W app_process: type=1400 audit(0.0:35): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8677 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-27 20:06:56.076  2634  2634 I chatty  : uid=2000(shell) app_process identical 2 lines
+10-27 20:06:56.076  2634  2634 W app_process: type=1400 audit(0.0:38): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8677 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-27 20:06:56.112  2634  2634 D app_process: Time zone APEX ICU file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+10-27 20:06:56.112  2634  2634 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt66l.dat
+10-27 20:06:56.114  2634  2634 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+10-27 20:06:56.115  2634  2634 I app_process: The ClassLoaderContext is a special shared library.
+10-27 20:06:56.117  2634  2634 I app_process: The ClassLoaderContext is a special shared library.
+10-27 20:06:56.124  2634  2634 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+10-27 20:06:56.126  2634  2634 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-27 20:06:56.130  2634  2649 V UiAutomation: Init UiAutomation@dbe0c77[id=1, flags=0]
+10-27 20:06:57.141   502  2447 D CompatibilityChangeReporter: Compat change id reported: 149924527; UID 2000; state: ENABLED
+10-27 20:06:57.141   502  2447 D CompatibilityChangeReporter: Compat change id reported: 132649864; UID 2000; state: DISABLED
+10-27 20:06:57.152  2634  2634 W AccessibilityNodeInfoDumper: Fetch time: 13ms
+10-27 20:06:57.153   502   819 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@9647ce8
+10-27 20:06:57.153  2634  2649 V UiAutomation: Init UiAutomation@dbe0c77[id=-1, flags=0]
+10-27 20:06:57.156  2634  2634 D AndroidRuntime: Shutting down VM
+10-27 20:06:57.674  2651  2651 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-27 20:06:57.675  2651  2651 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.profilebootclasspath"
+10-27 20:06:57.675  2651  2651 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+10-27 20:06:57.675  2651  2651 I AndroidRuntime: Using default boot image
+10-27 20:06:57.675  2651  2651 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+10-27 20:06:57.675  2651  2651 I AndroidRuntime: Leaving lock profiling enabled
+10-27 20:06:57.675  2651  2651 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+10-27 20:06:57.677  2651  2651 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 20:06:57.672  2651  2651 W app_process: type=1400 audit(0.0:39): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8677 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-27 20:06:57.672  2651  2651 I chatty  : uid=2000(shell) app_process identical 2 lines
+10-27 20:06:57.672  2651  2651 W app_process: type=1400 audit(0.0:42): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8677 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-27 20:06:57.714  2651  2651 D app_process: Time zone APEX ICU file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+10-27 20:06:57.714  2651  2651 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt66l.dat
+10-27 20:06:57.715  2651  2651 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+10-27 20:06:57.716  2651  2651 I app_process: The ClassLoaderContext is a special shared library.
+10-27 20:06:57.722  2651  2651 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+10-27 20:06:57.724  2651  2651 D AndroidRuntime: Calling main entry com.android.commands.input.Input
+10-27 20:06:57.731  2651  2651 D AndroidRuntime: Shutting down VM
+10-27 20:06:57.781   694   694 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=2, position=599500, buffered position=599500, speed=0.0, updated=141289, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:06:57.809   694   694 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=2, position=599500, buffered position=599500, speed=0.0, updated=141323, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:06:57.835   502   819 I system_server: oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:06:57.835   502   819 I system_server: oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:06:57.879   712   712 V MediaTimeout: processState: PlaybackState {state=2, position=599500, buffered position=599500, speed=0.0, updated=141289, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:06:57.879   712   712 V MediaTimeout: processState: PlaybackState {state=2, position=599500, buffered position=599500, speed=0.0, updated=141323, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:06:57.896   355   448 D AudioFlinger: Client defaulted notificationFrames to 1000 for frameCount 2000
+10-27 20:06:57.897   355   448 D AF::TrackHandle: OpPlayAudio: track:56 usage:1 not muted
+10-27 20:06:57.905   502   529 I system_server: oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:06:57.905   502   529 I system_server: oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:06:57.933  2383  2395 I mber.audiobook: Background concurrent copying GC freed 147063(6150KB) AllocSpace objects, 67(1624KB) LOS objects, 49% free, 8806KB/17MB, paused 12us total 101.604ms
+10-27 20:06:58.177   694   694 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=2, position=599500, buffered position=600000, speed=0.0, updated=141629, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:06:58.180   712   712 V MediaTimeout: processState: PlaybackState {state=2, position=599500, buffered position=600000, speed=0.0, updated=141629, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:06:58.224   712   712 D InterruptionStateProvider: No alerting: filtered notification: 0|app.ember.audiobooks|1001|null|10130
+10-27 20:06:58.224   712   712 D InterruptionStateProvider: No alerting: filtered notification: 0|app.ember.audiobooks|1001|null|10130
+10-27 20:06:58.302   712   712 W ConstraintSet: id unknown center_vertical_guideline
+10-27 20:06:58.302   712   712 W ConstraintSet: id unknown media_action_barrier
+10-27 20:06:58.302   712   712 W ConstraintSet: id unknown qs_media_controls_options
+10-27 20:06:58.390   712   744 I ndroid.systemu: Waiting for a blocking GC ProfileSaver
+10-27 20:06:58.403   712   712 D InterruptionStateProvider: No alerting: filtered notification: 0|app.ember.audiobooks|1001|null|10130
+10-27 20:06:58.403   712   712 D InterruptionStateProvider: No alerting: filtered notification: 0|app.ember.audiobooks|1001|null|10130
+10-27 20:06:58.427   712   728 I ndroid.systemu: NativeAlloc concurrent copying GC freed 117951(6621KB) AllocSpace objects, 102(6092KB) LOS objects, 49% free, 7713KB/15MB, paused 20us total 101.169ms
+10-27 20:06:58.427   712   744 I ndroid.systemu: WaitForGcToComplete blocked ProfileSaver on ProfileSaver for 37.003ms
+10-27 20:06:58.440   502   534 I DropBoxManagerService: add tag=system_app_strictmode isTagEnabled=true flags=0x2
+10-27 20:06:58.451   712   712 W ConstraintSet: id unknown center_vertical_guideline
+10-27 20:06:58.451   712   712 W ConstraintSet: id unknown media_action_barrier
+10-27 20:06:58.451   712   712 W ConstraintSet: id unknown qs_media_controls_options
+10-27 20:07:00.001   712   712 D KeyguardClockSwitch: Updating clock: 807
+10-27 20:07:00.182   694   694 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+10-27 20:07:00.182   694   694 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="Pride and Prejudice" artist="Jane Austen" album="Pride and Prejudice" duration=600000 trackPosition=1/1 }
+10-27 20:07:00.183   694   694 E AvrcpMediaPlayerWrapper:   └ Current Playstate: PlaybackState {state=2, position=599500, buffered position=600000, speed=0.0, updated=141629, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:07:00.183   694   694 E AvrcpMediaPlayerWrapper:   └ QueueItem(0): { mediaId="NowPlayingId0" title="Pride and Prejudice" artist="Chapter 1" album="" duration=0 trackPosition=1/1 }
+10-27 20:07:00.183   694   694 V AvrcpMediaPlayerWrapper: trySendMediaUpdate(): Metadata has been updated for app.ember.audiobooks
+10-27 20:07:00.183   694   694 D AvrcpMediaPlayerList: sendMediaUpdate
+10-27 20:07:00.183   694   694 D AvrcpMediaPlayerList: sendMediaUpdate state=PlaybackState {state=2, position=599500, buffered position=600000, speed=0.0, updated=141629, actions=7340031, custom actions=[], active item id=0, error=null}
+10-27 20:07:00.183   694   694 D AvrcpTargetService: onMediaUpdated: track_changed=false state=true queue=false
+10-27 20:07:00.183   694   694 D AvrcpNativeInterface: sendMediaUpdate: metadata=false playStatus=true queue=false
+10-27 20:07:00.183   694   694 D AvrcpTargetJni: sendMediaUpdateNative
+10-27 20:07:00.184   694   694 I bt_stack: [INFO:avrcp_service.cc(346)] virtual void bluetooth::avrcp::AvrcpService::SendMediaUpdate(bool, bool, bool) track_changed=0 :  play_state=1 :  queue=0
+10-27 20:07:00.844   502  1185 I system_server: oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:07:00.909   502  1185 I system_server: oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:07:04.258   299  1920 D goldfish-address-space: claimShared: Ask to claim region [0x3f8000000 0x3f89e4000]
+10-27 20:07:04.268   162   162 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device manifest.
+10-27 20:07:04.269  2671  2671 I Gralloc4: mapper 4.x is not supported
+10-27 20:07:04.272  2671  2671 D HostConnection: createUnique: call
+10-27 20:07:04.273  2671  2671 D HostConnection: HostConnection::get() New Host Connection established 0x7843fd696e10, tid 2671
+10-27 20:07:04.273  2671  2671 D goldfish-address-space: allocate: Ask for block of size 0x100
+10-27 20:07:04.274  2671  2671 D goldfish-address-space: allocate: ioctl allocate returned offset 0x3f7ffe000 size 0x2000
+10-27 20:07:04.284  2671  2671 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+10-27 20:07:04.853   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:07:04.854   502  1990 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+10-27 20:07:04.854   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 19, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:1, uid:1071 session name: ""
+10-27 20:07:04.854   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=19)
+10-27 20:07:04.856   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:07:04.858  2675  2677 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:07:04.868   397   397 I perfetto: ftrace_procfs.cc:176    enabled ftrace
+10-27 20:07:05.100     0     0 W perfetto: enabled ftrace
+10-27 20:07:04.891  1660  1703 I MediaProvider: Deleted 0 items on external due to app.ember.audiobooks
+10-27 20:07:04.902  1660  1703 I MediaProvider: Using lower FS for /storage/emulated/0/Download/EmberTest/f-went-there.json
+10-27 20:07:09.476  1410  1855 I Dialer  : OmtpVvmCarrierCfgHlpr - OmtpEvent:CONFIG_STATUS_SMS_TIME_OUT
+10-27 20:07:09.476  1410  1410 I Dialer  : RetryPolicy - discarding deferred status: configuration_state=4
+10-27 20:07:09.477  1410  1410 I Dialer  : VvmTaskExecutor - no more tasks, stopping service if no task are added in 5000 millis
+10-27 20:07:09.477  1410  1410 I Dialer  : VvmTaskReceiver - task received
+10-27 20:07:09.477  1410  1410 I Dialer  : VvmTaskReceiver - TaskExecutor already running
+10-27 20:07:09.477  1410  1410 I Dialer  : Task.createTask - create task:com.android.voicemail.impl.ActivationTask
+10-27 20:07:09.477  1410  1410 I Dialer  : RetryPolicy - retry #2 for com.android.voicemail.impl.ActivationTask@fb64c7f queued, executing in 5000
+10-27 20:07:09.477  1410  1410 I Dialer  : VvmTaskExecutor - com.android.voicemail.impl.ActivationTask@fb64c7f added
+10-27 20:07:09.477  1410  1410 I Dialer  : VvmTaskExecutor - minimal wait time:5000
+10-27 20:07:09.477  1410  1410 I Dialer  : VvmTaskExecutor - sleep for 5000 millis
+10-27 20:07:09.858   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=19)
+10-27 20:07:09.858   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 19 ended, total sessions:0
+10-27 20:07:09.859   397   397 I perfetto: ftrace_procfs.cc:183    disabled ftrace
+10-27 20:07:10.092     0     0 W perfetto: disabled ftrace
+10-27 20:07:09.935  2684  2684 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-27 20:07:09.936  2684  2684 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.profilebootclasspath"
+10-27 20:07:09.936  2684  2684 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+10-27 20:07:09.936  2684  2684 I AndroidRuntime: Using default boot image
+10-27 20:07:09.936  2684  2684 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+10-27 20:07:09.936  2684  2684 I AndroidRuntime: Leaving lock profiling enabled
+10-27 20:07:09.936  2684  2684 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+10-27 20:07:09.937  2684  2684 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 20:07:09.932  2684  2684 W app_process: type=1400 audit(0.0:43): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8677 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-27 20:07:09.932  2684  2684 I chatty  : uid=2000(shell) app_process identical 2 lines
+10-27 20:07:09.932  2684  2684 W app_process: type=1400 audit(0.0:46): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8677 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-27 20:07:09.971  2684  2684 D app_process: Time zone APEX ICU file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+10-27 20:07:09.971  2684  2684 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt66l.dat
+10-27 20:07:09.973  2684  2684 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+10-27 20:07:09.973  2684  2684 I app_process: The ClassLoaderContext is a special shared library.
+10-27 20:07:09.974  2684  2684 I app_process: The ClassLoaderContext is a special shared library.
+10-27 20:07:09.979  2684  2684 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+10-27 20:07:09.981  2684  2684 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-27 20:07:09.986  2684  2698 V UiAutomation: Init UiAutomation@fffe3cc[id=2, flags=0]
+10-27 20:07:11.017  2684  2684 W AccessibilityNodeInfoDumper: Fetch time: 12ms
+10-27 20:07:11.018   502  1185 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@b96a624
+10-27 20:07:11.018  2684  2698 V UiAutomation: Init UiAutomation@fffe3cc[id=-1, flags=0]
+10-27 20:07:11.020  2684  2684 D AndroidRuntime: Shutting down VM
+10-27 20:07:11.571  2700  2700 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-27 20:07:11.572  2700  2700 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.profilebootclasspath"
+10-27 20:07:11.572  2700  2700 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+10-27 20:07:11.572  2700  2700 I AndroidRuntime: Using default boot image
+10-27 20:07:11.572  2700  2700 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+10-27 20:07:11.572  2700  2700 I AndroidRuntime: Leaving lock profiling enabled
+10-27 20:07:11.572  2700  2700 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+10-27 20:07:11.573  2700  2700 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 20:07:11.568  2700  2700 W app_process: type=1400 audit(0.0:47): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8677 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-27 20:07:11.568  2700  2700 I chatty  : uid=2000(shell) app_process identical 2 lines
+10-27 20:07:11.568  2700  2700 W app_process: type=1400 audit(0.0:50): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8677 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-27 20:07:11.607  2700  2700 D app_process: Time zone APEX ICU file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+10-27 20:07:11.608  2700  2700 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt66l.dat
+10-27 20:07:11.609  2700  2700 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+10-27 20:07:11.610  2700  2700 I app_process: The ClassLoaderContext is a special shared library.
+10-27 20:07:11.616  2700  2700 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+10-27 20:07:11.619  2700  2700 D AndroidRuntime: Calling main entry com.android.commands.input.Input
+10-27 20:07:11.625  2700  2700 D AndroidRuntime: Shutting down VM
+10-27 20:07:11.780   299  1920 D goldfish-address-space: claimShared: Ask to claim region [0x3f8000000 0x3f89e4000]
+10-27 20:07:11.804   299  1920 D goldfish-address-space: claimShared: Ask to claim region [0x3f8aac000 0x3f9490000]
+10-27 20:07:11.819   299  1920 D goldfish-address-space: claimShared: Ask to claim region [0x3fa923000 0x3fb307000]
+10-27 20:07:14.492  1410  1855 I Dialer  : VvmTaskExecutor - executing task com.android.voicemail.impl.ActivationTask@fb64c7f
+10-27 20:07:14.492  1410  1855 I Dialer  : PreOMigrationHandler - ComponentInfo{com.android.phone/com.android.services.telephony.TelephonyConnectionService}, ***, UserHandle{0} already migrated
+10-27 20:07:14.500  1449  2290 I VoicemailNotifier: receivers for android.intent.action.PROVIDER_CHANGED :[]
+10-27 20:07:14.501  1410  1855 I Dialer  : VvmActivationTask - VVM content provider configured - vvm_type_cvvm
+10-27 20:07:14.501  1410  1855 I Dialer  : OmtpVvmCarrierCfgHlpr - OmtpEvent:CONFIG_ACTIVATING
+10-27 20:07:14.502  1449  2290 I VoicemailNotifier: receivers for android.intent.action.PROVIDER_CHANGED :[]
+10-27 20:07:14.506  1037  1320 D SmsNumberUtils: enter filterDestAddr. destAddr="[BajqU4K5_YhSYbs-7QUn0dOwcmI]"
+10-27 20:07:14.507  1037  1320 D SmsNumberUtils: destAddr is not formatted.
+10-27 20:07:14.507  1037  1320 D SmsNumberUtils: leave filterDestAddr, new destAddr="[BajqU4K5_YhSYbs-7QUn0dOwcmI]"
+10-27 20:07:16.170   299  1920 D goldfish-address-space: claimShared: Ask to claim region [0x3f94d3000 0x3f9eb7000]
+10-27 20:07:16.177   162   162 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device manifest.
+10-27 20:07:16.180  2715  2715 I Gralloc4: mapper 4.x is not supported
+10-27 20:07:16.187  2715  2715 D HostConnection: createUnique: call
+10-27 20:07:16.189  2715  2715 D HostConnection: HostConnection::get() New Host Connection established 0x718c083d6510, tid 2715
+10-27 20:07:16.189  2715  2715 D goldfish-address-space: allocate: Ask for block of size 0x100
+10-27 20:07:16.189  2715  2715 D goldfish-address-space: allocate: ioctl allocate returned offset 0x3f7ffe000 size 0x2000
+10-27 20:07:16.199  2715  2715 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+10-27 20:07:16.447  2717  2717 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-27 20:07:16.449  2717  2717 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.profilebootclasspath"
+10-27 20:07:16.449  2717  2717 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+10-27 20:07:16.449  2717  2717 I AndroidRuntime: Using default boot image
+10-27 20:07:16.449  2717  2717 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+10-27 20:07:16.449  2717  2717 I AndroidRuntime: Leaving lock profiling enabled
+10-27 20:07:16.449  2717  2717 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+10-27 20:07:16.451  2717  2717 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 20:07:16.444  2717  2717 W app_process: type=1400 audit(0.0:51): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8677 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-27 20:07:16.444  2717  2717 I chatty  : uid=2000(shell) app_process identical 2 lines
+10-27 20:07:16.444  2717  2717 W app_process: type=1400 audit(0.0:54): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8677 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-27 20:07:16.489  2717  2717 D app_process: Time zone APEX ICU file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+10-27 20:07:16.489  2717  2717 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt66l.dat
+10-27 20:07:16.491  2717  2717 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+10-27 20:07:16.491  2717  2717 I app_process: The ClassLoaderContext is a special shared library.
+10-27 20:07:16.498  2717  2717 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+10-27 20:07:16.500  2717  2717 D AndroidRuntime: Calling main entry com.android.commands.input.Input
+10-27 20:07:16.503   502   533 D AutofillManagerService: onBackKeyPressed()
+10-27 20:07:16.504  2717  2717 D AndroidRuntime: Shutting down VM
+10-27 20:07:18.931   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:07:18.931   502  1185 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+10-27 20:07:18.932   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 20, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:1, uid:1071 session name: ""
+10-27 20:07:18.932   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=20)
+10-27 20:07:18.933   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:07:18.934  2732  2734 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:07:18.956   397   397 I perfetto: ftrace_procfs.cc:176    enabled ftrace
+10-27 20:07:19.189     0     0 W perfetto: enabled ftrace
+10-27 20:07:21.951   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:07:21.952   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:07:21.953   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 21, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:2, uid:1071 session name: ""
+10-27 20:07:21.953   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=21)
+10-27 20:07:21.955  2742  2744 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:07:22.009   299  1920 D goldfish-address-space: claimShared: Ask to claim region [0x3fa923000 0x3fac40000]
+10-27 20:07:22.015   299   299 D goldfish-address-space: claimShared: Ask to claim region [0x3fac40000 0x3faf5d000]
+10-27 20:07:22.016   299   299 D goldfish-address-space: claimShared: Ask to claim region [0x3faf5d000 0x3fb27a000]
+10-27 20:07:23.934   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=20)
+10-27 20:07:23.934   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 20 ended, total sessions:1
+10-27 20:07:26.955   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=21)
+10-27 20:07:26.955   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 21 ended, total sessions:0
+10-27 20:07:26.957   397   397 I perfetto: ftrace_procfs.cc:183    disabled ftrace
+10-27 20:07:27.189     0     0 W perfetto: disabled ftrace
+10-27 20:07:29.974   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:07:21.951   502  1185 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+10-27 20:07:29.974   502  2447 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+10-27 20:07:29.975   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 22, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:1, uid:1071 session name: ""
+10-27 20:07:29.975   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=22)
+10-27 20:07:29.977   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:07:29.989   397   397 I perfetto: ftrace_procfs.cc:176    enabled ftrace
+10-27 20:07:30.221     0     0 W perfetto: enabled ftrace
+10-27 20:07:34.028   299   299 D goldfish-address-space: claimShared: Ask to claim region [0x3f8000000 0x3f89e4000]
+10-27 20:07:34.040   162   162 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device manifest.
+10-27 20:07:34.040  2762  2762 I Gralloc4: mapper 4.x is not supported
+10-27 20:07:34.046  2762  2762 D HostConnection: createUnique: call
+10-27 20:07:34.047  2762  2762 D HostConnection: HostConnection::get() New Host Connection established 0x7d6d912d6d50, tid 2762
+10-27 20:07:34.047  2762  2762 D goldfish-address-space: allocate: Ask for block of size 0x100
+10-27 20:07:34.047  2762  2762 D goldfish-address-space: allocate: ioctl allocate returned offset 0x3f7ffe000 size 0x2000
+10-27 20:07:34.055  2762  2762 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+10-27 20:07:34.480  2764  2764 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-27 20:07:34.482  2764  2764 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.profilebootclasspath"
+10-27 20:07:34.482  2764  2764 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+10-27 20:07:34.482  2764  2764 I AndroidRuntime: Using default boot image
+10-27 20:07:34.482  2764  2764 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+10-27 20:07:34.482  2764  2764 I AndroidRuntime: Leaving lock profiling enabled
+10-27 20:07:34.482  2764  2764 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+10-27 20:07:34.484  2764  2764 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 20:07:34.480  2764  2764 W app_process: type=1400 audit(0.0:55): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8677 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-27 20:07:34.480  2764  2764 I chatty  : uid=2000(shell) app_process identical 2 lines
+10-27 20:07:34.480  2764  2764 W app_process: type=1400 audit(0.0:58): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8677 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-27 20:07:34.521  2764  2764 D app_process: Time zone APEX ICU file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+10-27 20:07:34.521  2764  2764 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt66l.dat
+10-27 20:07:34.523  2764  2764 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+10-27 20:07:34.524  2764  2764 I app_process: The ClassLoaderContext is a special shared library.
+10-27 20:07:34.524  2764  2764 I app_process: The ClassLoaderContext is a special shared library.
+10-27 20:07:34.530  2764  2764 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+10-27 20:07:34.532  2764  2764 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-27 20:07:34.539  2764  2778 V UiAutomation: Init UiAutomation@1e0f80d[id=3, flags=0]
+10-27 20:07:34.977   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=22)
+10-27 20:07:34.978   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 22 ended, total sessions:0
+10-27 20:07:34.979   397   397 I perfetto: ftrace_procfs.cc:183    disabled ftrace
+10-27 20:07:35.212     0     0 W perfetto: disabled ftrace
+10-27 20:07:35.549  2764  2764 W AccessibilityNodeInfoDumper: Fetch time: 2ms
+10-27 20:07:35.549   502   529 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@983305
+10-27 20:07:35.549  2764  2778 V UiAutomation: Init UiAutomation@1e0f80d[id=-1, flags=0]
+10-27 20:07:35.553  2764  2764 D AndroidRuntime: Shutting down VM
+10-27 20:07:36.070  2781  2781 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-27 20:07:36.071  2781  2781 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.profilebootclasspath"
+10-27 20:07:36.071  2781  2781 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+10-27 20:07:36.071  2781  2781 I AndroidRuntime: Using default boot image
+10-27 20:07:36.071  2781  2781 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+10-27 20:07:36.071  2781  2781 I AndroidRuntime: Leaving lock profiling enabled
+10-27 20:07:36.071  2781  2781 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+10-27 20:07:36.072  2781  2781 I app_process: Core platform API reporting enabled, enforcing=false
+10-27 20:07:36.068  2781  2781 W app_process: type=1400 audit(0.0:59): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8677 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-27 20:07:36.068  2781  2781 I chatty  : uid=2000(shell) app_process identical 2 lines
+10-27 20:07:36.068  2781  2781 W app_process: type=1400 audit(0.0:62): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8677 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-27 20:07:36.105  2781  2781 D app_process: Time zone APEX ICU file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+10-27 20:07:36.105  2781  2781 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt66l.dat
+10-27 20:07:36.107  2781  2781 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+10-27 20:07:36.108  2781  2781 I app_process: The ClassLoaderContext is a special shared library.
+10-27 20:07:36.113  2781  2781 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+10-27 20:07:36.116  2781  2781 D AndroidRuntime: Calling main entry com.android.commands.input.Input
+10-27 20:07:36.124  2781  2781 D AndroidRuntime: Shutting down VM
+10-27 20:07:46.553   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:07:46.553   502   529 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+10-27 20:07:46.555   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:07:46.555   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 23, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:1, uid:1071 session name: ""
+10-27 20:07:46.556   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=23)
+10-27 20:07:46.568   397   397 I perfetto: ftrace_procfs.cc:176    enabled ftrace
+10-27 20:07:46.800     0     0 W perfetto: enabled ftrace
+10-27 20:07:46.651  1660  1703 I MediaProvider: Deleted 0 items on external due to app.ember.audiobooks
+10-27 20:07:46.660  1660  1703 I MediaProvider: Using lower FS for /storage/emulated/0/Download/EmberTest/f-stayed.json
+10-27 20:07:49.984     0     0 W healthd : battery l=100 v=5000 t=25.0 h=2 st=2 c=900000 fc=300000 cc=10 chg=a
+10-27 20:07:51.177   465   465 E netmgr  : qemu_pipe_open_ns:62: Could not connect to the 'pipe:qemud:network' service: Invalid argument
+10-27 20:07:51.177   465   465 E netmgr  : Failed to open QEMU pipe 'qemud:network': Invalid argument
+10-27 20:07:51.246   472   472 E wifi_forwarder: qemu_pipe_open_ns:62: Could not connect to the 'pipe:qemud:wififorward' service: Invalid argument
+10-27 20:07:51.246   472   472 E wifi_forwarder: RemoteConnection failed to initialize: RemoteConnection failed to open pipe
+10-27 20:07:51.561   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=23)
+10-27 20:07:51.561   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 23 ended, total sessions:0
+10-27 20:07:51.562   397   397 I perfetto: ftrace_procfs.cc:183    disabled ftrace
+10-27 20:07:51.795     0     0 W perfetto: disabled ftrace
+10-27 20:07:51.605   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:07:51.605   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 24, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:1, uid:1071 session name: ""
+10-27 20:07:51.606  2808  2810 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:07:51.607   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:07:51.623  1660  1703 I MediaProvider: Deleted 0 items on external due to app.ember.audiobooks
+10-27 20:07:51.635  1660  1703 I MediaProvider: Using lower FS for /storage/emulated/0/Download/EmberTest/f-files-2.json
+10-27 20:07:51.710   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=24)
+10-27 20:07:51.727   397   397 I perfetto: ftrace_procfs.cc:176    enabled ftrace
+10-27 20:07:51.960     0     0 W perfetto: enabled ftrace
+10-27 20:07:56.605   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=24)
+10-27 20:07:56.606   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 24 ended, total sessions:0
+10-27 20:07:56.607   397   397 I perfetto: ftrace_procfs.cc:183    disabled ftrace
+10-27 20:07:56.840     0     0 W perfetto: disabled ftrace
+10-27 20:07:56.674   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:07:56.675   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 25, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:1, uid:1071 session name: ""
+10-27 20:07:56.676   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:07:56.766   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=25)
+10-27 20:07:56.803   397   397 I perfetto: ftrace_procfs.cc:176    enabled ftrace
+10-27 20:07:57.036     0     0 W perfetto: enabled ftrace
+10-27 20:07:57.062   502   529 D WifiNl80211Manager: Scan result ready event
+10-27 20:07:57.062   502   529 D WifiNative: Scan result ready event
+10-27 20:07:59.693   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:07:59.695   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:08:00.001   712   712 D KeyguardClockSwitch: Updating clock: 808
+10-27 20:08:01.675   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=25)
+10-27 20:08:01.675   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 25 ended, total sessions:0
+10-27 20:08:01.676   397   397 I perfetto: ftrace_procfs.cc:183    disabled ftrace
+10-27 20:08:01.909     0     0 W perfetto: disabled ftrace
+10-27 20:08:07.712   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:07:56.674   502   529 I chatty  : uid=1000(system) Binder:502_1 identical 2 lines
+10-27 20:07:59.693   502   529 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+10-27 20:08:07.712   502   530 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+10-27 20:08:07.713   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 26, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:1, uid:1071 session name: ""
+10-27 20:08:07.714   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=26)
+10-27 20:08:07.715  2837  2839 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:08:07.715   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:08:07.964     0     0 W perfetto: enabled ftrace
+10-27 20:08:07.731   397   397 I perfetto: ftrace_procfs.cc:176    enabled ftrace
+10-27 20:08:07.734  1660  1703 I MediaProvider: Deleted 0 items on external due to app.ember.audiobooks
+10-27 20:08:07.738  1660  1703 I MediaProvider: Using lower FS for /storage/emulated/0/Download/EmberTest/f-moved.json
+10-27 20:08:07.739  2383  2397 W System  : A resource failed to call release. 
+10-27 20:08:07.739  2383  2397 W System  : A resource failed to call release. 
+10-27 20:08:12.715   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=26)
+10-27 20:08:12.715   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 26 ended, total sessions:0
+10-27 20:08:12.716   397   397 I perfetto: ftrace_procfs.cc:183    disabled ftrace
+10-27 20:08:12.949     0     0 W perfetto: disabled ftrace
+10-27 20:08:12.762   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:08:12.762   502   529 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+10-27 20:08:12.763   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 27, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:1, uid:1071 session name: ""
+10-27 20:08:12.764  2848  2850 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:08:12.764   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:08:12.898   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=27)
+10-27 20:08:12.917   397   397 I perfetto: ftrace_procfs.cc:176    enabled ftrace
+10-27 20:08:13.150     0     0 W perfetto: enabled ftrace
+10-27 20:08:12.926   299   299 D goldfish-address-space: claimShared: Ask to claim region [0x3fbed4000 0x3fbf5d000]
+10-27 20:08:12.927   299  1920 D goldfish-address-space: claimShared: Ask to claim region [0x3fbf5d000 0x3fbff3000]
+10-27 20:08:12.927  2383  2436 D HostConnection: HostConnection::get() New Host Connection established 0x711affd0b710, tid 2436
+10-27 20:08:12.929  2383  2436 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+10-27 20:08:12.930  2383  2436 D EGL_emulation: eglCreateContext: 0x711aefdc4a00: maj 3 min 0 rcv 3
+10-27 20:08:12.931  2383  2436 D EGL_emulation: eglMakeCurrent: 0x711aefdc4a00: ver 3 0 (tinfo 0x711a8fd4e680) (first time)
+10-27 20:08:12.933  2383  2405 D HostConnection: HostConnection::get() New Host Connection established 0x711affd0c790, tid 2405
+10-27 20:08:12.935  2383  2405 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+10-27 20:08:14.546  1410  1855 I Dialer  : OmtpVvmCarrierCfgHlpr - OmtpEvent:CONFIG_STATUS_SMS_TIME_OUT
+10-27 20:08:14.546  1410  1410 I Dialer  : RetryPolicy - discarding deferred status: configuration_state=4
+10-27 20:08:14.547  1410  1410 I Dialer  : VvmTaskExecutor - no more tasks, stopping service if no task are added in 5000 millis
+10-27 20:08:14.547  1410  1410 I Dialer  : VvmTaskReceiver - task received
+10-27 20:08:14.547  1410  1410 I Dialer  : VvmTaskReceiver - TaskExecutor already running
+10-27 20:08:14.547  1410  1410 I Dialer  : Task.createTask - create task:com.android.voicemail.impl.ActivationTask
+10-27 20:08:14.547  1410  1410 I Dialer  : RetryPolicy - retry #3 for com.android.voicemail.impl.ActivationTask@e6d319b queued, executing in 5000
+10-27 20:08:14.547  1410  1410 I Dialer  : VvmTaskExecutor - com.android.voicemail.impl.ActivationTask@e6d319b added
+10-27 20:08:14.547  1410  1410 I Dialer  : VvmTaskExecutor - minimal wait time:5000
+10-27 20:08:14.547  1410  1410 I Dialer  : VvmTaskExecutor - sleep for 5000 millis
+10-27 20:08:16.804   299  1920 D goldfish-address-space: claimShared: Ask to claim region [0x3f8000000 0x3f89e4000]
+10-27 20:08:16.807   162   162 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device manifest.
+10-27 20:08:16.808  2858  2858 I Gralloc4: mapper 4.x is not supported
+10-27 20:08:16.812  2858  2858 D HostConnection: createUnique: call
+10-27 20:08:16.812  2858  2858 D HostConnection: HostConnection::get() New Host Connection established 0x7d6af34d15d0, tid 2858
+10-27 20:08:16.812  2858  2858 D goldfish-address-space: allocate: Ask for block of size 0x100
+10-27 20:08:16.812  2858  2858 D goldfish-address-space: allocate: ioctl allocate returned offset 0x3f7ffe000 size 0x2000
+10-27 20:08:16.822  2858  2858 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+10-27 20:08:17.193   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:08:17.194   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 28, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:2, uid:1071 session name: ""
+10-27 20:08:17.194   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=28)
+10-27 20:08:17.197   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:08:17.763   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=27)
+10-27 20:08:17.763   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 27 ended, total sessions:1
+10-27 20:08:19.214   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:08:17.194   502   529 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+10-27 20:08:19.214   502  1990 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+10-27 20:08:19.214   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 29, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:2, uid:1071 session name: ""
+10-27 20:08:19.215   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=29)
+10-27 20:08:19.216   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:08:19.586  1410  1855 I Dialer  : VvmTaskExecutor - executing task com.android.voicemail.impl.ActivationTask@e6d319b
+10-27 20:08:19.586  1410  1855 I Dialer  : PreOMigrationHandler - ComponentInfo{com.android.phone/com.android.services.telephony.TelephonyConnectionService}, ***, UserHandle{0} already migrated
+10-27 20:08:19.594  1449  2290 I VoicemailNotifier: receivers for android.intent.action.PROVIDER_CHANGED :[]
+10-27 20:08:19.594  1410  1855 I Dialer  : VvmActivationTask - VVM content provider configured - vvm_type_cvvm
+10-27 20:08:19.594  1410  1855 I Dialer  : OmtpVvmCarrierCfgHlpr - OmtpEvent:CONFIG_ACTIVATING
+10-27 20:08:19.596  1449  2290 I VoicemailNotifier: receivers for android.intent.action.PROVIDER_CHANGED :[]
+10-27 20:08:19.600  1037  1320 D SmsNumberUtils: enter filterDestAddr. destAddr="[BajqU4K5_YhSYbs-7QUn0dOwcmI]"
+10-27 20:08:19.601  1037  1320 D SmsNumberUtils: destAddr is not formatted.
+10-27 20:08:19.601  1037  1320 D SmsNumberUtils: leave filterDestAddr, new destAddr="[BajqU4K5_YhSYbs-7QUn0dOwcmI]"
+10-27 20:08:22.196   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=28)
+10-27 20:08:22.196   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 28 ended, total sessions:1
+10-27 20:08:24.216   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=29)
+10-27 20:08:24.218   397   397 I perfetto: ftrace_procfs.cc:183    disabled ftrace
+10-27 20:08:24.218   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 29 ended, total sessions:0
+10-27 20:08:24.450     0     0 W perfetto: disabled ftrace
+10-27 20:08:27.235   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:08:27.235   502   529 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+10-27 20:08:27.236   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 30, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:1, uid:1071 session name: ""
+10-27 20:08:27.236   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=30)
+10-27 20:08:27.237   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:08:27.239  2882  2884 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:08:27.251   397   397 I perfetto: ftrace_procfs.cc:176    enabled ftrace
+10-27 20:08:27.484     0     0 W perfetto: enabled ftrace
+10-27 20:08:27.259  1660  1703 I MediaProvider: Deleted 0 items on external due to app.ember.audiobooks
+10-27 20:08:27.267  1660  1705 I MediaProvider: Using lower FS for /storage/emulated/0/Download/EmberTest/f-files-3.json
+10-27 20:08:32.240   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=30)
+10-27 20:08:32.240   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 30 ended, total sessions:0
+10-27 20:08:32.242   397   397 I perfetto: ftrace_procfs.cc:183    disabled ftrace
+10-27 20:08:32.474     0     0 W perfetto: disabled ftrace
+10-27 20:08:32.312   502   530 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+10-27 20:08:32.312   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:08:32.313   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 31, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:1, uid:1071 session name: ""
+10-27 20:08:32.315   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:08:32.422   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=31)
+10-27 20:08:32.444   397   397 I perfetto: ftrace_procfs.cc:176    enabled ftrace
+10-27 20:08:32.676     0     0 W perfetto: enabled ftrace
+10-27 20:08:36.354   299  1920 D goldfish-address-space: claimShared: Ask to claim region [0x3f8000000 0x3f89e4000]
+10-27 20:08:36.364   162   162 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device manifest.
+10-27 20:08:36.364  2903  2903 I Gralloc4: mapper 4.x is not supported
+10-27 20:08:36.368  2903  2903 D HostConnection: createUnique: call
+10-27 20:08:36.368  2903  2903 D HostConnection: HostConnection::get() New Host Connection established 0x70ff9219b610, tid 2903
+10-27 20:08:36.368  2903  2903 D goldfish-address-space: allocate: Ask for block of size 0x100
+10-27 20:08:36.369  2903  2903 D goldfish-address-space: allocate: ioctl allocate returned offset 0x3f7ffe000 size 0x2000
+10-27 20:08:36.375  2903  2903 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+10-27 20:08:36.590   502   535 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+10-27 20:08:36.595   403   403 I perfetto: ing_service_impl.cc:758 Configured tracing session 32, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:2, uid:1071 session name: ""
+10-27 20:08:36.595   397   397 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=32)
+10-27 20:08:36.598   502   535 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+10-27 20:08:36.599  2907  2909 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+10-27 20:08:36.620  1660  1703 I MediaProvider: Deleted 0 items on external due to app.ember.audiobooks
+10-27 20:08:36.625  1660  1703 I MediaProvider: Using lower FS for /storage/emulated/0/Download/EmberTest/quick-end.json
+10-27 20:08:37.313   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=31)
+10-27 20:08:37.313   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 31 ended, total sessions:1
+10-27 20:08:41.598   397   397 I perfetto: probes_producer.cc:329  Producer stop (id=32)
+10-27 20:08:41.598   403   403 I perfetto: ng_service_impl.cc:1948 Tracing session 32 ended, total sessions:0
+10-27 20:08:41.599   397   397 I perfetto: ftrace_procfs.cc:183    disabled ftrace
+10-27 20:08:41.832     0     0 W perfetto: disabled ftrace
+10-27 20:08:41.853     0     0 D logd    : logdr: UID=2000 GID=2000 PID=2917 n tail=0 logMask=99 pid=0 start=0ns timeout=0ns
