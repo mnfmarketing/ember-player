@@ -23,8 +23,6 @@ final class AppModel {
     /// Pages opened from elsewhere (and by the simulator checks).
     var openBook: BookRoute?
     var openShow: ShowRoute?
-    /// Home's Continue listening card is on screen (the mini player hides meanwhile).
-    var continueCardShowing = false
     /// "New shelf…" from a book's menu: the book to put on it.
     var newShelfFor: String?
     /// Screens opened by the simulator checks (launch argument -EmberRoute).

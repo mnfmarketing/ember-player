@@ -6,12 +6,30 @@ APP=ios/build/Build/Products/Debug-iphonesimulator/Ember.app
 BID=app.ember.audiobooks
 mkdir -p "$OUT"
 
+# Runs a command, giving up after $1 seconds (a stuck simulator must not stall the whole run).
+limit() {
+  local t=$1; shift
+  "$@" < /dev/null > /dev/null 2>&1 &
+  local pid=$!
+  ( sleep "$t"; kill -9 "$pid" 2>/dev/null && echo "TIMED OUT: $*" >> "$OUT/progress.txt" ) < /dev/null > /dev/null 2>&1 &
+  local dog=$!
+  wait "$pid"
+  kill "$dog" 2>/dev/null
+}
+
+crashes() {
+  mkdir -p "$OUT/crashes"
+  cp ~/Library/Logs/DiagnosticReports/Ember* "$OUT/crashes/" 2>/dev/null || true
+}
+
 shot() {  # device name route [wait] [extra args...]
   local dev=$1 name=$2 route=$3 wait=${4:-6}
   shift 4 2>/dev/null || shift $#
-  xcrun simctl launch --terminate-running-process "$dev" $BID -EmberDemo YES -EmberRoute "$route" "$@" < /dev/null > /dev/null 2>&1
+  echo "$name" >> "$OUT/progress.txt"
+  limit 60 xcrun simctl launch --terminate-running-process "$dev" $BID -EmberDemo YES -EmberRoute "$route" "$@"
   sleep "$wait"
-  xcrun simctl io "$dev" screenshot "$OUT/$name.png" > /dev/null
+  limit 30 xcrun simctl io "$dev" screenshot "$OUT/$name.png"
+  crashes
 }
 
 for dev in "$PHONE" "$PAD"; do
@@ -26,7 +44,7 @@ done
 
 # Warm-up: the first launch builds the demo library (audio and covers), so give it time before any screenshot.
 for dev in "$PHONE" "$PAD"; do
-  xcrun simctl launch "$dev" $BID -EmberDemo YES < /dev/null > /dev/null 2>&1
+  limit 60 xcrun simctl launch "$dev" $BID -EmberDemo YES
 done
 sleep 30
 
@@ -51,8 +69,7 @@ done
 # Sync: another device moved this book on, so Ember asks before jumping.
 xcrun simctl ui "$PHONE" appearance dark
 shot "$PHONE" "p-sync-prompt" home 10 -EmberSyncTest YES -EmberSyncFake demo-0,360000
-mkdir -p "$OUT/crashes"
-cp ~/Library/Logs/DiagnosticReports/Ember* "$OUT/crashes/" 2>/dev/null || true
+crashes
 ls -la "$OUT" "$OUT/crashes"
 # Nothing left holding this step's output open.
 xcrun simctl shutdown all > /dev/null 2>&1 < /dev/null || true
