@@ -34,8 +34,8 @@ targets:
         SUPPORTS_MACCATALYST: NO
         SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD: NO
         # Google sign-in (Drive books and sync): the iOS OAuth client's id and its reversed form.
-        EMBER_GOOGLE_CLIENT_ID: ""
-        EMBER_GOOGLE_SCHEME: "app.ember.oauth"
+        EMBER_GOOGLE_CLIENT_ID: "201241191505-fjf2d2tuq040kr6g6hatuo3qtekckunl.apps.googleusercontent.com"
+        EMBER_GOOGLE_SCHEME: "com.googleusercontent.apps.201241191505-fjf2d2tuq040kr6g6hatuo3qtekckunl"
     info:
       path: Ember/Info.plist
       properties:
