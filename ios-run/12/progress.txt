@@ -1,0 +1,10 @@
+demo ready on E839A11B-51B4-4AD3-ACF4-A53B95B7C957 after 3s
+demo ready on 26F052CD-15B7-44B7-A129-B7135FDA1B92 after 3s
+p-d-01-home
+p-d-02-books
+p-d-03-book
+p-d-04-player
+p-d-05-podcasts
+p-d-06-show
+p-d-07-profile
+TIMED OUT: xcrun simctl launch --terminate-running-process E839A11B-51B4-4AD3-ACF4-A53B95B7C957 app.ember.audiobooks -EmberDemo YES -EmberRoute profile
