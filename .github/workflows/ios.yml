@@ -2,7 +2,7 @@ name: iOS
 
 # Ember for iPhone and iPad, built on GitHub's Mac machines.
 #  - ios branch: unit tests, then the app on iPhone and iPad simulators with screenshots (saved to ci-logs).
-#  - main (only when ios/ changed): an unsigned Ember-iOS-N.ipa under Releases, for SideStore to sign and install.
+#  - main (only when ios/ changed), or run by hand: an unsigned Ember-iOS-N.ipa under Releases, for SideStore to sign and install.
 on:
   push:
     branches: [ios, main]
@@ -47,12 +47,12 @@ jobs:
           exit $code
 
       - name: Screenshots on iPhone and iPad
-        if: github.ref_name == 'ios'
+        if: github.ref_name == 'ios' && github.event_name == 'push'
         timeout-minutes: 35
         run: bash ios/ci/shots.sh
 
       - name: Unsigned app for SideStore
-        if: github.ref_name == 'main'
+        if: github.ref_name == 'main' || github.event_name == 'workflow_dispatch'
         run: |
           set -o pipefail
           N=$(( $(git ls-remote --tags origin 'refs/tags/ios-*' | wc -l | tr -d ' ') + 1 ))
@@ -68,10 +68,11 @@ jobs:
           ls -la ../Ember-iOS-$N.ipa
 
       - name: Publish release
-        if: github.ref_name == 'main'
+        if: github.ref_name == 'main' || github.event_name == 'workflow_dispatch'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ios-${{ env.IOS_BUILD }}
+          target_commitish: ${{ github.sha }}
           name: Ember for iPhone and iPad ${{ env.IOS_BUILD }}
           files: Ember-iOS-${{ env.IOS_BUILD }}.ipa
           make_latest: false
