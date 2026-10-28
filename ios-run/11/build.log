@@ -1,12 +1,12 @@
 Command line invocation:
-    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild test -project Ember.xcodeproj -scheme Ember -destination id=77AA4492-C787-4EEE-A772-05D4B3E9ECCD -derivedDataPath build CODE_SIGNING_ALLOWED=NO
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild test -project Ember.xcodeproj -scheme Ember -destination id=E839A11B-51B4-4AD3-ACF4-A53B95B7C957 -derivedDataPath build CODE_SIGNING_ALLOWED=NO
 
 Build settings from command line:
     CODE_SIGNING_ALLOWED = NO
 
 --- xcodebuild: WARNING: Using the first of multiple matching destinations:
-{ platform:iOS Simulator, arch:arm64, id:77AA4492-C787-4EEE-A772-05D4B3E9ECCD, OS:26.5, name:iPhone 17 Pro }
-{ platform:iOS Simulator, arch:x86_64, id:77AA4492-C787-4EEE-A772-05D4B3E9ECCD, OS:26.5, name:iPhone 17 Pro }
+{ platform:iOS Simulator, arch:arm64, id:E839A11B-51B4-4AD3-ACF4-A53B95B7C957, OS:26.5, name:iPhone 17 Pro }
+{ platform:iOS Simulator, arch:x86_64, id:E839A11B-51B4-4AD3-ACF4-A53B95B7C957, OS:26.5, name:iPhone 17 Pro }
 ComputePackagePrebuildTargetDependencyGraph
 
 Prepare packages
@@ -38,27 +38,27 @@ ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/X
 
 ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/actool --version --output-format xml1
 
-Build description signature: e25c9a28238f3d76390bc844df80b6c6
-Build description path: /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/XCBuildData/e25c9a28238f3d76390bc844df80b6c6.xcbuilddata
-ClangStatCache /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk /Users/runner/work/ember-player/ember-player/ios/build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-688ef53f1462e2c8f657fdc38a81448ff45c64a1807a658693f2a61704f17a36.sdkstatcache
-    cd /Users/runner/work/ember-player/ember-player/ios/Ember.xcodeproj
-    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -o /Users/runner/work/ember-player/ember-player/ios/build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-688ef53f1462e2c8f657fdc38a81448ff45c64a1807a658693f2a61704f17a36.sdkstatcache
-
+Build description signature: daa50502b87cea5826f96194a6bc9418
+Build description path: /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/XCBuildData/daa50502b87cea5826f96194a6bc9418.xcbuilddata
 CreateBuildDirectory /Users/runner/work/ember-player/ember-player/ios/build/Build/Products
     cd /Users/runner/work/ember-player/ember-player/ios/Ember.xcodeproj
     builtin-create-build-directory /Users/runner/work/ember-player/ember-player/ios/build/Build/Products
+
+ClangStatCache /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk /Users/runner/work/ember-player/ember-player/ios/build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-688ef53f1462e2c8f657fdc38a81448ff45c64a1807a658693f2a61704f17a36.sdkstatcache
+    cd /Users/runner/work/ember-player/ember-player/ios/Ember.xcodeproj
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -o /Users/runner/work/ember-player/ember-player/ios/build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-688ef53f1462e2c8f657fdc38a81448ff45c64a1807a658693f2a61704f17a36.sdkstatcache
 
 CreateBuildDirectory /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex
     cd /Users/runner/work/ember-player/ember-player/ios/Ember.xcodeproj
     builtin-create-build-directory /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex
 
-WriteAuxiliaryFile /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember-fbe89a9e3c367dc41c2a636a1700bbbc-VFS-iphonesimulator/all-product-headers.yaml
-    cd /Users/runner/work/ember-player/ember-player/ios/Ember.xcodeproj
-    write-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember-fbe89a9e3c367dc41c2a636a1700bbbc-VFS-iphonesimulator/all-product-headers.yaml
-
 CreateBuildDirectory /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator
     cd /Users/runner/work/ember-player/ember-player/ios/Ember.xcodeproj
     builtin-create-build-directory /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator
+
+WriteAuxiliaryFile /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember-fbe89a9e3c367dc41c2a636a1700bbbc-VFS-iphonesimulator/all-product-headers.yaml
+    cd /Users/runner/work/ember-player/ember-player/ios/Ember.xcodeproj
+    write-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember-fbe89a9e3c367dc41c2a636a1700bbbc-VFS-iphonesimulator/all-product-headers.yaml
 
 CreateBuildDirectory /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
     cd /Users/runner/work/ember-player/ember-player/ios/Ember.xcodeproj
@@ -275,37 +275,37 @@ SwiftDriver Ember normal arm64 com.apple.xcode.tools.swift.compiler (in target '
     cd /Users/runner/work/ember-player/ember-player/ios
     builtin-SwiftDriver -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Ember -Onone @/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target arm64-apple-ios26.0-simulator -g -module-cache-path /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/work/ember-player/ember-player/ios/build/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator -F /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/work/ember-player/ember-player/ios/build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-688ef53f1462e2c8f657fdc38a81448ff45c64a1807a658693f2a61704f17a36.sdkstatcache -output-file-map /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex -sdk-module-cache-path /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Ember-generated-files.hmap -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Ember-own-target-headers.hmap -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Ember-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Ember-project-headers.hmap -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember-Swift.h -working-directory /Users/runner/work/ember-player/ember-player/ios -experimental-emit-module-separately -disable-cmo
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_stdarg-89NKD4EM5EK6TR2JQAO4NWJE7.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_AvailabilityInternal-73VGY7KD431ITQ1HRPHJHCU8I.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/DeveloperToolsSupport-CSYNET52CFNM2V3WFUNYLJEFT.pcm
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_float-6RODQ7V4CKAIT3ETKZBESWQC9.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_SwiftConcurrencyShims-4PCEDKSOYQKTOD1TQX7XB8UM1.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_float-6RODQ7V4CKAIT3ETKZBESWQC9.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/ptrauth-34JYIJ2C4MPRULPV1NRT174YZ.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_stddef-7MAZRLXIKTUJTIZZGY2HHPK8F.pcm
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_AvailabilityInternal-73VGY7KD431ITQ1HRPHJHCU8I.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/SwiftShims-ATCUSJT4J8QIGZ3RTSQIU7473.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_stdbool-EIMJ96Y08MKQ8D2VJMXBVCC5.pcm
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_stddef-7MAZRLXIKTUJTIZZGY2HHPK8F.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/ptrcheck-1JU1F85V75BDN5VM6P8OVM2Z3.pcm
 
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/ptrauth-34JYIJ2C4MPRULPV1NRT174YZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/DeveloperToolsSupport-CSYNET52CFNM2V3WFUNYLJEFT.pcm
+
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_DarwinFoundation1-EU8N3SPEXM7WBHI90XY29BNBQ.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_DarwinFoundation2-CDY2XJZCMEKOX5ONPICSE1SEC.pcm
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_stdbool-EIMJ96Y08MKQ8D2VJMXBVCC5.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/ExtensionFoundation-8DOTEC6WPLMY3HRGK882TZ2M1.pcm
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_stdarg-89NKD4EM5EK6TR2JQAO4NWJE7.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_limits-2A461IPLIEMRH5R5NBDGJ3BZZ.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_tgmath-8OCSR68HB938CB27RS9PHFIWK.pcm
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/ExtensionFoundation-8DOTEC6WPLMY3HRGK882TZ2M1.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_DarwinFoundation2-CDY2XJZCMEKOX5ONPICSE1SEC.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_stdint-B0IRQVJKLXLPJVZ95KWSVW7DN.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_Builtin_tgmath-8OCSR68HB938CB27RS9PHFIWK.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/sys_types-4JWBQDCVND1JFFQDMWDEJXTSI.pcm
 
@@ -321,9 +321,9 @@ SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-p
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/simd-9P0KNGXCPKEUPDJMFBTNDJ2VG.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/ObjectiveC-66I5Q7YKK48WE7SJQHJ9B3DVJ.pcm
-
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/MachO-A14R1MIR4U0DGHAE60KS2ZPYJ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/ObjectiveC-66I5Q7YKK48WE7SJQHJ9B3DVJ.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/os_object-CFLYTHGYSSGIBAXGELCC7R3RN.pcm
 
@@ -333,110 +333,110 @@ SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-p
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Dispatch-DIRUS29UJUORE0E6M9FRWW7BV.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/XPC-EDME7WFWPQ5CB45YUAC0AVS8F.pcm
-
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreFoundation-DZMOX7ZMX7PVHHSZY3MIF8O51.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/XPC-EDME7WFWPQ5CB45YUAC0AVS8F.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/dnssd-74UORIM4NNHQAIE1PKZ3K0O8H.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/os-EH6S0R4R535WRHCFEJ7MGJUMN.pcm
-
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CFNetwork-D3I9BNFVG00L0O4Z9DDI8TTYV.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Security-41I4ZM32823H9GJSNKVDGJWXT.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreGraphics-1A24Y37ENNS5P4YFCOYHWCS9Y.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreAudioTypes-3WL3PPA324LMW0QIHMPIR5Z2.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Foundation-95YDDDNDFDX4ET0DBHBYQAS40.pcm
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreGraphics-1A24Y37ENNS5P4YFCOYHWCS9Y.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreText-F24PSRMLRK8442GW6Z00V62WD.pcm
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Security-41I4ZM32823H9GJSNKVDGJWXT.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreAudio-7K4NE8Z90USY1CVPEJZ9ZQL8Y.pcm
 
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreText-F24PSRMLRK8442GW6Z00V62WD.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Foundation-95YDDDNDFDX4ET0DBHBYQAS40.pcm
+
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/ImageIO-EL81QUB698F3BJME3AJA4XBUN.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/OSLog-1N6J2477DPK35MA4D1NYSK6FP.pcm
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/os-EH6S0R4R535WRHCFEJ7MGJUMN.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/_LocationEssentials-AB2UGVGGMPR9JKT0XC7NTLYXO.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/UniformTypeIdentifiers-5KH3QLTW3Y9STM4Y51OHM20FV.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Accessibility-4YLX2072ORB1WK2RUX2AML8C7.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreLocation-D1ZPEAF3GAE206WN0HISE13G9.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreTransferable-D6U6UQESSHDGG9AG9BXS9QVCF.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreMIDI-4XO2KVYXDNMFURH1L6W3IPVLJ.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/UserNotifications-8V45D3VNTEQP8QD1L2H3UA9A0.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/BackgroundTasks-E5GCNWSZURW5LBYYWQT90RWM7.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/FileProvider-4BNDBJPTG4MMMDUFEAZAFA6QB.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/UIUtilities-JPB10XCYX3L3YHHRPZU3907G.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Network-95GDJ7ZCB193S2P6JRIPW9JUL.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/DataDetection-9FFX4P66H2KAKIJ9KASKCIN31.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Symbols-MOMERH7LL77TE2SHYKYA0V25.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreData-4YMQ9HX2P5TIF7TUGKTXC91LX.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/LocalAuthentication-29V4G80FBPSKNFJW7OBT7F69H.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/AVRouting-6LEDLUBCQ54H72WL0EOQPDYF1.pcm
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/FileProvider-4BNDBJPTG4MMMDUFEAZAFA6QB.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/AudioToolbox-C513YBI3T2SLFFG0D95C3UCVY.pcm
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Symbols-MOMERH7LL77TE2SHYKYA0V25.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/IOSurface-A1510GEIG0048BXK7UYVMBLE5.pcm
 
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/OSLog-1N6J2477DPK35MA4D1NYSK6FP.pcm
+
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/OpenGLES-E55NT8ZYMHXCPZVURS1RNNQDK.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Network-95GDJ7ZCB193S2P6JRIPW9JUL.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreTransferable-D6U6UQESSHDGG9AG9BXS9QVCF.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/UniformTypeIdentifiers-5KH3QLTW3Y9STM4Y51OHM20FV.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/AVRouting-6LEDLUBCQ54H72WL0EOQPDYF1.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreMIDI-4XO2KVYXDNMFURH1L6W3IPVLJ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/UIUtilities-JPB10XCYX3L3YHHRPZU3907G.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/DataDetection-9FFX4P66H2KAKIJ9KASKCIN31.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Metal-AZWXSA4DCSY9W0W9D5JM9P18L.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/BackgroundTasks-E5GCNWSZURW5LBYYWQT90RWM7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/MediaAccessibility-EBGSTQS4T4E434XQXEG8967JF.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/AudioToolbox-C513YBI3T2SLFFG0D95C3UCVY.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreVideo-ACS5APMGR6WU14OEM13TDS7HI.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/UserNotifications-8V45D3VNTEQP8QD1L2H3UA9A0.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Accessibility-4YLX2072ORB1WK2RUX2AML8C7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreImage-7D5QYA1RFFCMKKCWE1NLCQ8DN.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/QuartzCore-AGDQ96ZWEYMODBG5XJKCIE3WL.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreMedia-4ZBDLY9OTS0O3XO4TRDELV1BH.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreLocation-D1ZPEAF3GAE206WN0HISE13G9.pcm
 
 LinkAssetCatalog /Users/runner/work/ember-player/ember-player/ios/Ember/Assets.xcassets (in target 'Ember' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
     builtin-linkAssetCatalog --thinned /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/assetcatalog_output/thinned --thinned-dependencies /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/assetcatalog_dependencies_thinned --thinned-info-plist-content /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/assetcatalog_generated_info.plist_thinned --unthinned /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/assetcatalog_output/unthinned --unthinned-dependencies /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/assetcatalog_dependencies_unthinned --unthinned-info-plist-content /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/assetcatalog_generated_info.plist_unthinned --output /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app --plist-output /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/assetcatalog_generated_info.plist
+note: Emplaced /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/AppIcon60x60@2x.png (in target 'Ember' from project 'Ember')
 note: Emplaced /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/AppIcon76x76@2x~ipad.png (in target 'Ember' from project 'Ember')
 note: Emplaced /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Assets.car (in target 'Ember' from project 'Ember')
-note: Emplaced /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/AppIcon60x60@2x.png (in target 'Ember' from project 'Ember')
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/MediaAccessibility-EBGSTQS4T4E434XQXEG8967JF.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Metal-AZWXSA4DCSY9W0W9D5JM9P18L.pcm
-
-ProcessInfoPlistFile /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Info.plist /Users/runner/work/ember-player/ember-player/ios/Ember/Info.plist (in target 'Ember' from project 'Ember')
-    cd /Users/runner/work/ember-player/ember-player/ios
-    builtin-infoPlistUtility /Users/runner/work/ember-player/ember-player/ios/Ember/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/assetcatalog_generated_info.plist -o /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Info.plist
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreVideo-ACS5APMGR6WU14OEM13TDS7HI.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/QuartzCore-AGDQ96ZWEYMODBG5XJKCIE3WL.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreImage-7D5QYA1RFFCMKKCWE1NLCQ8DN.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/CoreMedia-4ZBDLY9OTS0O3XO4TRDELV1BH.pcm
-
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/SwiftUICore-DNKLYGHX855JPFM9A5I5Z6WHM.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/UIKit-3UHJO1XG58XV8T3PFWQ3OH00I.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/SwiftUICore-DNKLYGHX855JPFM9A5I5Z6WHM.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/MediaToolbox-4OB7D5HS0GEN06K73C5X6QPM0.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/AVFAudio-DB9M2O7GP6Z4JHTFOC20YYZ4Z.pcm
 
+ProcessInfoPlistFile /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Info.plist /Users/runner/work/ember-player/ember-player/ios/Ember/Info.plist (in target 'Ember' from project 'Ember')
+    cd /Users/runner/work/ember-player/ember-player/ios
+    builtin-infoPlistUtility /Users/runner/work/ember-player/ember-player/ios/Ember/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/assetcatalog_generated_info.plist -o /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Info.plist
+
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/AVFoundation-EATDMDWGOC8P2ZGEZNM6E1CF7.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/Photos-25T6I1K1U04IY9BPDWC2COO5P.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/MediaPlayer-30EX2AUHR4UER99UB4N8W58MY.pcm
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/AuthenticationServices-7EPOSWM9D32I8ZZG3E1D5U3ME.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/SwiftUI-EKRFF7PGKWAV3WWKNK8ERYLQK.pcm
 
-SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/AuthenticationServices-7EPOSWM9D32I8ZZG3E1D5U3ME.pcm
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/MediaPlayer-30EX2AUHR4UER99UB4N8W58MY.pcm
 
 SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-player/ios/build/ModuleCache.noindex/PhotosUI-BCVI2Y5HF1XK8HVV3BJHPX1H7.pcm
 
@@ -646,6 +646,8 @@ SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ember-player/ember-p
 
 SwiftExplicitDependencyCompileModuleFromInterface arm64 /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/XCUIAutomation-1QM09KW0MB72U.swiftmodule
 
+SwiftExplicitDependencyCompileModuleFromInterface arm64 /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/XCTest-16MH81BEY0QCT.swiftmodule
+
 SwiftDriverJobDiscovery normal arm64 Compiling HomeView.swift, Library.swift, ListenLogView.swift, Models.swift, Names.swift, Player.swift, PlayerView.swift, PodcastStore.swift, PodcastsView.swift, ProfileView.swift (in target 'Ember' from project 'Ember')
 
 SwiftDriver\ Compilation Ember normal arm64 com.apple.xcode.tools.swift.compiler (in target 'Ember' from project 'Ember')
@@ -656,15 +658,13 @@ Ld /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-i
     cd /Users/runner/work/ember-player/ember-player/ios
     /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios26.0-simulator -dynamiclib -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -O0 -L/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator -F/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator -filelist /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember.LinkFileList -install_name @rpath/Ember.debug.dylib -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember.swiftmodule @/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember-linker-args.resp -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point -o /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Ember.debug.dylib
 
-SwiftExplicitDependencyCompileModuleFromInterface arm64 /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/XCTest-16MH81BEY0QCT.swiftmodule
+SwiftEmitModule normal arm64 Emitting\ module\ for\ EmberTests (in target 'EmberTests' from project 'Ember')
 
-SwiftCompile normal arm64 Compiling\ SyncModelTests.swift /Users/runner/work/ember-player/ember-player/ios/EmberTests/SyncModelTests.swift (in target 'EmberTests' from project 'Ember')
 SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/EmberTests/SyncModelTests.swift (in target 'EmberTests' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
     
 
-SwiftEmitModule normal arm64 Emitting\ module\ for\ EmberTests (in target 'EmberTests' from project 'Ember')
-
+SwiftCompile normal arm64 Compiling\ SyncModelTests.swift /Users/runner/work/ember-player/ember-player/ios/EmberTests/SyncModelTests.swift (in target 'EmberTests' from project 'Ember')
 SwiftCompile normal arm64 /Users/runner/work/ember-player/ember-player/ios/EmberTests/SyncModelTests.swift (in target 'EmberTests' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
     
@@ -706,21 +706,21 @@ Ld /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-i
 
 ExtractAppIntentsMetadata (in target 'Ember' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
-    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.AUKFDd/Metal.xctoolchain --module-name Ember --sdk-root /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk --xcode-version 17F113 --platform-family iOS --deployment-target 26.0 --bundle-identifier app.ember.audiobooks --output /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app --target-triple arm64-apple-ios26.0-simulator --binary-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Ember --dependency-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember_dependency_info.dat --stringsdata-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember.SwiftFileList --metadata-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Ember.DependencyMetadataFileList --static-metadata-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Ember.DependencyStaticMetadataFileList --swift-const-vals-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
-2026-10-27 22:20:20.008 appintentsmetadataprocessor[3054:13849] Starting appintentsmetadataprocessor export
-2026-10-27 22:20:20.031 appintentsmetadataprocessor[3054:13849] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.nX6WAu/Metal.xctoolchain --module-name Ember --sdk-root /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk --xcode-version 17F113 --platform-family iOS --deployment-target 26.0 --bundle-identifier app.ember.audiobooks --output /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app --target-triple arm64-apple-ios26.0-simulator --binary-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Ember --dependency-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember_dependency_info.dat --stringsdata-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember.SwiftFileList --metadata-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Ember.DependencyMetadataFileList --static-metadata-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Ember.DependencyStaticMetadataFileList --swift-const-vals-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Objects-normal/arm64/Ember.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-10-28 02:16:23.061 appintentsmetadataprocessor[2845:12306] Starting appintentsmetadataprocessor export
+2026-10-28 02:16:23.083 appintentsmetadataprocessor[2845:12306] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
 
 CopySwiftLibs /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app (in target 'Ember' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
-    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Ember.debug.dylib --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Frameworks --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/SystemExtensions --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Extensions --platform iphonesimulator --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.AUKFDd/Metal.xctoolchain --toolchain /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Ember.debug.dylib --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Frameworks --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/SystemExtensions --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Extensions --platform iphonesimulator --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.nX6WAu/Metal.xctoolchain --toolchain /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
 Ignoring --strip-bitcode because --sign was not passed
 
 AppIntentsSSUTraining (in target 'Ember' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
     /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsnltrainingprocessor --infoplist-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Info.plist --temp-dir-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/ssu --bundle-id app.ember.audiobooks --product-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app --extracted-metadata-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Metadata.appintents --metadata-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/Ember.build/Ember.DependencyMetadataFileList --source-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Info.plist --archive-ssu-assets
-2026-10-27 22:20:20.122 appintentsnltrainingprocessor[3065:13876] Parsing options for appintentsnltrainingprocessor
-2026-10-27 22:20:20.123 appintentsnltrainingprocessor[3065:13876] Starting AppIntents SSU YAML Generation
-2026-10-27 22:20:20.161 appintentsnltrainingprocessor[3065:13876] No AppShortcuts found - Skipping.
+2026-10-28 02:16:23.153 appintentsnltrainingprocessor[2846:12310] Parsing options for appintentsnltrainingprocessor
+2026-10-28 02:16:23.153 appintentsnltrainingprocessor[2846:12310] Starting AppIntents SSU YAML Generation
+2026-10-28 02:16:23.161 appintentsnltrainingprocessor[2846:12310] No AppShortcuts found - Skipping.
 
 ProcessInfoPlistFile /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/Info.plist /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/empty-EmberTests.plist (in target 'EmberTests' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
@@ -736,23 +736,23 @@ Ld /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-i
     cd /Users/runner/work/ember-player/ember-player/ios
     /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios26.0-simulator -bundle -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -O0 -L/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator -L/Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk/Developer/Library/Frameworks -filelist /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests.LinkFileList -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -bundle_loader /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Ember -Xlinker -object_path_lto -Xlinker /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests.swiftmodule @/Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests-linker-args.resp -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/Ember.debug.dylib -o /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/EmberTests
 
-ExtractAppIntentsMetadata (in target 'EmberTests' from project 'Ember')
-    cd /Users/runner/work/ember-player/ember-player/ios
-    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.AUKFDd/Metal.xctoolchain --module-name EmberTests --sdk-root /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk --xcode-version 17F113 --platform-family iOS --deployment-target 26.0 --bundle-identifier app.ember.audiobooks.tests --output /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest --target-triple arm64-apple-ios26.0-simulator --binary-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/EmberTests --dependency-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests_dependency_info.dat --stringsdata-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests.SwiftFileList --metadata-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/EmberTests.DependencyMetadataFileList --static-metadata-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/EmberTests.DependencyStaticMetadataFileList --swift-const-vals-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
-2026-10-27 22:20:21.305 appintentsmetadataprocessor[3113:14012] Starting appintentsmetadataprocessor export
-2026-10-27 22:20:21.307 appintentsmetadataprocessor[3113:14012] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
-
 CopySwiftLibs /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest (in target 'EmberTests' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
-    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/EmberTests --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/Frameworks --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/PlugIns --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/SystemExtensions --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/Extensions --platform iphonesimulator --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.AUKFDd/Metal.xctoolchain --toolchain /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/EmberTests --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/Frameworks --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/PlugIns --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/SystemExtensions --scan-folder /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/Extensions --platform iphonesimulator --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.nX6WAu/Metal.xctoolchain --toolchain /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
 Ignoring --strip-bitcode because --sign was not passed
+
+ExtractAppIntentsMetadata (in target 'EmberTests' from project 'Ember')
+    cd /Users/runner/work/ember-player/ember-player/ios
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.nX6WAu/Metal.xctoolchain --module-name EmberTests --sdk-root /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk --xcode-version 17F113 --platform-family iOS --deployment-target 26.0 --bundle-identifier app.ember.audiobooks.tests --output /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest --target-triple arm64-apple-ios26.0-simulator --binary-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/EmberTests --dependency-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests_dependency_info.dat --stringsdata-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests.SwiftFileList --metadata-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/EmberTests.DependencyMetadataFileList --static-metadata-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/EmberTests.DependencyStaticMetadataFileList --swift-const-vals-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/Objects-normal/arm64/EmberTests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-10-28 02:16:23.865 appintentsmetadataprocessor[2850:12344] Starting appintentsmetadataprocessor export
+2026-10-28 02:16:23.867 appintentsmetadataprocessor[2850:12344] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
 
 AppIntentsSSUTraining (in target 'EmberTests' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
     /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsnltrainingprocessor --infoplist-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/Info.plist --temp-dir-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/ssu --bundle-id app.ember.audiobooks.tests --product-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest --extracted-metadata-path /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/Metadata.appintents --metadata-file-list /Users/runner/work/ember-player/ember-player/ios/build/Build/Intermediates.noindex/Ember.build/Debug-iphonesimulator/EmberTests.build/EmberTests.DependencyMetadataFileList --source-file /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest/Info.plist --archive-ssu-assets
-2026-10-27 22:20:21.346 appintentsnltrainingprocessor[3119:14023] Parsing options for appintentsnltrainingprocessor
-2026-10-27 22:20:21.347 appintentsnltrainingprocessor[3119:14023] Starting AppIntents SSU YAML Generation
-2026-10-27 22:20:21.347 appintentsnltrainingprocessor[3119:14023] No AppShortcuts found - Skipping.
+2026-10-28 02:16:23.908 appintentsnltrainingprocessor[2854:12350] Parsing options for appintentsnltrainingprocessor
+2026-10-28 02:16:23.909 appintentsnltrainingprocessor[2854:12350] Starting AppIntents SSU YAML Generation
+2026-10-28 02:16:23.909 appintentsnltrainingprocessor[2854:12350] No AppShortcuts found - Skipping.
 
 RegisterExecutionPolicyException /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app/PlugIns/EmberTests.xctest (in target 'EmberTests' from project 'Ember')
     cd /Users/runner/work/ember-player/ember-player/ios
@@ -774,62 +774,3 @@ Touch /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debu
     cd /Users/runner/work/ember-player/ember-player/ios
     /usr/bin/touch -c /Users/runner/work/ember-player/ember-player/ios/build/Build/Products/Debug-iphonesimulator/Ember.app
 
-Test Suite 'All tests' started at 2026-10-27 22:24:19.730.
-Test Suite 'EmberTests.xctest' started at 2026-10-27 22:24:19.731.
-Test Suite 'SyncModelTests' started at 2026-10-27 22:24:19.732.
-Test Case '-[EmberTests.SyncModelTests testABookThatJustAppearedTakesTheOtherDevicesPlace]' started.
-Test Case '-[EmberTests.SyncModelTests testABookThatJustAppearedTakesTheOtherDevicesPlace]' passed (0.014 seconds).
-Test Case '-[EmberTests.SyncModelTests testAnUnansweredQuestionDoesNotOverwriteTheOtherDevice]' started.
-Test Case '-[EmberTests.SyncModelTests testAnUnansweredQuestionDoesNotOverwriteTheOtherDevice]' passed (0.002 seconds).
-Test Case '-[EmberTests.SyncModelTests testBookKeysIgnoreCaseAccentsAndPunctuation]' started.
-Test Case '-[EmberTests.SyncModelTests testBookKeysIgnoreCaseAccentsAndPunctuation]' passed (0.017 seconds).
-Test Case '-[EmberTests.SyncModelTests testBookmarksFromBothDevicesAreKept]' started.
-Test Case '-[EmberTests.SyncModelTests testBookmarksFromBothDevicesAreKept]' passed (0.035 seconds).
-Test Case '-[EmberTests.SyncModelTests testBookmarksOfABookNotHereAreNeverDeleted]' started.
-Test Case '-[EmberTests.SyncModelTests testBookmarksOfABookNotHereAreNeverDeleted]' passed (0.001 seconds).
-Test Case '-[EmberTests.SyncModelTests testCanonicalTextIsTheSameWhateverTheOrder]' started.
-Test Case '-[EmberTests.SyncModelTests testCanonicalTextIsTheSameWhateverTheOrder]' passed (0.006 seconds).
-Test Case '-[EmberTests.SyncModelTests testClearAllOnEitherDeviceClearsBoth]' started.
-Test Case '-[EmberTests.SyncModelTests testClearAllOnEitherDeviceClearsBoth]' passed (0.001 seconds).
-Test Case '-[EmberTests.SyncModelTests testDeletingABookmarkHereDeletesItEverywhere]' started.
-Test Case '-[EmberTests.SyncModelTests testDeletingABookmarkHereDeletesItEverywhere]' passed (0.080 seconds).
-Test Case '-[EmberTests.SyncModelTests testFirstSyncUploadsEverything]' started.
-Test Case '-[EmberTests.SyncModelTests testFirstSyncUploadsEverything]' passed (0.001 seconds).
-Test Case '-[EmberTests.SyncModelTests testListeningHereEarlierLosesEvenIfSyncedLater]' started.
-Test Case '-[EmberTests.SyncModelTests testListeningHereEarlierLosesEvenIfSyncedLater]' passed (0.001 seconds).
-Test Case '-[EmberTests.SyncModelTests testListeningHereLaterBeatsTheOtherDevice]' started.
-Test Case '-[EmberTests.SyncModelTests testListeningHereLaterBeatsTheOtherDevice]' passed (0.001 seconds).
-Test Case '-[EmberTests.SyncModelTests testLogFileNameMatchesAndroid]' started.
-Test Case '-[EmberTests.SyncModelTests testLogFileNameMatchesAndroid]' passed (0.003 seconds).
-Test Case '-[EmberTests.SyncModelTests testLogFileRoundTrips]' started.
-Test Case '-[EmberTests.SyncModelTests testLogFileRoundTrips]' passed (0.009 seconds).
-Test Case '-[EmberTests.SyncModelTests testLogKeepsTheNewest400]' started.
-Test Case '-[EmberTests.SyncModelTests testLogKeepsTheNewest400]' passed (0.005 seconds).
-Test Case '-[EmberTests.SyncModelTests testLogsFromBothDevicesInterleave]' started.
-Test Case '-[EmberTests.SyncModelTests testLogsFromBothDevicesInterleave]' passed (0.003 seconds).
-Test Case '-[EmberTests.SyncModelTests testMarkingFinishedMovesThePlaceToo]' started.
-Test Case '-[EmberTests.SyncModelTests testMarkingFinishedMovesThePlaceToo]' passed (0.003 seconds).
-Test Case '-[EmberTests.SyncModelTests testNewerPlaceOnTheOtherDeviceComesHere]' started.
-Test Case '-[EmberTests.SyncModelTests testNewerPlaceOnTheOtherDeviceComesHere]' passed (0.003 seconds).
-Test Case '-[EmberTests.SyncModelTests testOldDeletionsAreForgotten]' started.
-Test Case '-[EmberTests.SyncModelTests testOldDeletionsAreForgotten]' passed (0.003 seconds).
-Test Case '-[EmberTests.SyncModelTests testSameTextAsAndroid]' started.
-Test Case '-[EmberTests.SyncModelTests testSameTextAsAndroid]' passed (0.002 seconds).
-Test Case '-[EmberTests.SyncModelTests testStateFileRoundTripsAndReadsAndroidsFormat]' started.
-Test Case '-[EmberTests.SyncModelTests testStateFileRoundTripsAndReadsAndroidsFormat]' passed (0.003 seconds).
-Test Suite 'SyncModelTests' passed at 2026-10-27 22:24:20.607.
-	 Executed 20 tests, with 0 failures (0 unexpected) in 0.190 (0.875) seconds
-Test Suite 'EmberTests.xctest' passed at 2026-10-27 22:24:20.609.
-	 Executed 20 tests, with 0 failures (0 unexpected) in 0.190 (0.878) seconds
-Test Suite 'All tests' passed at 2026-10-27 22:24:20.609.
-	 Executed 20 tests, with 0 failures (0 unexpected) in 0.190 (0.880) seconds
-2026-10-27 22:24:21.692 xcodebuild[2287:11610] [MT] IDETestOperationsObserverDebug: 240.092 elapsed -- Testing started completed.
-2026-10-27 22:24:21.692 xcodebuild[2287:11610] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
-2026-10-27 22:24:21.692 xcodebuild[2287:11610] [MT] IDETestOperationsObserverDebug: 240.092 sec, +240.092 sec -- end
-
-Test session results, code coverage, and logs:
-	/Users/runner/work/ember-player/ember-player/ios/build/Logs/Test/Test-Ember-2026.10.27_22-19-26-+0000.xcresult
-
-** TEST SUCCEEDED **
-
-Testing started
