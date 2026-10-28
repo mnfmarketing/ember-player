@@ -64,7 +64,8 @@ for mode in dark light; do
   shot "$PHONE" "p-$m-05-podcasts" podcasts 6
   shot "$PHONE" "p-$m-06-show" show 6
   shot "$PHONE" "p-$m-07-profile" profile 6
-  shot "$PHONE" "p-$m-08-search" search 6
+  [ $m = d ] && shot "$PHONE" "p-$m-08-search" search 6
+  [ $m = l ] && continue  # iPad in dark only (time on the CI Mac is limited)
   shot "$PAD" "t-$m-01-home" home 8
   shot "$PAD" "t-$m-02-player" player 9
   shot "$PAD" "t-$m-03-books" books 9

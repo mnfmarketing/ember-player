@@ -78,7 +78,7 @@ struct RootView: View {
         case "books": app.selectedTab = .books
         case "podcasts": app.selectedTab = .podcasts
         case "search": app.selectedTab = .search
-        case "player": app.playerOpen = true
+        case "player": if hSize != .regular { app.playerOpen = true }  // iPad: the player column is already open
         case "profile": app.profileOpen = true
         case "book":
             app.selectedTab = .home

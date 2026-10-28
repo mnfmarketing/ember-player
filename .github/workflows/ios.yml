@@ -48,7 +48,7 @@ jobs:
 
       - name: Screenshots on iPhone and iPad
         if: github.ref_name == 'ios'
-        timeout-minutes: 20
+        timeout-minutes: 35
         run: bash ios/ci/shots.sh
 
       - name: Unsigned app for SideStore
