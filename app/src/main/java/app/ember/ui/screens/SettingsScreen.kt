@@ -540,6 +540,7 @@ fun SettingsScreen(
     BoxWithConstraints(Modifier.fillMaxSize()) {
         // Unfolded: the list on the left, the open page on the right.
         val wide = maxWidth >= 720.dp
+        val listWidth = minOf(380.dp, maxWidth * 0.42f)
         var selected by rememberSaveable { mutableStateOf(initial?.takeIf { it != "sound" } ?: "appearance") }
         val pick: (String) -> Unit = { id ->
             when {
@@ -550,7 +551,7 @@ fun SettingsScreen(
         }
         when {
             wide -> Row(Modifier.fillMaxSize()) {
-                Box(Modifier.width(minOf(380.dp, maxWidth * 0.42f)).fillMaxHeight()) {
+                Box(Modifier.width(listWidth).fillMaxHeight()) {
                     SettingsList(::summary, selected = selected, onBack = onBack, onPick = pick)
                 }
                 Box(Modifier.width(1.dp).fillMaxHeight().background(EmberColors.Outline.copy(alpha = 0.5f)))

@@ -1,110 +1,72 @@
 # Steps for the batch being built (sourced by quick.sh; helpers come from lib.sh).
 # Replace these for each new batch. Name screenshots f01-..., f02-... so they sort together.
 #
-# Ember-24: sync between devices. A plain folder stands in for Google Drive, and a test hook
-# writes changes as if an iPhone had made them.
+# Ember-25: downloads one tap away (Books and Podcasts buttons, a bar on Home), and Settings
+# as a searchable list where each topic has its own page (two panes unfolded).
 say() { echo "== $*" | tee -a "$OUT/focus.txt"; }
-report() { selfcheck "$1"; python3 - "$OUT/$1" <<'PY' | tee -a "$OUT/focus.txt"
-import json, sys
-r = json.load(open(sys.argv[1]))
-for k in ("syncOn", "syncError", "syncDevices", "syncFiles", "syncPrompt", "demo0PositionMs", "positions", "demo0Bookmarks", "demo0Log", "libraryDbVersion"):
-    print(f"   {k}: {r.get(k)}")
-PY
-}
-# Saves the "Drive" state.json from a self-check report (Android doesn't let adb read Ember's folder).
-pull_sync() { mkdir -p "$OUT/$1"; selfcheck "$1.json"; python3 -c "import json,sys; open(sys.argv[2],'w').write(json.load(open(sys.argv[1]))['syncState'])" "$OUT/$1.json" "$OUT/$1/state.json" || say "no state.json"; }
-# Prints the place items in a saved state.json: who wrote each one and where it is.
-places() { python3 - "$OUT/$1/state.json" <<'PY' | tee -a "$OUT/focus.txt"
-import json, sys
-s = json.load(open(sys.argv[1]))
-print("   devices:", {k: v["name"] for k, v in s.get("devices", {}).items()})
-for k, e in sorted(s["items"].items()):
-    if k.endswith("/pos") or k.startswith("mark/") or k.startswith("day/"):
-        print(f"   {k}  by {e['d']}  {e.get('v')}")
-PY
-}
-sync_now() { adb shell am start -n "$ACT" --ez ember_sync_now true > /dev/null; sleep "${1:-8}"; }
 
-# The demo book is loaded and playing (quick.sh). Pause it: loaded but paused.
-adb shell input keyevent 127; sleep 3
+# ---- Downloads: nothing running, then pretend two are at 45% ----
+adb shell am start -n "$ACT" --es ember_fake_downloads off > /dev/null; sleep 1
+open_route library; shot f01-books-downloads-idle 3
+adb shell am start -n "$ACT" --es ember_fake_downloads "2,45" > /dev/null; sleep 3
+open_route library; shot f02-books-downloading 3
+open_route podcasts; shot f03-podcasts-downloading 3
+open_route home; adb shell input swipe 540 700 540 1900 300; shot f04-home-downloading-bar 3
+tap_text "Downloading 2 · 45%"; sleep 3; shot f05-bar-opens-downloads 1
+adb shell input keyevent KEYCODE_BACK; sleep 2
+open_route library; sleep 2
+tap_text "Downloads, 2 downloading"; sleep 3; shot f06-button-opens-downloads 1
+adb shell am start -n "$ACT" --es ember_fake_downloads off > /dev/null; sleep 5
+open_route home; shot f07-home-no-bar 3
 
-say "turn sync on (test folder in place of Drive)"
-adb shell am start -n "$ACT" --ez ember_sync_test true > /dev/null; sleep 2
-sync_now
-report f-first-sync.json
-pull_sync f-files-1
-places f-files-1
-open_route "settings/Sync"; shot f01-sync-settings 4
-
-say "the iPhone is further along in the loaded book: Ember asks"
-adb shell am start -n "$ACT" --es ember_sync_fake demo-0,600000 > /dev/null; sleep 3
-sync_now
-open_route player; shot f02-go-there-prompt 4
-report f-prompt.json
-tap_text "Go there"; sleep 4
-shot f03-after-go-there 2
-report f-went-there.json
-
-say "the log shows both devices, and the iPhone's bookmark arrived"
-tap_text "Listening log"; shot f04-log-two-devices 4
+# ---- Settings: the list, a page, Back, search ----
+open_route settings; shot f08-settings-list 3
+tap_text "Playback"; sleep 2; shot f09-playback-page 1
+adb shell input keyevent KEYCODE_BACK; sleep 2; shot f10-back-to-list 1
+tap_text "Sleep timer"; sleep 2; shot f11-sleep-page 1
+adb shell input keyevent KEYCODE_BACK; sleep 2
+tap_text "Car and headphones"; sleep 2; shot f12-car-page 1
+adb shell input keyevent KEYCODE_BACK; sleep 2
+tap_text "Downloads and storage"; sleep 2; shot f13-storage-page 1
+adb shell input keyevent KEYCODE_BACK; sleep 2
+tap_text "About"; sleep 2; shot f14-about-page 1
+adb shell input keyevent KEYCODE_BACK; sleep 2
+tap_text "Sound"; sleep 3; shot f15-sound-sheet 1
+adb shell input keyevent KEYCODE_BACK; sleep 2
+tap_text "Search settings"; sleep 1
+adb shell input text "wifi"; sleep 2
+adb shell input keyevent KEYCODE_BACK; sleep 1
+shot f16-search-wifi 1
+tap_text "Torrents on Wi-Fi only"; sleep 2; shot f17-search-opens-page 1
+adb shell input keyevent KEYCODE_BACK; sleep 2
+tap_text "Clear search"; sleep 1
+tap_text "Search settings"; sleep 1
+adb shell input text "bedtime"; sleep 1
+adb shell input keyevent KEYCODE_BACK; sleep 1
+shot f18-search-bedtime 1
 adb shell input keyevent KEYCODE_BACK; sleep 2
 
-say "Stay here keeps this device's place and sends it out"
-adb shell am start -n "$ACT" --es ember_sync_fake demo-0,300000 > /dev/null; sleep 3
-sync_now
-open_route player; shot f05-prompt-again 4
-tap_text "Stay here"; sleep 10
-report f-stayed.json
-pull_sync f-files-2
-places f-files-2
+# ---- From the profile page: a topic opens its page; Back returns to the profile ----
+open_route you; sleep 3
+adb shell input swipe 540 1700 540 700 300; sleep 1
+tap_text "Car and headphones"; sleep 2; shot f19-profile-topic-page 1
+adb shell input keyevent KEYCODE_BACK; sleep 2; shot f20-back-to-profile 1
 
-say "a book that isn't loaded just moves, without asking"
-adb shell am start -n "$ACT" --es ember_sync_fake demo-1,420000 > /dev/null; sleep 3
-sync_now
-report f-moved.json
-open_route home; shot f06-home-after-sync 4
+# ---- Dark mode ----
+adb shell cmd uimode night yes; sleep 3
+open_route settings; shot f21-settings-dark 3
+adb shell cmd uimode night no; sleep 2
 
-say "a bookmark made here goes out"
-adb shell am start -n "$ACT" --es ember_add_bookmark demo-0,123000 > /dev/null; sleep 2
-sync_now
-pull_sync f-files-3
-places f-files-3
-
-say "settings after syncing with the iPhone"
-open_route "settings/Sync"; shot f07-sync-settings-after 4
-
-# Pass/fail summary for this batch.
-python3 - "$OUT" <<'PY' | tee -a "$OUT/focus.txt"
-import json, os, sys
-out = sys.argv[1]
-def r(n):
-    p = os.path.join(out, n)
-    return json.load(open(p)) if os.path.exists(p) else {}
-def places(d):
-    p = os.path.join(out, d, "state.json")
-    if not os.path.exists(p):
-        return {}
-    s = json.load(open(p))
-    return {k: e for k, e in s["items"].items() if k.endswith("/pos")}
-checks = []
-first = r("f-first-sync.json")
-checks.append(("sync turned on and ran", first.get("syncOn") is True and not first.get("syncError")))
-checks.append(("state.json and a log file on 'Drive'", "state.json" in str(first.get("syncFiles")) and "log-" in str(first.get("syncFiles"))))
-checks.append(("database is version 6", first.get("libraryDbVersion") == 6))
-checks.append(("loaded book: asked 'Go there?'", "600000" in str(r("f-prompt.json").get("syncPrompt"))))
-went = r("f-went-there.json")
-checks.append(("Go there moved to 10:00", abs((went.get("demo0PositionMs") or 0) - 600000) < 15000))
-checks.append(("the iPhone's bookmark arrived", "Saved on the iPhone" in str(went.get("demo0Bookmarks"))))
-checks.append(("the iPhone's log entries arrived", "test-iphone" in str(went.get("demo0Log"))))
-st = r("f-stayed.json")
-checks.append(("Stay here kept 10:00", abs((st.get("demo0PositionMs") or 0) - 600000) < 15000 and not st.get("syncPrompt")))
-p2 = places("f-files-2")
-mine = [e for k, e in p2.items() if '"p":3000' not in (e.get("v") or "") and e.get("d") != "test-iphone"]
-checks.append(("Stay here sent this device's place out", any(json.loads(e["v"])["p"] > 500000 for e in mine)))
-mv = r("f-moved.json")
-checks.append(("a book not loaded moved without asking", "demo-1=420000" in str(mv.get("positions")) and not mv.get("syncPrompt")))
-s3 = os.path.join(out, "f-files-3", "state.json")
-checks.append(("a bookmark made here went out", os.path.exists(s3) and '\\"p\\":123000' in open(s3).read()))
-for name, ok in checks:
-    print(("PASS " if ok else "FAIL ") + name)
-PY
+# ---- Unfolded: list on the left, page on the right ----
+adb shell wm size 1968x2184
+adb shell wm density 380
+sleep 3
+open_route settings; shot f22-unfolded-settings 5
+tap_text "Playback"; sleep 2; shot f23-unfolded-playback 1
+tap_text "Library"; sleep 2; shot f24-unfolded-library 1
+adb shell am start -n "$ACT" --es ember_fake_downloads "1,70" > /dev/null; sleep 3
+open_route library; shot f25-unfolded-books-downloading 3
+adb shell am start -n "$ACT" --es ember_fake_downloads off > /dev/null
+adb shell wm size reset
+adb shell wm density reset
+sleep 3

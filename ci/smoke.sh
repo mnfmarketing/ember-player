@@ -86,8 +86,8 @@ grep -E 'bookTitles' "$OUT/after-info.json" || true
 open_route recap; shot 64-recap-month 6
 tap_text "This year"; shot 64b-recap-year 5
 # Settings: fill in missing info for the rest.
-open_route settings; sleep 2
-for i in 1 2 3 4; do adb shell input swipe 500 1800 500 400 300; sleep 1; done
+open_route "settings/library"; sleep 2
+adb shell input swipe 500 1800 500 600 300; sleep 1
 tap_text "Fill in missing book info"; sleep 30
 shot 65-settings-new-sections 1
 # Home screen icon shortcuts.
@@ -100,10 +100,8 @@ tap_text "Light"; shot 23-quote-card-light 4
 open_route "search?q=austen"; shot 24-search 5
 open_route downloads; shot 25-downloads
 open_route settings; shot 05-settings
-adb shell input swipe 500 1800 500 400 300; sleep 1
-adb shell input swipe 500 1800 500 400 300; shot 26-settings-playback 2
-adb shell input swipe 500 1800 500 400 300; sleep 1
-adb shell input swipe 500 1800 500 400 300; shot 27-settings-backup 2
+open_route "settings/playback"; shot 26-settings-playback 2
+open_route "settings/backup"; shot 27-settings-backup 2
 open_route home
 adb shell am start -n "$ACT" --es ember_play demo-0 > /dev/null
 sleep 6
@@ -218,8 +216,7 @@ adb shell input swipe 540 500 540 1700 350; shot 79-player-pulled-closed 2
 open_route home; shot 79b-home-no-mini 3
 adb shell input swipe 500 1600 500 700 300; shot 79c-home-scrolled-mini 2
 # Settings: the sleep timer section (bedtime on).
-open_route settings; sleep 2
-for i in 1 2 3; do adb shell input swipe 500 1800 500 400 300; sleep 1; done
+open_route "settings/sleep"; sleep 2
 tap_text "Bedtime"; shot 78-settings-sleep-timer 2
 tap_text "Bedtime"; sleep 1
 open_route library; sleep 3
