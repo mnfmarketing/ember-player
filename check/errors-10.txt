@@ -1,0 +1,1 @@
+e: file:///home/runner/work/ember-player/ember-player/app/src/main/java/app/ember/ui/screens/SettingsScreen.kt:553:50 'val maxWidth: Dp' cannot be called in this context with an implicit receiver. Use an explicit receiver if necessary.
