@@ -24,31 +24,32 @@ open_route settings; shot f08-settings-list 3
 tap_text "Playback"; sleep 2; shot f09-playback-page 1
 adb shell input keyevent KEYCODE_BACK; sleep 2; shot f10-back-to-list 1
 tap_text "Sleep timer"; sleep 2; shot f11-sleep-page 1
-adb shell input keyevent KEYCODE_BACK; sleep 2
-tap_text "Car and headphones"; sleep 2; shot f12-car-page 1
-adb shell input keyevent KEYCODE_BACK; sleep 2
-tap_text "Downloads and storage"; sleep 2; shot f13-storage-page 1
-adb shell input keyevent KEYCODE_BACK; sleep 2
-tap_text "About"; sleep 2; shot f14-about-page 1
-adb shell input keyevent KEYCODE_BACK; sleep 2
+open_route "settings/car"; shot f12-car-page 2
+open_route "settings/storage"; shot f13-storage-page 2
+open_route "settings/about"; shot f14-about-page 2
+open_route settings; sleep 2
 tap_text "Sound"; sleep 3; shot f15-sound-sheet 1
-adb shell input keyevent KEYCODE_BACK; sleep 2
+open_route settings; sleep 2
 tap_text "Search settings"; sleep 1
 adb shell input text "wifi"; sleep 2
-adb shell input keyevent KEYCODE_BACK; sleep 1
+adb shell input keyevent KEYCODE_ESCAPE; sleep 1
 shot f16-search-wifi 1
 tap_text "Torrents on Wi-Fi only"; sleep 2; shot f17-search-opens-page 1
-adb shell input keyevent KEYCODE_BACK; sleep 2
+open_route settings; sleep 2
 tap_text "Clear search"; sleep 1
 tap_text "Search settings"; sleep 1
 adb shell input text "bedtime"; sleep 1
-adb shell input keyevent KEYCODE_BACK; sleep 1
+adb shell input keyevent KEYCODE_ESCAPE; sleep 1
 shot f18-search-bedtime 1
-adb shell input keyevent KEYCODE_BACK; sleep 2
+tap_text "Clear search"; sleep 1
+adb shell input swipe 540 1700 540 600 300; sleep 1
+shot f18b-settings-list-bottom 1
 
 # ---- From the profile page: a topic opens its page; Back returns to the profile ----
 open_route you; sleep 3
-adb shell input swipe 540 1700 540 700 300; sleep 1
+adb shell input swipe 540 1700 540 500 300; sleep 1
+adb shell input swipe 540 1700 540 500 300; sleep 1
+shot f19a-profile-topics 1
 tap_text "Car and headphones"; sleep 2; shot f19-profile-topic-page 1
 adb shell input keyevent KEYCODE_BACK; sleep 2; shot f20-back-to-profile 1
 
@@ -57,13 +58,15 @@ adb shell cmd uimode night yes; sleep 3
 open_route settings; shot f21-settings-dark 3
 adb shell cmd uimode night no; sleep 2
 
-# ---- Unfolded: list on the left, page on the right ----
+# ---- Unfolded: with the player column open the page opens on its own; minimized, two panes ----
 adb shell wm size 1968x2184
 adb shell wm density 380
 sleep 3
 open_route settings; shot f22-unfolded-settings 5
-tap_text "Playback"; sleep 2; shot f23-unfolded-playback 1
-tap_text "Library"; sleep 2; shot f24-unfolded-library 1
+tap_text "Minimize player"; sleep 2
+open_route settings; shot f23-unfolded-two-panes 3
+tap_text "Playback"; sleep 2; shot f24-unfolded-playback 1
+tap_text "Library"; sleep 2; shot f24b-unfolded-library 1
 adb shell am start -n "$ACT" --es ember_fake_downloads "1,70" > /dev/null; sleep 3
 open_route library; shot f25-unfolded-books-downloading 3
 adb shell am start -n "$ACT" --es ember_fake_downloads off > /dev/null
