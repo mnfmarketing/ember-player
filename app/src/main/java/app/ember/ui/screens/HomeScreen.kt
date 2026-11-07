@@ -76,6 +76,7 @@ fun HomeScreen(
     onSearch: () -> Unit = {},
     onOpenClips: () -> Unit = {},
     onOpenUpNext: () -> Unit = {},
+    onOpenDownloads: () -> Unit = {},
 ) {
     val books by vm.books.collectAsState()
     val clips by vm.clips.collectAsState()
@@ -144,6 +145,9 @@ fun HomeScreen(
                 }
             }
         }
+
+        // Only while something downloads.
+        item { DownloadingBar(vm, onOpenDownloads) }
 
         scan?.let { s ->
             item {

@@ -83,6 +83,31 @@ class Downloads(private val context: Context) {
     }
 
     /** Checks the download manager for any downloads that finished while we weren't looking. */
+    /** Downloads Android is still working on for Ember (episodes and Drive books): how many, bytes done, bytes in all. */
+    data class Activity(val count: Int, val done: Long, val total: Long)
+
+    fun activity(): Activity {
+        val q = DownloadManager.Query().setFilterByStatus(
+            DownloadManager.STATUS_RUNNING or DownloadManager.STATUS_PENDING or DownloadManager.STATUS_PAUSED,
+        )
+        return dm.query(q)?.use { c ->
+            var n = 0
+            var done = 0L
+            var total = 0L
+            val di = c.getColumnIndexOrThrow(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR)
+            val ti = c.getColumnIndexOrThrow(DownloadManager.COLUMN_TOTAL_SIZE_BYTES)
+            while (c.moveToNext()) {
+                n++
+                val t = c.getLong(ti)
+                if (t > 0) {
+                    total += t
+                    done += c.getLong(di).coerceIn(0, t)
+                }
+            }
+            Activity(n, done, total)
+        } ?: Activity(0, 0, 0)
+    }
+
     suspend fun reconcile() {
         for (d in media.getRunningDownloads()) update(d.downloadId)
     }

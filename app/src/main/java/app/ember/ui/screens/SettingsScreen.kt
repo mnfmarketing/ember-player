@@ -58,12 +58,109 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.material.icons.rounded.Backup
+import androidx.compose.material.icons.rounded.Bedtime
+import androidx.compose.material.icons.rounded.ChevronRight
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.Flag
+import androidx.compose.material.icons.rounded.GraphicEq
+import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.Palette
+import androidx.compose.material.icons.rounded.PlayCircle
+import androidx.compose.material.icons.rounded.Podcasts
+import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material.icons.rounded.Sync
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.graphics.Color
 import app.ember.data.LibraryFolderEntity
 import app.ember.data.LibraryScanner
 import app.ember.ui.MainViewModel
 import app.ember.ui.theme.EmberColors
 import java.text.DateFormat
 import java.util.Date
+
+/** The Settings pages, in the order the list shows them. */
+private data class SettingsPage(val id: String, val title: String, val icon: androidx.compose.ui.graphics.vector.ImageVector, val tint: Long)
+
+private val settingsPages = listOf(
+    SettingsPage("appearance", "Appearance", Icons.Rounded.Palette, 0xFF7E8CE0),
+    SettingsPage("playback", "Playback", Icons.Rounded.PlayCircle, 0xFFE2683C),
+    SettingsPage("sleep", "Sleep timer", Icons.Rounded.Bedtime, 0xFF6B7FD7),
+    SettingsPage("sound", "Sound", Icons.Rounded.GraphicEq, 0xFFD9534F),
+    SettingsPage("library", "Library", Icons.Rounded.Folder, 0xFF3FA7D6),
+    SettingsPage("storage", "Downloads and storage", Icons.Rounded.DownloadForOffline, 0xFF4CAF7D),
+    SettingsPage("podcasts", "Podcasts", Icons.Rounded.Podcasts, 0xFF9C6ADE),
+    SettingsPage("car", "Car and headphones", Icons.Rounded.DirectionsCar, 0xFF5C6B7A),
+    SettingsPage("sync", "Sync", Icons.Rounded.Sync, 0xFF2BA3A0),
+    SettingsPage("backup", "Backup and restore", Icons.Rounded.Backup, 0xFF4A8FD6),
+    SettingsPage("goals", "Goals", Icons.Rounded.Flag, 0xFFE0A030),
+    SettingsPage("about", "About", Icons.Rounded.Info, 0xFF8A8F98),
+)
+
+/** Older names for sections (from the profile page and earlier versions) and the page each now lives on. */
+private fun pageFor(section: String?): String? = when (section?.lowercase()) {
+    null, "" -> null
+    "appearance" -> "appearance"
+    "playback", "flip to pause" -> "playback"
+    "sleep", "sleep timer" -> "sleep"
+    "sound", "equalizer" -> "sound"
+    "library", "library folders", "book info", "google drive" -> "library"
+    "storage", "downloads" -> "storage"
+    "podcasts" -> "podcasts"
+    "car", "car mode", "headphone and car buttons", "car and headphones" -> "car"
+    "sync" -> "sync"
+    "backup", "backup and restore" -> "backup"
+    "goals" -> "goals"
+    "about", "good to know" -> "about"
+    else -> settingsPages.firstOrNull { it.id == section }?.id
+}
+
+/** One setting the search box can find: what it's called, other words for it, and its page. */
+private data class SettingHit(val label: String, val page: String, val words: String = "")
+
+private val settingIndex = listOf(
+    SettingHit("Theme", "appearance", "colors colour midnight paper slate graphite forest ocean ember"),
+    SettingHit("Light or dark", "appearance", "dark mode night match phone"),
+    SettingHit("True black", "appearance", "oled battery black"),
+    SettingHit("Accent color", "appearance", "colour highlight custom book cover"),
+    SettingHit("Skip back", "playback", "rewind seconds jump"),
+    SettingHit("Skip forward", "playback", "seconds jump ahead"),
+    SettingHit("Rewind a little after a pause", "playback", "smart rewind resume"),
+    SettingHit("Skip silence", "playback", "trim pauses"),
+    SettingHit("Resume when headphones or car connect", "playback", "bluetooth auto play earbuds"),
+    SettingHit("Flip to pause", "playback", "face down turn over"),
+    SettingHit("Rate books when you finish them", "playback", "rating storygraph goodreads finished"),
+    SettingHit("Play the next book in a series", "playback", "series autoplay auto-play"),
+    SettingHit("Clip length", "playback", "clips quote"),
+    SettingHit("Bedtime", "sleep", "night timer automatic"),
+    SettingHit("Fade out at the end", "sleep", "fade volume"),
+    SettingHit("Shake to restart the timer", "sleep", "shake"),
+    SettingHit("Equalizer", "sound", "eq preset bass treble spoken word"),
+    SettingHit("Narration boost", "sound", "voice louder clearer"),
+    SettingHit("Library folders", "library", "add folder rescan scan audiobooks"),
+    SettingHit("Google Drive", "library", "drive cloud stream"),
+    SettingHit("Fill in missing book info", "library", "audible cover series narrator description"),
+    SettingHit("Downloads", "storage", "downloaded space free up storage"),
+    SettingHit("Torrent downloads folder", "storage", "torrent folder"),
+    SettingHit("Torrents on Wi-Fi only", "storage", "wifi wi-fi mobile data"),
+    SettingHit("Auto-download episodes", "podcasts", "episodes download keep"),
+    SettingHit("Open car mode when your car connects", "car", "car mode automatic bluetooth"),
+    SettingHit("Your car", "car", "bluetooth device"),
+    SettingHit("Headphone and car buttons", "car", "double press triple next previous earbuds"),
+    SettingHit("Sync with Google Drive", "sync", "devices iphone ipad other device"),
+    SettingHit("Back up now", "backup", "backup save"),
+    SettingHit("Restore", "backup", "restore backup file"),
+    SettingHit("Export for StoryGraph or Goodreads", "backup", "csv export"),
+    SettingHit("Daily listening goal", "goals", "minutes streak"),
+    SettingHit("Books this year", "goals", "yearly goal"),
+    SettingHit("Tips and gestures", "about", "good to know pocket lock android auto chromecast widget"),
+    SettingHit("Problem report", "about", "crash closed unexpectedly"),
+    SettingHit("Version", "about", "update"),
+)
 
 @Composable
 fun SettingsScreen(
@@ -73,12 +170,13 @@ fun SettingsScreen(
     onPickDriveFolder: () -> Unit,
     onOpenDownloads: () -> Unit = {},
     onOpenCar: () -> Unit = {},
-    /** Opens scrolled to this section (a group title), or with the sound sheet open ("sound"). */
+    /** Opens at this page (or with the sound sheet open, "sound"); null shows the list. */
     section: String? = null,
+    /** On the phone, a page opens as its own screen (with Back to the list). */
+    onOpenPage: (String) -> Unit = {},
 ) {
     val settings by vm.settings.collectAsState()
     val folders by vm.folders.collectAsState()
-    val listState = androidx.compose.foundation.lazy.rememberLazyListState()
     val scan by vm.scanProgress.collectAsState()
     var removing by remember { mutableStateOf<LibraryFolderEntity?>(null) }
     var showSound by remember { mutableStateOf(false) }
@@ -108,389 +206,360 @@ fun SettingsScreen(
     }
     val version = remember {
         try {
-            context.packageManager.getPackageInfo(context.packageName, 0).versionName ?: ""
+            context.packageManager.getPackageInfo(context.packageName, 0).let { "${it.versionName ?: ""}" }
         } catch (e: Exception) {
             ""
         }
     }
+    val initial = pageFor(section)
+    LaunchedEffect(initial) { if (initial == "sound") showSound = true }
 
-    // Where each group title sits in the list below (after the header, the folders and the Drive card).
-    // Keep in step with the items when adding or moving a section.
-    LaunchedEffect(section, folders.size) {
-        if (section == "sound") {
-            showSound = true
-            return@LaunchedEffect
-        }
-        val f = folders.size
-        val index = when (section) {
-            "Appearance" -> 1
-            "Library folders" -> 3
-            "Playback" -> 6 + f
-            "Sleep timer" -> 9 + f
-            "Car mode" -> 11 + f
-            "Headphone and car buttons" -> 13 + f
-            "Book info" -> 15 + f
-            "Podcasts" -> 17 + f
-            "Storage" -> 19 + f
-            "Backup and restore" -> 21 + f
-            "Sync" -> 23 + f
-            "Goals" -> 24 + f
-            "Good to know" -> 27 + f
-            else -> return@LaunchedEffect
-        }
-        listState.scrollToItem(index)
-    }
+    // ---- Each page's rows ----
+    fun LazyListScope.pageItems(page: String) {
+        when (page) {
+            "appearance" -> item { AppearanceSection(vm) }
 
-    LazyColumn(Modifier.fillMaxSize(), state = listState, contentPadding = PaddingValues(bottom = 32.dp)) {
-        item {
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .statusBarsPadding()
-                    .padding(start = if (onBack != null) 4.dp else 20.dp, end = 8.dp, top = 12.dp, bottom = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                if (onBack != null) {
-                    IconButton(onClick = onBack) { Icon(Icons.Rounded.ArrowBack, "Back", tint = EmberColors.Text) }
-                }
-                Text("Settings", style = MaterialTheme.typography.headlineLarge, color = EmberColors.Text)
-            }
-        }
-
-        item { Group("Appearance") }
-        item { AppearanceSection(vm) }
-
-        item { Group("Library folders") }
-        items(folders, key = { it.id }) { f ->
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Icon(
-                    if (f.uri.startsWith("drive:")) Icons.Rounded.CloudQueue else Icons.Rounded.Folder,
-                    null,
-                    tint = MaterialTheme.colorScheme.primary,
+            "playback" -> item {
+                ChoiceRow("Skip back", listOf(5, 10, 15, 30, 60), settings.skipBackSec, { "${it}s" }, { vm.setSkipBack(it) })
+                ChoiceRow("Skip forward", listOf(10, 15, 30, 45, 60), settings.skipForwardSec, { "${it}s" }, { vm.setSkipForward(it) })
+                ChoiceRow(
+                    "Rewind a little after a pause",
+                    listOf(0, 3, 5, 10, 15),
+                    settings.autoRewindSec,
+                    { if (it == 0) "Off" else "${it}s" },
+                    { vm.setAutoRewind(it) },
+                    note = "Smart rewind: nothing after a few seconds, half this after a short pause, this after a few minutes, double after an hour, triple after a night",
                 )
-                Spacer(Modifier.width(14.dp))
-                Column(Modifier.weight(1f)) {
-                    Text(f.name, style = MaterialTheme.typography.bodyLarge, color = EmberColors.Text, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                    Text(
-                        if (f.lastScanAt > 0) "Scanned " + DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(Date(f.lastScanAt)) else "Not scanned yet",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = EmberColors.TextMuted,
-                    )
-                    folderProblems[f.id]?.let { problem ->
-                        Text(problem, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
-                        TextButton(onClick = onAddFolder, contentPadding = PaddingValues(0.dp)) { Text("Choose the folder again") }
+                ToggleRow("Skip silence", "Trims long pauses in the narration", settings.skipSilence) { vm.setSkipSilence(it) }
+                ToggleRow(
+                    "Resume when headphones or car connect",
+                    "Picks up where you left off when Bluetooth headphones, your car, or wired headphones connect, if you listened in the last 3 days.",
+                    settings.resumeOnConnect,
+                ) { on ->
+                    val needsAsk = on && android.os.Build.VERSION.SDK_INT >= 31 &&
+                        androidx.core.content.ContextCompat.checkSelfPermission(context, android.Manifest.permission.BLUETOOTH_CONNECT) !=
+                        android.content.pm.PackageManager.PERMISSION_GRANTED
+                    if (needsAsk) {
+                        btPermission.launch(android.Manifest.permission.BLUETOOTH_CONNECT)
+                    } else {
+                        vm.setResumeOnConnect(on)
+                        if (on && !app.ember.playback.ResumeOnConnect.canStartOnItsOwn(context)) askBattery = true
                     }
-                    if (LibraryScanner.isDriveAppUri(f.uri)) {
+                }
+                ToggleRow(
+                    "Flip to pause",
+                    "Put your phone face down to pause. Turn it back up within 30 minutes to pick up again.",
+                    settings.flipToPause,
+                ) { vm.setFlipToPause(it) }
+                ToggleRow(
+                    "Rate books when you finish them",
+                    "When a book plays to the end, Ember asks for your rating and offers to open it in StoryGraph or Goodreads.",
+                    settings.rateOnFinish,
+                ) { vm.setRateOnFinish(it) }
+                ToggleRow(
+                    "Play the next book in a series",
+                    "When a book ends, the next unfinished book in the same series starts. Set the series and number in a book's details.",
+                    settings.seriesAutoPlay,
+                ) { vm.setSeriesAutoPlay(it) }
+                ChoiceRow(
+                    "Clip length",
+                    listOf(15, 30, 60, 90),
+                    settings.clipLengthSec,
+                    { "${it}s" },
+                    { vm.setClipLength(it) },
+                    note = "How far back a clip reaches when you tap Clip in the player",
+                )
+            }
+
+            "sleep" -> item {
+                ToggleRow(
+                    "Bedtime",
+                    "Start the sleep timer by itself when you listen at night. Turn the timer off and it stays off for the night.",
+                    settings.bedtimeOn,
+                ) { vm.setBedtime(it, settings.bedtimeFromMin, settings.bedtimeToMin, settings.bedtimeTimerMin) }
+                if (settings.bedtimeOn) {
+                    ChoiceRow(
+                        "From",
+                        listOf(20 * 60, 21 * 60, 22 * 60, 23 * 60, 0),
+                        settings.bedtimeFromMin,
+                        { clockLabel(it) },
+                        { vm.setBedtime(true, it, settings.bedtimeToMin, settings.bedtimeTimerMin) },
+                    )
+                    ChoiceRow(
+                        "Until",
+                        listOf(4 * 60, 5 * 60, 6 * 60, 7 * 60, 8 * 60),
+                        settings.bedtimeToMin,
+                        { clockLabel(it) },
+                        { vm.setBedtime(true, settings.bedtimeFromMin, it, settings.bedtimeTimerMin) },
+                    )
+                    ChoiceRow(
+                        "Timer length",
+                        listOf(15, 30, 45, 60),
+                        settings.bedtimeTimerMin,
+                        { "$it min" },
+                        { vm.setBedtime(true, settings.bedtimeFromMin, settings.bedtimeToMin, it) },
+                    )
+                }
+                ToggleRow(
+                    "Fade out at the end",
+                    "Lowers the volume over the last 10 seconds. Off: it simply pauses.",
+                    settings.sleepFade,
+                ) { vm.setSleepFade(it) }
+                Note("Shake your phone to start the timer over. If it already stopped, shake within 5 minutes to keep listening. When the timer stops a book, the player offers to go back to where you set it.")
+            }
+
+            "library" -> {
+                item { Group("Library folders") }
+                items(folders, key = { it.id }) { f ->
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp, vertical = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(
+                            if (f.uri.startsWith("drive:")) Icons.Rounded.CloudQueue else Icons.Rounded.Folder,
+                            null,
+                            tint = MaterialTheme.colorScheme.primary,
+                        )
+                        Spacer(Modifier.width(14.dp))
+                        Column(Modifier.weight(1f)) {
+                            Text(f.name, style = MaterialTheme.typography.bodyLarge, color = EmberColors.Text, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text(
+                                if (f.lastScanAt > 0) "Scanned " + DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(Date(f.lastScanAt)) else "Not scanned yet",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = EmberColors.TextMuted,
+                            )
+                            folderProblems[f.id]?.let { problem ->
+                                Text(problem, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
+                                TextButton(onClick = onAddFolder, contentPadding = PaddingValues(0.dp)) { Text("Choose the folder again") }
+                            }
+                            if (LibraryScanner.isDriveAppUri(f.uri)) {
+                                Text(
+                                    "Picked through the Drive app, which downloads each whole file before it plays. Connect Google Drive below and add this folder there to stream instantly. Your progress carries over.",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.primary,
+                                )
+                            }
+                        }
+                        IconButton(onClick = { removing = f }) { Icon(Icons.Rounded.Delete, "Remove folder", tint = EmberColors.TextFaint) }
+                    }
+                }
+                item {
+                    Column(Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
+                        scan?.let {
+                            Text(
+                                "Scanning ${it.folder}: ${it.booksFound} books · ${it.current}",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.primary,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                            Spacer(Modifier.height(8.dp))
+                        }
+                        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                            OutlinedButton(onClick = onAddFolder) {
+                                Icon(Icons.Rounded.CreateNewFolder, null, Modifier.size(18.dp))
+                                Spacer(Modifier.width(6.dp))
+                                Text("Add folder")
+                            }
+                            if (folders.isNotEmpty()) {
+                                OutlinedButton(onClick = vm::rescan, enabled = scan == null) {
+                                    Icon(Icons.Rounded.Refresh, null, Modifier.size(18.dp))
+                                    Spacer(Modifier.width(6.dp))
+                                    Text("Rescan")
+                                }
+                            }
+                        }
+                        Spacer(Modifier.height(8.dp))
                         Text(
-                            "Picked through the Drive app, which downloads each whole file before it plays. Connect Google Drive below and add this folder there to stream instantly. Your progress carries over.",
+                            "Tip: each subfolder becomes one book, and each M4B file is its own book with its chapters. Add a cover.jpg to a folder to use it as the cover.",
                             style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.primary,
+                            color = EmberColors.TextFaint,
                         )
                     }
                 }
-                IconButton(onClick = { removing = f }) { Icon(Icons.Rounded.Delete, "Remove folder", tint = EmberColors.TextFaint) }
-            }
-        }
-        item {
-            Column(Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
-                scan?.let {
-                    Text(
-                        "Scanning ${it.folder}: ${it.booksFound} books · ${it.current}",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.primary,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                    Spacer(Modifier.height(8.dp))
+                item { DriveCard(vm, onPickFolder = onPickDriveFolder) }
+                item { Group("Book info") }
+                item {
+                    NavRow(
+                        Icons.Rounded.TravelExplore,
+                        "Fill in missing book info",
+                        infoFill ?: "Series, number, narrator, description and covers from Audible's catalog. Only fills what's missing, and only clear matches.",
+                    ) { vm.fillMissingInfo() }
                 }
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    OutlinedButton(onClick = onAddFolder) {
-                        Icon(Icons.Rounded.CreateNewFolder, null, Modifier.size(18.dp))
-                        Spacer(Modifier.width(6.dp))
-                        Text("Add folder")
-                    }
-                    if (folders.isNotEmpty()) {
-                        OutlinedButton(onClick = vm::rescan, enabled = scan == null) {
-                            Icon(Icons.Rounded.Refresh, null, Modifier.size(18.dp))
-                            Spacer(Modifier.width(6.dp))
-                            Text("Rescan")
-                        }
-                    }
-                }
-                Spacer(Modifier.height(8.dp))
-                Text(
-                    "Tip: each subfolder becomes one book, and each M4B file is its own book with its chapters. Add a cover.jpg to a folder to use it as the cover.",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = EmberColors.TextFaint,
-                )
             }
-        }
 
-        item { DriveCard(vm, onPickFolder = onPickDriveFolder) }
+            "storage" -> item {
+                NavRow(Icons.Rounded.DownloadForOffline, "Downloads", "What's downloading and what's saved on this phone. Free up space.", onOpenDownloads)
+                NavRow(
+                    Icons.Rounded.Folder,
+                    "Torrent downloads go to",
+                    settings.torrentFolderName.ifBlank { "Not chosen yet. Tap to choose a folder (your audiobooks folder works well)." },
+                ) { torrentFolderPicker.launch(null) }
+                ToggleRow(
+                    "Torrents on Wi-Fi only",
+                    "Torrent downloads wait for Wi-Fi so audiobooks don't use your mobile data.",
+                    settings.torrentWifiOnly,
+                ) { vm.setTorrentWifiOnly(it) }
+            }
 
-        item { Group("Playback") }
-        item {
-            val st by vm.settings.collectAsState()
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .clickable { showSound = true }
-                    .padding(horizontal = 20.dp, vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Column(Modifier.weight(1f)) {
-                    Text("Equalizer and narration boost", style = MaterialTheme.typography.bodyLarge, color = EmberColors.Text)
-                    val eqLabel = if (st.eqEnabled) {
-                        (app.ember.sound.SoundPresets.presets.firstOrNull { it.key == st.eqPreset }?.label ?: "Custom") + " preset"
-                    } else {
-                        "Off"
-                    }
-                    val boostLabel = if (st.narrationBoost) " · boost on" else ""
-                    Text(
-                        eqLabel + boostLabel,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = EmberColors.TextMuted,
-                    )
-                }
-            }
-        }
-        item {
-            ChoiceRow("Skip back", listOf(5, 10, 15, 30, 60), settings.skipBackSec, { "${it}s" }, { vm.setSkipBack(it) })
-            ChoiceRow("Skip forward", listOf(10, 15, 30, 45, 60), settings.skipForwardSec, { "${it}s" }, { vm.setSkipForward(it) })
-            ChoiceRow(
-                "Rewind a little after a pause",
-                listOf(0, 3, 5, 10, 15),
-                settings.autoRewindSec,
-                { if (it == 0) "Off" else "${it}s" },
-                { vm.setAutoRewind(it) },
-                note = "Smart rewind: nothing after a few seconds, half this after a short pause, this after a few minutes, double after an hour, triple after a night",
-            )
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = 10.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Column(Modifier.weight(1f)) {
-                    Text("Skip silence", style = MaterialTheme.typography.bodyLarge, color = EmberColors.Text)
-                    Text("Trims long pauses in the narration", style = MaterialTheme.typography.bodySmall, color = EmberColors.TextMuted)
-                }
-                Switch(checked = settings.skipSilence, onCheckedChange = { vm.setSkipSilence(it) })
-            }
-            ToggleRow(
-                "Resume when headphones or car connect",
-                "Picks up where you left off when Bluetooth headphones, your car, or wired headphones connect, if you listened in the last 3 days.",
-                settings.resumeOnConnect,
-            ) { on ->
-                val needsAsk = on && android.os.Build.VERSION.SDK_INT >= 31 &&
-                    androidx.core.content.ContextCompat.checkSelfPermission(context, android.Manifest.permission.BLUETOOTH_CONNECT) !=
-                    android.content.pm.PackageManager.PERMISSION_GRANTED
-                if (needsAsk) {
-                    btPermission.launch(android.Manifest.permission.BLUETOOTH_CONNECT)
-                } else {
-                    vm.setResumeOnConnect(on)
-                    if (on && !app.ember.playback.ResumeOnConnect.canStartOnItsOwn(context)) askBattery = true
-                }
-            }
-            ToggleRow(
-                "Flip to pause",
-                "Put your phone face down to pause. Turn it back up within 30 minutes to pick up again.",
-                settings.flipToPause,
-            ) { vm.setFlipToPause(it) }
-            ToggleRow(
-                "Rate books when you finish them",
-                "When a book plays to the end, Ember asks for your rating and offers to open it in StoryGraph or Goodreads.",
-                settings.rateOnFinish,
-            ) { vm.setRateOnFinish(it) }
-            ToggleRow(
-                "Play the next book in a series",
-                "When a book ends, the next unfinished book in the same series starts. Set the series and number in a book's details.",
-                settings.seriesAutoPlay,
-            ) { vm.setSeriesAutoPlay(it) }
-            ChoiceRow(
-                "Clip length",
-                listOf(15, 30, 60, 90),
-                settings.clipLengthSec,
-                { "${it}s" },
-                { vm.setClipLength(it) },
-                note = "How far back a clip reaches when you tap Clip in the player",
-            )
-        }
-
-        item { Group("Sleep timer") }
-        item {
-            ToggleRow(
-                "Bedtime",
-                "Start the sleep timer by itself when you listen at night. Turn the timer off and it stays off for the night.",
-                settings.bedtimeOn,
-            ) { vm.setBedtime(it, settings.bedtimeFromMin, settings.bedtimeToMin, settings.bedtimeTimerMin) }
-            if (settings.bedtimeOn) {
+            "podcasts" -> item {
                 ChoiceRow(
-                    "From",
-                    listOf(20 * 60, 21 * 60, 22 * 60, 23 * 60, 0),
-                    settings.bedtimeFromMin,
-                    { clockLabel(it) },
-                    { vm.setBedtime(true, it, settings.bedtimeToMin, settings.bedtimeTimerMin) },
-                )
-                ChoiceRow(
-                    "Until",
-                    listOf(4 * 60, 5 * 60, 6 * 60, 7 * 60, 8 * 60),
-                    settings.bedtimeToMin,
-                    { clockLabel(it) },
-                    { vm.setBedtime(true, settings.bedtimeFromMin, it, settings.bedtimeTimerMin) },
-                )
-                ChoiceRow(
-                    "Timer length",
-                    listOf(15, 30, 45, 60),
-                    settings.bedtimeTimerMin,
-                    { "$it min" },
-                    { vm.setBedtime(true, settings.bedtimeFromMin, settings.bedtimeToMin, it) },
+                    "Auto-download up to",
+                    listOf(1, 2, 3, 5, 10),
+                    settings.autoDownloadCount,
+                    { "$it" },
+                    { vm.setAutoDownloadCount(it) },
+                    note = "Unplayed episodes kept per show, for shows with Auto download on (turn it on in a show's settings). Only newly released episodes are downloaded, never older ones.",
                 )
             }
-            ToggleRow(
-                "Fade out at the end",
-                "Lowers the volume over the last 10 seconds. Off: it simply pauses.",
-                settings.sleepFade,
-            ) { vm.setSleepFade(it) }
-            Text(
-                "Shake your phone to start the timer over. If it already stopped, shake within 5 minutes to keep listening. When the timer stops a book, the player offers to go back to where you set it.",
-                style = MaterialTheme.typography.bodySmall,
-                color = EmberColors.TextMuted,
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 6.dp),
-            )
-        }
 
-        item { Group("Car mode") }
-        item {
-            ToggleRow(
-                "Open car mode when your car connects",
-                "Big buttons and the screen stays on. Works with cars that report themselves as car audio; pick yours below if it doesn't open.",
-                settings.carModeAuto,
-            ) { vm.setCarModeAuto(it) }
-            val chosen = settings.carDevices.split(',').filter { it.isNotBlank() }
-            NavRow(
-                Icons.Rounded.DirectionsCar,
-                "Your car",
-                if (chosen.isEmpty()) "Tap to choose your car's Bluetooth" else "${chosen.size} ${if (chosen.size == 1) "device" else "devices"} chosen",
-            ) {
-                val need = android.os.Build.VERSION.SDK_INT >= 31 &&
-                    androidx.core.content.ContextCompat.checkSelfPermission(context, android.Manifest.permission.BLUETOOTH_CONNECT) !=
-                    android.content.pm.PackageManager.PERMISSION_GRANTED
-                if (need) carPermission.launch(android.Manifest.permission.BLUETOOTH_CONNECT) else pickCar = true
-            }
-            NavRow(Icons.Rounded.DirectionsCar, "Open car mode now", "Also on the Car button in the player, and on Ember's home screen icon", onOpenCar)
-        }
-
-        item { Group("Headphone and car buttons") }
-        item {
-            ActionRow("Press twice", settings.btnDouble) { vm.setButton("double", it) }
-            ActionRow("Press three times", settings.btnTriple) { vm.setButton("triple", it) }
-            ActionRow("Next button", settings.btnNext) { vm.setButton("next", it) }
-            ActionRow("Previous button", settings.btnPrevious) { vm.setButton("previous", it) }
-            Text(
-                "Press twice and three times are for headphones with one button (holding it opens your voice assistant; Android keeps that). Most earbuds and cars send Next and Previous for their own double and triple taps. A short beep confirms a bookmark.",
-                style = MaterialTheme.typography.bodySmall,
-                color = EmberColors.TextMuted,
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 6.dp),
-            )
-        }
-
-        item { Group("Book info") }
-        item {
-            NavRow(
-                Icons.Rounded.TravelExplore,
-                "Fill in missing book info",
-                infoFill ?: "Series, number, narrator, description and covers from Audible's catalog. Only fills what's missing, and only clear matches.",
-            ) { vm.fillMissingInfo() }
-            NavRow(
-                Icons.Rounded.IosShare,
-                "Export for StoryGraph or Goodreads",
-                "A CSV of your books, ratings and finish dates. Import it on either site.",
-            ) { exportCsv.launch("ember-books.csv") }
-        }
-
-        item { Group("Podcasts") }
-        item {
-            ChoiceRow(
-                "Auto-download up to",
-                listOf(1, 2, 3, 5, 10),
-                settings.autoDownloadCount,
-                { "$it" },
-                { vm.setAutoDownloadCount(it) },
-                note = "Unplayed episodes kept per show, for shows with Auto download on (turn it on in a show's settings). Only newly released episodes are downloaded, never older ones.",
-            )
-        }
-
-        item { Group("Storage") }
-        item {
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .clickable(onClick = onOpenDownloads)
-                    .padding(horizontal = 20.dp, vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Icon(Icons.Rounded.DownloadForOffline, null, tint = MaterialTheme.colorScheme.primary)
-                Spacer(Modifier.width(14.dp))
-                Column(Modifier.weight(1f)) {
-                    Text("Downloads and storage", style = MaterialTheme.typography.bodyLarge, color = EmberColors.Text)
-                    Text("See what's saved on this phone and free up space", style = MaterialTheme.typography.bodySmall, color = EmberColors.TextMuted)
+            "car" -> {
+                item { Group("Car mode") }
+                item {
+                    ToggleRow(
+                        "Open car mode when your car connects",
+                        "Big buttons and the screen stays on. Works with cars that report themselves as car audio; pick yours below if it doesn't open.",
+                        settings.carModeAuto,
+                    ) { vm.setCarModeAuto(it) }
+                    val chosen = settings.carDevices.split(',').filter { it.isNotBlank() }
+                    NavRow(
+                        Icons.Rounded.DirectionsCar,
+                        "Your car",
+                        if (chosen.isEmpty()) "Tap to choose your car's Bluetooth" else "${chosen.size} ${if (chosen.size == 1) "device" else "devices"} chosen",
+                    ) {
+                        val need = android.os.Build.VERSION.SDK_INT >= 31 &&
+                            androidx.core.content.ContextCompat.checkSelfPermission(context, android.Manifest.permission.BLUETOOTH_CONNECT) !=
+                            android.content.pm.PackageManager.PERMISSION_GRANTED
+                        if (need) carPermission.launch(android.Manifest.permission.BLUETOOTH_CONNECT) else pickCar = true
+                    }
+                    NavRow(Icons.Rounded.DirectionsCar, "Open car mode now", "Also on the Car button in the player, and on Ember's home screen icon", onOpenCar)
+                }
+                item { Group("Headphone and car buttons") }
+                item {
+                    ActionRow("Press twice", settings.btnDouble) { vm.setButton("double", it) }
+                    ActionRow("Press three times", settings.btnTriple) { vm.setButton("triple", it) }
+                    ActionRow("Next button", settings.btnNext) { vm.setButton("next", it) }
+                    ActionRow("Previous button", settings.btnPrevious) { vm.setButton("previous", it) }
+                    Note("Press twice and three times are for headphones with one button (holding it opens your voice assistant; Android keeps that). Most earbuds and cars send Next and Previous for their own double and triple taps. A short beep confirms a bookmark.")
                 }
             }
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .clickable { torrentFolderPicker.launch(null) }
-                    .padding(horizontal = 20.dp, vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Icon(Icons.Rounded.Folder, null, tint = MaterialTheme.colorScheme.primary)
-                Spacer(Modifier.width(14.dp))
-                Column(Modifier.weight(1f)) {
-                    Text("Torrent downloads go to", style = MaterialTheme.typography.bodyLarge, color = EmberColors.Text)
-                    Text(
-                        settings.torrentFolderName.ifBlank { "Not chosen yet. Tap to choose a folder (your audiobooks folder works well)." },
-                        style = MaterialTheme.typography.bodySmall,
-                        color = EmberColors.TextMuted,
-                    )
+
+            "sync" -> item { SyncSection(vm) }
+
+            "backup" -> {
+                item { BackupSection(vm) }
+                item { Group("Export") }
+                item {
+                    NavRow(
+                        Icons.Rounded.IosShare,
+                        "Export for StoryGraph or Goodreads",
+                        "A CSV of your books, ratings and finish dates. Import it on either site.",
+                    ) { exportCsv.launch("ember-books.csv") }
                 }
             }
-            ToggleRow(
-                "Torrents on Wi-Fi only",
-                "Torrent downloads wait for Wi-Fi so audiobooks don't use your mobile data.",
-                settings.torrentWifiOnly,
-            ) { vm.setTorrentWifiOnly(it) }
-        }
 
-        item { Group("Backup and restore") }
-        item { BackupSection(vm) }
-        item { SyncSection(vm) }
-
-        item { Group("Goals") }
-        item {
-            ChoiceRow("Daily listening goal", listOf(15, 30, 45, 60, 90), settings.dailyGoalMin, { "$it min" }, { vm.setDailyGoal(it) })
-            ChoiceRow("Books this year", listOf(12, 24, 36, 52, 100), settings.yearlyGoalBooks, { "$it" }, { vm.setYearlyGoal(it) })
-        }
-
-        item { CrashReportCard() }
-
-        item { Group("Good to know") }
-        item {
-            Column(Modifier.padding(horizontal = 20.dp)) {
-                Info("Pocket lock", "Tap the lock in the player so pocket taps do nothing. Press and hold anywhere to unlock. Headphone and car buttons keep working.")
-                Info("Scrubbing", "Drag the slider to move; a tap does nothing. Slide your finger down while dragging for finer control.")
-                Info("Sleep timer", "Fades out over the last 10 seconds. Shake the phone to restart it.")
-                Info("Android Auto", "Ember shows up in Android Auto. Because it is sideloaded, turn on Unknown sources in Android Auto's developer settings first.")
-                Info("Chromecast", "Tap the cast icon in the player. Your place carries over both ways when you start or stop casting.")
-                Info("Home screen widget", "Long-press your home screen, tap Widgets, and find Ember.")
-                Spacer(Modifier.height(16.dp))
-                Text("Ember $version", style = MaterialTheme.typography.labelSmall, color = EmberColors.TextFaint)
+            "goals" -> item {
+                ChoiceRow("Daily listening goal", listOf(15, 30, 45, 60, 90), settings.dailyGoalMin, { "$it min" }, { vm.setDailyGoal(it) })
+                ChoiceRow("Books this year", listOf(12, 24, 36, 52, 100), settings.yearlyGoalBooks, { "$it" }, { vm.setYearlyGoal(it) })
             }
+
+            "about" -> {
+                item {
+                    Column(Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
+                        Text("Ember $version", style = MaterialTheme.typography.titleMedium, color = EmberColors.Text)
+                        Text("Your audiobook and podcast player", style = MaterialTheme.typography.bodySmall, color = EmberColors.TextMuted)
+                    }
+                }
+                item { CrashReportCard() }
+                item { Group("Tips and gestures") }
+                item {
+                    Column(Modifier.padding(horizontal = 20.dp)) {
+                        Info("Pocket lock", "Tap the lock in the player so pocket taps do nothing. Press and hold anywhere to unlock. Headphone and car buttons keep working.")
+                        Info("Scrubbing", "Drag the slider to move; a tap does nothing. Slide your finger down while dragging for finer control.")
+                        Info("Sleep timer", "Shake the phone to restart it. If it already stopped, shake within 5 minutes to keep listening.")
+                        Info("Android Auto", "Ember shows up in Android Auto. Because it is sideloaded, turn on Unknown sources in Android Auto's developer settings first.")
+                        Info("Chromecast", "Tap the cast icon in the player. Your place carries over both ways when you start or stop casting.")
+                        Info("Home screen widget", "Long-press your home screen, tap Widgets, and find Ember.")
+                    }
+                }
+            }
+        }
+    }
+
+    // ---- What each row in the list says is set ----
+    val sync by vm.syncStatus.collectAsState()
+    val downloads by vm.downloadActivity.collectAsState()
+    fun summary(page: String): String = when (page) {
+        "appearance" -> buildString {
+            append(app.ember.ui.theme.themeById(settings.themeId).name)
+            append(" · ")
+            append(
+                when (settings.appearance) {
+                    "light" -> "Light"
+                    "dark" -> "Dark"
+                    else -> "Match phone"
+                },
+            )
+            if (settings.trueBlack && settings.appearance != "light") append(" · true black")
+        }
+        "playback" -> "Back ${settings.skipBackSec}s · forward ${settings.skipForwardSec}s" + if (settings.flipToPause) " · flip to pause" else ""
+        "sleep" -> (if (settings.bedtimeOn) "Bedtime ${clockLabel(settings.bedtimeFromMin)} to ${clockLabel(settings.bedtimeToMin)}" else "Bedtime off") +
+            if (settings.sleepFade) " · fade out" else ""
+        "sound" -> (
+            if (settings.eqEnabled) {
+                (app.ember.sound.SoundPresets.presets.firstOrNull { it.key == settings.eqPreset }?.label ?: "Custom") + " equalizer"
+            } else {
+                "Equalizer off"
+            }
+            ) + if (settings.narrationBoost) " · narration boost" else ""
+        "library" -> when {
+            scan != null -> "Scanning…"
+            folders.isEmpty() -> "No folders yet"
+            else -> "${folders.size} ${if (folders.size == 1) "folder" else "folders"}"
+        }
+        "storage" -> if (downloads.count > 0) "Downloading ${downloads.count}" else if (settings.torrentWifiOnly) "Torrents on Wi-Fi only" else "Torrents on any network"
+        "podcasts" -> "Keep up to ${settings.autoDownloadCount} new per show"
+        "car" -> if (settings.carModeAuto) "Car mode opens when your car connects" else "Car mode by hand"
+        "sync" -> when {
+            !sync.on -> "Off"
+            sync.lastSyncAt > 0 -> "On · synced " + android.text.format.DateUtils.getRelativeTimeSpanString(sync.lastSyncAt, System.currentTimeMillis(), android.text.format.DateUtils.MINUTE_IN_MILLIS)
+            else -> "On"
+        }
+        "backup" -> if (settings.lastBackupAt > 0) {
+            "Last backup " + android.text.format.DateUtils.getRelativeTimeSpanString(settings.lastBackupAt, System.currentTimeMillis(), android.text.format.DateUtils.MINUTE_IN_MILLIS)
+        } else {
+            "Nightly backups"
+        }
+        "goals" -> "${settings.dailyGoalMin} min a day · ${settings.yearlyGoalBooks} books a year"
+        "about" -> "Ember $version · tips and gestures"
+        else -> ""
+    }
+
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+        // Unfolded: the list on the left, the open page on the right.
+        val wide = maxWidth >= 720.dp
+        var selected by rememberSaveable { mutableStateOf(initial?.takeIf { it != "sound" } ?: "appearance") }
+        val pick: (String) -> Unit = { id ->
+            when {
+                id == "sound" -> showSound = true
+                wide -> selected = id
+                else -> onOpenPage(id)
+            }
+        }
+        when {
+            wide -> Row(Modifier.fillMaxSize()) {
+                Box(Modifier.width(minOf(380.dp, maxWidth * 0.42f)).fillMaxHeight()) {
+                    SettingsList(::summary, selected = selected, onBack = onBack, onPick = pick)
+                }
+                Box(Modifier.width(1.dp).fillMaxHeight().background(EmberColors.Outline.copy(alpha = 0.5f)))
+                Box(Modifier.weight(1f).fillMaxHeight()) {
+                    PageColumn(settingsPages.first { it.id == selected }.title, onBack = null) { pageItems(selected) }
+                }
+            }
+            initial == null || initial == "sound" -> SettingsList(::summary, selected = null, onBack = onBack, onPick = pick)
+            else -> PageColumn(settingsPages.firstOrNull { it.id == initial }?.title ?: "Settings", onBack = onBack) { pageItems(initial) }
         }
     }
 
@@ -542,6 +611,122 @@ fun SettingsScreen(
             dismissButton = { TextButton(onClick = { removing = null }) { Text("Cancel") } },
         )
     }
+}
+
+/** The main Settings list: search, then one row per page with what's set. */
+@Composable
+private fun SettingsList(summary: (String) -> String, selected: String?, onBack: (() -> Unit)?, onPick: (String) -> Unit) {
+    var query by rememberSaveable { mutableStateOf("") }
+    val words = query.trim().lowercase().split(Regex("\\s+")).filter { it.isNotEmpty() }
+    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 32.dp)) {
+        item { Header("Settings", onBack) }
+        item {
+            OutlinedTextField(
+                value = query,
+                onValueChange = { query = it },
+                placeholder = { Text("Search settings") },
+                leadingIcon = { Icon(Icons.Rounded.Search, null) },
+                trailingIcon = {
+                    if (query.isNotEmpty()) IconButton(onClick = { query = "" }) { Icon(Icons.Rounded.Close, "Clear search") }
+                },
+                singleLine = true,
+                shape = RoundedCornerShape(28.dp),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
+            )
+        }
+        if (words.isEmpty()) {
+            item { CrashReportCard() }
+            items(settingsPages, key = { it.id }) { p ->
+                PageRow(p.title, summary(p.id), p.icon, Color(p.tint), selected = p.id == selected) { onPick(p.id) }
+            }
+        } else {
+            val hits = settingIndex.filter { h ->
+                val page = settingsPages.first { it.id == h.page }
+                val text = (h.label + " " + h.words + " " + page.title).lowercase()
+                words.all { text.contains(it) }
+            }
+            if (hits.isEmpty()) {
+                item {
+                    Text(
+                        "Nothing matches \"${query.trim()}\"",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = EmberColors.TextMuted,
+                        modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
+                    )
+                }
+            }
+            items(hits, key = { it.label }) { h ->
+                val page = settingsPages.first { it.id == h.page }
+                PageRow(h.label, page.title, page.icon, Color(page.tint), selected = false) { onPick(h.page) }
+            }
+        }
+    }
+}
+
+@Composable
+private fun Header(title: String, onBack: (() -> Unit)?) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .statusBarsPadding()
+            .padding(start = if (onBack != null) 4.dp else 20.dp, end = 8.dp, top = 12.dp, bottom = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        if (onBack != null) {
+            IconButton(onClick = onBack) { Icon(Icons.Rounded.ArrowBack, "Back", tint = EmberColors.Text) }
+        }
+        Text(title, style = MaterialTheme.typography.headlineLarge, color = EmberColors.Text, maxLines = 1, overflow = TextOverflow.Ellipsis)
+    }
+}
+
+/** One page of settings, under its own title. */
+@Composable
+private fun PageColumn(title: String, onBack: (() -> Unit)?, content: LazyListScope.() -> Unit) {
+    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 32.dp)) {
+        item { Header(title, onBack) }
+        content()
+    }
+}
+
+/** A row in the Settings list: a colored icon, the page's name and what's set there. */
+@Composable
+private fun PageRow(title: String, sub: String, icon: androidx.compose.ui.graphics.vector.ImageVector, tint: Color, selected: Boolean, onClick: () -> Unit) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp, vertical = 1.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .background(if (selected) MaterialTheme.colorScheme.primary.copy(alpha = 0.14f) else Color.Transparent)
+            .clickable(onClick = onClick)
+            .padding(horizontal = 12.dp, vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Box(
+            Modifier
+                .size(38.dp)
+                .clip(RoundedCornerShape(11.dp))
+                .background(tint),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(icon, null, tint = Color.White, modifier = Modifier.size(22.dp))
+        }
+        Spacer(Modifier.width(16.dp))
+        Column(Modifier.weight(1f)) {
+            Text(title, style = MaterialTheme.typography.bodyLarge, color = EmberColors.Text, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            if (sub.isNotEmpty()) Text(sub, style = MaterialTheme.typography.bodySmall, color = EmberColors.TextMuted, maxLines = 1, overflow = TextOverflow.Ellipsis)
+        }
+        Icon(Icons.Rounded.ChevronRight, null, tint = EmberColors.TextFaint)
+    }
+}
+
+@Composable
+private fun Note(text: String) {
+    Text(
+        text,
+        style = MaterialTheme.typography.bodySmall,
+        color = EmberColors.TextMuted,
+        modifier = Modifier.padding(horizontal = 20.dp, vertical = 6.dp),
+    )
 }
 
 @Composable

@@ -47,6 +47,7 @@ import androidx.compose.material.icons.rounded.PlayCircle
 import androidx.compose.material.icons.rounded.Podcasts
 import androidx.compose.material.icons.rounded.QueueMusic
 import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.Sync
 import androidx.compose.material.icons.rounded.Lightbulb
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
@@ -154,10 +155,12 @@ private val topics = listOf(
     Topic("Playback", "Skip times, smart rewind, flip to pause", Icons.Rounded.PlayCircle, "Playback"),
     Topic("Sleep timer", "Bedtime, fade out, shake to restart", Icons.Rounded.Bedtime, "Sleep timer"),
     Topic("Sound and equalizer", "Presets and narration boost", Icons.Rounded.GraphicEq, "sound"),
-    Topic("Library folders and Google Drive", "Where Ember finds your books", Icons.Rounded.Folder, "Library folders"),
-    Topic("Car mode and buttons", "Your car, headphone presses", Icons.Rounded.DirectionsCar, "Car mode"),
-    Topic("Podcasts", "Auto-download", Icons.Rounded.Podcasts, "Podcasts"),
-    Topic("Backup and restore", "Your library, progress and notes", Icons.Rounded.Backup, "Backup and restore"),
+    Topic("Library", "Folders, Google Drive, book info", Icons.Rounded.Folder, "library"),
+    Topic("Downloads and storage", "What's downloading, Wi-Fi only, space", Icons.Rounded.DownloadForOffline, "storage"),
+    Topic("Podcasts", "Auto-download", Icons.Rounded.Podcasts, "podcasts"),
+    Topic("Car and headphones", "Your car, headphone presses", Icons.Rounded.DirectionsCar, "car"),
+    Topic("Sync", "Your iPhone and iPad", Icons.Rounded.Sync, "sync"),
+    Topic("Backup and restore", "Your library, progress and notes", Icons.Rounded.Backup, "backup"),
 )
 
 @Composable
@@ -283,7 +286,7 @@ fun YouScreen(
         topics.forEach { t ->
             item(key = t.section) { TopicRow(t) { onOpenSettings(t.section) } }
         }
-        item { TopicRow(Topic("Good to know", "Tips and gestures", Icons.Rounded.Lightbulb, "Good to know")) { onOpenSettings("Good to know") } }
+        item { TopicRow(Topic("About", "Version, tips and gestures", Icons.Rounded.Lightbulb, "about")) { onOpenSettings("about") } }
 
         item {
             Text(

@@ -171,6 +171,12 @@ class MainActivity : ComponentActivity() {
             }
             routeRequest.value = "you"
         }
+        // Test hook: pretend downloads are running ("2,45" = two at 45%; "off" stops pretending).
+        intent.getStringExtra("ember_fake_downloads")?.let { v ->
+            val p = v.split(',')
+            app.ember.ui.MainViewModel.FakeDownloads.value =
+                if (p.size == 2) app.ember.ui.MainViewModel.DownloadActivity(p[0].toIntOrNull() ?: 0, (p[1].toIntOrNull() ?: 0) / 100f) else null
+        }
         intent.getStringExtra("ember_split")?.let { id -> container.appScope.launch { container.scanner.split(id) } }
         intent.getStringExtra("ember_torrent")?.let {
             container.torrents.testPickSmallest = intent.getBooleanExtra("ember_torrent_smallest", false)

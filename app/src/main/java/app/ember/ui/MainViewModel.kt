@@ -119,6 +119,9 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     companion object {
         /** How long the Undo bar stays up. */
         const val UNDO_WINDOW_MS = 6_000L
+
+        /** Test hook: pretend downloads are running, for screenshots. */
+        val FakeDownloads = kotlinx.coroutines.flow.MutableStateFlow<DownloadActivity?>(null)
     }
 
 
@@ -1919,6 +1922,28 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     // ---- Torrent downloads ----
 
     val torrentViews: StateFlow<List<app.ember.torrent.TorrentView>> = c.torrents.views
+
+    /** What's downloading right now (torrents, episodes and Drive books): how many, and how far along in all. */
+    data class DownloadActivity(val count: Int = 0, val progress: Float = -1f)
+
+    val downloadActivity: StateFlow<DownloadActivity> = kotlinx.coroutines.flow.flow {
+        while (true) {
+            val a = FakeDownloads.value ?: withContext(Dispatchers.IO) { currentDownloads() }
+            emit(a)
+            delay(if (a.count > 0) 1_500 else 4_000)
+        }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(3_000), DownloadActivity())
+
+    private fun currentDownloads(): DownloadActivity {
+        val t = c.torrents.views.value.filter { it.job.active }
+        val dm = runCatching { c.downloads.activity() }.getOrNull()
+        val count = t.size + (dm?.count ?: 0)
+        if (count == 0) return DownloadActivity()
+        val done = t.sumOf { it.bytesDone } + (dm?.done ?: 0L)
+        val total = t.sumOf { it.job.wantedBytes } + (dm?.total ?: 0L)
+        return DownloadActivity(count, if (total > 0) (done.toFloat() / total).coerceIn(0f, 1f) else -1f)
+    }
+
     val torrentWaitingForWifi: StateFlow<Boolean> = c.torrents.waitingForWifi
 
     sealed interface TorrentAdd {

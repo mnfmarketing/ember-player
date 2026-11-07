@@ -86,6 +86,7 @@ fun LibraryScreen(
     onAddExternal: () -> Unit,
     onAddDrive: () -> Unit = {},
     onAddTorrent: () -> Unit = {},
+    onOpenDownloads: () -> Unit = {},
 ) {
     val books by vm.books.collectAsState()
     val shelves by vm.shelves.collectAsState()
@@ -114,6 +115,7 @@ fun LibraryScreen(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text("Books", style = MaterialTheme.typography.headlineLarge, color = EmberColors.Text, modifier = Modifier.weight(1f))
+            DownloadsButton(vm, onOpenDownloads)
             Box {
                 IconButton(onClick = { addMenu = true }) {
                     Icon(Icons.Rounded.Add, "Add books", tint = EmberColors.Text)

@@ -245,7 +245,7 @@ fun EmberRoot(vm: MainViewModel, routeRequest: String? = null, onRouteHandled: (
                 }
                 app.ember.playback.PlaybackIssue.Action.RECONNECT_DRIVE -> {
                     vm.dismissPlaybackIssue()
-                    nav.navigate("settings/Library folders") { launchSingleTop = true }
+                    nav.navigate("settings/library") { launchSingleTop = true }
                 }
                 app.ember.playback.PlaybackIssue.Action.STREAM -> vm.streamInstead()
                 app.ember.playback.PlaybackIssue.Action.NONE -> vm.dismissPlaybackIssue()
@@ -316,7 +316,7 @@ fun EmberRoot(vm: MainViewModel, routeRequest: String? = null, onRouteHandled: (
             if (result == SnackbarResult.ActionPerformed) vm.undoLast(offer) else vm.dismissUndo(offer)
         }
         val addDrive: () -> Unit = {
-            if (vm.driveStatus.value == app.ember.drive.DriveAuth.Status.CONNECTED) nav.navigate("drive_picker") else nav.navigate("settings/Library folders") { launchSingleTop = true }
+            if (vm.driveStatus.value == app.ember.drive.DriveAuth.Status.CONNECTED) nav.navigate("drive_picker") else nav.navigate("settings/library") { launchSingleTop = true }
         }
 
         // Long-press a cover anywhere for that book's settings, without opening the book.
@@ -374,6 +374,7 @@ fun EmberRoot(vm: MainViewModel, routeRequest: String? = null, onRouteHandled: (
                                     onSearch = { nav.navigate("search") },
                                     onOpenClips = { nav.navigate("clips") },
                                     onOpenUpNext = { nav.navigate("upnext") },
+                                    onOpenDownloads = { nav.navigate("downloads") { launchSingleTop = true } },
                                 )
                             }
                             composable("upnext") {
@@ -388,6 +389,7 @@ fun EmberRoot(vm: MainViewModel, routeRequest: String? = null, onRouteHandled: (
                                     onAddExternal = { nav.navigate("add_external") },
                                     onAddDrive = addDrive,
                                     onAddTorrent = { nav.navigate("torrent_add") },
+                                    onOpenDownloads = { nav.navigate("downloads") { launchSingleTop = true } },
                                 )
                             }
                             composable("podcasts") {
@@ -396,6 +398,7 @@ fun EmberRoot(vm: MainViewModel, routeRequest: String? = null, onRouteHandled: (
                                     onOpenShow = { nav.navigate("podcast/$it") },
                                     onDiscover = { nav.navigate("discover") },
                                     onShowSettings = { nav.navigate("show_settings/$it") },
+                                    onOpenDownloads = { nav.navigate("downloads") { launchSingleTop = true } },
                                 )
                             }
                             composable(
@@ -473,6 +476,7 @@ fun EmberRoot(vm: MainViewModel, routeRequest: String? = null, onRouteHandled: (
                                     onPickDriveFolder = { nav.navigate("drive_picker") },
                                     onOpenDownloads = { nav.navigate("downloads") },
                                     onOpenCar = { nav.navigate("car") },
+                                    onOpenPage = { nav.navigate("settings/$it") },
                                 )
                             }
                             composable("settings/{section}") { entry ->
@@ -484,6 +488,7 @@ fun EmberRoot(vm: MainViewModel, routeRequest: String? = null, onRouteHandled: (
                                     onOpenDownloads = { nav.navigate("downloads") },
                                     onOpenCar = { nav.navigate("car") },
                                     section = entry.arguments?.getString("section"),
+                                    onOpenPage = { nav.navigate("settings/$it") },
                                 )
                             }
                             composable("car") {

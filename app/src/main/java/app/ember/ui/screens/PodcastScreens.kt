@@ -190,6 +190,7 @@ fun PodcastsScreen(
     onOpenShow: (String) -> Unit,
     onDiscover: () -> Unit,
     onShowSettings: (String) -> Unit = {},
+    onOpenDownloads: () -> Unit = {},
 ) {
     val shows by vm.podcasts.collectAsState()
     var quickShow by remember { mutableStateOf<String?>(null) }
@@ -229,6 +230,7 @@ fun PodcastsScreen(
             if (shows.isNotEmpty()) {
                 IconButton(onClick = vm::refreshPodcasts) { Icon(Icons.Rounded.Refresh, "Check for new episodes", tint = EmberColors.Text) }
             }
+            DownloadsButton(vm, onOpenDownloads)
             // Same as Books: one plus button for every way to add.
             Box {
                 IconButton(onClick = { menu = true }) { Icon(Icons.Rounded.Add, "Add podcasts", tint = EmberColors.Text) }
