@@ -1,0 +1,300 @@
+11-07 21:31:34.066  1042  1042 W SQLiteLog: (28) double-quoted string literal: "emergency"
+11-07 21:31:34.066  1042  1042 W SQLiteLog: (28) double-quoted string literal: "emergency"
+11-07 21:31:38.491  1779  1865 W d.process.acor: Long monitor contention with owner Worker-1 (1852) at android.database.sqlite.SQLiteDatabase android.database.sqlite.SQLiteOpenHelper.getWritableDatabase()(SQLiteOpenHelper.java:316) waiters=1 in android.database.sqlite.SQLiteDatabase android.database.sqlite.SQLiteOpenHelper.getReadableDatabase() for 425ms
+11-07 21:31:38.498  1779  1854 W d.process.acor: Long monitor contention with owner Worker-1 (1852) at android.database.sqlite.SQLiteDatabase android.database.sqlite.SQLiteOpenHelper.getReadableDatabase()(SQLiteOpenHelper.java:340) waiters=0 in android.database.sqlite.SQLiteDatabase android.database.sqlite.SQLiteOpenHelper.getReadableDatabase() for 461ms
+11-07 21:31:39.056  1779  1779 W d.process.acor: Long monitor contention with owner Worker-1 (1865) at android.database.sqlite.SQLiteDatabase android.database.sqlite.SQLiteOpenHelper.getReadableDatabase()(SQLiteOpenHelper.java:340) waiters=0 in android.database.sqlite.SQLiteDatabase android.database.sqlite.SQLiteOpenHelper.getWritableDatabase() for 458ms
+11-07 21:31:39.059  1779  1860 W d.process.acor: Long monitor contention with owner Worker-1 (1865) at android.database.sqlite.SQLiteDatabase android.database.sqlite.SQLiteOpenHelper.getReadableDatabase()(SQLiteOpenHelper.java:340) waiters=1 in android.database.sqlite.SQLiteDatabase android.database.sqlite.SQLiteOpenHelper.getReadableDatabase() for 460ms
+11-07 21:31:40.286  1473  1473 E MediaUpgradeReceiver: 	at android.database.sqlite.SQLiteOpenHelper.getDatabaseLocked(SQLiteOpenHelper.java:427)
+11-07 21:31:40.286  1473  1473 E MediaUpgradeReceiver: 	at android.database.sqlite.SQLiteOpenHelper.getWritableDatabase(SQLiteOpenHelper.java:316)
+11-07 21:31:44.154  1473  1975 W MediaProvider: android.database.sqlite.SQLiteDatabaseLockedException: database is locked (code 5 SQLITE_BUSY)
+11-07 21:31:44.154  1473  1975 W MediaProvider: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 21:31:44.154  1473  1975 W MediaProvider: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:890)
+11-07 21:31:44.154  1473  1975 W MediaProvider: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:756)
+11-07 21:31:44.154  1473  1975 W MediaProvider: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:66)
+11-07 21:31:44.154  1473  1975 W MediaProvider: 	at android.database.sqlite.SQLiteDatabase.executeSql(SQLiteDatabase.java:1920)
+11-07 21:31:44.154  1473  1975 W MediaProvider: 	at android.database.sqlite.SQLiteDatabase.execSQL(SQLiteDatabase.java:1841)
+11-07 21:31:44.154  1473  1975 W MediaProvider: 	at android.database.sqlite.SQLiteOpenHelper.getDatabaseLocked(SQLiteOpenHelper.java:427)
+11-07 21:31:44.154  1473  1975 W MediaProvider: 	at android.database.sqlite.SQLiteOpenHelper.getWritableDatabase(SQLiteOpenHelper.java:316)
+11-07 21:31:44.781   511   552 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:app.ember.audiobooks flg=0x4000010 (has extras) } to com.android.packageinstaller/.PackageInstalledReceiver
+11-07 21:31:44.781   511   552 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:app.ember.audiobooks flg=0x4000010 (has extras) } to com.android.gallery3d/.app.PackagesMonitor
+11-07 21:31:46.437  2377  2377 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+11-07 21:31:46.483  2377  2426 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+11-07 21:31:46.693  2377  2426 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+11-07 21:31:46.699  2377  2426 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+11-07 21:31:48.120  1473  1975 W MediaProvider: android.database.sqlite.SQLiteDatabaseLockedException: database is locked (code 5 SQLITE_BUSY)
+11-07 21:31:48.120  1473  1975 W MediaProvider: 	at android.database.sqlite.SQLiteConnection.nativeExecute(Native Method)
+11-07 21:31:48.120  1473  1975 W MediaProvider: 	at android.database.sqlite.SQLiteConnection.execute(SQLiteConnection.java:707)
+11-07 21:31:48.120  1473  1975 W MediaProvider: 	at android.database.sqlite.SQLiteSession.beginTransactionUnchecked(SQLiteSession.java:325)
+11-07 21:31:48.120  1473  1975 W MediaProvider: 	at android.database.sqlite.SQLiteSession.beginTransaction(SQLiteSession.java:300)
+11-07 21:31:48.120  1473  1975 W MediaProvider: 	at android.database.sqlite.SQLiteDatabase.beginTransaction(SQLiteDatabase.java:571)
+11-07 21:31:48.120  1473  1975 W MediaProvider: 	at android.database.sqlite.SQLiteDatabase.beginTransaction(SQLiteDatabase.java:481)
+11-07 21:31:50.363   511   804 W ActivityTaskManager: Force removing ActivityRecord{7e6cc36 u0 app.ember.audiobooks/app.ember.ui.MainActivity t9 f}}: app died, no saved state
+11-07 21:31:50.366   511   606 W InputDispatcher: channel '1cb69ae app.ember.audiobooks/app.ember.ui.MainActivity (server)' ~ Consumer closed input channel or an error occurred.  events=0x9
+11-07 21:31:50.366   511   606 E InputDispatcher: channel '1cb69ae app.ember.audiobooks/app.ember.ui.MainActivity (server)' ~ Channel is unrecoverably broken and will be disposed!
+11-07 21:31:50.368   511   804 W InputDispatcher: Attempted to unregister already unregistered input channel '1cb69ae app.ember.audiobooks/app.ember.ui.MainActivity (server)'
+11-07 21:31:50.370   705   705 W AvrcpMediaPlayerWrapper: The session was destroyed app.ember.audiobooks
+11-07 21:31:51.385  2448  2492 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+11-07 21:31:51.394  2448  2448 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+11-07 21:31:51.838  2448  2492 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+11-07 21:31:51.838  2448  2492 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+11-07 21:32:31.441   511  1932 W ActivityTaskManager: Force removing ActivityRecord{55107d7 u0 app.ember.audiobooks/app.ember.ui.MainActivity t10 f}}: app died, no saved state
+11-07 21:32:34.693   511   552 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:app.ember.audiobooks flg=0x4000010 (has extras) } to com.android.gallery3d/.app.PackagesMonitor
+11-07 21:32:34.715   511   552 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:app.ember.audiobooks flg=0x4000010 (has extras) } to com.android.packageinstaller/.PackageInstalledReceiver
+11-07 21:32:34.716   511   552 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:app.ember.audiobooks flg=0x4000010 (has extras) } to com.android.gallery3d/.app.PackagesMonitor
+11-07 21:32:36.034  2594  2646 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+11-07 21:32:36.038  2594  2594 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+11-07 21:32:36.667  2594  2646 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+11-07 21:32:36.668  2594  2646 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+11-07 21:35:34.144   511  1394 W NotificationService: Toast already killed. pkg=app.ember.audiobooks token=android.os.BinderProxy@58b7d28
+11-07 21:37:20.943   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:37:23.954   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:37:26.984   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:37:29.987   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:37:32.990   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:37:36.000   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:37:39.017   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:37:42.383   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:37:45.709   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:37:48.727   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:37:51.820   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:37:54.824   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:37:57.010   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:38:01.033   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:38:04.026   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:38:07.043   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:38:10.028   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:38:13.039   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:38:15.318   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:38:18.320   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:38:21.191   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:38:24.220   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:38:27.223   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:38:30.223   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:38:33.225   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:38:36.227   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:38:39.310   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:38:42.312   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:38:45.313   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:38:48.315   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:38:52.468   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:38:55.486   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:38:58.570   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:39:01.507   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:39:04.522   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:39:07.520   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:39:10.521   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:39:13.523   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:39:16.526   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:39:19.526   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:39:22.532   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:39:25.531   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:39:28.543   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:39:31.574   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:39:34.611   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:39:37.043   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:39:40.134   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:39:43.131   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:39:46.137   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:39:49.140   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:39:52.141   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:39:55.152   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:39:58.161   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:40:01.157   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:40:04.186   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:40:07.179   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:40:10.198   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:40:13.251   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:40:16.254   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:40:19.267   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:40:22.257   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:40:25.259   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:40:28.260   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:40:31.261   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:40:34.263   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:40:37.267   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:40:38.419  2594  3091 E DatabaseUtils: java.lang.SecurityException: Permission Denial: reading androidx.core.content.FileProvider uri content://app.ember.audiobooks.files/notes/Pride%20and%20Prejudice%20notes.md from pid=4630, uid=1000 requires the provider be exported, or grantUriPermission()
+11-07 21:40:38.419  4630  4630 W ChooserActivity: Could not load (content://app.ember.audiobooks.files/notes/Pride%20and%20Prejudice%20notes.md) thumbnail/name for preview. If desired, consider using Intent#createChooser to launch the ChooserActivity, and set your Intent's clipData and flags in accordance with that method's documentation
+11-07 21:40:38.450  2594  3091 E DatabaseUtils: java.lang.SecurityException: Permission Denial: reading androidx.core.content.FileProvider uri content://app.ember.audiobooks.files/notes/Pride%20and%20Prejudice%20notes.md from pid=4630, uid=1000 requires the provider be exported, or grantUriPermission()
+11-07 21:40:38.451  4630  4630 W ChooserActivity: Could not load (content://app.ember.audiobooks.files/notes/Pride%20and%20Prejudice%20notes.md) thumbnail/name for preview. If desired, consider using Intent#createChooser to launch the ChooserActivity, and set your Intent's clipData and flags in accordance with that method's documentation
+11-07 21:40:39.009  2594  3091 E DatabaseUtils: java.lang.SecurityException: Permission Denial: reading androidx.core.content.FileProvider uri content://app.ember.audiobooks.files/notes/Pride%20and%20Prejudice%20notes.md from pid=4630, uid=1000 requires the provider be exported, or grantUriPermission()
+11-07 21:40:39.013  4630  4630 W ChooserActivity: Could not load (content://app.ember.audiobooks.files/notes/Pride%20and%20Prejudice%20notes.md) thumbnail/name for preview. If desired, consider using Intent#createChooser to launch the ChooserActivity, and set your Intent's clipData and flags in accordance with that method's documentation
+11-07 21:40:40.282   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:40:43.286   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:40:46.283   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:40:49.284   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:40:52.286   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:40:55.287   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:40:58.286   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:41:01.376   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:41:06.300   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:41:07.816   511   913 W NotificationService: Toast already killed. pkg=app.ember.audiobooks token=android.os.BinderProxy@caeb116
+11-07 21:41:09.307   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:41:12.302   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:41:15.304   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:41:18.306   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:41:21.308   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:41:24.308   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:41:27.309   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:41:30.561   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:41:33.753   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:41:36.748   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:41:39.749   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:41:42.750   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:41:45.009   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:41:56.145   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:41:59.150   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:42:02.152   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:42:05.152   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:42:08.153   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:42:11.154   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:42:14.155   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:42:17.157   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:42:20.158   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:42:24.405   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:42:27.412   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:42:30.413   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:42:33.413   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:42:36.415   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:42:39.419   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:42:42.420   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:42:45.420   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:42:48.432   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:42:51.554   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:42:56.205   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:44:01.319   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:44:01.766   705   705 W AvrcpMediaPlayerWrapper: onQueueChanged(): app.ember.audiobooks tried to update with no new data
+11-07 21:44:01.771   705   705 W AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks tried to update with no new data
+11-07 21:44:03.793   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:44:06.997   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:44:10.039   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:44:13.013   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:44:16.017   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:44:19.017   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:44:22.019   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:44:25.020   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:44:28.031   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:44:31.033   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:44:34.032   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:44:37.038   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:44:40.037   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:44:43.040   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:44:46.038   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:44:49.041   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:44:52.040   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:44:55.042   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:44:58.043   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:45:01.045   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:45:04.045   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:45:07.049   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:45:10.151   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:45:13.103   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:45:16.108   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:45:19.106   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:45:22.111   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:45:25.111   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:45:28.113   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:45:31.115   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:45:34.116   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:45:37.116   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:45:40.116   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:45:43.118   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:45:46.120   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:45:49.122   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:45:52.124   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:45:55.124   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:45:58.132   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:46:03.208   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:46:06.207   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:46:09.213   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:46:12.213   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:46:15.216   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:46:18.217   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:46:21.217   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:46:24.217   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:46:27.226   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:46:30.223   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:46:33.222   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:46:36.226   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:46:39.227   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:46:42.228   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:46:45.230   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:46:48.230   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:46:51.235   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:46:54.235   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:46:57.236   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:47:00.238   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:47:03.238   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:47:06.239   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:47:09.240   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:47:12.245   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:47:15.252   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:47:18.254   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:47:21.267   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:47:24.271   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:47:27.276   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:47:30.397   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:47:33.402   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:47:36.411   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:47:39.409   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:47:42.409   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:47:45.410   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:47:48.417   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:47:51.414   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:47:54.414   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:47:57.415   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:48:00.447   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:48:03.456   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:48:06.463   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:48:09.473   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:48:14.309   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:48:17.452   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:48:20.454   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:48:25.583   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:48:28.584   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:48:31.587   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:48:34.589   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:48:37.629   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:48:40.591   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:48:43.597   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:48:46.597   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:48:49.599   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:48:52.599   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:48:55.603   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:48:58.641   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:49:01.734   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:49:04.978   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:49:08.267   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:49:11.390   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:49:14.364   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:49:17.360   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:49:20.727   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:49:23.701   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:49:26.705   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:49:29.709   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:49:32.709   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:49:35.711   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:49:38.716   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:49:41.716   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:49:44.718   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:49:47.719   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:49:50.720   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:49:53.722   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:49:56.723   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:49:59.731   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:50:02.729   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:50:05.729   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:50:08.731   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:50:11.730   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:50:14.730   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:50:17.733   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:50:20.733   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:50:24.494   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:50:27.499   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:50:30.498   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:50:33.503   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:50:36.500   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:50:39.501   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:50:42.503   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:50:45.506   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:50:48.543   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-07 21:50:51.543   705   705 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
