@@ -206,7 +206,9 @@ fun SettingsScreen(
     }
     val version = remember {
         try {
-            context.packageManager.getPackageInfo(context.packageName, 0).let { "${it.versionName ?: ""}" }
+            // "Ember-25", the same name the releases use.
+            @Suppress("DEPRECATION")
+            context.packageManager.getPackageInfo(context.packageName, 0).versionCode.toString()
         } catch (e: Exception) {
             ""
         }
@@ -468,7 +470,7 @@ fun SettingsScreen(
             "about" -> {
                 item {
                     Column(Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
-                        Text("Ember $version", style = MaterialTheme.typography.titleMedium, color = EmberColors.Text)
+                        Text("Ember-$version", style = MaterialTheme.typography.titleMedium, color = EmberColors.Text)
                         Text("Your audiobook and podcast player", style = MaterialTheme.typography.bodySmall, color = EmberColors.TextMuted)
                     }
                 }
@@ -533,7 +535,7 @@ fun SettingsScreen(
             "Nightly backups"
         }
         "goals" -> "${settings.dailyGoalMin} min a day · ${settings.yearlyGoalBooks} books a year"
-        "about" -> "Ember $version · tips and gestures"
+        "about" -> "Ember-$version · tips and gestures"
         else -> ""
     }
 
