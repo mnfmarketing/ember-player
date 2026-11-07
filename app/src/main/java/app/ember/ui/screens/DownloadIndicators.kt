@@ -44,40 +44,46 @@ fun DownloadsButton(vm: MainViewModel, onClick: () -> Unit) {
     val a by vm.downloadActivity.collectAsState()
     val accent = MaterialTheme.colorScheme.primary
     val label = if (a.count > 0) "Downloads, ${a.count} downloading" else "Downloads"
-    IconButton(onClick = onClick) {
-        Box(Modifier.size(32.dp), contentAlignment = Alignment.Center) {
-            if (a.count > 0) {
-                if (a.progress >= 0f) {
-                    CircularProgressIndicator(
-                        progress = { a.progress },
-                        modifier = Modifier.size(30.dp),
-                        color = accent,
-                        trackColor = EmberColors.SurfaceHighest,
-                        strokeWidth = 2.5.dp,
-                        strokeCap = StrokeCap.Round,
-                    )
-                } else {
-                    CircularProgressIndicator(Modifier.size(30.dp), color = accent, strokeWidth = 2.5.dp, trackColor = EmberColors.SurfaceHighest)
+    // The count sits outside the button, so the button's round touch area doesn't cut it off.
+    Box {
+        IconButton(onClick = onClick) {
+            Box(Modifier.size(32.dp), contentAlignment = Alignment.Center) {
+                if (a.count > 0) {
+                    if (a.progress >= 0f) {
+                        CircularProgressIndicator(
+                            progress = { a.progress },
+                            modifier = Modifier.size(28.dp),
+                            color = accent,
+                            trackColor = EmberColors.SurfaceHighest,
+                            strokeWidth = 2.5.dp,
+                            strokeCap = StrokeCap.Round,
+                        )
+                    } else {
+                        CircularProgressIndicator(Modifier.size(28.dp), color = accent, strokeWidth = 2.5.dp, trackColor = EmberColors.SurfaceHighest)
+                    }
                 }
+                Icon(
+                    Icons.Rounded.Download,
+                    label,
+                    tint = if (a.count > 0) accent else EmberColors.Text,
+                    modifier = Modifier.size(if (a.count > 0) 16.dp else 24.dp),
+                )
             }
-            Icon(
-                Icons.Rounded.Download,
-                label,
-                tint = if (a.count > 0) accent else EmberColors.Text,
-                modifier = Modifier.size(if (a.count > 0) 18.dp else 24.dp),
-            )
-            if (a.count > 1) {
-                Box(
-                    Modifier
-                        .align(Alignment.TopEnd)
-                        .offset(x = 4.dp, y = (-4).dp)
-                        .size(16.dp)
-                        .clip(CircleShape)
-                        .background(accent),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Text("${a.count.coerceAtMost(9)}", style = MaterialTheme.typography.labelSmall, color = onColorFor(accent))
-                }
+        }
+        if (a.count > 1) {
+            Box(
+                Modifier
+                    .align(Alignment.TopEnd)
+                    .offset(x = (-2).dp, y = 4.dp)
+                    .size(17.dp)
+                    .clip(CircleShape)
+                    .background(EmberColors.Background)
+                    .padding(1.5.dp)
+                    .clip(CircleShape)
+                    .background(accent),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text("${a.count.coerceAtMost(9)}", style = MaterialTheme.typography.labelSmall, color = onColorFor(accent))
             }
         }
     }
