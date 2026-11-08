@@ -238,6 +238,16 @@ struct BookSoundView: View {
         NavigationStack {
             Form {
                 Section {
+                    Toggle("Its own sound", isOn: fx($book.customEffects))
+                    if book.customEffects {
+                        Toggle("Trim silence", isOn: fx($book.trimSilence))
+                        Toggle("Voice boost", isOn: fx($book.voiceBoost))
+                    }
+                } footer: {
+                    Text(book.customEffects ? "This book uses these instead of your Sound settings. The equalizer stays as you set it." :
+                         "Off: this book follows your Sound settings (trim silence \(app.settings.trimSilence ? "on" : "off"), voice boost \(app.settings.voiceBoost ? "on" : "off")).")
+                }
+                Section {
                     Picker("Skip at the start of each file", selection: $book.skipIntroSec) {
                         ForEach([0, 3, 5, 10, 15, 30], id: \.self) { Text($0 == 0 ? "Off" : "\($0) s").tag($0) }
                     }
@@ -254,6 +264,14 @@ struct BookSoundView: View {
             .navigationBarTitleDisplayMode(.inline)
             .onDisappear { app.library.changed() }
         }
+    }
+
+    private func fx(_ b: Binding<Bool>) -> Binding<Bool> {
+        Binding(get: { b.wrappedValue }, set: {
+            b.wrappedValue = $0
+            app.library.changed()
+            app.player.soundChanged()
+        })
     }
 }
 

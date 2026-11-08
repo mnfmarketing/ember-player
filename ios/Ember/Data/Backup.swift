@@ -45,6 +45,11 @@ enum Backup {
             "skipBackSec": s.skipBackSec, "skipForwardSec": s.skipForwardSec, "autoRewindSec": s.autoRewindSec,
             "dailyGoalMin": s.dailyGoalMin, "yearlyGoalBooks": s.yearlyGoalBooks, "bookTimeLeft": s.bookTimeLeft,
             "seriesAutoPlay": s.seriesAutoPlay, "sleepFade": s.sleepFade, "profileName": s.profileName, "upNext": s.upNext,
+            "skipSilence": s.trimSilence, "narrationBoost": s.voiceBoost, "eqEnabled": s.eqOn, "eqPreset": s.eqPreset, "eqCustom": s.eqCustom,
+            "clipLengthSec": s.clipLengthSec, "rateOnFinish": s.rateOnFinish, "flipToPause": s.flipToPause, "bedtimeOn": s.bedtimeOn,
+            "bedtimeFromMin": s.bedtimeFromMin, "bedtimeToMin": s.bedtimeToMin, "bedtimeTimerMin": s.bedtimeTimerMin,
+            "carModeAuto": s.carModeAuto, "appearance": s.appearance, "themeId": s.themeID, "trueBlack": s.trueBlack, "accentMode": s.accentMode,
+            "accentColor": s.accentColor & 0xFFFFFF,
         ] as [String: Any]
         if let photo = ProfilePhoto.data(), photo.count < 400_000 { root["profilePhoto"] = photo.base64EncodedString() }
         let data = (try? JSONSerialization.data(withJSONObject: root, options: [.prettyPrinted, .sortedKeys])) ?? Data()
@@ -162,6 +167,32 @@ enum Backup {
             if let g = s["dailyGoalMin"] as? NSNumber { app.settings.dailyGoalMin = g.intValue }
             if let g = s["yearlyGoalBooks"] as? NSNumber { app.settings.yearlyGoalBooks = g.intValue }
             for id in (s["upNext"] as? [String] ?? []).compactMap({ idMap[$0] }) where !app.settings.upNext.contains(id) { app.settings.upNext.append(id) }
+            let st = app.settings
+            func bool(_ k: String) -> Bool? { s[k] as? Bool }
+            func int(_ k: String) -> Int? { (s[k] as? NSNumber)?.intValue }
+            if let v = bool("skipSilence") { st.trimSilence = v }
+            if let v = bool("narrationBoost") { st.voiceBoost = v }
+            if let v = bool("eqEnabled") { st.eqOn = v }
+            if let v = s["eqPreset"] as? String { st.eqPreset = v }
+            if let v = s["eqCustom"] as? [NSNumber], v.count == 5 { st.eqCustom = v.map(\.intValue) }
+            if let v = int("clipLengthSec") { st.clipLengthSec = v }
+            if let v = bool("rateOnFinish") { st.rateOnFinish = v }
+            if let v = bool("sleepFade") { st.sleepFade = v }
+            if let v = bool("flipToPause") { st.flipToPause = v }
+            if let v = bool("bedtimeOn") { st.bedtimeOn = v }
+            if let v = int("bedtimeFromMin") { st.bedtimeFromMin = v }
+            if let v = int("bedtimeToMin") { st.bedtimeToMin = v }
+            if let v = int("bedtimeTimerMin") { st.bedtimeTimerMin = v }
+            if let v = bool("seriesAutoPlay") { st.seriesAutoPlay = v }
+            if let v = int("skipBackSec") { st.skipBackSec = v }
+            if let v = int("skipForwardSec") { st.skipForwardSec = v }
+            if let v = int("autoRewindSec") { st.autoRewindSec = v }
+            if let v = s["themeId"] as? String, Themes.all.contains(where: { $0.id == v }) { st.themeID = v }
+            if let v = bool("trueBlack") { st.trueBlack = v }
+            if let v = s["accentMode"] as? String { st.accentMode = v }
+            if let v = int("accentColor") { st.accentColor = v & 0xFFFFFF }
+            ThemeColors.apply(theme: st.themeID, trueBlack: st.trueBlack)
+            app.player.soundChanged()
         }
         if app.settings.profilePhotoAt == 0, let p = root["profilePhoto"] as? String, let d = Data(base64Encoded: p), ProfilePhoto.save(d) {
             app.settings.profilePhotoAt = Clock.now

@@ -12,6 +12,7 @@ struct PlayerView: View {
     @State private var sheet: PlayerSheet?
     @State private var locked = false
     @State private var drag: CGFloat = 0
+    @State private var car = false
 
     enum PlayerSheet: Identifiable {
         case chapters, sleep, speed, log, marks, sound
@@ -57,12 +58,20 @@ struct PlayerView: View {
                 scrubber(l, soft: soft).padding(.top, 18)
                 transport.padding(.top, 6)
                 roundButtons(soft: soft).padding(.top, 12)
-                HStack {
+                HStack(spacing: 30) {
                     Spacer()
+                    Button { if column { app.carModeOpen = true } else { car = true } } label: { Image(systemName: "car.fill").font(.title3).frame(width: 44, height: 44) }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel("Car mode")
                     RoutePicker().frame(width: 44, height: 44)
+                    CastButton().frame(width: 44, height: 44)
+                        .accessibilityLabel(app.cast.deviceName.map { "Casting to \($0)" } ?? "Cast to a Chromecast")
                     Spacer()
                 }
                 .padding(.top, 6)
+                if let name = app.cast.deviceName {
+                    Label("Playing on \(name)", systemImage: "tv").font(.caption.weight(.semibold)).foregroundStyle(soft)
+                }
             }
             .padding(.horizontal, 24)
             .padding(.bottom, column ? 16 : 4)
@@ -80,6 +89,7 @@ struct PlayerView: View {
             withAnimation(.spring) { drag = 0 }
         }, including: column ? .none : .all)
         .overlay { if locked { PocketLock(locked: $locked) } }
+        .fullScreenCover(isPresented: $car) { CarModeView() }
         .sheet(item: $sheet) { s in
             switch s {
             case .chapters: ChaptersSheet().presentationDetents([.medium, .large])

@@ -33,6 +33,39 @@ final class Settings {
     var autoDownloadCount: Int { didSet { d.set(autoDownloadCount, forKey: "autoDownloadCount") } }
     var podcastSpeedDefault: Double { didSet { d.set(podcastSpeedDefault, forKey: "podcastSpeedDefault") } }
 
+    // Sound (the names follow the Android backup: skipSilence, narrationBoost, eqEnabled...).
+    var eqOn: Bool { didSet { d.set(eqOn, forKey: "eqEnabled") } }
+    /// One of SoundPresets' keys, or "custom" (eqCustom).
+    var eqPreset: String { didSet { d.set(eqPreset, forKey: "eqPreset") } }
+    var eqCustom: [Int] { didSet { d.set(eqCustom, forKey: "eqCustom") } }
+    var trimSilence: Bool { didSet { d.set(trimSilence, forKey: "skipSilence") } }
+    var voiceBoost: Bool { didSet { d.set(voiceBoost, forKey: "narrationBoost") } }
+
+    /// How much audio a clip captures, counting back from when you tap Clip.
+    var clipLengthSec: Int { didSet { d.set(clipLengthSec, forKey: "clipLengthSec") } }
+    /// When a book finishes, ask for a rating and offer StoryGraph / Goodreads.
+    var rateOnFinish: Bool { didSet { d.set(rateOnFinish, forKey: "rateOnFinish") } }
+
+    // Sleep timer.
+    var flipToPause: Bool { didSet { d.set(flipToPause, forKey: "flipToPause") } }
+    /// Bedtime: playing between these times (minutes after midnight) starts the sleep timer by itself.
+    var bedtimeOn: Bool { didSet { d.set(bedtimeOn, forKey: "bedtimeOn") } }
+    var bedtimeFromMin: Int { didSet { d.set(bedtimeFromMin, forKey: "bedtimeFromMin") } }
+    var bedtimeToMin: Int { didSet { d.set(bedtimeToMin, forKey: "bedtimeToMin") } }
+    var bedtimeTimerMin: Int { didSet { d.set(bedtimeTimerMin, forKey: "bedtimeTimerMin") } }
+
+    // Themes.
+    /// One of Palette.themes (each has a light and a dark version).
+    var themeID: String { didSet { d.set(themeID, forKey: "themeId") } }
+    /// Dark mode on pure black.
+    var trueBlack: Bool { didSet { d.set(trueBlack, forKey: "trueBlack") } }
+
+    // Car mode.
+    /// Open car mode when the phone connects to CarPlay or a car's Bluetooth.
+    var carModeAuto: Bool { didSet { d.set(carModeAuto, forKey: "carModeAuto") } }
+    /// Bluetooth outputs (their ids) you've marked as your car.
+    var carDevices: [String] { didSet { d.set(carDevices, forKey: "carDevices") } }
+
     init() {
         let d = UserDefaults.standard
         func int(_ k: String, _ def: Int) -> Int { d.object(forKey: k) == nil ? def : d.integer(forKey: k) }
@@ -57,6 +90,32 @@ final class Settings {
         lastAutoBackupAt = d.object(forKey: "lastAutoBackupAt") as? Date
         autoDownloadCount = int("autoDownloadCount", 2)
         podcastSpeedDefault = d.object(forKey: "podcastSpeedDefault") == nil ? 1 : d.double(forKey: "podcastSpeedDefault")
+        eqOn = bool("eqEnabled", false)
+        eqPreset = d.string(forKey: "eqPreset") ?? "spoken"
+        eqCustom = (d.array(forKey: "eqCustom") as? [Int]).flatMap { $0.count == 5 ? $0 : nil } ?? [0, 0, 0, 0, 0]
+        trimSilence = bool("skipSilence", false)
+        voiceBoost = bool("narrationBoost", false)
+        clipLengthSec = int("clipLengthSec", 30)
+        rateOnFinish = bool("rateOnFinish", true)
+        flipToPause = bool("flipToPause", false)
+        bedtimeOn = bool("bedtimeOn", false)
+        bedtimeFromMin = int("bedtimeFromMin", 22 * 60)
+        bedtimeToMin = int("bedtimeToMin", 6 * 60)
+        bedtimeTimerMin = int("bedtimeTimerMin", 30)
+        themeID = d.string(forKey: "themeId") ?? "ember"
+        trueBlack = bool("trueBlack", false)
+        carModeAuto = bool("carModeAuto", true)
+        carDevices = d.stringArray(forKey: "carDevices") ?? []
+    }
+
+    /// Is it bedtime now (the window may run past midnight)?
+    func isBedtime(_ date: Date = Date()) -> Bool {
+        guard bedtimeOn else { return false }
+        let c = Calendar.current.dateComponents([.hour, .minute], from: date)
+        let m = (c.hour ?? 0) * 60 + (c.minute ?? 0)
+        if bedtimeFromMin == bedtimeToMin { return false }
+        if bedtimeFromMin < bedtimeToMin { return m >= bedtimeFromMin && m < bedtimeToMin }
+        return m >= bedtimeFromMin || m < bedtimeToMin
     }
 
     var firstName: String {

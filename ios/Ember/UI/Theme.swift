@@ -34,19 +34,27 @@ enum Theme {
         return (Double(h), Double(s), Double(b))
     }
 
-    /// The accent: the playing book's color (Match the book), or Ember's.
+    /// The accent: the playing book's color (Match the book), the theme's, or one you picked.
+    /// Light mode darkens bright picks so text on them stays readable.
     static func accent(settings: Settings, bookColor: Int?, dark: Bool) -> Color {
+        let t = Themes.byID(settings.themeID)
+        let themeColor = Color(hex: dark ? t.darkAccent : t.lightAccent)
         switch settings.accentMode {
-        case "fixed": return Color(hex: settings.accentColor)
+        case "fixed":
+            if dark { return Color(hex: settings.accentColor) }
+            var (h, s, b) = hsb(settings.accentColor)
+            b = min(b, 0.68)
+            s = max(s, 0.5)
+            return Color(hue: h, saturation: s, brightness: b)
         case "book":
             if let c = bookColor {
                 var (h, s, _) = hsb(c)
                 s = max(s, 0.45)
                 return Color(hue: h, saturation: s, brightness: dark ? 0.95 : 0.62)
             }
-            return dark ? emberDark : ember
+            return themeColor
         default:
-            return dark ? emberDark : ember
+            return themeColor
         }
     }
 }

@@ -74,10 +74,27 @@ final class SleepTimer {
         expiredAt = nil
     }
 
+    /// Turned off by you (bedtime then leaves it off for a while).
     func cancel() {
+        reset()
+        cancelledAt = Date()
+    }
+
+    @ObservationIgnored private(set) var cancelledAt: Date?
+
+    private func reset() {
         mode = .off
         endsAt = nil
         stopAtMs = -1
+    }
+
+    /// Seconds of listening until it stops (at the listening speed), or nil when it's off.
+    func secondsLeft(positionMs: Int64, speed: Double) -> Double? {
+        switch mode {
+        case .off: return nil
+        case .minutes: return endsAt?.timeIntervalSinceNow
+        case .endOfChapter: return stopAtMs > 0 ? Double(stopAtMs - positionMs) / 1000 / max(speed, 0.1) : nil
+        }
     }
 
     func tick(positionMs: Int64, chapterEnd: Int64) {
@@ -94,7 +111,7 @@ final class SleepTimer {
     }
 
     private func expire() {
-        cancel()
+        reset()
         expiredAt = Date()
         onExpire?()
     }

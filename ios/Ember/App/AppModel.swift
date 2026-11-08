@@ -3,6 +3,8 @@ import SwiftData
 import Observation
 import BackgroundTasks
 import UserNotifications
+import AVFoundation
+import UIKit
 
 /// Everything the app shares: the library, the player, podcasts, sync and your settings.
 @MainActor
@@ -15,9 +17,11 @@ final class AppModel {
     let player: Player
     let google = GoogleAuth()
     let sync: SyncService
+    let cast = CastLink()
 
     /// What's open: the full player, the profile sheet.
     var playerOpen = false
+    var carModeOpen = false
     var profileOpen = false
     var selectedTab: AppTab = .home
     /// Pages opened from elsewhere (and by the simulator checks).
@@ -73,6 +77,17 @@ final class AppModel {
         library.drive = DriveFiles(auth: google)
         sync.player = player
         player.onSyncWorthy = { [weak self] reason in self?.sync.request(reason, delay: reason == "playing" ? 1 : 4) }
+        ThemeColors.install(theme: settings.themeID, trueBlack: settings.trueBlack)
+        player.castLink = cast
+        cast.player = player
+        cast.setUp()
+        NotificationCenter.default.addObserver(forName: AVAudioSession.routeChangeNotification, object: nil, queue: .main) { [weak self] n in
+            let raw = n.userInfo?[AVAudioSessionRouteChangeReasonKey] as? UInt
+            MainActor.assumeIsolated {
+                guard let self, raw == AVAudioSession.RouteChangeReason.newDeviceAvailable.rawValue else { return }
+                if self.settings.carModeAuto, CarDetect.inCar(self.settings), UIApplication.shared.applicationState == .active { self.carModeOpen = true }
+            }
+        }
         player.sleep.onShakeAfterExpiry = { [weak self] in
             guard let self else { return }
             self.player.resume()
@@ -102,6 +117,7 @@ final class AppModel {
 
     func foreground() {
         sync.request("open", delay: 1.5)
+        if settings.carModeAuto, CarDetect.inCar(settings), !carModeOpen { carModeOpen = true }
     }
 
     func background() {

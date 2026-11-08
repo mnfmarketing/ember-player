@@ -4,13 +4,16 @@ import UniformTypeIdentifiers
 
 /// The Settings pages, in the order the list shows them (same topics as Ember on the Fold).
 enum SettingsSection: String, CaseIterable, Hashable, Identifiable {
-    case appearance, playback, library, downloads, podcasts, sync, backup, goals, about
+    case appearance, playback, sleep, sound, library, downloads, podcasts, car, sync, backup, goals, about
     var id: String { rawValue }
 
     var title: String {
         switch self {
         case .appearance: return "Appearance"
         case .playback: return "Playback"
+        case .sleep: return "Sleep timer"
+        case .sound: return "Sound"
+        case .car: return "Car mode"
         case .library: return "Library"
         case .downloads: return "Downloads and storage"
         case .podcasts: return "Podcasts"
@@ -25,6 +28,9 @@ enum SettingsSection: String, CaseIterable, Hashable, Identifiable {
         switch self {
         case .appearance: return "circle.lefthalf.filled"
         case .playback: return "play.fill"
+        case .sleep: return "moon.fill"
+        case .sound: return "slider.vertical.3"
+        case .car: return "car.fill"
         case .library: return "folder.fill"
         case .downloads: return "arrow.down.circle.fill"
         case .podcasts: return "mic.fill"
@@ -39,6 +45,9 @@ enum SettingsSection: String, CaseIterable, Hashable, Identifiable {
         switch self {
         case .appearance: return Color(hex: 0x7E8CE0)
         case .playback: return Color(hex: 0xE2683C)
+        case .sleep: return Color(hex: 0x5E5CE6)
+        case .sound: return Color(hex: 0xD6457A)
+        case .car: return Color(hex: 0x3A8F5C)
         case .library: return Color(hex: 0x3FA7D6)
         case .downloads: return Color(hex: 0x4CAF7D)
         case .podcasts: return Color(hex: 0x9C6ADE)
@@ -65,8 +74,19 @@ private struct SettingHit: Identifiable {
 }
 
 private let settingIndex: [SettingHit] = [
-    SettingHit(label: "Light or dark", section: .appearance, words: "dark mode night match phone theme"),
-    SettingHit(label: "Accent color", section: .appearance, words: "colour highlight book cover"),
+    SettingHit(label: "Light or dark", section: .appearance, words: "dark mode night match phone"),
+    SettingHit(label: "Theme", section: .appearance, words: "colors colours paper midnight slate graphite forest ocean look"),
+    SettingHit(label: "True black", section: .appearance, words: "oled dark battery"),
+    SettingHit(label: "Accent color", section: .appearance, words: "colour highlight book cover custom"),
+    SettingHit(label: "Ask for a rating when a book ends", section: .playback, words: "finished storygraph goodreads rate"),
+    SettingHit(label: "Clip length", section: .playback, words: "clips quote share"),
+    SettingHit(label: "Fade out", section: .sleep, words: "sleep volume quieter"),
+    SettingHit(label: "Bedtime", section: .sleep, words: "sleep night automatic evening"),
+    SettingHit(label: "Flip to pause", section: .sleep, words: "face down turn over"),
+    SettingHit(label: "Equalizer", section: .sound, words: "eq bass treble spoken clarity"),
+    SettingHit(label: "Trim silence", section: .sound, words: "skip silence pauses gaps smart speed"),
+    SettingHit(label: "Voice boost", section: .sound, words: "louder narration volume loud"),
+    SettingHit(label: "Car mode", section: .car, words: "driving car bluetooth big buttons"),
     SettingHit(label: "Skip back", section: .playback, words: "rewind seconds jump"),
     SettingHit(label: "Skip forward", section: .playback, words: "seconds jump ahead"),
     SettingHit(label: "Rewind after a pause", section: .playback, words: "smart rewind resume"),
@@ -106,6 +126,9 @@ struct SettingsPage: View {
             switch section {
             case .appearance: AppearanceSection()
             case .playback: PlaybackSection()
+            case .sleep: SleepSection()
+            case .sound: SoundSection()
+            case .car: CarSection()
             case .library: LibrarySection()
             case .downloads: DownloadsSection()
             case .podcasts: PodcastSection()
@@ -196,9 +219,15 @@ private struct SettingsList: View {
         switch s {
         case .appearance:
             let mode = st.appearance == "light" ? "Light" : st.appearance == "dark" ? "Dark" : "Match phone"
-            let accent = st.accentMode == "book" ? "accent matches the book" : st.accentMode == "fixed" ? "fixed accent" : "Ember orange"
-            return "\(mode) · \(accent)"
+            return "\(Themes.byID(st.themeID).name) · \(mode)\(st.trueBlack ? " · true black" : "")"
         case .playback: return "Back \(st.skipBackSec)s · forward \(st.skipForwardSec)s"
+        case .sleep:
+            let bits = [st.sleepFade ? "fades out" : nil, st.bedtimeOn ? "bedtime" : nil, st.flipToPause ? "flip to pause" : nil].compactMap { $0 }
+            return bits.isEmpty ? "Shake to start over" : bits.joined(separator: " · ").capitalizedFirst
+        case .sound:
+            let bits = [st.eqOn ? SoundPresets.label(st) : nil, st.trimSilence ? "trim silence" : nil, st.voiceBoost ? "voice boost" : nil].compactMap { $0 }
+            return bits.isEmpty ? "Equalizer off" : bits.joined(separator: " · ").capitalizedFirst
+        case .car: return st.carModeAuto ? "Opens when you connect to your car" : "Open it from the player"
         case .library: return folders.isEmpty ? "No folders yet" : "\(folders.count) folder\(folders.count == 1 ? "" : "s")"
         case .downloads:
             let a = app.downloadActivity
@@ -246,32 +275,115 @@ private struct GoalsSection: View {
 
 private struct AppearanceSection: View {
     @Environment(AppModel.self) private var app
+    @Environment(\.colorScheme) private var scheme
+    @State private var hue: Double = 30
 
     var body: some View {
         @Bindable var s = app.settings
-        Section("Appearance") {
+        Section {
             Picker("Light or dark", selection: $s.appearance) {
                 Text("Match phone").tag("system")
                 Text("Light").tag("light")
                 Text("Dark").tag("dark")
             }
-            Picker("Accent color", selection: $s.accentMode) {
-                Text("Match the book").tag("book")
-                Text("Ember orange").tag("theme")
-                Text("Fixed color").tag("fixed")
-            }
-            if s.accentMode == "fixed" {
-                HStack {
-                    ForEach([0xE87A2E, 0xD9443A, 0xE0A019, 0x2E9E6B, 0x1E8A8A, 0x2F6FDE, 0x5B7083], id: \.self) { c in
-                        Circle().fill(Color(hex: c)).frame(width: 30, height: 30)
-                            .overlay(Circle().stroke(.primary, lineWidth: s.accentColor == c ? 2 : 0).padding(-3))
-                            .onTapGesture { s.accentColor = c }
-                            .frame(maxWidth: .infinity)
-                    }
+        } footer: {
+            Text("Match phone follows your iPhone's dark mode, including its night schedule. Every theme has a light and a dark version.")
+        }
+        Section("Theme") {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 96), spacing: 12)], spacing: 12) {
+                ForEach(Themes.all) { t in
+                    ThemeTile(theme: t, selected: s.themeID == t.id, trueBlack: s.trueBlack)
+                        .onTapGesture {
+                            s.themeID = t.id
+                            ThemeColors.apply(theme: t.id, trueBlack: s.trueBlack)
+                        }
                 }
             }
+            .padding(.vertical, 6)
+            Toggle("True black in dark mode", isOn: Binding(get: { s.trueBlack }, set: {
+                s.trueBlack = $0
+                ThemeColors.apply(theme: s.themeID, trueBlack: $0)
+            }))
+        }
+        Section {
+            Picker("Accent color", selection: $s.accentMode) {
+                Text("Match the book").tag("book")
+                Text("The theme's").tag("theme")
+                Text("Pick one").tag("fixed")
+            }
+            if s.accentMode == "fixed" {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 40), spacing: 8)], spacing: 10) {
+                    ForEach(Themes.swatches, id: \.1) { name, c in
+                        Circle().fill(Color(hex: c)).frame(width: 32, height: 32)
+                            .overlay(Circle().stroke(.primary, lineWidth: s.accentColor == c ? 2 : 0).padding(-3))
+                            .onTapGesture { s.accentColor = c }
+                            .accessibilityLabel(name)
+                            .accessibilityAddTraits(s.accentColor == c ? .isSelected : [])
+                    }
+                }
+                .padding(.vertical, 4)
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Your own").font(.subheadline)
+                    Slider(value: $hue, in: 0...359, step: 1) { Text("Hue") } onEditingChanged: { editing in
+                        if !editing { s.accentColor = Themes.fromHue(hue) }
+                    }
+                    .tint(Color(hex: Themes.fromHue(hue)))
+                    .background(
+                        LinearGradient(colors: stride(from: 0.0, through: 360, by: 30).map { Color(hex: Themes.fromHue($0)) }, startPoint: .leading, endPoint: .trailing)
+                            .frame(height: 6).clipShape(Capsule())
+                    )
+                }
+            }
+        } header: {
+            Text("Accent")
+        } footer: {
+            Text("Match the book takes the color of the cover that's playing.")
         }
     }
+}
+
+/// A theme's preview: its dark and light screens side by side, with the accent.
+private struct ThemeTile: View {
+    let theme: ThemeDef
+    let selected: Bool
+    let trueBlack: Bool
+
+    var body: some View {
+        let d = Themes.palette(theme: theme.id, trueBlack: trueBlack, dark: true)
+        let l = Themes.palette(theme: theme.id, trueBlack: false, dark: false)
+        VStack(spacing: 6) {
+            HStack(spacing: 0) {
+                half(bg: d.map { Color($0.background) } ?? .black, card: d.map { Color($0.surface) } ?? Color(white: 0.11), accent: Color(hex: theme.darkAccent))
+                half(bg: l.map { Color($0.background) } ?? Color(white: 0.95), card: l.map { Color($0.surface) } ?? .white, accent: Color(hex: theme.lightAccent))
+            }
+            .frame(height: 64)
+            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+            .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous).stroke(selected ? Color.accentColor : Color.secondary.opacity(0.3), lineWidth: selected ? 3 : 1))
+            Text(theme.name).font(.caption.weight(selected ? .semibold : .regular))
+        }
+        .contentShape(Rectangle())
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(theme.name) theme")
+        .accessibilityAddTraits(selected ? [.isButton, .isSelected] : .isButton)
+    }
+
+    private func half(bg: Color, card: Color, accent: Color) -> some View {
+        ZStack(alignment: .topLeading) {
+            bg
+            VStack(alignment: .leading, spacing: 5) {
+                RoundedRectangle(cornerRadius: 4).fill(card).frame(height: 18)
+                HStack(spacing: 4) {
+                    Circle().fill(accent).frame(width: 10, height: 10)
+                    RoundedRectangle(cornerRadius: 2).fill(card).frame(height: 6)
+                }
+            }
+            .padding(7)
+        }
+    }
+}
+
+extension String {
+    var capitalizedFirst: String { prefix(1).uppercased() + dropFirst() }
 }
 
 private struct PlaybackSection: View {
@@ -292,6 +404,157 @@ private struct PlaybackSection: View {
             Text("Playback")
         } footer: {
             Text("Rewind after a pause goes back a little after short pauses, the full amount after a few minutes, and more after an hour or a night.")
+        }
+        Section {
+            Toggle("Ask for a rating when a book ends", isOn: $s.rateOnFinish)
+        } footer: {
+            Text("Rate it, then log it on StoryGraph or Goodreads in one tap.")
+        }
+        Section {
+            Picker("Clip length", selection: $s.clipLengthSec) {
+                ForEach([15, 30, 45, 60, 90, 120], id: \.self) { Text("\($0) seconds").tag($0) }
+            }
+        } footer: {
+            Text("A clip keeps the last stretch you heard, counting back from when you tap Clip. You can change each one before saving it.")
+        }
+    }
+}
+
+private struct SleepSection: View {
+    @Environment(AppModel.self) private var app
+
+    var body: some View {
+        @Bindable var s = app.settings
+        Section {
+            Toggle("Fade out", isOn: $s.sleepFade)
+        } footer: {
+            Text("The volume goes down over the last ten seconds instead of stopping all at once. Shake your phone any time to start the timer over.")
+        }
+        Section {
+            Toggle("Bedtime", isOn: $s.bedtimeOn)
+            if s.bedtimeOn {
+                DatePicker("From", selection: time($s.bedtimeFromMin), displayedComponents: .hourAndMinute)
+                DatePicker("Until", selection: time($s.bedtimeToMin), displayedComponents: .hourAndMinute)
+                Picker("Sleep timer", selection: $s.bedtimeTimerMin) {
+                    ForEach([10, 15, 20, 30, 45, 60, 90], id: \.self) { Text("\($0) min").tag($0) }
+                }
+            }
+        } footer: {
+            Text("Pressing play between these times starts the sleep timer by itself. Turning the timer off leaves it off for that night.")
+        }
+        Section {
+            Toggle("Flip to pause", isOn: Binding(get: { s.flipToPause }, set: { s.flipToPause = $0; app.player.updateFlip() }))
+        } footer: {
+            Text("Put your phone face down to pause; turn it back over within half an hour to keep listening.")
+        }
+    }
+
+    private func time(_ minutes: Binding<Int>) -> Binding<Date> {
+        Binding(get: {
+            Calendar.current.date(bySettingHour: minutes.wrappedValue / 60, minute: minutes.wrappedValue % 60, second: 0, of: Date()) ?? Date()
+        }, set: { d in
+            let c = Calendar.current.dateComponents([.hour, .minute], from: d)
+            minutes.wrappedValue = (c.hour ?? 0) * 60 + (c.minute ?? 0)
+        })
+    }
+}
+
+private struct SoundSection: View {
+    @Environment(AppModel.self) private var app
+
+    var body: some View {
+        @Bindable var s = app.settings
+        Section {
+            Toggle("Equalizer", isOn: changed($s.eqOn))
+            if s.eqOn {
+                Picker("Sound", selection: changed($s.eqPreset)) {
+                    ForEach(SoundPresets.presets) { Text($0.label).tag($0.key) }
+                    Text("Custom").tag("custom")
+                }
+                EQBands()
+            }
+        } footer: {
+            Text("Spoken word lifts voices and trims rumble. Drag a band to make your own.")
+        }
+        Section {
+            Toggle("Trim silence", isOn: changed($s.trimSilence))
+            Toggle("Voice boost", isOn: changed($s.voiceBoost))
+        } footer: {
+            let saved = UserDefaults.standard.double(forKey: "trimSavedMs")
+            Text("Trim silence hurries through the quiet between sentences\(saved > 60_000 ? " (it has saved you \(Fmt.duration(Int64(saved))) so far)" : ""). Voice boost makes quiet narrators louder without distorting. A book can have its own: open its Sound from the player or the book's page.")
+        }
+    }
+
+    private func changed<T>(_ b: Binding<T>) -> Binding<T> {
+        Binding(get: { b.wrappedValue }, set: { b.wrappedValue = $0; app.player.soundChanged() })
+    }
+}
+
+/// The five equalizer bands, as sliders. Moving one makes it your own (Custom).
+private struct EQBands: View {
+    @Environment(AppModel.self) private var app
+
+    var body: some View {
+        let s = app.settings
+        let gains = SoundPresets.gains(s)
+        HStack(alignment: .bottom, spacing: 0) {
+            ForEach(0..<5, id: \.self) { i in
+                VStack(spacing: 6) {
+                    Text(gains[i] > 0 ? "+\(gains[i])" : "\(gains[i])").font(.caption2.monospacedDigit()).foregroundStyle(.secondary)
+                    Slider(value: Binding(get: { Double(gains[i]) }, set: { v in
+                        var g = SoundPresets.gains(s)
+                        g[i] = Int(v.rounded())
+                        s.eqCustom = g
+                        s.eqPreset = "custom"
+                        app.player.soundChanged()
+                    }), in: Double(SoundPresets.minDB)...Double(SoundPresets.maxDB), step: 1)
+                    .frame(width: 130)
+                    .rotationEffect(.degrees(-90))
+                    .frame(width: 44, height: 130)
+                    .accessibilityLabel(SoundPresets.bandLabels[i])
+                    Text(SoundPresets.bandLabels[i]).font(.caption2).foregroundStyle(.secondary).lineLimit(1).fixedSize()
+                }
+                .frame(maxWidth: .infinity)
+            }
+        }
+        .padding(.vertical, 6)
+    }
+}
+
+private struct CarSection: View {
+    @Environment(AppModel.self) private var app
+
+    var body: some View {
+        @Bindable var s = app.settings
+        let out = CarDetect.currentOutput()
+        Section {
+            Button {
+                app.profileOpen = false
+                Task {
+                    try? await Task.sleep(for: .milliseconds(600))
+                    app.carModeOpen = true
+                }
+            } label: { Label("Open car mode", systemImage: "car.fill") }
+            Toggle("Open when you connect to your car", isOn: $s.carModeAuto)
+        } footer: {
+            Text("Car mode is the player made simple for a glance: big back, play and forward buttons, and a bookmark. Ember opens it when your iPhone connects to CarPlay or to a Bluetooth device you've marked as your car.")
+        }
+        Section("Your car") {
+            if let out, out.bluetooth {
+                Toggle(isOn: Binding(get: { s.carDevices.contains(out.uid) }, set: { on in
+                    if on { if !s.carDevices.contains(out.uid) { s.carDevices.append(out.uid) } } else { s.carDevices.removeAll { $0 == out.uid } }
+                })) {
+                    VStack(alignment: .leading) {
+                        Text("\(out.name) is my car")
+                        Text("Connected now").font(.caption).foregroundStyle(.secondary)
+                    }
+                }
+            } else {
+                Text("Connect to your car's Bluetooth, then come back here to mark it.").foregroundStyle(.secondary)
+            }
+            if !s.carDevices.isEmpty {
+                Button("Forget my cars (\(s.carDevices.count))", role: .destructive) { s.carDevices = [] }
+            }
         }
     }
 }

@@ -44,7 +44,15 @@ final class Player {
     var finished: String?
 
     let sleep = SleepTimer()
+    let sound = SoundFX()
+    let flip = FlipDetector()
     private let av = AVPlayer()
+    /// The current item already has the sound tap.
+    @ObservationIgnored private var tapped = false
+    /// Trim silence: playing a quiet stretch faster right now.
+    @ObservationIgnored private var hurrying = false
+    @ObservationIgnored private var flipPausedAt: Date?
+    @ObservationIgnored private var trimTimer: Timer?
     @ObservationIgnored private var index = 0
     @ObservationIgnored private var timeObserver: Any?
     @ObservationIgnored private var lastTick: Date?
@@ -83,7 +91,23 @@ final class Player {
             MainActor.assumeIsolated { self?.saveProgress() }
         })
         sleep.onExpire = { [weak self] in self?.sleepExpired() }
+        flip.onDown = { [weak self] in
+            guard let self, self.isPlaying else { return }
+            self.pause(reason: ListenEvent.reasonFlipped)
+            self.flipPausedAt = Date()
+            self.updateFlip()
+        }
+        flip.onUp = { [weak self] in
+            guard let self, let t = self.flipPausedAt else { return }
+            self.flipPausedAt = nil
+            if !self.isPlaying, Date().timeIntervalSince(t) < 30 * 60 { self.resume() }
+            self.updateFlip()
+        }
+        trimTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+            MainActor.assumeIsolated { self?.trimCheck() }
+        }
         setUpRemoteCommands()
+        soundChanged()
     }
 
     // MARK: Loading
@@ -166,9 +190,17 @@ final class Player {
         var idx = 0
         for (i, o) in l.offsets.enumerated() where o <= global { idx = i }
         index = idx
+        if casting, let c = castLink {
+            c.load(l, index: idx, atMs: max(global - l.offsets[idx], 0), rate: speed, play: isPlaying)
+            positionMs = global
+            return
+        }
         let item = AVPlayerItem(asset: DriveStream.asset(l.urls[idx]))
         item.audioTimePitchAlgorithm = .spectral
         av.replaceCurrentItem(with: item)
+        tapped = false
+        hurrying = false
+        soundChanged()
         let inTrack = max(global - l.offsets[idx], 0)
         quietSeek = true
         av.seek(to: CMTime(value: inTrack, timescale: 1000), toleranceBefore: .zero, toleranceAfter: .zero)
@@ -179,11 +211,20 @@ final class Player {
 
     func resume() {
         guard loaded != nil else { return }
-        if av.currentItem == nil { load(at: positionMs) }
-        activateSession()
-        smartRewind()
-        av.playImmediately(atRate: Float(speed))
+        if casting {
+            smartRewind()
+            castLink?.play()
+        } else {
+            if av.currentItem == nil { load(at: positionMs) }
+            activateSession()
+            smartRewind()
+            av.volume = 1
+            hurrying = false
+            av.playImmediately(atRate: Float(speed))
+        }
         isPlaying = true
+        bedtime()
+        updateFlip()
         lastTick = Date()
         log(.play, at: positionMs)
         UserDefaults.standard.removeObject(forKey: "pausedAt")
@@ -194,13 +235,14 @@ final class Player {
         guard isPlaying else { return }
         captureListening()
         flushListening()
-        av.pause()
+        if casting { castLink?.pause() } else { av.pause() }
         isPlaying = false
         UserDefaults.standard.set(Date().timeIntervalSince1970, forKey: "pausedAt")
         log(.pause, at: positionMs, reason: reason, to: awakeMs)
         saveProgress()
         onSyncWorthy?("pause")
         updateNowPlaying()
+        updateFlip()
     }
 
     func toggle() { isPlaying ? pause() : resume() }
@@ -218,7 +260,9 @@ final class Player {
         if idx != index {
             let wasPlaying = isPlaying
             load(at: target)
-            if wasPlaying { av.playImmediately(atRate: Float(speed)) }
+            if wasPlaying, !casting { av.playImmediately(atRate: Float(speed)) }
+        } else if casting {
+            castLink?.seek(fileMs: target - l.offsets[idx])
         } else {
             av.seek(to: CMTime(value: target - l.offsets[idx], timescale: 1000), toleranceBefore: .zero, toleranceAfter: .zero)
         }
@@ -230,7 +274,8 @@ final class Player {
 
     func setSpeed(_ s: Double) {
         speed = min(max(s, 0.5), 3.5)
-        if isPlaying { av.rate = Float(speed) }
+        hurrying = false
+        if casting { castLink?.setRate(speed) } else if isPlaying { av.rate = Float(speed) }
         if let l = loaded {
             if l.isEpisode {
                 if let ep = podcasts?.episode(String(l.id.dropFirst(8))), let show = podcasts?.podcast(ep.podcastID) { show.speed = speed }
@@ -283,11 +328,16 @@ final class Player {
 
     private func tick() {
         guard let l = loaded else { return }
-        let t = av.currentTime()
-        if t.isValid, t.seconds.isFinite {
-            positionMs = l.offsets[index] + Int64(t.seconds * 1000)
+        if casting {
+            if let ms = castLink?.fileMs { positionMs = l.offsets[index] + ms }
+            buffering = false
+        } else {
+            let t = av.currentTime()
+            if t.isValid, t.seconds.isFinite {
+                positionMs = l.offsets[index] + Int64(t.seconds * 1000)
+            }
+            buffering = av.timeControlStatus == .waitingToPlayAtSpecifiedRate
         }
-        buffering = av.timeControlStatus == .waitingToPlayAtSpecifiedRate
         guard isPlaying else { return }
         captureListening()
         ticks += 1
@@ -296,8 +346,79 @@ final class Player {
         if listenAccumMs >= 15_000 { flushListening() }
         if ticks % 2 == 0 { updateNowPlaying(elapsedOnly: true) }
         sleep.tick(positionMs: positionMs, chapterEnd: chapterEnd)
+        fade()
         outroWatch()
     }
+
+    // MARK: Sound, fading, bedtime, flip
+
+    /// The sound in force for what's playing: a book's or show's own, or yours. Call after any change.
+    func soundChanged() {
+        var trim = settings.trimSilence, boost = settings.voiceBoost
+        if let l = loaded {
+            if l.isEpisode {
+                if let ep = podcasts?.episode(String(l.id.dropFirst(8))), let show = podcasts?.podcast(ep.podcastID), show.customEffects {
+                    trim = show.trimSilence
+                    boost = show.voiceBoost
+                }
+            } else if let b = library.book(l.id), b.customEffects {
+                trim = b.trimSilence
+                boost = b.voiceBoost
+            }
+        }
+        sound.set(eq: settings.eqOn, gains: SoundPresets.gains(settings), boost: boost, trim: trim)
+        if sound.anyOn, !tapped, let item = av.currentItem {
+            tapped = true
+            sound.attach(item)
+        }
+        if !trim, hurrying {
+            hurrying = false
+            if isPlaying { av.rate = Float(speed) }
+        }
+    }
+
+    /// Trim silence: quiet stretches play at a faster rate (iOS can't cut them out of the stream).
+    private func trimCheck() {
+        guard isPlaying, sound.trimming, !casting else { return }
+        let quiet = sound.silent
+        if quiet != hurrying {
+            hurrying = quiet
+            av.rate = Float(quiet ? min(speed * 2.5, 4) : speed)
+        }
+        if hurrying {
+            let fast = min(speed * 2.5, 4)
+            let saved = 0.1 * (fast / speed - 1) * 1000
+            UserDefaults.standard.set(UserDefaults.standard.double(forKey: "trimSavedMs") + saved, forKey: "trimSavedMs")
+        }
+    }
+
+    /// The sleep timer's last ten seconds get quieter.
+    private func fade() {
+        guard !casting else { return }
+        var vol: Float = 1
+        if settings.sleepFade, let left = sleep.secondsLeft(positionMs: positionMs, speed: speed), left < 10 {
+            vol = Float(min(max(left, 0) / 10, 1))
+        }
+        if av.volume != vol { av.volume = vol }
+    }
+
+    /// Bedtime: pressing play in the evening window sets the sleep timer (unless you just turned it off).
+    private func bedtime() {
+        guard settings.isBedtime(), !sleep.isOn, loaded != nil else { return }
+        if let c = sleep.cancelledAt, Date().timeIntervalSince(c) < 2 * 3600 { return }
+        let m = settings.bedtimeTimerMin
+        sleep.start(minutes: m, positionMs: positionMs)
+        notice = "Bedtime: sleep timer set for \(m) min"
+    }
+
+    /// Flip to pause watches the phone only while it matters.
+    func updateFlip() {
+        if settings.flipToPause, isPlaying || flipPausedAt != nil { flip.start() } else { flip.stop() }
+    }
+
+    /// Casting to a Chromecast: the phone's player stands aside.
+    var casting: Bool { castLink?.active == true }
+    @ObservationIgnored weak var castLink: CastLink?
 
     private func captureListening() {
         let now = Date()
@@ -340,7 +461,12 @@ final class Player {
     }
 
     private func itemEnded(_ item: AVPlayerItem?) {
-        guard item === av.currentItem, let l = loaded else { return }
+        guard item === av.currentItem, !casting else { return }
+        fileEnded()
+    }
+
+    private func fileEnded() {
+        guard let l = loaded else { return }
         if index + 1 < l.urls.count {
             advanceFile()
         } else {
@@ -357,8 +483,36 @@ final class Player {
             start += Int64(b.skipIntroSec) * 1000
         }
         load(at: start)
-        if isPlaying { av.playImmediately(atRate: Float(speed)) }
+        if isPlaying, !casting { av.playImmediately(atRate: Float(speed)) }
     }
+
+    // MARK: Chromecast
+
+    /// A Chromecast connected: what's loaded moves there, playing if it was.
+    func castStarted() {
+        guard loaded != nil else { return }
+        av.pause()
+        hurrying = false
+        load(at: positionMs)
+        updateNowPlaying()
+    }
+
+    /// Casting stopped: back on the phone, paused where the Chromecast was.
+    func castEnded(fileMs: Int64?) {
+        guard let l = loaded else { return }
+        if let ms = fileMs { positionMs = l.offsets[index] + ms }
+        if isPlaying {
+            captureListening()
+            flushListening()
+            isPlaying = false
+            log(.pause, at: positionMs)
+        }
+        saveProgress()
+        load(at: positionMs)
+        updateNowPlaying()
+    }
+
+    func castItemEnded() { fileEnded() }
 
     private func bookEnded() {
         guard let l = loaded else { return }
@@ -437,6 +591,7 @@ final class Player {
     private func sleepExpired() {
         let awake = sleep.awakeMs
         pause(reason: ListenEvent.reasonSleep, awakeMs: awake)
+        if !casting { av.volume = 1 }
         SleepMarks.set(bookID: loaded?.id ?? "", positionMs: positionMs, awakeMs: awake)
     }
 

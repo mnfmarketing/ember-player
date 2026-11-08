@@ -33,6 +33,11 @@ struct RootView: View {
                 .inspectorColumnWidth(min: 320, ideal: 360, max: 520)
         }
         .fullScreenCover(isPresented: $app.playerOpen) { PlayerView() }
+        .background { Color.clear.fullScreenCover(isPresented: $app.carModeOpen) { CarModeView() } }
+        .sheet(item: Binding(get: { app.settings.rateOnFinish ? app.player.finished.map(FinishedItem.init) : nil },
+                             set: { if $0 == nil { app.player.finished = nil } })) { f in
+            FinishedSheet(bookID: f.id).presentationDetents([.height(520), .large])
+        }
         // iPad: a bigger sheet, so Settings has room for its list beside the open page.
         .sheet(isPresented: $app.profileOpen) { ProfileView().presentationSizing(.page) }
         .alert(
@@ -81,6 +86,10 @@ struct RootView: View {
         case "search": app.selectedTab = .search
         case "player": if hSize != .regular { app.playerOpen = true }  // iPad: the player column is already open
         case "profile": app.profileOpen = true
+        case "car": app.carModeOpen = true
+        case "finished":
+            app.selectedTab = .home
+            app.player.finished = app.settings.lastBookID ?? "demo-0"
         case "downloads":
             app.selectedTab = .books
             app.openDownloads = true
