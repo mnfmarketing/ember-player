@@ -11,8 +11,8 @@
 + timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell settings put global hide_error_dialogs 1
 + adb shell settings put secure anr_show_background 0
 + timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell settings put secure anr_show_background 0
-+ adb install -r Ember-23.apk
-+ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb install -r Ember-23.apk
++ adb install -r Ember-24.apk
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb install -r Ember-24.apk
 Performing Streamed Install
 Success
 + adb shell pm grant app.ember.audiobooks android.permission.POST_NOTIFICATIONS
@@ -41,8 +41,8 @@ Starting: Intent { cmp=app.ember.audiobooks/app.ember.ui.MainActivity }
 Status: ok
 LaunchState: COLD
 Activity: app.ember.audiobooks/app.ember.ui.MainActivity
-TotalTime: 1660
-WaitTime: 1669
+TotalTime: 728
+WaitTime: 730
 Complete
 + sleep 4
 + adb shell am force-stop app.ember.audiobooks
@@ -53,8 +53,8 @@ Starting: Intent { cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extra
 Status: ok
 LaunchState: COLD
 Activity: app.ember.audiobooks/app.ember.ui.MainActivity
-TotalTime: 930
-WaitTime: 931
+TotalTime: 567
+WaitTime: 568
 Complete
 + sleep 30
 + adb logcat -c
@@ -104,7 +104,7 @@ Warning: Activity not started, intent has been delivered to currently running to
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
 ++ adb pull /sdcard/ui.xml /tmp/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 24.9 MB/s (31609 bytes in 0.001s)
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 19.1 MB/s (31609 bytes in 0.002s)
 ++ python3 - 1
 text boxes on screen: 6
 tapping text box at 445 1439
@@ -113,39 +113,42 @@ tapping text box at 445 1439
 ++ sleep 1
 ++ adb exec-out screencap -p
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
-++ adb shell input text %sedited
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input text %sedited
-++ sleep 1
-++ adb shell input keyevent KEYCODE_ENTER
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_ENTER
-++ sleep 2
-++ shot f01-phone-c-next-field 1
-++ sleep 1
-++ adb exec-out screencap -p
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
 ++ tap_text 'Done typing'
 ++ adb shell uiautomator dump /sdcard/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
 ++ adb pull /sdcard/ui.xml /tmp/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.1 MB/s (5060 bytes in 0.041s)
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.7 MB/s (29110 bytes in 0.041s)
 ++ python3 - 'Done typing'
-could not find Done typing
+tapped Done typing at 178,1420
 ++ sleep 2
-++ shot f01-phone-d-keyboard-away 1
+++ shot f01-phone-c-keyboard-away 1
 ++ sleep 1
 ++ adb exec-out screencap -p
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
-++ tap_field 3
+++ tap_field 4
 ++ adb shell uiautomator dump /sdcard/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
 ++ adb pull /sdcard/ui.xml /tmp/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.1 MB/s (5060 bytes in 0.042s)
-++ python3 - 3
-text boxes on screen: 0
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.7 MB/s (31609 bytes in 0.042s)
+++ python3 - 4
+text boxes on screen: 6
+tapping text box at 445 914
 ++ sleep 3
-++ shot f01-phone-e-another-field 1
+++ adb shell input keyevent KEYCODE_MOVE_END
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_MOVE_END
+++ adb shell input text %s2
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input text %s2
+++ sleep 1
+++ shot f01-phone-d-middle-field-typing 1
+++ sleep 1
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ adb shell input keyevent KEYCODE_ENTER
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_ENTER
+++ sleep 2
+++ shot f01-phone-e-next-moves-down 1
 ++ sleep 1
 ++ adb exec-out screencap -p
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
@@ -161,7 +164,7 @@ text boxes on screen: 0
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
 ++ adb pull /sdcard/ui.xml /tmp/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 28.7 MB/s (31615 bytes in 0.001s)
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 42.1 MB/s (31936 bytes in 0.001s)
 ++ python3 - Cancel
 tapped Cancel at 164,2169
 ++ sleep 1
@@ -170,7 +173,7 @@ tapped Cancel at 164,2169
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
 ++ adb pull /sdcard/ui.xml /tmp/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.1 MB/s (5061 bytes in 0.041s)
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.1 MB/s (5061 bytes in 0.044s)
 ++ python3 - Discard
 tapped Discard at 781,1231
 ++ sleep 2
@@ -194,7 +197,7 @@ Warning: Activity not started, intent has been delivered to currently running to
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
 ++ adb pull /sdcard/ui.xml /tmp/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 48.1 MB/s (54717 bytes in 0.001s)
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 75.0 MB/s (54717 bytes in 0.001s)
 ++ python3 - 1
 text boxes on screen: 6
 tapping text box at 652 1301
@@ -203,39 +206,42 @@ tapping text box at 652 1301
 ++ sleep 1
 ++ adb exec-out screencap -p
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
-++ adb shell input text %sedited
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input text %sedited
-++ sleep 1
-++ adb shell input keyevent KEYCODE_ENTER
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_ENTER
-++ sleep 2
-++ shot f02-unfolded-c-next-field 1
-++ sleep 1
-++ adb exec-out screencap -p
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
 ++ tap_text 'Done typing'
 ++ adb shell uiautomator dump /sdcard/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
 ++ adb pull /sdcard/ui.xml /tmp/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.1 MB/s (5077 bytes in 0.042s)
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 1.1 MB/s (51871 bytes in 0.044s)
 ++ python3 - 'Done typing'
-could not find Done typing
+tapped Done typing at 350,1175
 ++ sleep 2
-++ shot f02-unfolded-d-keyboard-away 1
+++ shot f02-unfolded-c-keyboard-away 1
 ++ sleep 1
 ++ adb exec-out screencap -p
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
-++ tap_field 3
+++ tap_field 4
 ++ adb shell uiautomator dump /sdcard/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
 ++ adb pull /sdcard/ui.xml /tmp/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 4.9 MB/s (5077 bytes in 0.001s)
-++ python3 - 3
-text boxes on screen: 0
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 1.2 MB/s (54717 bytes in 0.042s)
+++ python3 - 4
+text boxes on screen: 6
+tapping text box at 652 827
 ++ sleep 3
-++ shot f02-unfolded-e-another-field 1
+++ adb shell input keyevent KEYCODE_MOVE_END
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_MOVE_END
+++ adb shell input text %s2
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input text %s2
+++ sleep 1
+++ shot f02-unfolded-d-middle-field-typing 1
+++ sleep 1
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ adb shell input keyevent KEYCODE_ENTER
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_ENTER
+++ sleep 2
+++ shot f02-unfolded-e-next-moves-down 1
 ++ sleep 1
 ++ adb exec-out screencap -p
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
@@ -251,7 +257,7 @@ text boxes on screen: 0
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
 ++ adb pull /sdcard/ui.xml /tmp/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 28.6 MB/s (54723 bytes in 0.002s)
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 65.4 MB/s (55043 bytes in 0.001s)
 ++ python3 - Cancel
 tapped Cancel at 338,1976
 ++ sleep 1
@@ -260,7 +266,7 @@ tapped Cancel at 338,1976
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
 ++ adb pull /sdcard/ui.xml /tmp/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.1 MB/s (5078 bytes in 0.042s)
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.1 MB/s (5078 bytes in 0.041s)
 ++ python3 - Discard
 tapped Discard at 1202,1121
 ++ sleep 2
@@ -279,7 +285,7 @@ Warning: Activity not started, intent has been delivered to currently running to
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
 ++ adb pull /sdcard/ui.xml /tmp/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 8.4 MB/s (11808 bytes in 0.001s)
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 17.0 MB/s (11808 bytes in 0.001s)
 ++ python3 - 1
 text boxes on screen: 6
 tapping text box at 540 1207
@@ -301,7 +307,7 @@ Warning: Activity not started, intent has been delivered to currently running to
 + sleep 5
 + adb pull /sdcard/Download/EmberTest/quick-end.json smoke-out/quick-end.json
 + timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/quick-end.json smoke-out/quick-end.json
-/sdcard/Download/EmberTest/quick-end.json: 1 file pulled, 0 skipped. 0.0 MB/s (1550 bytes in 0.042s)
+/sdcard/Download/EmberTest/quick-end.json: 1 file pulled, 0 skipped. 0.0 MB/s (1550 bytes in 0.041s)
 + finish_logs
 + adb logcat -d
 + timeout 90 /usr/local/lib/android/sdk/platform-tools/adb logcat -d
