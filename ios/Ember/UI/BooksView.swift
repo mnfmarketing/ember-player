@@ -8,6 +8,7 @@ struct BooksView: View {
     @AppStorage("booksFilter") private var filter = 0
     @AppStorage("booksSort") private var sort = "recent"
     @State private var picking = false
+    @Environment(\.horizontalSizeClass) private var hSize
 
     var body: some View {
         ScrollView {
@@ -19,6 +20,9 @@ struct BooksView: View {
                     Text("Finished").tag(3)
                 }
                 .pickerStyle(.segmented)
+
+                // iPad tucks the toolbar's Downloads button into its overflow menu, so show what's downloading here.
+                if hSize == .regular { DownloadingBar() }
 
                 if let s = app.library.scanning {
                     Label("Looking for books in \(s)…", systemImage: "magnifyingglass").font(.subheadline).foregroundStyle(.secondary)

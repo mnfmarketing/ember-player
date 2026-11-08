@@ -14,6 +14,7 @@ struct PodcastsView: View {
     @State private var addingRSS = false
     @State private var rss = ""
     @State private var importing = false
+    @Environment(\.horizontalSizeClass) private var hSize
 
     var body: some View {
         VStack(spacing: 0) {
@@ -25,6 +26,7 @@ struct PodcastsView: View {
             .pickerStyle(.segmented)
             .padding(.horizontal, 16)
             .padding(.bottom, 8)
+            if hSize == .regular { DownloadingBar().padding(.horizontal, 16).padding(.bottom, 8) }
             switch tab {
             case 1: newList
             case 2: upNext

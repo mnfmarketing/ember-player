@@ -84,6 +84,7 @@ shot "$PHONE" "p-set-06-downloads" downloads 7 -EmberFakeDownloads 2,45
 shot "$PHONE" "p-set-07-podcasts-idle" podcasts 6
 shot "$PAD" "t-set-01-settings-two-panes" settings 9
 shot "$PAD" "t-set-02-books-downloading" books 9 -EmberFakeDownloads 1,70
+shot "$PAD" "t-set-03-settings-page" settings-library 9
 xcrun simctl ui "$PHONE" appearance dark
 shot "$PHONE" "p-set-08-settings-dark" settings 7
 

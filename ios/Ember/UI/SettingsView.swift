@@ -128,7 +128,7 @@ private struct SettingsList: View {
 
     var body: some View {
         GeometryReader { geo in
-            if geo.size.width >= 680 {
+            if geo.size.width >= 620 {
                 HStack(spacing: 0) {
                     list(wide: true).frame(width: min(360, geo.size.width * 0.42))
                     Divider()

@@ -33,7 +33,8 @@ struct RootView: View {
                 .inspectorColumnWidth(min: 320, ideal: 360, max: 520)
         }
         .fullScreenCover(isPresented: $app.playerOpen) { PlayerView() }
-        .sheet(isPresented: $app.profileOpen) { ProfileView() }
+        // iPad: a bigger sheet, so Settings has room for its list beside the open page.
+        .sheet(isPresented: $app.profileOpen) { ProfileView().presentationSizing(.page) }
         .alert(
             app.sync.prompt.map { "Continue from your \($0.deviceName)?" } ?? "",
             isPresented: Binding(get: { app.sync.prompt != nil }, set: { _ in }),
