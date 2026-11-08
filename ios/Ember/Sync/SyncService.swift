@@ -230,6 +230,18 @@ final class SyncService {
         }
         let shows = podcasts.podcasts()
         let byID = Dictionary(shows.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
+        for k in library.clips() {
+            if k.isEpisode {
+                guard let ep = podcasts.episode(String(k.mediaID.dropFirst(8))), let show = byID[ep.podcastID] else { continue }
+                s.items["clip/\(k.createdAt)"] = LocalItem(v: Canon.obj([("f", .str(show.feedURL)), ("g", .str(ep.guid)), ("ti", .str(k.title)), ("su", .str(k.subtitle)),
+                                                                      ("s", .int(k.startMs)), ("e", .int(k.endMs)), ("n", .str(k.note)), ("c", .str(k.chapterTitle))]),
+                                                            o: SyncKeys.show(show.feedURL))
+            } else {
+                guard let bk = s.keyOf[k.mediaID] else { continue }
+                s.items["clip/\(k.createdAt)"] = LocalItem(v: Canon.obj([("b", .str(bk)), ("ti", .str(k.title)), ("su", .str(k.subtitle)),
+                                                                      ("s", .int(k.startMs)), ("e", .int(k.endMs)), ("n", .str(k.note)), ("c", .str(k.chapterTitle))]), o: bk)
+            }
+        }
         for p in shows {
             s.shows[p.feedURL] = p
             s.owners.insert(SyncKeys.show(p.feedURL))
@@ -299,6 +311,8 @@ final class SyncService {
                 applyBook(key, e, v, s)
             } else if key.hasPrefix("mark/") {
                 applyMark(key, v, s)
+            } else if key.hasPrefix("clip/") {
+                applyClip(key, v, s)
             } else if key.hasPrefix("shelf/") {
                 applyShelf(String(key.dropFirst(6)), v)
             } else if key.hasPrefix("shelfbook/") {
@@ -393,6 +407,41 @@ final class SyncService {
         } else {
             library.context.insert(Bookmark(bookID: b.id, positionMs: int64(v["p"]), note: v["n"] as? String ?? "", chapterTitle: v["c"] as? String ?? "", createdAt: created))
         }
+    }
+
+    private func applyClip(_ key: String, _ v: [String: Any]?, _ s: Snapshot) {
+        guard let created = Int64(key.dropFirst(5)) else { return }
+        let existing = (try? library.context.fetch(FetchDescriptor<Clip>(predicate: #Predicate { $0.createdAt == created }))) ?? []
+        guard let v else {
+            for c in existing { library.context.delete(c) }
+            return
+        }
+        let mediaID: String
+        var cover: String?
+        var color: Int?
+        if v["f"] != nil {
+            guard let ep = episodeFor(v) else { return }
+            mediaID = "episode:" + ep.id
+            let show = podcasts.podcast(ep.podcastID)
+            cover = show?.artworkFile
+            color = show?.color
+        } else {
+            guard let bk = v["b"] as? String, let b = s.books[bk] else { return }
+            mediaID = b.id
+            cover = b.coverFile
+            color = b.coverColor
+        }
+        let c = existing.first { $0.mediaID == mediaID } ?? {
+            let n = Clip(mediaID: mediaID, title: "", startMs: 0, endMs: 0, coverFile: cover, color: color, createdAt: created)
+            library.context.insert(n)
+            return n
+        }()
+        c.title = v["ti"] as? String ?? ""
+        c.subtitle = v["su"] as? String ?? ""
+        c.startMs = int64(v["s"])
+        c.endMs = int64(v["e"])
+        c.note = v["n"] as? String ?? ""
+        c.chapterTitle = v["c"] as? String ?? ""
     }
 
     private func applyShelf(_ lower: String, _ v: [String: Any]?) {

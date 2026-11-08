@@ -38,6 +38,8 @@ final class AppModel {
     /// The checks: text typed into Settings' search box (-EmberSettingsSearch), pretend downloads (-EmberFakeDownloads 2,45).
     var testSettingsQuery: String?
     var fakeDownloads: (count: Int, progress: Double)?
+    /// The checks: the chapter editor opens with this name's keyboard up (-EmberChapterFocus 3).
+    var testChapterFocus: Int?
 
     /// What's downloading now (episodes and Google Drive books): how many, and how far along in all
     /// (nil when that can't be told: episodes don't report their progress).
@@ -55,7 +57,7 @@ final class AppModel {
 
     init() {
         let schema = Schema([Book.self, Track.self, Chapter.self, Bookmark.self, ListenEvent.self, DayListening.self,
-                             Shelf.self, LibraryFolder.self, Podcast.self, Episode.self, QueueItem.self])
+                             Shelf.self, LibraryFolder.self, Podcast.self, Episode.self, QueueItem.self, Clip.self, BookMerge.self])
         // SwiftData keeps the library in Application Support; make sure the folder is there first.
         try? FileManager.default.createDirectory(at: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0], withIntermediateDirectories: true)
         let config = ModelConfiguration(schema: schema)
@@ -104,6 +106,7 @@ final class AppModel {
             let p = f.split(separator: ",")
             if p.count == 2, let n = Int(p[0]), let pct = Double(p[1]) { fakeDownloads = (n, pct / 100) }
         }
+        if args.object(forKey: "EmberChapterFocus") != nil { testChapterFocus = args.integer(forKey: "EmberChapterFocus") }
         if let route = args.string(forKey: "EmberRoute") { testRoute = route }
         if args.bool(forKey: "EmberSyncTest") { sync.enableTestFolder() }
         player.restoreLast()

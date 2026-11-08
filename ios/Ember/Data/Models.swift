@@ -36,6 +36,10 @@ final class Book {
     var customEffects: Bool = false
     var trimSilence: Bool = false
     var voiceBoost: Bool = false
+    /// You edited the chapters (a rescan keeps yours).
+    var chaptersEdited: Bool = false
+    /// The companion PDF: "lib:<path in the library folder>", "drive:<id>/<name>" or "file:<name in Ember's PDFs>".
+    var pdf: String?
 
     init(id: String, title: String) {
         self.id = id
@@ -112,6 +116,61 @@ final class Bookmark {
         self.note = note
         self.chapterTitle = chapterTitle
         self.createdAt = createdAt
+    }
+}
+
+/// A clip: a stretch of a book or episode you kept, with an optional quote or note.
+@Model
+final class Clip {
+    /// A book id, or "episode:<id>".
+    var mediaID: String
+    var title: String
+    var subtitle: String = ""
+    var startMs: Int64
+    var endMs: Int64
+    var note: String = ""
+    var chapterTitle: String = ""
+    var coverFile: String?
+    var color: Int?
+    /// Milliseconds since 1970: also what makes a clip the same one on every device.
+    var createdAt: Int64
+
+    init(mediaID: String, title: String, subtitle: String = "", startMs: Int64, endMs: Int64, note: String = "", chapterTitle: String = "",
+         coverFile: String? = nil, color: Int? = nil, createdAt: Int64 = Clock.now) {
+        self.mediaID = mediaID
+        self.title = title
+        self.subtitle = subtitle
+        self.startMs = startMs
+        self.endMs = endMs
+        self.note = note
+        self.chapterTitle = chapterTitle
+        self.coverFile = coverFile
+        self.color = color
+        self.createdAt = createdAt
+    }
+
+    var lengthMs: Int64 { max(endMs - startMs, 0) }
+    var isEpisode: Bool { mediaID.hasPrefix("episode:") }
+}
+
+/// Books you merged by hand: each part (its key within the folder) and its place in the merged book.
+@Model
+final class BookMerge {
+    var mergedKey: String
+    var idx: Int
+    var memberKey: String
+    var title: String
+    var folderID: String
+    /// How many files the part has (0: not known, as in a backup from Android).
+    var files: Int = 0
+
+    init(mergedKey: String, idx: Int, memberKey: String, title: String, folderID: String, files: Int = 0) {
+        self.files = files
+        self.mergedKey = mergedKey
+        self.idx = idx
+        self.memberKey = memberKey
+        self.title = title
+        self.folderID = folderID
     }
 }
 

@@ -61,6 +61,9 @@ struct ProfileView: View {
                 Section("Shortcuts") {
                     NavigationLink { UpNextBooksView() } label: { Row(icon: "text.line.last.and.arrowtriangle.forward", color: .green, title: "Up Next") }
                     NavigationLink { DownloadsView() } label: { Row(icon: "arrow.down.circle.fill", color: .blue, title: "Downloads") }
+                    NavigationLink { ClipsView() } label: { Row(icon: "scissors", color: .pink, title: "Clips") }
+                    NavigationLink { RecapView() } label: { Row(icon: "sparkles", color: .orange, title: "Your recap") }
+                    NavigationLink { NotesExportView() } label: { Row(icon: "square.and.arrow.up.on.square", color: .teal, title: "Export notes") }
                 }
 
                 Section("Settings") {

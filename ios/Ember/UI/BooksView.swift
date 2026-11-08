@@ -8,6 +8,7 @@ struct BooksView: View {
     @AppStorage("booksFilter") private var filter = 0
     @AppStorage("booksSort") private var sort = "recent"
     @State private var picking = false
+    @State private var addingExternal = false
     @Environment(\.horizontalSizeClass) private var hSize
 
     var body: some View {
@@ -63,8 +64,11 @@ struct BooksView: View {
                 } label: { Image(systemName: "line.3.horizontal.decrease") }
                 .accessibilityLabel("Sort")
                 Button { app.openDownloads = true } label: { DownloadIcon() }
-                Button { picking = true } label: { Image(systemName: "plus") }
-                    .accessibilityLabel("Add a folder")
+                Menu {
+                    Button { picking = true } label: { Label("Add a folder", systemImage: "folder.badge.plus") }
+                    Button { addingExternal = true } label: { Label("Add from Audible, Libby or Spotify", systemImage: "arrow.up.forward.app") }
+                } label: { Image(systemName: "plus") }
+                .accessibilityLabel("Add books")
             }
             ToolbarSpacer(.fixed, placement: .topBarTrailing)
             ToolbarItem(placement: .topBarTrailing) { ProfileButton() }
@@ -72,7 +76,9 @@ struct BooksView: View {
         .fileImporter(isPresented: $picking, allowedContentTypes: [.folder]) { result in
             if case .success(let url) = result { Task { await app.library.addFolder(url) } }
         }
+        .sheet(isPresented: $addingExternal) { AddExternalView() }
         .navigationDestination(for: BookRoute.self) { BookView(bookID: $0.id) }
+        .navigationDestination(item: Binding(get: { app.selectedTab == .books ? app.openBook : nil }, set: { app.openBook = $0 })) { BookView(bookID: $0.id) }
         .navigationDestination(isPresented: Binding(get: { app.openDownloads }, set: { app.openDownloads = $0 })) { DownloadsView() }
     }
 
@@ -151,6 +157,9 @@ struct BookMenu: ViewModifier {
                 Button { app.library.markFinished(book.id) } label: { Label("Mark as finished", systemImage: "checkmark.circle") }
             }
             Button { app.library.resetProgress(book.id) } label: { Label("Start over", systemImage: "backward.end") }
+            if app.library.isManualMerge(book) {
+                Button { Task { await app.library.split(book.id) } } label: { Label("Split into its parts", systemImage: "square.split.2x1") }
+            }
             Menu {
                 ForEach(app.library.shelves()) { s in
                     Button(s.name) {

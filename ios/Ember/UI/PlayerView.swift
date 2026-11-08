@@ -15,7 +15,7 @@ struct PlayerView: View {
     @State private var car = false
 
     enum PlayerSheet: Identifiable {
-        case chapters, sleep, speed, log, marks, sound
+        case chapters, sleep, speed, log, marks, sound, clip
         var id: Self { self }
     }
 
@@ -52,6 +52,7 @@ struct PlayerView: View {
                 HStack(spacing: 8) {
                     Pill(title: "Listening log", icon: "clock.arrow.circlepath") { sheet = .log }
                     if !l.isEpisode { Pill(title: "Bookmarks", icon: "bookmark") { sheet = .marks } }
+                    Pill(title: "Clip", icon: "scissors") { sheet = .clip }
                     Spacer()
                 }
                 .padding(.top, 10)
@@ -97,6 +98,7 @@ struct PlayerView: View {
             case .speed: SpeedSheet().presentationDetents([.height(320)])
             case .log: ListenLogView(bookID: l.id, title: l.title)
             case .marks: BookmarksView(bookID: l.id)
+            case .clip: ClipSheet().presentationDetents([.medium, .large])
             case .sound:
                 if let b = app.library.book(l.id) { BookSoundView(book: b).presentationDetents([.medium]) }
             }

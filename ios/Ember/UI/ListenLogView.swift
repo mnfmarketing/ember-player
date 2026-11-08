@@ -162,6 +162,7 @@ struct BookmarksView: View {
     @Query private var marks: [Bookmark]
     @State private var editing: Bookmark?
     @State private var note = ""
+    @State private var card: CardSource?
 
     init(bookID: String) {
         self.bookID = bookID
@@ -188,6 +189,9 @@ struct BookmarksView: View {
                                     if !m.note.isEmpty { Text(m.note).font(.subheadline).foregroundStyle(.secondary) }
                                 }
                             }
+                            .contextMenu {
+                                Button { card = CardSource(bookmark: m, book: app.library.book(bookID)) } label: { Label("Quote card", systemImage: "quote.bubble") }
+                            }
                             .swipeActions {
                                 Button(role: .destructive) { app.library.delete(m) } label: { Label("Delete", systemImage: "trash") }
                                 Button {
@@ -201,6 +205,7 @@ struct BookmarksView: View {
             }
             .navigationTitle("Bookmarks")
             .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(item: $card) { QuoteCardView(source: $0) }
             .toolbar { ToolbarItem(placement: .topBarLeading) { Button("Done") { dismiss() } } }
             .alert("Note", isPresented: Binding(get: { editing != nil }, set: { if !$0 { editing = nil } })) {
                 TextField("What happens here", text: $note)

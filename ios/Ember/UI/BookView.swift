@@ -6,12 +6,19 @@ struct BookView: View {
     @Environment(AppModel.self) private var app
     @Environment(Player.self) private var player
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) private var scheme
     let bookID: String
     @Query private var found: [Book]
     @State private var showLog = false
     @State private var showMarks = false
     @State private var showSound = false
+    @State private var showClips = false
     @State private var confirmRemove = false
+    @State private var editing = false
+    @State private var editingChapters = false
+    @State private var readingPDF = false
+    @State private var merging = false
+    @State private var confirmSplit = false
 
     init(bookID: String) {
         self.bookID = bookID
@@ -49,6 +56,9 @@ struct BookView: View {
                 }
                 .foregroundStyle(.white)
 
+                if b.isExternal {
+                    ExternalControls(book: b, deep: deep)
+                } else {
                 HStack(spacing: 10) {
                     Button {
                         let was = playing && player.isPlaying
@@ -73,12 +83,17 @@ struct BookView: View {
                     .buttonStyle(.glass)
                     .accessibilityLabel(app.settings.upNext.contains(b.id) ? "In Up Next" : "Add to Up Next")
                 }
+                }
 
                 ScrollView(.horizontal) {
                     HStack(spacing: 8) {
                         Pill(title: "Listening log", icon: "clock.arrow.circlepath") { showLog = true }
                         Pill(title: "Bookmarks", icon: "bookmark") { showMarks = true }
-                        Pill(title: "Sound", icon: "slider.horizontal.3") { showSound = true }
+                        if !b.isExternal {
+                            Pill(title: "Sound", icon: "slider.horizontal.3") { showSound = true }
+                            Pill(title: "Clips", icon: "scissors") { showClips = true }
+                        }
+                        if b.pdf != nil { Pill(title: "PDF", icon: "doc.richtext") { readingPDF = true } }
                     }
                     .padding(.horizontal, 2)
                 }
@@ -173,6 +188,20 @@ struct BookView: View {
                         Button { app.library.markFinished(b.id) } label: { Label("Mark as finished", systemImage: "checkmark.circle") }
                     }
                     Button { app.library.resetProgress(b.id) } label: { Label("Start over", systemImage: "backward.end") }
+                    Divider()
+                    Button { editing = true } label: { Label("Edit details", systemImage: "pencil") }
+                    if !b.isExternal {
+                        Button { editingChapters = true } label: { Label("Edit chapters", systemImage: "list.number") }
+                        if app.library.isManualMerge(b) {
+                            Button { confirmSplit = true } label: { Label("Split into its parts", systemImage: "square.split.2x1") }
+                        } else if app.library.mergeCandidates(b).count > 1 {
+                            Button { merging = true } label: { Label("Merge with other books…", systemImage: "square.stack.3d.down.right") }
+                        }
+                    }
+                    if let url = NotesExport.file(app.library, bookID: b.id) {
+                        ShareLink(item: url) { Label("Export notes", systemImage: "square.and.arrow.up") }
+                    }
+                    Divider()
                     Button(role: .destructive) { confirmRemove = true } label: { Label("Remove from Ember", systemImage: "trash") }
                 } label: { Image(systemName: "ellipsis") }
                 .accessibilityLabel("More")
@@ -181,7 +210,21 @@ struct BookView: View {
         .environment(\.colorScheme, .dark)
         .sheet(isPresented: $showLog) { ListenLogView(bookID: b.id, title: b.displayTitle) }
         .sheet(isPresented: $showMarks) { BookmarksView(bookID: b.id) }
-        .sheet(isPresented: $showSound) { BookSoundView(book: b).presentationDetents([.medium]) }
+        .sheet(isPresented: $showSound) { BookSoundView(book: b).presentationDetents([.medium, .large]) }
+        .sheet(isPresented: $showClips) {
+            NavigationStack {
+                ClipsView(mediaID: b.id).toolbar { ToolbarItem(placement: .topBarLeading) { Button("Done") { showClips = false } } }
+            }
+        }
+        .navigationDestination(isPresented: $editing) { EditBookView(bookID: b.id).environment(\.colorScheme, scheme) }
+        .navigationDestination(isPresented: $editingChapters) { ChapterEditorView(bookID: b.id).environment(\.colorScheme, scheme) }
+        .navigationDestination(isPresented: $readingPDF) { PDFScreen(bookID: b.id).environment(\.colorScheme, scheme) }
+        .sheet(isPresented: $merging) { MergeSheet(bookID: b.id).environment(\.colorScheme, scheme) }
+        .confirmationDialog("Split this book into its parts?", isPresented: $confirmSplit, titleVisibility: .visible) {
+            Button("Split") { Task { await app.library.split(b.id); dismiss() } }
+        } message: {
+            Text("Each part becomes a book again, with its share of your place, bookmarks and clips.")
+        }
         .confirmationDialog("Remove this book from Ember?", isPresented: $confirmRemove, titleVisibility: .visible) {
             Button("Remove", role: .destructive) {
                 app.library.deleteBook(b.id)

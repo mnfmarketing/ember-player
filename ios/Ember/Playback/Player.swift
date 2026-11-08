@@ -245,7 +245,10 @@ final class Player {
         updateFlip()
     }
 
-    func toggle() { isPlaying ? pause() : resume() }
+    func toggle() {
+        rangeEnd = nil
+        isPlaying ? pause() : resume()
+    }
 
     func skip(seconds: Int) {
         seek(to: positionMs + Int64(seconds) * 1000)
@@ -317,6 +320,39 @@ final class Player {
         seek(to: l.chapters[i].startMs)
     }
 
+    /// Plays a stretch (a clip) and stops at its end.
+    func playRange(mediaID: String, startMs: Int64, endMs: Int64) {
+        if loaded?.id != mediaID {
+            if mediaID.hasPrefix("episode:") {
+                guard let ep = podcasts?.episode(String(mediaID.dropFirst(8))) else { return }
+                playEpisode(ep, play: false)
+            } else {
+                playBook(mediaID, play: false)
+            }
+        }
+        guard loaded?.id == mediaID else { return }
+        seek(to: startMs)
+        rangeEnd = endMs
+        resume()
+    }
+
+    /// Where a clip being played stops.
+    @ObservationIgnored private var rangeEnd: Int64?
+
+    /// The clip you'd get now: the last stretch you heard.
+    func clipRange(seconds: Int) -> (Int64, Int64) {
+        let end = positionMs
+        return (max(end - Int64(seconds) * 1000, 0), end)
+    }
+
+    /// After you edit the chapters of what's playing.
+    func reloadChapters() {
+        guard var l = loaded, !l.isEpisode else { return }
+        l.chapters = library.chapters(l.id)
+        loaded = l
+        updateNowPlaying()
+    }
+
     func bookmarkHere() {
         guard let l = loaded, !l.isEpisode else { return }
         library.addBookmark(l.id, positionMs: positionMs, chapterTitle: chapter?.title ?? "")
@@ -346,6 +382,10 @@ final class Player {
         if listenAccumMs >= 15_000 { flushListening() }
         if ticks % 2 == 0 { updateNowPlaying(elapsedOnly: true) }
         sleep.tick(positionMs: positionMs, chapterEnd: chapterEnd)
+        if let e = rangeEnd, positionMs >= e {
+            rangeEnd = nil
+            pause()
+        }
         fade()
         outroWatch()
     }

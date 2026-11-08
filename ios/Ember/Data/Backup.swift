@@ -23,6 +23,9 @@ enum Backup {
             ]
         }
         root["bookmarks"] = lib.allBookmarks().map { ["bookId": $0.bookID, "positionMs": $0.positionMs, "note": $0.note, "chapterTitle": $0.chapterTitle, "createdAt": $0.createdAt] }
+        root["clips"] = lib.clips().map { ["mediaId": $0.mediaID, "title": $0.title, "subtitle": $0.subtitle, "startMs": $0.startMs, "endMs": $0.endMs,
+                                           "note": $0.note, "chapterTitle": $0.chapterTitle, "createdAt": $0.createdAt] as [String: Any] }
+        root["merges"] = lib.merges().map { ["mergedKey": $0.mergedKey, "idx": $0.idx, "memberKey": $0.memberKey, "title": $0.title, "folderId": $0.folderID] as [String: Any] }
         root["shelves"] = lib.shelves().map { ["name": $0.name, "createdAt": Int64($0.createdAt.timeIntervalSince1970 * 1000), "books": $0.books] as [String: Any] }
         root["listening"] = lib.days().filter { $0.ms > 0 }.map { ["day": $0.day, "ms": $0.ms] }
         let shows = app.podcasts.podcasts()
@@ -88,6 +91,16 @@ enum Backup {
             return "That isn't an Ember backup."
         }
         let lib = app.library
+        // Books merged by hand (from this device's own backups: folder ids differ between devices).
+        let folderIDs = Set(lib.folders().map(\.id)), haveMerges = Set(lib.merges().map(\.mergedKey))
+        var mergedFolders = Set<String>()
+        for m in root["merges"] as? [[String: Any]] ?? [] {
+            guard let key = m["mergedKey"] as? String, !haveMerges.contains(key), let fid = m["folderId"] as? String, folderIDs.contains(fid),
+                  let member = m["memberKey"] as? String else { continue }
+            lib.context.insert(BookMerge(mergedKey: key, idx: Int(int64(m["idx"])), memberKey: member, title: m["title"] as? String ?? "", folderID: fid))
+            mergedFolders.insert(fid)
+        }
+        for f in lib.folders() where mergedFolders.contains(f.id) { await lib.scan(f) }
         let existing = lib.books()
         var byKey: [String: [Book]] = [:]
         for b in existing { byKey[key(b.title, b.author), default: []].append(b) }
@@ -142,6 +155,18 @@ enum Backup {
             if have.contains("\(id)|\(pos / 1000)") { continue }
             lib.context.insert(Bookmark(bookID: id, positionMs: pos, note: m["note"] as? String ?? "", chapterTitle: m["chapterTitle"] as? String ?? "", createdAt: int64(m["createdAt"] ?? Clock.now)))
             marks += 1
+        }
+        var clips = 0
+        let haveClips = Set(lib.clips().map { "\($0.mediaID)|\($0.startMs / 1000)" })
+        for k in root["clips"] as? [[String: Any]] ?? [] {
+            let old = k["mediaId"] as? String ?? ""
+            guard !old.hasPrefix("episode:"), let id = idMap[old], let b = lib.book(id) else { continue }
+            let start = int64(k["startMs"])
+            if haveClips.contains("\(id)|\(start / 1000)") { continue }
+            lib.context.insert(Clip(mediaID: id, title: k["title"] as? String ?? b.title, subtitle: k["subtitle"] as? String ?? b.author, startMs: start,
+                                    endMs: int64(k["endMs"]), note: k["note"] as? String ?? "", chapterTitle: k["chapterTitle"] as? String ?? "",
+                                    coverFile: b.coverFile, color: b.coverColor, createdAt: int64(k["createdAt"] ?? Clock.now)))
+            clips += 1
         }
         var shelves = Dictionary(lib.shelves().map { ($0.name.lowercased(), $0) }, uniquingKeysWith: { a, _ in a })
         for s in root["shelves"] as? [[String: Any]] ?? [] {
@@ -221,6 +246,7 @@ enum Backup {
         app.podcasts.changed()
         var out = "Restored \(matched) book\(matched == 1 ? "" : "s")"
         if marks > 0 { out += ", \(marks) bookmark\(marks == 1 ? "" : "s")" }
+        if clips > 0 { out += ", \(clips) clip\(clips == 1 ? "" : "s")" }
         if shows > 0 { out += ", \(shows) podcast\(shows == 1 ? "" : "s")" }
         out += "."
         if waiting > 0 { out += " \(waiting) more aren't in this library yet (add their folders, then restore again)." }

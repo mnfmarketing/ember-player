@@ -19,6 +19,8 @@ struct Scanner {
         var pdf: URL?
         /// Disc folders: each disc's file count, in order.
         var parts: [Int] = []
+        /// Books merged by hand keep the name you gave them.
+        var forcedTitle: String?
     }
 
     struct Scanned {
@@ -212,6 +214,7 @@ struct Scanner {
         }
         var bookTitle = f.fallbackTitle
         if let t = title?.trimmingCharacters(in: .whitespaces), !t.isEmpty { bookTitle = f.parts.isEmpty ? t : Names.stripDisc(t) }
+        if let forced = f.forcedTitle, !forced.isEmpty { bookTitle = forced }
         if !f.parts.isEmpty { renumberAcrossDiscs(&chapters, &tracks, bookTitle: bookTitle) }
         if art == nil, let cover = f.cover, cover.isFileURL { art = try? Data(contentsOf: cover) }
         return Scanned(
