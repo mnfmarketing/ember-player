@@ -32,6 +32,8 @@ shot() {  # device name route [wait] [extra args...]
   crashes
 }
 
+# The on-screen keyboard, as on a real phone (for the chapter editor's typing check).
+defaults write com.apple.iphonesimulator ConnectHardwareKeyboard -bool false 2>/dev/null || true
 for dev in "$PHONE" "$PAD"; do
   xcrun simctl boot "$dev" < /dev/null > /dev/null 2>&1 || true
 done
@@ -53,6 +55,7 @@ for dev in "$PHONE" "$PAD"; do
   echo "demo ready on $dev after $((i * 3))s" >> "$OUT/progress.txt"
 done
 
+if [ "${EMBER_SHOTS:-all}" != new ]; then
 for mode in dark light; do
   for dev in "$PHONE" "$PAD"; do xcrun simctl ui "$dev" appearance $mode; done
   m=${mode:0:1}
@@ -87,6 +90,8 @@ shot "$PAD" "t-set-02-books-downloading" books 9 -EmberFakeDownloads 1,70
 shot "$PAD" "t-set-03-settings-page" settings-library 9
 xcrun simctl ui "$PHONE" appearance dark
 shot "$PHONE" "p-set-08-settings-dark" settings 7
+
+fi
 
 # Ember-iOS-3: themes, sound, sleep, car mode, clips, cards, editing, widgets.
 xcrun simctl ui "$PHONE" appearance light

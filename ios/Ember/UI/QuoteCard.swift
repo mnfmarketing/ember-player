@@ -62,9 +62,7 @@ struct QuoteCardArt: View {
         let pop = light ? accent : Color(hex: CardColors.lighten(source.color.map(CardColors.tune) ?? 0xD9774A))
         let thumb: CGFloat = format == .story ? 260 : 210
         let cover = Covers.image(source.coverFile)
-        ZStack {
-            background(cover: cover, accent: accent)
-            VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: 0) {
                 if !quote.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                     Text("\u{201C}").font(.system(size: 240, design: .serif)).foregroundStyle(pop).frame(height: 150, alignment: .top).padding(.leading, -10)
                     Text(quote.trimmingCharacters(in: .whitespacesAndNewlines))
@@ -97,10 +95,11 @@ struct QuoteCardArt: View {
                     Text("EMBER").font(.system(size: 26)).kerning(3).foregroundStyle(ink.opacity(0.55))
                 }
                 .padding(.top, 30)
-            }
-            .padding(96)
         }
+        .padding(96)
         .frame(width: size.width, height: size.height)
+        .background { background(cover: cover, accent: accent).frame(width: size.width, height: size.height).clipped() }
+        .clipped()
         .environment(\.colorScheme, light ? .light : .dark)
     }
 

@@ -5,6 +5,7 @@ struct FinishedSheet: View {
     @Environment(AppModel.self) private var app
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
+    @Environment(\.colorScheme) private var scheme
     let bookID: String
 
     var body: some View {
@@ -15,7 +16,7 @@ struct FinishedSheet: View {
                     .frame(width: 120, height: 120)
                     .shadow(color: .black.opacity(0.25), radius: 14, y: 6)
                     .padding(.top, 28)
-                Text("You finished it").font(.subheadline.weight(.semibold)).foregroundStyle(Color.accentColor).padding(.top, 14)
+                Text("You finished it").font(.subheadline.weight(.semibold)).foregroundStyle(.tint).padding(.top, 14)
                 Text(b.displayTitle).font(.title2.weight(.bold)).multilineTextAlignment(.center).lineLimit(2).padding(.horizontal, 24)
                 Text("How was it?").foregroundStyle(.secondary).padding(.top, 16)
                 HStack(spacing: 8) {
@@ -26,7 +27,7 @@ struct FinishedSheet: View {
                             app.sync.request("rating")
                         } label: {
                             Image(systemName: n <= b.rating ? "star.fill" : "star").font(.system(size: 34))
-                                .foregroundStyle(n <= b.rating ? Color.accentColor : .secondary)
+                                .foregroundStyle(n <= b.rating ? AnyShapeStyle(.tint) : AnyShapeStyle(.secondary))
                         }
                         .buttonStyle(.plain)
                         .accessibilityLabel("\(n) star\(n == 1 ? "" : "s")")
@@ -52,6 +53,7 @@ struct FinishedSheet: View {
                 .padding(.top, 18)
                 Spacer(minLength: 8)
             }
+            .tint(Theme.accent(settings: app.settings, bookColor: b.coverColor, dark: scheme == .dark))
         }
     }
 

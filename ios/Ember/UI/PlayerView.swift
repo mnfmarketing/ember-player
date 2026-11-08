@@ -94,7 +94,7 @@ struct PlayerView: View {
         .task {
             if app.testPlayerSheet == "clip" {
                 app.testPlayerSheet = nil
-                try? await Task.sleep(for: .milliseconds(600))
+                try? await Task.sleep(for: .milliseconds(1800))
                 sheet = .clip
             }
         }

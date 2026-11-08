@@ -101,9 +101,15 @@ struct BookView: View {
                 .scrollBounceBehavior(.basedOnSize)
 
                 HStack(spacing: 0) {
-                    Fact(label: "LENGTH", value: Fmt.duration(b.durationMs), soft: soft)
-                    Divider().frame(height: 30).overlay(.white.opacity(0.25))
-                    Fact(label: b.status == Book.statusFinished ? "FINISHED" : "LEFT", value: b.status == Book.statusFinished ? "✓" : Fmt.duration(max(b.durationMs - pos, 0)), soft: soft)
+                    if b.isExternal {
+                        Fact(label: "LISTENING IN", value: ExternalApp.from(b.externalApp).label, soft: soft)
+                        Divider().frame(height: 30).overlay(.white.opacity(0.25))
+                        Fact(label: b.status == Book.statusFinished ? "FINISHED" : "PROGRESS", value: b.status == Book.statusFinished ? "✓" : "\(b.positionMs)%", soft: soft)
+                    } else {
+                        Fact(label: "LENGTH", value: Fmt.duration(b.durationMs), soft: soft)
+                        Divider().frame(height: 30).overlay(.white.opacity(0.25))
+                        Fact(label: b.status == Book.statusFinished ? "FINISHED" : "LEFT", value: b.status == Book.statusFinished ? "✓" : Fmt.duration(max(b.durationMs - pos, 0)), soft: soft)
+                    }
                     Divider().frame(height: 30).overlay(.white.opacity(0.25))
                     VStack(spacing: 2) {
                         Text("RATING").font(.caption).foregroundStyle(soft)

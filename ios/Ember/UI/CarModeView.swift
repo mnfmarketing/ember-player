@@ -11,9 +11,7 @@ struct CarModeView: View {
 
     var body: some View {
         ZStack {
-            Color(hex: 0x0B0908).ignoresSafeArea()
             if let l = player.loaded {
-                backdrop(l)
                 GeometryReader { g in
                     let landscape = g.size.width > g.size.height * 1.15
                     VStack(spacing: 0) {
@@ -56,6 +54,13 @@ struct CarModeView: View {
                 }
             }
         }
+        .background {
+            ZStack {
+                Color(hex: 0x0B0908)
+                if let l = player.loaded { backdrop(l) }
+            }
+            .ignoresSafeArea()
+        }
         .foregroundStyle(.white)
         .environment(\.colorScheme, .dark)
         .statusBarHidden(false)
@@ -65,10 +70,11 @@ struct CarModeView: View {
 
     private func backdrop(_ l: Player.Loaded) -> some View {
         ZStack {
+            Theme.deep(l.color)
             if let img = Covers.image(l.coverFile) {
-                Image(uiImage: img).resizable().scaledToFill().blur(radius: 50).scaleEffect(1.3)
-            } else {
-                Theme.deep(l.color)
+                GeometryReader { g in
+                    Image(uiImage: img).resizable().scaledToFill().frame(width: g.size.width, height: g.size.height).blur(radius: 50).scaleEffect(1.3).clipped()
+                }
             }
             LinearGradient(stops: [.init(color: .black.opacity(0.55), location: 0), .init(color: .black.opacity(0.72), location: 0.5), .init(color: .black.opacity(0.9), location: 1)],
                            startPoint: .top, endPoint: .bottom)

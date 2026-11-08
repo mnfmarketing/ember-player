@@ -354,7 +354,12 @@ struct ChapterEditorView: View {
             guard !loaded else { return }
             loaded = true
             rows = app.library.chapters(bookID).map { Row(title: $0.title, startMs: $0.startMs) }
-            if let i = app.testChapterFocus, rows.indices.contains(i) { focused = rows[i].id }
+        }
+        .task {
+            guard let i = app.testChapterFocus else { return }
+            try? await Task.sleep(for: .milliseconds(900))
+            let idx = min(i, rows.count - 1)
+            if rows.indices.contains(idx) { focused = rows[idx].id }
         }
     }
 
@@ -409,8 +414,11 @@ struct MergeSheet: View {
                                     Text(b.displayTitle).foregroundStyle(.primary)
                                     Text(Fmt.duration(b.durationMs)).font(.caption).foregroundStyle(.secondary)
                                 }
+                                Spacer()
                             }
+                            .contentShape(Rectangle())
                         }
+                        .buttonStyle(.plain)
                     }
                 }
             }
