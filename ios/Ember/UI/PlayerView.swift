@@ -91,12 +91,10 @@ struct PlayerView: View {
         }, including: column ? .none : .all)
         .overlay { if locked { PocketLock(locked: $locked) } }
         .fullScreenCover(isPresented: $car) { CarModeView() }
-        .task {
-            if app.testPlayerSheet == "clip" {
-                app.testPlayerSheet = nil
-                try? await Task.sleep(for: .milliseconds(1800))
-                sheet = .clip
-            }
+        .onAppear {
+            guard app.testPlayerSheet == "clip" else { return }
+            app.testPlayerSheet = nil
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) { sheet = .clip }
         }
         .sheet(item: $sheet) { s in
             switch s {

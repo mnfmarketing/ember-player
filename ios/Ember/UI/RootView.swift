@@ -287,6 +287,7 @@ private struct TestSheet: View {
             case "quote":
                 if let c = app.library.clips().last { QuoteCardView(source: CardSource(clip: c)) }
             case "clips": ClipsView()
+            case "newclip": ClipSheet()
             case "edit": EditBookView(bookID: book)
             case "chapters": ChapterEditorView(bookID: book)
             case "merge": MergeSheet(bookID: book)

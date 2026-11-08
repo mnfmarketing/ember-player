@@ -55,7 +55,7 @@ for dev in "$PHONE" "$PAD"; do
   echo "demo ready on $dev after $((i * 3))s" >> "$OUT/progress.txt"
 done
 
-if [ "${EMBER_SHOTS:-all}" != new ]; then
+if [ "${EMBER_SHOTS:-all}" = all ]; then
 for mode in dark light; do
   for dev in "$PHONE" "$PAD"; do xcrun simctl ui "$dev" appearance $mode; done
   m=${mode:0:1}
@@ -97,9 +97,7 @@ fi
 if [ "${EMBER_SHOTS:-all}" = few ]; then
   xcrun simctl ui "$PHONE" appearance light
   shot "$PHONE" "p-f-01-clip" clip 12
-  shot "$PHONE" "p-f-02-merge" home 9 -EmberSheet merge
-  shot "$PHONE" "p-f-03-recap" home 10 -EmberSheet recap
-  shot "$PHONE" "p-f-04-clips" home 9 -EmberSheet clips
+  shot "$PHONE" "p-f-02-newclip" home 10 -EmberSheet newclip
   crashes
   xcrun simctl shutdown all > /dev/null 2>&1 < /dev/null || true
   exit 0
