@@ -113,13 +113,40 @@ enum Mp4TagWriter {
         return Box(type, payload: be32(UInt64(16 + text.count)) + typeBytes("data") + be32(1) + be32(0) + text)
     }
 
+    /// The iTunes-style tag list ("mdir" metadata). Files written by Apple's own encoders may carry a
+    /// QuickTime-style "mdta" metadata box instead, which readers don't take iTunes tags from, so an
+    /// iTunes one is added in front of it.
     private static func ilst(_ moov: Box) -> Box {
         let udta = moov.childOrAdd("udta") { Box("udta", children: []) }
-        let meta = udta.childOrAdd("meta") {
+        func handler(_ meta: Box) -> String? {
+            guard let p = meta.child("hdlr")?.payload, p.count >= 12 else { return nil }
+            return String(bytes: p[8..<12], encoding: .isoLatin1)
+        }
+        let meta: Box
+        if let m = udta.children?.first(where: { $0.type == "meta" && handler($0) == "mdir" }) {
+            meta = m
+        } else {
             let hdlr = be32(0) + be32(0) + typeBytes("mdir") + typeBytes("appl") + be32(0) + be32(0) + [0]
-            return Box("meta", children: [Box("hdlr", payload: hdlr)], prefix: [0, 0, 0, 0])
+            meta = Box("meta", children: [Box("hdlr", payload: hdlr)], prefix: [0, 0, 0, 0])
+            udta.children?.insert(meta, at: 0)
         }
         return meta.childOrAdd("ilst") { Box("ilst", children: []) }
+    }
+
+    /// The title tags as written in the file (for checking a write).
+    static func readTitle(_ url: URL) -> String? {
+        guard let h = try? FileHandle(forReadingFrom: url) else { return nil }
+        defer { try? h.close() }
+        guard let size = try? h.seekToEnd(), let tops = try? topLevel(h, size: size), let top = tops.first(where: { $0.type == "moov" }),
+              top.size <= maxMoov, let bytes = try? read(h, top.offset, Int(top.size)) else { return nil }
+        let hdr = u32(bytes, 0) == 1 ? 16 : 8
+        guard let kids = try? parse(bytes, hdr, bytes.count), let udta = Box("moov", children: kids).child("udta") else { return nil }
+        for meta in udta.children ?? [] where meta.type == "meta" {
+            for item in meta.child("ilst")?.children ?? [] where item.type == "\u{A9}nam" || item.type == "\u{A9}alb" {
+                if let p = item.payload, p.count > 16 { return String(decoding: p[16...], as: UTF8.self) }
+            }
+        }
+        return nil
     }
 
     private static func applyTags(_ moov: Box, _ t: Tags) {
@@ -366,7 +393,7 @@ enum Mp4TagWriter {
             for item in common where item.identifier == .commonIdentifierAlbumName || item.identifier == .commonIdentifierTitle {
                 if let s = try? await item.load(.stringValue), s.trimmingCharacters(in: .whitespaces) == tags.title.trimmingCharacters(in: .whitespaces) { found = true }
             }
-            if !found { return false }
+            if !found, readTitle(url)?.trimmingCharacters(in: .whitespaces) != tags.title.trimmingCharacters(in: .whitespaces) { return false }
         }
         if let chapters {
             guard let read = readChpl(url) else { return false }
