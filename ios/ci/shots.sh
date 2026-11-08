@@ -96,12 +96,6 @@ fi
 # Just a few (commit message [few-shots]).
 if [ "${EMBER_SHOTS:-all}" = few ]; then
   xcrun simctl ui "$PHONE" appearance light
-  limit 60 xcrun simctl launch --terminate-running-process "$PHONE" $BID -EmberDemo YES -EmberRoute home -EmberSheet newclip
-  sleep 8
-  pid=$(pgrep -f "Ember.app/Ember" | head -1)
-  echo "pid $pid" >> "$OUT/progress.txt"
-  ps -o pid,%cpu,stat,command -p "$pid" >> "$OUT/progress.txt" 2>&1
-  [ -n "$pid" ] && sample "$pid" 3 -file "$OUT/sample.txt" > /dev/null 2>&1
   shot "$PHONE" "p-f-02-newclip" home 10 -EmberSheet newclip
   crashes
   xcrun simctl shutdown all > /dev/null 2>&1 < /dev/null || true
