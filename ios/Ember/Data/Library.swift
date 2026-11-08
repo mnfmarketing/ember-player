@@ -563,7 +563,10 @@ final class Library {
         guard let p = b.pdf else { return nil }
         if p.hasPrefix("file:") { return Self.pdfDir.appendingPathComponent(String(p.dropFirst(5))) }
         if p.hasPrefix("lib:"), let folder = folder(of: b), let root = open(folder) { return root.appendingPathComponent(String(p.dropFirst(4))) }
-        if let t = DriveTrack(p) { return try? await t.local ?? drive?.save(t.id, ext: t.ext) }
+        if let t = DriveTrack(p) {
+            if let l = t.local { return l }
+            return try? await drive?.save(t.id, ext: t.ext)
+        }
         return nil
     }
 

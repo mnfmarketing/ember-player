@@ -10,6 +10,9 @@ import UIKit
 @MainActor
 @Observable
 final class AppModel {
+    /// The one model (Siri, Shortcuts and widget buttons reach the player through it).
+    static let shared = AppModel()
+
     let container: ModelContainer
     let settings = Settings()
     let library: Library
@@ -40,6 +43,10 @@ final class AppModel {
     var fakeDownloads: (count: Int, progress: Double)?
     /// The checks: the chapter editor opens with this name's keyboard up (-EmberChapterFocus 3).
     var testChapterFocus: Int?
+    /// The checks: a screen opened as a sheet (-EmberSheet recap, quote, clips, edit, chapters, merge, external, notes, widgets).
+    var testSheet: String?
+    /// The checks: a sheet the player opens by itself ("clip").
+    var testPlayerSheet: String?
 
     /// What's downloading now (episodes and Google Drive books): how many, and how far along in all
     /// (nil when that can't be told: episodes don't report their progress).
@@ -78,7 +85,11 @@ final class AppModel {
         player.podcasts = podcasts
         library.drive = DriveFiles(auth: google)
         sync.player = player
-        player.onSyncWorthy = { [weak self] reason in self?.sync.request(reason, delay: reason == "playing" ? 1 : 4) }
+        player.onSyncWorthy = { [weak self] reason in
+            guard let self else { return }
+            self.sync.request(reason, delay: reason == "playing" ? 1 : 4)
+            WidgetBridge.update(self)
+        }
         ThemeColors.install(theme: settings.themeID, trueBlack: settings.trueBlack)
         player.castLink = cast
         cast.player = player
@@ -106,6 +117,12 @@ final class AppModel {
             let p = f.split(separator: ",")
             if p.count == 2, let n = Int(p[0]), let pct = Double(p[1]) { fakeDownloads = (n, pct / 100) }
         }
+        if let t = args.string(forKey: "EmberTheme") {
+            settings.themeID = t
+            settings.trueBlack = args.bool(forKey: "EmberTrueBlack")
+            ThemeColors.apply(theme: t, trueBlack: settings.trueBlack)
+        }
+        if let s = args.string(forKey: "EmberSheet") { testSheet = s }
         if args.object(forKey: "EmberChapterFocus") != nil { testChapterFocus = args.integer(forKey: "EmberChapterFocus") }
         if let route = args.string(forKey: "EmberRoute") { testRoute = route }
         if args.bool(forKey: "EmberSyncTest") { sync.enableTestFolder() }
@@ -125,6 +142,7 @@ final class AppModel {
 
     func background() {
         player.saveProgress()
+        WidgetBridge.update(self, now: true)
         Backup.daily(self)
         sync.request("background", delay: 0)
         scheduleRefresh()

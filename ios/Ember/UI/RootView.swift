@@ -6,6 +6,7 @@ struct RootView: View {
     @Environment(\.horizontalSizeClass) private var hSize
     @Environment(\.colorScheme) private var scheme
     @State private var shelfName = ""
+    @State private var widgets = false
 
     var body: some View {
         @Bindable var app = app
@@ -66,6 +67,10 @@ struct RootView: View {
             }
         }
         .overlay(alignment: .top) { NoticeToast() }
+        .sheet(isPresented: $widgets) { WidgetPreviews() }
+        .sheet(item: Binding(get: { app.testSheet.map(FinishedItem.init) }, set: { if $0 == nil { app.testSheet = nil } })) { s in
+            TestSheet(name: s.id)
+        }
         .tint(Theme.accent(settings: app.settings, bookColor: app.player.loaded?.color, dark: scheme == .dark))
         .task(id: app.testRoute) { openTestRoute() }
     }
@@ -87,6 +92,10 @@ struct RootView: View {
         case "player": if hSize != .regular { app.playerOpen = true }  // iPad: the player column is already open
         case "profile": app.profileOpen = true
         case "car": app.carModeOpen = true
+        case "widgets": widgets = true
+        case "clip":
+            if hSize != .regular { app.playerOpen = true }
+            app.testPlayerSheet = "clip"
         case "finished":
             app.selectedTab = .home
             app.player.finished = app.settings.lastBookID ?? "demo-0"
@@ -260,6 +269,32 @@ private extension View {
             tabViewBottomAccessory { MiniPlayer() }
         } else {
             self
+        }
+    }
+}
+
+
+/// Screens the simulator checks open directly (-EmberSheet name).
+private struct TestSheet: View {
+    @Environment(AppModel.self) private var app
+    let name: String
+
+    var body: some View {
+        let book = app.settings.lastBookID ?? "demo-0"
+        NavigationStack {
+            switch name {
+            case "recap": RecapView()
+            case "quote":
+                if let c = app.library.clips().last { QuoteCardView(source: CardSource(clip: c)) }
+            case "clips": ClipsView()
+            case "edit": EditBookView(bookID: book)
+            case "chapters": ChapterEditorView(bookID: book)
+            case "merge": MergeSheet(bookID: book)
+            case "external": AddExternalView()
+            case "notes": NotesExportView()
+            case "lookup": BookInfoSheet(title: "Project Hail Mary", author: "Andy Weir") { _ in }
+            default: Text(name)
+            }
         }
     }
 }

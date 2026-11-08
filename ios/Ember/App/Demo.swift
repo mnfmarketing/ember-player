@@ -101,6 +101,24 @@ enum Demo {
             lib.context.insert(b)
         }
         lib.context.insert(Bookmark(bookID: "demo-0", positionMs: 95_000, note: "The night market scene. Come back to this.", chapterTitle: "The Night Market", createdAt: now - 86_400_000))
+        if let b0 = lib.book("demo-0") {
+            b0.narrator = "Sam Okafor"
+            lib.context.insert(Clip(mediaID: "demo-0", title: b0.title, subtitle: b0.author, startMs: 62_000, endMs: 92_000,
+                                    note: "Every lantern in Vell was lit by someone who meant to come back for it.", chapterTitle: "The Night Market",
+                                    coverFile: b0.coverFile, color: b0.coverColor, createdAt: now - 2 * 3_600_000))
+            lib.context.insert(Clip(mediaID: "demo-0", title: b0.title, subtitle: b0.author, startMs: 140_000, endMs: 170_000,
+                                    note: "", chapterTitle: "Lanterns", coverFile: b0.coverFile, color: b0.coverColor, createdAt: now - 3_600_000))
+        }
+        let ext = Book(id: "demo-ext", title: "The Quiet Engine")
+        ext.author = "Priya Natarajan"
+        ext.source = Book.sourceExternal
+        ext.externalApp = "AUDIBLE"
+        ext.durationMs = 100
+        ext.positionMs = 35
+        ext.status = Book.statusInProgress
+        ext.lastPlayedAt = now - 7 * 86_400_000
+        ext.coverColor = 0x5B3A8C
+        lib.context.insert(ext)
         let shelf = Shelf(name: "Favorites")
         shelf.books = ["demo-0", "demo-2"]
         lib.context.insert(shelf)

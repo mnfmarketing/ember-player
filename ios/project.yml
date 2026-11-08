@@ -28,9 +28,15 @@ targets:
     platform: iOS
     sources:
       - path: Ember
+      - path: Shared
     dependencies:
       - package: GoogleCast
         product: GoogleCastDynamic
+      - target: EmberWidgets
+    entitlements:
+      path: Ember/Ember.entitlements
+      properties:
+        com.apple.security.application-groups: [group.app.ember.audiobooks]
     settings:
       base:
         SWIFT_OBJC_BRIDGING_HEADER: Ember/Ember-Bridging-Header.h
@@ -75,6 +81,31 @@ targets:
         CFBundleURLTypes:
           - CFBundleURLName: app.ember.google
             CFBundleURLSchemes: ["$(EMBER_GOOGLE_SCHEME)"]
+  EmberWidgets:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Widgets
+      - path: Shared
+    entitlements:
+      path: Widgets/EmberWidgets.entitlements
+      properties:
+        com.apple.security.application-groups: [group.app.ember.audiobooks]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: app.ember.audiobooks.widgets
+        PRODUCT_NAME: EmberWidgets
+        TARGETED_DEVICE_FAMILY: "1,2"
+        SWIFT_ACTIVE_COMPILATION_CONDITIONS: "$(inherited) WIDGET_EXTENSION"
+        SKIP_INSTALL: YES
+    info:
+      path: Widgets/Info.plist
+      properties:
+        CFBundleDisplayName: Ember
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
   EmberTests:
     type: bundle.unit-test
     platform: iOS

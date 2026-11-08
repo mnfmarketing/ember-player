@@ -3,7 +3,7 @@ import SwiftData
 
 @main
 struct EmberApp: App {
-    @State private var model = AppModel()
+    @State private var model = AppModel.shared
     @Environment(\.scenePhase) private var phase
 
     var body: some Scene {

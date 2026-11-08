@@ -186,3 +186,37 @@ struct CarModeView: View {
         }
     }
 }
+
+/// The widgets as they'd look on the Home and Lock Screens (for the simulator checks).
+struct WidgetPreviews: View {
+    @Environment(AppModel.self) private var app
+
+    var body: some View {
+        let s = WidgetBridge.snapshot(app)
+        let img = Covers.image(app.player.loaded?.coverFile)
+        ScrollView {
+            VStack(spacing: 20) {
+                Text("Widgets").font(.title2.weight(.bold))
+                HStack(spacing: 16) {
+                    tile(170, 170) { NowPlayingWidgetView(snap: s, image: img, family: "small") }
+                    tile(170, 170, bg: AnyView(Color(red: 0.07, green: 0.06, blue: 0.07))) { ListeningWidgetView(snap: s) }
+                }
+                tile(364, 170) { NowPlayingWidgetView(snap: s, image: img, family: "medium") }
+                HStack(spacing: 16) {
+                    LockScreenWidgetView(snap: s, family: "rectangular").padding(10).frame(width: 220, height: 76)
+                        .background(.black.opacity(0.55), in: RoundedRectangle(cornerRadius: 16)).foregroundStyle(.white)
+                    LockScreenWidgetView(snap: s, family: "circular").frame(width: 64, height: 64).padding(6)
+                        .background(.black.opacity(0.55), in: Circle()).foregroundStyle(.white)
+                }
+            }
+            .padding(20)
+        }
+        .background(LinearGradient(colors: [Color(hex: 0x3B5B8C), Color(hex: 0x8C5B7A)], startPoint: .top, endPoint: .bottom).ignoresSafeArea())
+    }
+
+    private func tile<V: View>(_ w: CGFloat, _ h: CGFloat, bg: AnyView? = nil, @ViewBuilder _ v: () -> V) -> some View {
+        v().padding(16).frame(width: w, height: h)
+            .background(bg ?? AnyView(NowPlayingWidgetView.background(WidgetBridge.snapshot(app))))
+            .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
+    }
+}

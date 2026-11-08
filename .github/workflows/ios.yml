@@ -64,6 +64,12 @@ jobs:
           grep -q "BUILD SUCCEEDED" ../ios-out/release.log
           mkdir -p Payload
           cp -R build-device/Build/Products/Release-iphoneos/Ember.app Payload/
+          # A placeholder signature that carries the entitlements (the widgets' App Group), so
+          # SideStore knows to set it up when it signs the app with your Apple ID.
+          for f in Payload/Ember.app/Frameworks/*; do [ -e "$f" ] && codesign -f -s - "$f"; done
+          for x in Payload/Ember.app/PlugIns/*.appex; do [ -e "$x" ] && codesign -f -s - --entitlements Widgets/EmberWidgets.entitlements "$x"; done
+          codesign -f -s - --entitlements Ember/Ember.entitlements Payload/Ember.app
+          codesign -d --entitlements - Payload/Ember.app 2>&1 | tail -5
           zip -qry "../Ember-iOS-$N.ipa" Payload
           ls -la ../Ember-iOS-$N.ipa
 

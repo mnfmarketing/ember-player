@@ -225,6 +225,7 @@ final class Player {
         isPlaying = true
         bedtime()
         updateFlip()
+        onSyncWorthy?("play")
         lastTick = Date()
         log(.play, at: positionMs)
         UserDefaults.standard.removeObject(forKey: "pausedAt")
