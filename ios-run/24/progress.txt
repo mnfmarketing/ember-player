@@ -1,7 +1,0 @@
-demo ready on FCC5F673-7BEC-4A7D-8F2A-4DC35E2668EC after 3s
-TIMED OUT: xcrun simctl launch 65E439BE-B365-4ED5-AD53-88133BA3829C app.ember.audiobooks -EmberDemo YES
-demo ready on 65E439BE-B365-4ED5-AD53-88133BA3829C after 180s
-pid 31939
-  PID  %CPU STAT COMMAND
-31939  65.1 Rs   /Users/runner/Library/Developer/CoreSimulator/Devices/FCC5F673-7BEC-4A7D-8F2A-4DC35E2668EC/data/Containers/Bundle/Application/C5D8077D-D647-4A56-BEA6-C10D92F9AA6D/Ember.app/Ember -EmberDemo YES -EmberRoute home -EmberSheet newclip
-p-f-02-newclip
