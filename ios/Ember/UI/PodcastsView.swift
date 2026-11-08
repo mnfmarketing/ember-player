@@ -34,6 +34,9 @@ struct PodcastsView: View {
         .navigationTitle("Podcasts")
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink { DownloadsView() } label: { DownloadIcon() }
+            }
+            ToolbarItem(placement: .topBarTrailing) {
                 Menu {
                     Button { finding = true } label: { Label("Find a show", systemImage: "magnifyingglass") }
                     Button { addingRSS = true } label: { Label("Add by RSS link", systemImage: "link") }

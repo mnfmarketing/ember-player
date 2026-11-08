@@ -2,39 +2,242 @@ import SwiftUI
 import SwiftData
 import UniformTypeIdentifiers
 
-enum SettingsSection: Hashable { case appearance, playback, library, podcasts, sync, backup, about }
+/// The Settings pages, in the order the list shows them (same topics as Ember on the Fold).
+enum SettingsSection: String, CaseIterable, Hashable, Identifiable {
+    case appearance, playback, library, downloads, podcasts, sync, backup, goals, about
+    var id: String { rawValue }
 
-struct SettingsView: View {
-    @Environment(AppModel.self) private var app
-    /// Show just one topic (from the profile page), or everything (nil).
-    var section: SettingsSection?
-
-    var body: some View {
-        Form {
-            if show(.appearance) { AppearanceSection() }
-            if show(.playback) { PlaybackSection() }
-            if show(.library) { LibrarySection() }
-            if show(.podcasts) { PodcastSection() }
-            if show(.sync) { SyncSection() }
-            if show(.backup) { BackupSection() }
-            if show(.about) { AboutSection() }
-        }
-        .navigationTitle(title)
-        .navigationBarTitleDisplayMode(.inline)
-    }
-
-    private func show(_ s: SettingsSection) -> Bool { section == nil || section == s }
-
-    private var title: String {
-        switch section {
+    var title: String {
+        switch self {
         case .appearance: return "Appearance"
         case .playback: return "Playback"
-        case .library: return "Library folders"
+        case .library: return "Library"
+        case .downloads: return "Downloads and storage"
         case .podcasts: return "Podcasts"
         case .sync: return "Sync"
         case .backup: return "Backup and restore"
-        case .about: return "Good to know"
-        case nil: return "Settings"
+        case .goals: return "Goals"
+        case .about: return "About"
+        }
+    }
+
+    var icon: String {
+        switch self {
+        case .appearance: return "circle.lefthalf.filled"
+        case .playback: return "play.fill"
+        case .library: return "folder.fill"
+        case .downloads: return "arrow.down.circle.fill"
+        case .podcasts: return "mic.fill"
+        case .sync: return "arrow.triangle.2.circlepath"
+        case .backup: return "externaldrive.fill"
+        case .goals: return "flag.fill"
+        case .about: return "info"
+        }
+    }
+
+    var color: Color {
+        switch self {
+        case .appearance: return Color(hex: 0x7E8CE0)
+        case .playback: return Color(hex: 0xE2683C)
+        case .library: return Color(hex: 0x3FA7D6)
+        case .downloads: return Color(hex: 0x4CAF7D)
+        case .podcasts: return Color(hex: 0x9C6ADE)
+        case .sync: return Color(hex: 0x2BA3A0)
+        case .backup: return Color(hex: 0x4A8FD6)
+        case .goals: return Color(hex: 0xE0A030)
+        case .about: return Color(hex: 0x8A8F98)
+        }
+    }
+}
+
+/// Settings opened from elsewhere: a page, or the list (nil).
+struct SettingsTarget: Hashable, Identifiable {
+    var section: SettingsSection?
+    var id: String { section?.rawValue ?? "list" }
+}
+
+/// One setting the search box can find: its name, other words for it, and its page.
+private struct SettingHit: Identifiable {
+    let label: String
+    let section: SettingsSection
+    var words: String = ""
+    var id: String { label }
+}
+
+private let settingIndex: [SettingHit] = [
+    SettingHit(label: "Light or dark", section: .appearance, words: "dark mode night match phone theme"),
+    SettingHit(label: "Accent color", section: .appearance, words: "colour highlight book cover"),
+    SettingHit(label: "Skip back", section: .playback, words: "rewind seconds jump"),
+    SettingHit(label: "Skip forward", section: .playback, words: "seconds jump ahead"),
+    SettingHit(label: "Rewind after a pause", section: .playback, words: "smart rewind resume"),
+    SettingHit(label: "Play the next book in a series", section: .playback, words: "series autoplay auto-play"),
+    SettingHit(label: "Time left counts the whole book", section: .playback, words: "chapter remaining"),
+    SettingHit(label: "Library folders", section: .library, words: "add folder files icloud rescan scan"),
+    SettingHit(label: "Google Drive", section: .library, words: "drive cloud stream"),
+    SettingHit(label: "Downloads", section: .downloads, words: "downloaded offline space storage episodes"),
+    SettingHit(label: "Episodes kept per show", section: .podcasts, words: "auto download keep"),
+    SettingHit(label: "Check for new episodes", section: .podcasts, words: "refresh"),
+    SettingHit(label: "Sync with Google Drive", section: .sync, words: "devices fold android other device"),
+    SettingHit(label: "Save a backup", section: .backup, words: "backup export"),
+    SettingHit(label: "Restore from a backup", section: .backup, words: "restore import"),
+    SettingHit(label: "Daily listening goal", section: .goals, words: "minutes streak"),
+    SettingHit(label: "Books this year", section: .goals, words: "yearly goal"),
+    SettingHit(label: "Tips and gestures", section: .about, words: "good to know pocket lock headphones scrubbing"),
+    SettingHit(label: "Version", section: .about, words: "build update"),
+]
+
+struct SettingsView: View {
+    /// Show one page (from the profile page), or the list of pages (nil).
+    var section: SettingsSection?
+
+    var body: some View {
+        if let section { SettingsPage(section: section) } else { SettingsList() }
+    }
+}
+
+/// One topic's settings on their own page.
+struct SettingsPage: View {
+    let section: SettingsSection
+
+    var body: some View {
+        Form {
+            switch section {
+            case .appearance: AppearanceSection()
+            case .playback: PlaybackSection()
+            case .library: LibrarySection()
+            case .downloads: DownloadsSection()
+            case .podcasts: PodcastSection()
+            case .sync: SyncSection()
+            case .backup: BackupSection()
+            case .goals: GoalsSection()
+            case .about: AboutSection()
+            }
+        }
+        .navigationTitle(section.title)
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+/// The list of pages, each with what's set there, and a search box. With room (iPad), the list on
+/// the left and the open page on the right.
+private struct SettingsList: View {
+    @Environment(AppModel.self) private var app
+    @Query(sort: \LibraryFolder.name) private var folders: [LibraryFolder]
+    @State private var q = ""
+    @State private var selected: SettingsSection = .appearance
+
+    var body: some View {
+        GeometryReader { geo in
+            if geo.size.width >= 680 {
+                HStack(spacing: 0) {
+                    list(wide: true).frame(width: min(360, geo.size.width * 0.42))
+                    Divider()
+                    SettingsPage(section: selected).id(selected)
+                }
+            } else {
+                list(wide: false)
+            }
+        }
+        .navigationTitle("Settings")
+        .navigationBarTitleDisplayMode(.inline)
+        .searchable(text: $q, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search settings")
+        .onAppear { if let t = app.testSettingsQuery { q = t; app.testSettingsQuery = nil } }
+    }
+
+    @ViewBuilder
+    private func list(wide: Bool) -> some View {
+        let words = q.lowercased().split(separator: " ").map(String.init)
+        List {
+            if words.isEmpty {
+                Section {
+                    ForEach(SettingsSection.allCases) { s in
+                        row(s, title: s.title, sub: summary(s), wide: wide)
+                    }
+                }
+            } else {
+                let hits = settingIndex.filter { h in
+                    let text = (h.label + " " + h.words + " " + h.section.title).lowercased()
+                    return words.allSatisfy { text.contains($0) }
+                }
+                if hits.isEmpty {
+                    Text("Nothing matches \u{201C}\(q.trimmingCharacters(in: .whitespaces))\u{201D}").foregroundStyle(.secondary)
+                }
+                ForEach(hits) { h in row(h.section, title: h.label, sub: h.section.title, wide: wide) }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func row(_ s: SettingsSection, title: String, sub: String, wide: Bool) -> some View {
+        let label = HStack(spacing: 14) {
+            Image(systemName: s.icon).font(.system(size: 15, weight: .semibold)).foregroundStyle(.white)
+                .frame(width: 30, height: 30).background(s.color, in: RoundedRectangle(cornerRadius: 8))
+            VStack(alignment: .leading, spacing: 1) {
+                Text(title)
+                if !sub.isEmpty { Text(sub).font(.caption).foregroundStyle(.secondary).lineLimit(1) }
+            }
+        }
+        if wide {
+            Button { selected = s } label: {
+                HStack { label; Spacer(); Image(systemName: "chevron.right").font(.caption.weight(.semibold)).foregroundStyle(.tertiary) }
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .listRowBackground(selected == s && q.isEmpty ? Color.accentColor.opacity(0.15) : nil)
+        } else {
+            NavigationLink { SettingsPage(section: s) } label: { label }
+        }
+    }
+
+    private func summary(_ s: SettingsSection) -> String {
+        let st = app.settings
+        switch s {
+        case .appearance:
+            let mode = st.appearance == "light" ? "Light" : st.appearance == "dark" ? "Dark" : "Match phone"
+            let accent = st.accentMode == "book" ? "accent matches the book" : st.accentMode == "fixed" ? "fixed accent" : "Ember orange"
+            return "\(mode) · \(accent)"
+        case .playback: return "Back \(st.skipBackSec)s · forward \(st.skipForwardSec)s"
+        case .library: return folders.isEmpty ? "No folders yet" : "\(folders.count) folder\(folders.count == 1 ? "" : "s")"
+        case .downloads:
+            let a = app.downloadActivity
+            return a.count > 0 ? "Downloading \(a.count)" : "Episodes and Google Drive books"
+        case .podcasts: return "Keep up to \(st.autoDownloadCount) per show"
+        case .sync:
+            if !app.sync.isOn { return "Off" }
+            if let at = app.sync.lastSyncAt { return "On · synced \(at.formatted(.relative(presentation: .named)))" }
+            return "On"
+        case .backup:
+            if let at = st.lastBackupAt ?? st.lastAutoBackupAt { return "Last backup \(at.formatted(.relative(presentation: .named)))" }
+            return "A backup each day in Files"
+        case .goals: return "\(st.dailyGoalMin) min a day · \(st.yearlyGoalBooks) books a year"
+        case .about: return "Build \(Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "1") · tips and gestures"
+        }
+    }
+}
+
+private struct DownloadsSection: View {
+    @Environment(AppModel.self) private var app
+
+    var body: some View {
+        Section {
+            NavigationLink { DownloadsView() } label: { Label("Downloads", systemImage: "arrow.down.circle") }
+        } footer: {
+            Text("What's downloading, and the episodes and Google Drive books saved on this \(UIDevice.current.userInterfaceIdiom == .pad ? "iPad" : "iPhone"). Remove them there to free up space.")
+        }
+    }
+}
+
+private struct GoalsSection: View {
+    @Environment(AppModel.self) private var app
+
+    var body: some View {
+        Section {
+            Picker("Daily listening goal", selection: Binding(get: { app.settings.dailyGoalMin }, set: { app.settings.dailyGoalMin = $0; app.sync.request("goal") })) {
+                ForEach([15, 30, 45, 60, 90], id: \.self) { Text("\($0) min").tag($0) }
+            }
+            Picker("Books this year", selection: Binding(get: { app.settings.yearlyGoalBooks }, set: { app.settings.yearlyGoalBooks = $0; app.sync.request("goal") })) {
+                ForEach([12, 24, 36, 52, 100], id: \.self) { Text("\($0)").tag($0) }
+            }
         }
     }
 }
@@ -250,7 +453,10 @@ struct BackupDocument: FileDocument {
 
 private struct AboutSection: View {
     var body: some View {
-        Section("Good to know") {
+        Section {
+            LabeledContent("Version", value: "Ember for \(UIDevice.current.userInterfaceIdiom == .pad ? "iPad" : "iPhone") \(Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "1")")
+        }
+        Section("Tips and gestures") {
             info("Scrubbing", "Drag the slider; Ember only moves when you let go. Tap the time left to switch between the chapter and the whole book.")
             info("Sleep timer", "Shake your phone to start it over. Shake within 5 minutes after it stops to keep listening.")
             info("Pocket lock", "Tap the lock in the player so pocket taps do nothing. Press and hold to unlock. Headphone and lock screen controls keep working.")

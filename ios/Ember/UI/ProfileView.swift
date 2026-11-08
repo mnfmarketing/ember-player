@@ -64,13 +64,10 @@ struct ProfileView: View {
                 }
 
                 Section("Settings") {
-                    NavigationLink { SettingsView(section: .appearance) } label: { Row(icon: "circle.lefthalf.filled", color: .orange, title: "Appearance") }
-                    NavigationLink { SettingsView(section: .playback) } label: { Row(icon: "play.fill", color: .orange, title: "Playback") }
-                    NavigationLink { SettingsView(section: .library) } label: { Row(icon: "folder.fill", color: .green, title: "Library folders") }
-                    NavigationLink { SettingsView(section: .podcasts) } label: { Row(icon: "mic.fill", color: Color(hex: 0x8A3B12), title: "Podcasts") }
-                    NavigationLink { SettingsView(section: .sync) } label: { Row(icon: "arrow.triangle.2.circlepath", color: .blue, title: "Sync with Google Drive") }
-                    NavigationLink { SettingsView(section: .backup) } label: { Row(icon: "externaldrive.fill", color: .gray, title: "Backup and restore") }
-                    NavigationLink { SettingsView(section: .about) } label: { Row(icon: "info", color: .blue, title: "Good to know") }
+                    // The same pages as the Settings list; each opens straight to its page.
+                    ForEach(SettingsSection.allCases) { s in
+                        NavigationLink { SettingsView(section: s) } label: { Row(icon: s.icon, color: s.color, title: s.title) }
+                    }
                 }
 
                 Section {
@@ -89,6 +86,9 @@ struct ProfileView: View {
                         .buttonStyle(.glassProminent)
                         .accessibilityLabel("Done")
                 }
+            }
+            .navigationDestination(item: Binding(get: { app.openSettings }, set: { app.openSettings = $0 })) { t in
+                SettingsView(section: t.section)
             }
             .onChange(of: photo) { _, item in
                 guard let item else { return }
@@ -231,20 +231,66 @@ struct UpNextBooksView: View {
 
 struct DownloadsView: View {
     @Environment(AppModel.self) private var app
+    @Query(sort: \Book.title) private var books: [Book]
 
     var body: some View {
         let _ = app.podcasts.version
         let eps = app.podcasts.downloaded()
+        let saving = app.library.saving
+        let downloadingEps = app.podcasts.downloading.keys.compactMap { app.podcasts.episode($0) }
+        let savedBooks = books.filter { saving[$0.id] == nil && app.library.isDownloaded($0.id) == true }
         List {
-            if eps.isEmpty { Text("Downloaded episodes show up here.").foregroundStyle(.secondary) }
-            ForEach(eps) { e in EpisodeRow(episode: e, showTitle: true) }
-            if !eps.isEmpty {
-                Button("Remove played downloads", role: .destructive) {
-                    for e in eps where e.played { app.podcasts.removeDownload(e) }
-                    app.podcasts.changed()
+            if !saving.isEmpty || !downloadingEps.isEmpty || app.fakeDownloads != nil {
+                Section("Downloading") {
+                    ForEach(books.filter { saving[$0.id] != nil }) { b in
+                        let p = saving[b.id] ?? (0, 1)
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text(b.displayTitle).font(.subheadline.weight(.semibold)).lineLimit(1)
+                            ProgressView(value: Double(p.0), total: Double(max(p.1, 1)))
+                            Text("\(p.0) of \(p.1) files").font(.caption).foregroundStyle(.secondary)
+                        }
+                    }
+                    ForEach(downloadingEps) { e in
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text(e.title).font(.subheadline.weight(.semibold)).lineLimit(1)
+                            ProgressView().progressViewStyle(.linear)
+                        }
+                    }
+                    if let f = app.fakeDownloads {
+                        // The simulator checks' pretend downloads.
+                        ForEach(0..<f.count, id: \.self) { i in
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text("Test download \(i + 1)").font(.subheadline.weight(.semibold))
+                                ProgressView(value: f.progress)
+                            }
+                        }
+                    }
+                }
+            }
+            Section("Books on this \(UIDevice.current.userInterfaceIdiom == .pad ? "iPad" : "iPhone")") {
+                if savedBooks.isEmpty { Text("Google Drive books you download show up here.").foregroundStyle(.secondary) }
+                ForEach(savedBooks) { b in
+                    NavigationLink(value: BookRoute(id: b.id)) {
+                        HStack {
+                            CoverView(file: b.coverFile, title: b.displayTitle, color: b.coverColor, corner: 6).frame(width: 44, height: 44)
+                            Text(b.displayTitle).font(.subheadline.weight(.semibold)).lineLimit(2)
+                        }
+                    }
+                    .swipeActions { Button("Remove", role: .destructive) { app.library.removeDownload(b.id) } }
+                }
+            }
+            Section("Episodes") {
+                if eps.isEmpty { Text("Downloaded episodes show up here.").foregroundStyle(.secondary) }
+                ForEach(eps) { e in EpisodeRow(episode: e, showTitle: true) }
+                if !eps.isEmpty {
+                    Button("Remove played downloads", role: .destructive) {
+                        for e in eps where e.played { app.podcasts.removeDownload(e) }
+                        app.podcasts.changed()
+                    }
                 }
             }
         }
         .navigationTitle("Downloads")
+        .navigationDestination(for: BookRoute.self) { BookView(bookID: $0.id) }
     }
 }

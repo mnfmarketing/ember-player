@@ -80,6 +80,13 @@ struct RootView: View {
         case "search": app.selectedTab = .search
         case "player": if hSize != .regular { app.playerOpen = true }  // iPad: the player column is already open
         case "profile": app.profileOpen = true
+        case "downloads":
+            app.selectedTab = .books
+            app.openDownloads = true
+        case let s where s.hasPrefix("settings"):
+            // "settings" (the list) or "settings-playback" (a page).
+            app.openSettings = SettingsTarget(section: SettingsSection(rawValue: String(r.dropFirst("settings-".count))))
+            app.profileOpen = true
         case "book":
             app.selectedTab = .home
             app.openBook = BookRoute(id: app.settings.lastBookID ?? "demo-0")

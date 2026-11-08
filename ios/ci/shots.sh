@@ -72,6 +72,21 @@ for mode in dark light; do
   shot "$PAD" "t-$m-04-book" book 9
 done
 
+# Settings as a list with its own pages, search, and downloads one tap away (pretend downloads).
+xcrun simctl ui "$PHONE" appearance light
+xcrun simctl ui "$PAD" appearance light
+shot "$PHONE" "p-set-01-settings-list" settings 7
+shot "$PHONE" "p-set-02-settings-page" settings-playback 7
+shot "$PHONE" "p-set-03-settings-search" settings 7 -EmberSettingsSearch rewind
+shot "$PHONE" "p-set-04-books-downloading" books 7 -EmberFakeDownloads 2,45
+shot "$PHONE" "p-set-05-home-downloading" home 8 -EmberFakeDownloads 2,45
+shot "$PHONE" "p-set-06-downloads" downloads 7 -EmberFakeDownloads 2,45
+shot "$PHONE" "p-set-07-podcasts-idle" podcasts 6
+shot "$PAD" "t-set-01-settings-two-panes" settings 9
+shot "$PAD" "t-set-02-books-downloading" books 9 -EmberFakeDownloads 1,70
+xcrun simctl ui "$PHONE" appearance dark
+shot "$PHONE" "p-set-08-settings-dark" settings 7
+
 # Sync: another device moved this book on, so Ember asks before jumping.
 xcrun simctl ui "$PHONE" appearance dark
 shot "$PHONE" "p-sync-prompt" home 10 -EmberSyncTest YES -EmberSyncFake demo-0,360000

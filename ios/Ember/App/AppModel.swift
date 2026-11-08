@@ -25,8 +25,29 @@ final class AppModel {
     var openShow: ShowRoute?
     /// "New shelf…" from a book's menu: the book to put on it.
     var newShelfFor: String?
+    /// Settings opened in the profile sheet: a page, or the list.
+    var openSettings: SettingsTarget?
+    /// Downloads opened from the Books tab (and by the checks).
+    var openDownloads = false
     /// Screens opened by the simulator checks (launch argument -EmberRoute).
     var testRoute: String?
+    /// The checks: text typed into Settings' search box (-EmberSettingsSearch), pretend downloads (-EmberFakeDownloads 2,45).
+    var testSettingsQuery: String?
+    var fakeDownloads: (count: Int, progress: Double)?
+
+    /// What's downloading now (episodes and Google Drive books): how many, and how far along in all
+    /// (nil when that can't be told: episodes don't report their progress).
+    var downloadActivity: (count: Int, progress: Double?) {
+        if let f = fakeDownloads { return (f.count, f.progress) }
+        let eps = podcasts.downloading.count
+        let books = Array(library.saving.values)
+        let count = eps + books.count
+        guard count > 0 else { return (0, nil) }
+        if eps > 0 { return (count, nil) }
+        let done = books.reduce(0) { $0 + $1.0 }
+        let total = books.reduce(0) { $0 + $1.1 }
+        return (count, total > 0 ? Double(done) / Double(total) : nil)
+    }
 
     init() {
         let schema = Schema([Book.self, Track.self, Chapter.self, Bookmark.self, ListenEvent.self, DayListening.self,
@@ -63,6 +84,11 @@ final class AppModel {
     func started() async {
         let args = UserDefaults.standard
         if args.bool(forKey: "EmberDemo") { await Demo.seed(self) }
+        if let q = args.string(forKey: "EmberSettingsSearch") { testSettingsQuery = q }
+        if let f = args.string(forKey: "EmberFakeDownloads") {
+            let p = f.split(separator: ",")
+            if p.count == 2, let n = Int(p[0]), let pct = Double(p[1]) { fakeDownloads = (n, pct / 100) }
+        }
         if let route = args.string(forKey: "EmberRoute") { testRoute = route }
         if args.bool(forKey: "EmberSyncTest") { sync.enableTestFolder() }
         player.restoreLast()

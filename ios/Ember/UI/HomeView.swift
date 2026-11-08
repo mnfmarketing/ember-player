@@ -18,6 +18,9 @@ struct HomeView: View {
                 }
                 .accessibilityAddTraits(.isHeader)
 
+                // Only while something downloads.
+                DownloadingBar()
+
                 if let b = continueBook {
                     ContinueCard(book: b)
                 } else {

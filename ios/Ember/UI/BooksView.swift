@@ -58,6 +58,7 @@ struct BooksView: View {
                     }
                 } label: { Image(systemName: "line.3.horizontal.decrease") }
                 .accessibilityLabel("Sort")
+                Button { app.openDownloads = true } label: { DownloadIcon() }
                 Button { picking = true } label: { Image(systemName: "plus") }
                     .accessibilityLabel("Add a folder")
             }
@@ -68,6 +69,7 @@ struct BooksView: View {
             if case .success(let url) = result { Task { await app.library.addFolder(url) } }
         }
         .navigationDestination(for: BookRoute.self) { BookView(bookID: $0.id) }
+        .navigationDestination(isPresented: Binding(get: { app.openDownloads }, set: { app.openDownloads = $0 })) { DownloadsView() }
     }
 
     private var shown: [Book] {
