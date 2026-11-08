@@ -88,6 +88,46 @@ shot "$PAD" "t-set-03-settings-page" settings-library 9
 xcrun simctl ui "$PHONE" appearance dark
 shot "$PHONE" "p-set-08-settings-dark" settings 7
 
+# Ember-iOS-3: themes, sound, sleep, car mode, clips, cards, editing, widgets.
+xcrun simctl ui "$PHONE" appearance light
+xcrun simctl ui "$PAD" appearance dark
+shot "$PHONE" "p-n-01-appearance" settings-appearance 7
+shot "$PHONE" "p-n-02-sleep" settings-sleep 7 -bedtimeOn YES -sleepFade YES
+shot "$PHONE" "p-n-03-sound" settings-sound 7 -eqEnabled YES -skipSilence YES
+shot "$PHONE" "p-n-04-car-settings" settings-car 7
+shot "$PHONE" "p-n-05-playback" settings-playback 7
+shot "$PHONE" "p-n-06-player" player 8
+shot "$PHONE" "p-n-07-clip" clip 9
+shot "$PHONE" "p-n-08-clips" home 8 -EmberSheet clips
+shot "$PHONE" "p-n-09-quote" home 10 -EmberSheet quote
+shot "$PHONE" "p-n-10-recap" home 10 -EmberSheet recap
+shot "$PHONE" "p-n-11-edit" home 8 -EmberSheet edit
+shot "$PHONE" "p-n-12-chapters" home 8 -EmberSheet chapters
+shot "$PHONE" "p-n-13-chapters-typing" home 9 -EmberSheet chapters -EmberChapterFocus 3
+shot "$PHONE" "p-n-14-merge" home 8 -EmberSheet merge
+shot "$PHONE" "p-n-15-add-external" home 8 -EmberSheet external
+shot "$PHONE" "p-n-16-notes" home 8 -EmberSheet notes
+shot "$PHONE" "p-n-17-lookup" home 12 -EmberSheet lookup
+shot "$PHONE" "p-n-18-finished" finished 8
+shot "$PHONE" "p-n-19-car" car 8
+shot "$PHONE" "p-n-20-widgets" widgets 8
+shot "$PHONE" "p-n-21-external-book" book 8 -lastBookID demo-ext
+shot "$PHONE" "p-th-02-books-forest" books 7 -themeId forest
+shot "$PHONE" "p-th-03-settings-paper" settings 7 -themeId paper
+shot "$PHONE" "p-th-07-book-paper" book 7 -themeId paper
+xcrun simctl ui "$PHONE" appearance dark
+shot "$PHONE" "p-th-01-home-midnight" home 8 -themeId midnight
+shot "$PHONE" "p-th-04-home-trueblack" home 8 -themeId ocean -trueBlack YES
+shot "$PHONE" "p-th-05-appearance-slate" settings-appearance 7 -themeId slate
+shot "$PHONE" "p-th-06-profile-midnight" profile 7 -themeId midnight
+shot "$PHONE" "p-n-22-sound-dark" settings-sound 7 -eqEnabled YES
+shot "$PAD" "t-n-01-car" car 9
+shot "$PAD" "t-n-02-appearance" settings-appearance 9
+shot "$PAD" "t-n-03-home-midnight" home 9 -themeId midnight
+shot "$PAD" "t-n-04-recap" home 10 -EmberSheet recap
+shot "$PAD" "t-n-05-chapters" home 9 -EmberSheet chapters -EmberChapterFocus 2
+shot "$PAD" "t-n-06-player" player 9
+
 # Sync: another device moved this book on, so Ember asks before jumping.
 xcrun simctl ui "$PHONE" appearance dark
 shot "$PHONE" "p-sync-prompt" home 10 -EmberSyncTest YES -EmberSyncFake demo-0,360000
