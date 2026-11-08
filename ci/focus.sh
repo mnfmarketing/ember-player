@@ -34,13 +34,14 @@ check_editor() {  # $1 = screenshot prefix
   shot "$1-a-editor" 1
   tap_field 1; sleep 3
   shot "$1-b-lowest-field-typing" 1
-  adb shell input text "%sedited"; sleep 1
-  adb shell input keyevent KEYCODE_ENTER; sleep 2
-  shot "$1-c-next-field" 1
   tap_text "Done typing"; sleep 2
-  shot "$1-d-keyboard-away" 1
-  tap_field 3; sleep 3
-  shot "$1-e-another-field" 1
+  shot "$1-c-keyboard-away" 1
+  tap_field 4; sleep 3
+  adb shell input keyevent KEYCODE_MOVE_END
+  adb shell input text "%s2"; sleep 1
+  shot "$1-d-middle-field-typing" 1
+  adb shell input keyevent KEYCODE_ENTER; sleep 2
+  shot "$1-e-next-moves-down" 1
   adb shell input keyevent KEYCODE_BACK; sleep 2
   shot "$1-f-back-hides-keyboard" 1
   tap_text "Cancel"; sleep 1
