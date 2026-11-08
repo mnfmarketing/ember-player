@@ -93,6 +93,18 @@ shot "$PHONE" "p-set-08-settings-dark" settings 7
 
 fi
 
+# Just a few (commit message [few-shots]).
+if [ "${EMBER_SHOTS:-all}" = few ]; then
+  xcrun simctl ui "$PHONE" appearance light
+  shot "$PHONE" "p-f-01-clip" clip 12
+  shot "$PHONE" "p-f-02-merge" home 9 -EmberSheet merge
+  shot "$PHONE" "p-f-03-recap" home 10 -EmberSheet recap
+  shot "$PHONE" "p-f-04-clips" home 9 -EmberSheet clips
+  crashes
+  xcrun simctl shutdown all > /dev/null 2>&1 < /dev/null || true
+  exit 0
+fi
+
 # Ember-iOS-3: themes, sound, sleep, car mode, clips, cards, editing, widgets.
 xcrun simctl ui "$PHONE" appearance light
 xcrun simctl ui "$PAD" appearance dark
