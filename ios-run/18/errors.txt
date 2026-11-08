@@ -1,1 +1,0 @@
-Ember/Data/Library.swift:566:65: error: 'async' call in an autoclosure that does not support concurrency
