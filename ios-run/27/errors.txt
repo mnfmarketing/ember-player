@@ -1,1 +1,0 @@
-EmberTests/DriveStreamTests.swift:81: error: -[EmberTests.DriveStreamTests testTagWriterKeepsFilePlayable] : XCTAssertEqual failed: ("failed("The saved file didn\'t check out, so Ember put it back the way it was.")") is not equal to ("ok")

@@ -1,0 +1,5 @@
+TIMED OUT: xcrun simctl launch FCC5F673-7BEC-4A7D-8F2A-4DC35E2668EC app.ember.audiobooks -EmberDemo YES
+demo ready on FCC5F673-7BEC-4A7D-8F2A-4DC35E2668EC after 9s
+demo ready on 65E439BE-B365-4ED5-AD53-88133BA3829C after 45s
+p-f-02-search
+p-f-03-search-dark
