@@ -15,6 +15,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.layout.isImeVisible
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -93,6 +101,11 @@ fun ChapterEditorScreen(vm: MainViewModel, bookId: String, onDone: () -> Unit) {
         dirty = true
     }
 
+    // While the keyboard is up, the chapter list gets the room: the tips, the save-into-file card
+    // and the buttons step aside (they come back when the keyboard goes away).
+    val typing = WindowInsets.isImeVisible
+    val focusManager = LocalFocusManager.current
+
     Column(Modifier.fillMaxSize().imePadding()) {
         Row(
             Modifier.fillMaxWidth().statusBarsPadding().padding(4.dp),
@@ -105,7 +118,7 @@ fun ChapterEditorScreen(vm: MainViewModel, bookId: String, onDone: () -> Unit) {
             }
         }
 
-        FlowRow(
+        if (!typing) FlowRow(
             Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
@@ -120,7 +133,7 @@ fun ChapterEditorScreen(vm: MainViewModel, bookId: String, onDone: () -> Unit) {
                 leadingIcon = { Icon(Icons.Rounded.FormatListNumbered, null, Modifier.size(18.dp)) },
             )
         }
-        Text(
+        if (!typing) Text(
             if (here != null) {
                 "Tip: play the book to the right spot, then tap the pin on a chapter to move its start there."
             } else {
@@ -160,6 +173,15 @@ fun ChapterEditorScreen(vm: MainViewModel, bookId: String, onDone: () -> Unit) {
                                     dirty = true
                                 },
                                 singleLine = true,
+                                // Next goes to the following chapter's name; Done on the last one puts the keyboard away.
+                                keyboardOptions = KeyboardOptions(
+                                    capitalization = KeyboardCapitalization.Sentences,
+                                    imeAction = if (i == rows.lastIndex) ImeAction.Done else ImeAction.Next,
+                                ),
+                                keyboardActions = KeyboardActions(
+                                    onNext = { focusManager.moveFocus(FocusDirection.Down) },
+                                    onDone = { focusManager.clearFocus() },
+                                ),
                                 modifier = Modifier.weight(1f),
                             )
                             IconButton(onClick = { vm.playFrom(bookId, r.start) }) {
@@ -188,10 +210,28 @@ fun ChapterEditorScreen(vm: MainViewModel, bookId: String, onDone: () -> Unit) {
             }
         }
 
-        Box(Modifier.padding(horizontal = 16.dp)) {
+        if (!typing) Box(Modifier.padding(horizontal = 16.dp)) {
             SaveToFileOption(vm, bookId, writeFile, { writeFile = it }, what = "chapter names and times")
         }
-        Row(
+        if (typing) {
+            // A slim bar above the keyboard: put it away, or save straight from here.
+            Row(
+                Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 6.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                TextButton(onClick = { focusManager.clearFocus() }) { Text("Done typing") }
+                Spacer(Modifier.weight(1f))
+                TextButton(
+                    onClick = {
+                        focusManager.clearFocus()
+                        vm.saveChapters(bookId, rows.map { it.start to it.title }, writeFile = writeFile)
+                        onDone()
+                    },
+                    enabled = loaded && rows.isNotEmpty(),
+                ) { Text("Save chapters") }
+            }
+        } else Row(
             Modifier.fillMaxWidth().navigationBarsPadding().padding(16.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {

@@ -1,75 +1,64 @@
 # Steps for the batch being built (sourced by quick.sh; helpers come from lib.sh).
 # Replace these for each new batch. Name screenshots f01-..., f02-... so they sort together.
 #
-# Ember-25: downloads one tap away (Books and Podcasts buttons, a bar on Home), and Settings
-# as a searchable list where each topic has its own page (two panes unfolded).
+# Ember-26: editing chapters with the keyboard up. The list keeps the room (tips, the
+# save-into-file card and the buttons step aside), Next moves to the following chapter.
 say() { echo "== $*" | tee -a "$OUT/focus.txt"; }
 
-# ---- Downloads: nothing running, then pretend two are at 45% ----
-adb shell am start -n "$ACT" --es ember_fake_downloads off > /dev/null; sleep 1
-open_route library; shot f01-books-downloads-idle 3
-adb shell am start -n "$ACT" --es ember_fake_downloads "2,45" > /dev/null; sleep 3
-open_route library; shot f02-books-downloading 3
-open_route podcasts; shot f03-podcasts-downloading 3
-open_route home; adb shell input swipe 540 700 540 1900 300; shot f04-home-downloading-bar 3
-tap_text "Downloading 2 · 45%"; sleep 3; shot f05-bar-opens-downloads 1
-adb shell input keyevent KEYCODE_BACK; sleep 2
-open_route library; sleep 2
-tap_text "Downloads, 2 downloading"; sleep 3; shot f06-button-opens-downloads 1
-adb shell am start -n "$ACT" --es ember_fake_downloads off > /dev/null; sleep 5
-open_route home; shot f07-home-no-bar 3
+# Taps the n-th text box from the bottom of what's on screen (1 = lowest), the hardest case.
+tap_field() {
+  adb shell uiautomator dump /sdcard/ui.xml > /dev/null
+  adb pull /sdcard/ui.xml /tmp/ui.xml > /dev/null
+  python3 - "$1" <<'PY'
+import re, sys, subprocess
+n = int(sys.argv[1])
+xml = open('/tmp/ui.xml', encoding='utf-8').read()
+boxes = []
+for m in re.finditer(r'<node [^>]*>', xml):
+    node = m.group(0)
+    if 'class="android.widget.EditText"' in node:
+        b = re.search(r'bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"', node)
+        x1, y1, x2, y2 = map(int, b.groups())
+        boxes.append(((x1 + x2) // 2, (y1 + y2) // 2))
+boxes.sort(key=lambda p: p[1])
+print("text boxes on screen:", len(boxes))
+if len(boxes) >= n:
+    x, y = boxes[-n]
+    print("tapping text box at", x, y)
+    subprocess.run(["adb", "shell", "input", "tap", str(x), str(y)])
+PY
+}
 
-# ---- Settings: the list, a page, Back, search ----
-open_route settings; shot f08-settings-list 3
-tap_text "Playback"; sleep 2; shot f09-playback-page 1
-adb shell input keyevent KEYCODE_BACK; sleep 2; shot f10-back-to-list 1
-tap_text "Sleep timer"; sleep 2; shot f11-sleep-page 1
-open_route "settings/car"; shot f12-car-page 2
-open_route "settings/storage"; shot f13-storage-page 2
-open_route "settings/about"; shot f14-about-page 2
-open_route settings; sleep 2
-tap_text "Sound"; sleep 3; shot f15-sound-sheet 1
-open_route settings; sleep 2
-tap_text "Search settings"; sleep 1
-adb shell input text "wifi"; sleep 2
-adb shell input keyevent KEYCODE_ESCAPE; sleep 1
-shot f16-search-wifi 1
-tap_text "Torrents on Wi-Fi only"; sleep 2; shot f17-search-opens-page 1
-open_route settings; sleep 2
-tap_text "Clear search"; sleep 1
-tap_text "Search settings"; sleep 1
-adb shell input text "bedtime"; sleep 1
-adb shell input keyevent KEYCODE_ESCAPE; sleep 1
-shot f18-search-bedtime 1
-tap_text "Clear search"; sleep 1
-adb shell input swipe 540 1700 540 600 300; sleep 1
-shot f18b-settings-list-bottom 1
+check_editor() {  # $1 = screenshot prefix
+  open_route "chapters/demo-0"; sleep 3
+  shot "$1-a-editor" 1
+  tap_field 1; sleep 3
+  shot "$1-b-lowest-field-typing" 1
+  adb shell input text "%sedited"; sleep 1
+  adb shell input keyevent KEYCODE_ENTER; sleep 2
+  shot "$1-c-next-field" 1
+  tap_text "Done typing"; sleep 2
+  shot "$1-d-keyboard-away" 1
+  tap_field 3; sleep 3
+  shot "$1-e-another-field" 1
+  adb shell input keyevent KEYCODE_BACK; sleep 2
+  shot "$1-f-back-hides-keyboard" 1
+  tap_text "Cancel"; sleep 1
+  tap_text "Discard"; sleep 2
+}
 
-# ---- From the profile page: a topic opens its page; Back returns to the profile ----
-open_route you; sleep 3
-adb shell input swipe 540 1700 540 500 300; sleep 1
-adb shell input swipe 540 1700 540 500 300; sleep 1
-shot f19a-profile-topics 1
-tap_text "Car and headphones"; sleep 2; shot f19-profile-topic-page 1
-adb shell input keyevent KEYCODE_BACK; sleep 2; shot f20-back-to-profile 1
-
-# ---- Dark mode ----
-adb shell cmd uimode night yes; sleep 3
-open_route settings; shot f21-settings-dark 3
-adb shell cmd uimode night no; sleep 2
-
-# ---- Unfolded: with the player column open the page opens on its own; minimized, two panes ----
+check_editor f01-phone
 adb shell wm size 1968x2184
 adb shell wm density 380
 sleep 3
-open_route settings; shot f22-unfolded-settings 5
-tap_text "Minimize player"; sleep 2
-open_route settings; shot f23-unfolded-two-panes 3
-tap_text "Playback"; sleep 2; shot f24-unfolded-playback 1
-tap_text "Library"; sleep 2; shot f24b-unfolded-library 1
-adb shell am start -n "$ACT" --es ember_fake_downloads "1,70" > /dev/null; sleep 3
-open_route library; shot f25-unfolded-books-downloading 3
-adb shell am start -n "$ACT" --es ember_fake_downloads off > /dev/null
+check_editor f02-unfolded
 adb shell wm size reset
 adb shell wm density reset
 sleep 3
+
+# Edit details too (its fields scroll above the keyboard).
+open_route "edit/demo-0"; sleep 3
+tap_field 1; sleep 3
+shot f03-edit-details-typing 1
+adb shell input keyevent KEYCODE_BACK; sleep 1
+adb shell input keyevent KEYCODE_BACK; sleep 2
