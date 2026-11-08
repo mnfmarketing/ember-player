@@ -98,6 +98,8 @@ struct SettingsView: View {
 /// One topic's settings on their own page.
 struct SettingsPage: View {
     let section: SettingsSection
+    /// Off beside the list (iPad), where the bar keeps saying "Settings".
+    var showsTitle = true
 
     var body: some View {
         Form {
@@ -113,7 +115,7 @@ struct SettingsPage: View {
             case .about: AboutSection()
             }
         }
-        .navigationTitle(section.title)
+        .navigationTitle(showsTitle ? section.title : "Settings")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
@@ -132,7 +134,7 @@ private struct SettingsList: View {
                 HStack(spacing: 0) {
                     list(wide: true).frame(width: min(360, geo.size.width * 0.42))
                     Divider()
-                    SettingsPage(section: selected).id(selected)
+                    SettingsPage(section: selected, showsTitle: false).id(selected)
                 }
             } else {
                 list(wide: false)
