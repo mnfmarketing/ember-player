@@ -778,7 +778,7 @@ struct SearchView: View {
             }
         }
         .navigationTitle("Search")
-        .searchable(text: $q, placement: .automatic, prompt: "Books, authors, shows")
+        .searchable(text: $q, placement: .navigationBarDrawer(displayMode: .always), prompt: "Books, authors, shows")
         .overlay { if q.isEmpty { ContentUnavailableView("Search everything", systemImage: "magnifyingglass", description: Text("Books, authors, narrators, series, shows and episodes.")) } }
         .navigationDestination(for: BookRoute.self) { BookView(bookID: $0.id) }
         .navigationDestination(for: ShowRoute.self) { ShowView(podcastID: $0.id) }

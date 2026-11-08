@@ -96,7 +96,9 @@ fi
 # Just a few (commit message [few-shots]).
 if [ "${EMBER_SHOTS:-all}" = few ]; then
   xcrun simctl ui "$PHONE" appearance light
-  shot "$PHONE" "p-f-02-newclip" home 10 -EmberSheet newclip
+  shot "$PHONE" "p-f-02-search" search 8
+  xcrun simctl ui "$PHONE" appearance dark
+  shot "$PHONE" "p-f-03-search-dark" search 8
   crashes
   xcrun simctl shutdown all > /dev/null 2>&1 < /dev/null || true
   exit 0

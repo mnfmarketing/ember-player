@@ -193,6 +193,11 @@ struct Scanner {
             if f.files.count == 1 {
                 var found: [(String, Int64)] = []
                 if containerExt.contains(url.pathExtension.lowercased()) {
+                    // Ember's own reader first (it knows Nero chapters too), then AVFoundation's.
+                    found = await Mp4Chapters.read(url).map { ($0.title, $0.startMs) }
+                }
+                if found.count <= 1, containerExt.contains(url.pathExtension.lowercased()) {
+                    found = []
                     let groups = (try? await asset.loadChapterMetadataGroups(bestMatchingPreferredLanguages: Locale.preferredLanguages)) ?? []
                     for g in groups {
                         let t = await string(g.items, .commonIdentifierTitle) ?? ""

@@ -46,8 +46,8 @@ final class CastServer: @unchecked Sendable {
     }
 
     /// The address a Chromecast can fetch this from (nil when the iPhone isn't on Wi-Fi).
-    func url(_ source: Source, ext: String) -> URL? {
-        guard running, let ip = Self.wifiAddress() else { return nil }
+    func url(_ source: Source, ext: String, host: String? = nil) -> URL? {
+        guard running, let ip = host ?? Self.wifiAddress() else { return nil }
         let key = UUID().uuidString.prefix(12).lowercased()
         q.sync { sources[String(key)] = (source, ext.lowercased()) }
         let e = ext.isEmpty ? "" : "." + ext

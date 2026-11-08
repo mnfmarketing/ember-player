@@ -188,7 +188,8 @@ enum Backup {
             if ms > (days[day] ?? 0) { lib.setDay(day, ms: ms) }
         }
         if let s = root["settings"] as? [String: Any] {
-            if app.settings.profileName.isEmpty, let n = s["profileName"] as? String { app.settings.profileName = n }
+            // Your name and photo come back with a restore (the one you asked for wins over what's here).
+            if let n = (s["profileName"] as? String)?.trimmingCharacters(in: .whitespaces), !n.isEmpty { app.settings.profileName = n }
             if let g = s["dailyGoalMin"] as? NSNumber { app.settings.dailyGoalMin = g.intValue }
             if let g = s["yearlyGoalBooks"] as? NSNumber { app.settings.yearlyGoalBooks = g.intValue }
             for id in (s["upNext"] as? [String] ?? []).compactMap({ idMap[$0] }) where !app.settings.upNext.contains(id) { app.settings.upNext.append(id) }
@@ -219,7 +220,7 @@ enum Backup {
             ThemeColors.apply(theme: st.themeID, trueBlack: st.trueBlack)
             app.player.soundChanged()
         }
-        if app.settings.profilePhotoAt == 0, let p = root["profilePhoto"] as? String, let d = Data(base64Encoded: p), ProfilePhoto.save(d) {
+        if let p = root["profilePhoto"] as? String, let d = Data(base64Encoded: p, options: .ignoreUnknownCharacters), ProfilePhoto.save(d) {
             app.settings.profilePhotoAt = Clock.now
         }
         var shows = 0

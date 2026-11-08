@@ -21,7 +21,9 @@ struct RootView: View {
             Tab("Podcasts", systemImage: "mic.fill", value: AppTab.podcasts) {
                 NavigationStack { PodcastsView() }
             }
-            Tab(value: AppTab.search, role: .search) {
+            // A plain tab (not iOS 26's search tab, which hides the other tabs while you search and
+            // leaves no obvious way back): the tab bar stays, and Cancel closes the keyboard.
+            Tab("Search", systemImage: "magnifyingglass", value: AppTab.search) {
                 NavigationStack { SearchView() }
             }
         }

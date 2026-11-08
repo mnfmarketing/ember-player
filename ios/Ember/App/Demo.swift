@@ -165,7 +165,7 @@ enum Demo {
         }
     }
 
-    nonisolated private static func tone(_ final: URL, seconds: Int, freq: Double) {
+    nonisolated static func tone(_ final: URL, seconds: Int, freq: Double) {
         // Written beside the real name and moved into place, so a stopped launch never leaves half a file.
         let temp = final.deletingLastPathComponent().appendingPathComponent(".partial-" + final.lastPathComponent)
         try? FileManager.default.removeItem(at: temp)

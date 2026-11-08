@@ -227,6 +227,7 @@ final class Library {
             keep.insert(id)
             if let existing = book(id), tracks(id).count == f.files.count {
                 if existing.pdf == nil, let p = f.pdf { existing.pdf = pdfRef(p, root: root) }
+                await recheckChapters(existing)
                 continue
             }
             let s = await Scanner.read(f, root: root)
@@ -283,6 +284,7 @@ final class Library {
             keep.insert(id)
             if let existing = book(id), tracks(id).count == f.files.count {
                 if existing.pdf == nil, let p = f.pdf { existing.pdf = pdfRef(p, root: nil) }
+                await recheckChapters(existing)
                 continue
             }
             var s = await Scanner.read(f, root: URL(fileURLWithPath: "/"))
@@ -541,6 +543,32 @@ final class Library {
         let ts = tracks(id)
         guard ts.count == 1, DriveTrack(ts[0].path) == nil, let u = fileURL(book: b, track: ts[0]), Mp4TagWriter.canWrite(u) else { return nil }
         return u
+    }
+
+    // MARK: Chapters in older scans
+
+    /// Books scanned before Ember could read Nero chapters (or while Drive streaming was broken)
+    /// show one long chapter. Each such single-file book is read once more.
+    private func recheckChapters(_ b: Book) async {
+        guard !b.chaptersEdited, !b.isExternal else { return }
+        let key = "chaptersRechecked"
+        var done = Set(UserDefaults.standard.stringArray(forKey: key) ?? [])
+        guard !done.contains(b.id) else { return }
+        let ts = tracks(b.id)
+        guard ts.count == 1, chapters(b.id).count <= 1, let url = fileURL(book: b, track: ts[0]),
+              Scanner.containerExt.contains(url.pathExtension.lowercased()) else { return }
+        let raw = await Mp4Chapters.read(url)
+        done.insert(b.id)
+        UserDefaults.standard.set(Array(done), forKey: key)
+        guard raw.count > 1 else { return }
+        let id = b.id
+        try? context.delete(model: Chapter.self, where: #Predicate { $0.bookID == id })
+        for (i, c) in raw.enumerated() {
+            let end = i + 1 < raw.count ? raw[i + 1].startMs : b.durationMs
+            context.insert(Chapter(bookID: id, idx: i, title: Names.chapter(c.title, bookTitle: b.title, index: i), startMs: c.startMs, endMs: max(end, c.startMs)))
+        }
+        try? context.save()
+        changed()
     }
 
     // MARK: Companion PDFs

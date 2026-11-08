@@ -94,8 +94,12 @@ final class DriveFiles {
         return data
     }
 
+    /// The checks: where "Drive" files really come from (a little server on the simulator).
+    nonisolated(unsafe) static var testMediaURL: ((String) -> URL)?
+
     nonisolated static func mediaURL(_ fileID: String) -> URL {
-        URL(string: "https://www.googleapis.com/drive/v3/files/\(fileID)?alt=media&supportsAllDrives=true")!
+        if let t = testMediaURL { return t(fileID) }
+        return URL(string: "https://www.googleapis.com/drive/v3/files/\(fileID)?alt=media&supportsAllDrives=true")!
     }
 
     /// Where a downloaded Drive file lives (it may not be there).
@@ -130,6 +134,22 @@ final class DriveStream: NSObject, AVAssetResourceLoaderDelegate, @unchecked Sen
     }
 
     static func fileID(_ url: URL) -> String? { url.scheme == scheme ? url.host : nil }
+
+    /// The type AVFoundation is told the stream is. It only plays types it lists, and an .m4b's own
+    /// type isn't one of them: told "audio book", it loaded the file but played nothing.
+    static func contentType(_ ext: String) -> String {
+        switch ext.lowercased() {
+        case "m4b", "m4a", "mp4": return AVFileType.m4a.rawValue
+        case "mp3": return AVFileType.mp3.rawValue
+        case "wav": return AVFileType.wav.rawValue
+        case "aif", "aiff": return AVFileType.aiff.rawValue
+        case "caf": return AVFileType.caf.rawValue
+        default:
+            let known = Set(AVURLAsset.audiovisualTypes().map(\.rawValue))
+            if let u = UTType(filenameExtension: ext)?.identifier, known.contains(u) { return u }
+            return AVFileType.m4a.rawValue
+        }
+    }
 
     func resourceLoader(_ loader: AVAssetResourceLoader, shouldWaitForLoadingOfRequestedResource request: AVAssetResourceLoadingRequest) -> Bool {
         guard let url = request.request.url, let id = url.host else { return false }
@@ -166,7 +186,7 @@ final class DriveStream: NSObject, AVAssetResourceLoaderDelegate, @unchecked Sen
                 self.queue.async {
                     if box.request.isCancelled { return }
                     if wantInfo, let info = box.request.contentInformationRequest {
-                        info.contentType = UTType(filenameExtension: ext)?.identifier ?? UTType.audio.identifier
+                        info.contentType = DriveStream.contentType(ext)
                         info.contentLength = total
                         info.isByteRangeAccessSupported = true
                     }
