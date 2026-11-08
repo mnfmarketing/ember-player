@@ -1,0 +1,46 @@
+demo ready on FCC5F673-7BEC-4A7D-8F2A-4DC35E2668EC after 3s
+demo ready on 65E439BE-B365-4ED5-AD53-88133BA3829C after 3s
+p-n-01-appearance
+p-n-02-sleep
+p-n-03-sound
+p-n-04-car-settings
+p-n-05-playback
+p-n-06-player
+p-n-07-clip
+TIMED OUT: xcrun simctl launch --terminate-running-process FCC5F673-7BEC-4A7D-8F2A-4DC35E2668EC app.ember.audiobooks -EmberDemo YES -EmberRoute clip
+TIMED OUT: xcrun simctl io FCC5F673-7BEC-4A7D-8F2A-4DC35E2668EC screenshot ios-out/p-n-07-clip.png
+p-n-08-clips
+TIMED OUT: xcrun simctl launch --terminate-running-process FCC5F673-7BEC-4A7D-8F2A-4DC35E2668EC app.ember.audiobooks -EmberDemo YES -EmberRoute home -EmberSheet clips
+TIMED OUT: xcrun simctl io FCC5F673-7BEC-4A7D-8F2A-4DC35E2668EC screenshot ios-out/p-n-08-clips.png
+p-n-09-quote
+TIMED OUT: xcrun simctl launch --terminate-running-process FCC5F673-7BEC-4A7D-8F2A-4DC35E2668EC app.ember.audiobooks -EmberDemo YES -EmberRoute home -EmberSheet quote
+p-n-10-recap
+TIMED OUT: xcrun simctl launch --terminate-running-process FCC5F673-7BEC-4A7D-8F2A-4DC35E2668EC app.ember.audiobooks -EmberDemo YES -EmberRoute home -EmberSheet recap
+TIMED OUT: xcrun simctl io FCC5F673-7BEC-4A7D-8F2A-4DC35E2668EC screenshot ios-out/p-n-10-recap.png
+p-n-11-edit
+p-n-12-chapters
+p-n-13-chapters-typing
+p-n-14-merge
+TIMED OUT: xcrun simctl io FCC5F673-7BEC-4A7D-8F2A-4DC35E2668EC screenshot ios-out/p-n-14-merge.png
+p-n-15-add-external
+TIMED OUT: xcrun simctl io FCC5F673-7BEC-4A7D-8F2A-4DC35E2668EC screenshot ios-out/p-n-15-add-external.png
+p-n-16-notes
+p-n-17-lookup
+p-n-18-finished
+p-n-19-car
+p-n-20-widgets
+p-n-21-external-book
+p-th-02-books-forest
+p-th-03-settings-paper
+p-th-07-book-paper
+p-th-01-home-midnight
+p-th-04-home-trueblack
+p-th-05-appearance-slate
+p-th-06-profile-midnight
+p-n-22-sound-dark
+t-n-01-car
+t-n-02-appearance
+t-n-03-home-midnight
+t-n-04-recap
+t-n-05-chapters
+t-n-06-player
