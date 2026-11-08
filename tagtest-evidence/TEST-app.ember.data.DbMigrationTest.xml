@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="app.ember.data.DbMigrationTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-07T20:55:01" hostname="runnervm7aw5e" time="0.276">
+<testsuite name="app.ember.data.DbMigrationTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-08T01:50:35" hostname="runnervm7aw5e" time="0.284">
   <properties/>
-  <testcase name="libraryUpgrades" classname="app.ember.data.DbMigrationTest" time="0.258"/>
+  <testcase name="libraryUpgrades" classname="app.ember.data.DbMigrationTest" time="0.266"/>
   <testcase name="podcastUpgrades" classname="app.ember.data.DbMigrationTest" time="0.017"/>
   <system-out><![CDATA[app.ember.data.EmberDatabase: upgrade 1 to 2 matches Room's schema and keeps every row
 app.ember.data.EmberDatabase: upgrade 2 to 3 matches Room's schema and keeps every row
