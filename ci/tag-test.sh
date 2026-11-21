@@ -33,6 +33,16 @@ EOF
 ffmpeg -loglevel error -i "$IN/audio.m4a" -i "$IN/meta.txt" -map 0 -map_metadata 1 -map_chapters 1 -c copy -f mp4 "$IN/end.m4b"
 ffmpeg -loglevel error -i "$IN/audio.m4a" -i "$IN/meta.txt" -map 0 -map_metadata 1 -map_chapters 1 -c copy -f mp4 -movflags +faststart "$IN/front.m4b"
 
+# A long book with a huge index: six hours at 96 kHz (a big sample table), plus 100 MB of padding
+# inside the index (players skip "free" boxes), so it's bigger than the 64/96 MB Ember used to allow.
+ffmpeg -loglevel error -f lavfi -i "sine=frequency=330:duration=600:sample_rate=96000" -c:a aac -b:a 32k "$IN/ten.m4a"
+for i in $(seq 36); do echo "file '$IN/ten.m4a'"; done > "$IN/list.txt"
+ffmpeg -loglevel error -f concat -safe 0 -i "$IN/list.txt" -i "$IN/meta.txt" -map 0 -map_metadata 1 -map_chapters 1 -c copy -f mp4 "$IN/big-plain.m4b"
+python3 ci/pad-moov.py "$IN/big-plain.m4b" "$IN/big.m4b" 104857600
+rm -f "$IN/big-plain.m4b" "$IN/ten.m4a"
+ls -la "$IN"
+ffprobe -v error -show_entries format=duration -of compact "$IN/big.m4b"
+
 # A podcast-style MP3 with chapter marks (ID3 CHAP frames), in both ID3 versions.
 cat > "$IN/epmeta.txt" <<'EOM'
 ;FFMETADATA1

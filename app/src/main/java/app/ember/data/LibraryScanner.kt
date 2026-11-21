@@ -264,7 +264,8 @@ class LibraryScanner(
         val existing = dao.getBook(id)
         if (existing != null) {
             val tracks = dao.getTracks(id)
-            if (tracks.size == c.files.size) {
+            // A book read without its length (a file Android's reader couldn't open) is read again.
+            if (tracks.size == c.files.size && tracks.none { it.durationMs <= 0 }) {
                 // A PDF added to the folder later still shows up (unless you removed it by hand).
                 if (existing.pdfUri == null && c.pdf != null) dao.setPdf(id, c.pdf.uri.toString())
                 return
@@ -299,11 +300,15 @@ class LibraryScanner(
             } catch (e: Exception) {
                 // Unreadable file; still keep it as a track.
             }
+            // Ember reads the file's index itself too: Android's reader gives up on some very large
+            // M4Bs (no length, so no saved place), and it misses Nero chapters.
+            val own = if (f.ext in CONTAINER_EXT && (c.files.size == 1 || duration <= 0)) Mp4ChapterParser.info(context, f.uri) else null
+            if (duration <= 0 && own != null) duration = own.durationMs
             val fileTitle = f.name.substringBeforeLast('.')
             trackRows += TrackEntity(id, index, f.uri.toString(), trackTitle?.takeIf { it.isNotBlank() } ?: fileTitle, duration)
 
             if (c.files.size == 1) {
-                val raw = if (f.ext in CONTAINER_EXT) Mp4ChapterParser.parse(context, f.uri) else emptyList()
+                val raw = own?.chapters.orEmpty()
                 if (raw.isNotEmpty()) {
                     raw.forEachIndexed { ci, rc ->
                         val end = raw.getOrNull(ci + 1)?.startMs ?: duration
@@ -615,7 +620,10 @@ class LibraryScanner(
 
     private suspend fun importDriveCandidate(id: String, c: DriveCandidate, folderId: Long) {
         val existing = dao.getBook(id)
-        if (existing != null && dao.getTracks(id).size == c.files.size) return
+        if (existing != null) {
+            val tracks = dao.getTracks(id)
+            if (tracks.size == c.files.size && tracks.none { it.durationMs <= 0 }) return
+        }
         val token = driveAuth.token() ?: return
         val headers = mapOf("Authorization" to "Bearer $token")
 
@@ -645,14 +653,16 @@ class LibraryScanner(
                 }
             } catch (e: Exception) {
             }
+            val own = if (f.ext() in CONTAINER_EXT && f.size > 0 && (c.files.size == 1 || duration <= 0)) {
+                Mp4ChapterParser.info(CachedRemoteSource(f.size) { pos, len -> drive.readRange(f.id, token, pos, len) })
+            } else {
+                null
+            }
+            if (duration <= 0 && own != null) duration = own.durationMs
             val fileTitle = f.name.substringBeforeLast('.')
             trackRows += TrackEntity(id, index, DRIVE_TRACK_PREFIX + f.id, trackTitle?.takeIf { it.isNotBlank() } ?: fileTitle, duration)
             if (c.files.size == 1) {
-                val raw = if (f.ext() in CONTAINER_EXT && f.size > 0) {
-                    Mp4ChapterParser.parse(CachedRemoteSource(f.size) { pos, len -> drive.readRange(f.id, token, pos, len) })
-                } else {
-                    emptyList()
-                }
+                val raw = own?.chapters.orEmpty()
                 if (raw.isNotEmpty()) {
                     raw.forEachIndexed { ci, rc ->
                         val end = raw.getOrNull(ci + 1)?.startMs ?: duration

@@ -15,7 +15,16 @@ object Mp4ChapterParser {
 
     data class RawChapter(val startMs: Long, val title: String)
 
-    private const val MAX_MOOV = 64L * 1024 * 1024
+    /** What Ember reads from a file's index itself: chapters, and the length (from the movie header). */
+    data class Info(val chapters: List<RawChapter>, val durationMs: Long)
+
+    /**
+     * Leaf boxes bigger than this are left out when the index is read: they're the audio's sample
+     * tables, which can run to tens of megabytes in long books and aren't needed for chapters.
+     * (Ember used to load the whole index and gave up past 64 MB, which some 1 GB+ books exceed.)
+     */
+    private const val KEEP_LEAF = 1L shl 20
+    private val CONTAINERS = setOf("moov", "trak", "mdia", "minf", "stbl", "udta", "tref", "edts", "dinf")
 
     /** Random-access bytes: a local file, or a remote file read with HTTP range requests. */
     interface ByteSource {
@@ -35,23 +44,78 @@ object Mp4ChapterParser {
         }
     }
 
-    fun parse(context: Context, uri: Uri): List<RawChapter> = try {
+    fun parse(context: Context, uri: Uri): List<RawChapter> = info(context, uri).chapters
+
+    fun parse(source: ByteSource): List<RawChapter> = info(source).chapters
+
+    fun info(context: Context, uri: Uri): Info = try {
         context.contentResolver.openFileDescriptor(uri, "r")?.use { pfd ->
             FileInputStream(pfd.fileDescriptor).use { stream ->
-                parseSource(ChannelSource(stream.channel))
+                infoOf(ChannelSource(stream.channel))
             }
-        } ?: emptyList()
+        } ?: Info(emptyList(), 0)
     } catch (e: Exception) {
-        emptyList()
+        Info(emptyList(), 0)
     }
 
-    fun parse(source: ByteSource): List<RawChapter> = try {
-        parseSource(source)
+    fun info(source: ByteSource): Info = try {
+        infoOf(source)
     } catch (e: Exception) {
-        emptyList()
+        Info(emptyList(), 0)
     }
 
-    private fun parseSource(ch: ByteSource): List<RawChapter> {
+    /** The index with the big sample tables left out (each replaced by an empty box of the same type). */
+    private fun slim(ch: ByteSource, start: Long, end: Long, out: java.io.ByteArrayOutputStream) {
+        var p = start
+        while (p + 8 <= end) {
+            val h = ByteBuffer.allocate(minOf(16L, end - p).toInt())
+            readFully(ch, h, p)
+            h.flip()
+            if (h.remaining() < 8) break
+            var size = h.int.toLong() and 0xffffffffL
+            val typeInt = h.int
+            var hdr = 8
+            if (size == 1L) {
+                if (h.remaining() < 8) break
+                size = h.long
+                hdr = 16
+            } else if (size == 0L) {
+                size = end - p
+            }
+            if (size < hdr || p + size > end) break
+            val len = size - hdr
+            val body: ByteArray = when {
+                typeString(typeInt) in CONTAINERS -> java.io.ByteArrayOutputStream().also { slim(ch, p + hdr, p + size, it) }.toByteArray()
+                len <= KEEP_LEAF -> ByteBuffer.allocate(len.toInt()).also { readFully(ch, it, p + hdr) }.array()
+                else -> ByteArray(0)
+            }
+            out.write(ByteBuffer.allocate(8).putInt(body.size + 8).putInt(typeInt).array())
+            out.write(body)
+            p += size
+        }
+    }
+
+    private fun movieDurationMs(m: ByteBuffer): Long {
+        val mvhd = findPath(m, listOf("mvhd")) ?: return 0
+        val d = mvhd.duplicate()
+        if (d.remaining() < 20) return 0
+        val version = d.get().toInt() and 0xff
+        d.position(d.position() + 3)
+        return if (version == 1) {
+            if (d.remaining() < 28) return 0
+            d.position(d.position() + 16)
+            val ts = d.int.toLong() and 0xffffffffL
+            val dur = d.long
+            if (ts > 0 && dur > 0) dur * 1000 / ts else 0
+        } else {
+            d.position(d.position() + 8)
+            val ts = d.int.toLong() and 0xffffffffL
+            val dur = d.int.toLong() and 0xffffffffL
+            if (ts > 0 && dur > 0 && dur != 0xffffffffL) dur * 1000 / ts else 0
+        }
+    }
+
+    private fun infoOf(ch: ByteSource): Info {
         val fileSize = ch.size
         var pos = 0L
         var moov: ByteBuffer? = null
@@ -76,29 +140,33 @@ object Mp4ChapterParser {
             }
             if (boxSize < headerLen) break
             if (type == "moov") {
-                val contentSize = boxSize - headerLen
-                if (contentSize <= 0 || contentSize > MAX_MOOV) return emptyList()
-                val buf = ByteBuffer.allocate(contentSize.toInt())
-                readFully(ch, buf, pos + headerLen)
-                buf.flip()
-                moov = buf
+                if (boxSize - headerLen <= 0) return Info(emptyList(), 0)
+                val out = java.io.ByteArrayOutputStream()
+                slim(ch, pos + headerLen, minOf(pos + boxSize, fileSize), out)
+                moov = ByteBuffer.wrap(out.toByteArray())
                 break
             }
             pos += boxSize
         }
-        val m = moov ?: return emptyList()
+        val m = moov ?: return Info(emptyList(), 0)
+        val durationMs = try {
+            movieDurationMs(m)
+        } catch (e: Exception) {
+            0L
+        }
         val nero = findPath(m, listOf("udta", "chpl"))?.let { parseChpl(it) }.orEmpty()
         val qt = try {
             parseQtChapters(m, ch)
         } catch (e: Exception) {
             emptyList()
         }
-        return when {
+        val chapters = when {
             qt.size > 1 -> qt
             nero.size > 1 -> nero
             qt.isNotEmpty() -> qt
             else -> nero
         }
+        return Info(chapters, durationMs)
     }
 
     private fun typeString(v: Int): String {

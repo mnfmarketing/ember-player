@@ -37,7 +37,15 @@ object Mp4TagWriter {
         data class Failed(val reason: String) : Result()
     }
 
-    private const val MAX_MOOV = 96L * 1024 * 1024
+    /** Indexes bigger than this are left alone (real ones top out around a few hundred MB). */
+    private const val MAX_MOOV = 1L shl 30
+
+    /**
+     * Leaf boxes bigger than this aren't loaded: they're the audio's sample tables (tens of MB in
+     * long books), which Ember never changes, so they're copied straight from the file when the new
+     * index is written. That keeps memory small for 1 GB+ books.
+     */
+    private const val LOAD_LEAF = 1L shl 20
 
     // ------------------------------------------------------------------ box model
 
@@ -47,6 +55,9 @@ object Mp4TagWriter {
         val children: MutableList<Box>? = null,
         /** Version/flags bytes for "full" container boxes like meta. */
         val prefix: ByteArray? = null,
+        /** A big leaf left in the file: where its content starts, and how long it is. */
+        val src: Long = -1L,
+        val srcLen: Long = 0L,
     ) {
         fun child(t: String) = children?.firstOrNull { it.type == t }
         fun childOrAdd(t: String, factory: () -> Box): Box {
@@ -62,56 +73,102 @@ object Mp4TagWriter {
     private fun typeOf(b: ByteArray, off: Int) = String(b, off, 4, Charsets.ISO_8859_1)
     private fun typeBytes(t: String) = t.toByteArray(Charsets.ISO_8859_1)
 
-    private fun parse(data: ByteArray, start: Int, end: Int): MutableList<Box> {
+    private fun parse(ch: FileChannel, start: Long, end: Long): MutableList<Box> {
         val out = mutableListOf<Box>()
-        val bb = ByteBuffer.wrap(data)
         var p = start
         while (p + 8 <= end) {
-            var size = bb.getInt(p).toLong() and 0xffffffffL
-            val type = typeOf(data, p + 4)
+            val h = readAt(ch, p, minOf(16L, end - p).toInt())
+            val bb = ByteBuffer.wrap(h)
+            var size = bb.getInt(0).toLong() and 0xffffffffL
+            val type = typeOf(h, 4)
             var hdr = 8
             if (size == 1L) {
-                size = bb.getLong(p + 8)
+                if (h.size < 16) throw IllegalStateException("Unreadable box $type")
+                size = bb.getLong(8)
                 hdr = 16
             } else if (size == 0L) {
-                size = (end - p).toLong()
+                size = end - p
             }
             if (size < hdr || p + size > end) throw IllegalStateException("Unreadable box $type")
             val cStart = p + hdr
-            val cEnd = (p + size).toInt()
+            val cEnd = p + size
+            val len = cEnd - cStart
             out += when {
                 type == "meta" -> {
                     // ISO meta has 4 version/flag bytes before its children; QuickTime meta doesn't.
-                    val isFull = cEnd - cStart >= 12 && bb.getInt(cStart) == 0 && typeOf(data, cStart + 8).all { it.isLetterOrDigit() }
+                    val peek = if (len >= 12) readAt(ch, cStart, 12) else ByteArray(0)
+                    val isFull = peek.size == 12 && ByteBuffer.wrap(peek).getInt(0) == 0 && typeOf(peek, 8).all { it.isLetterOrDigit() }
                     if (isFull) {
-                        Box(type, children = parse(data, cStart + 4, cEnd), prefix = data.copyOfRange(cStart, cStart + 4))
+                        Box(type, children = parse(ch, cStart + 4, cEnd), prefix = peek.copyOfRange(0, 4))
                     } else {
-                        Box(type, children = parse(data, cStart, cEnd))
+                        Box(type, children = parse(ch, cStart, cEnd))
                     }
                 }
-                type in containers -> Box(type, children = parse(data, cStart, cEnd))
-                else -> Box(type, payload = data.copyOfRange(cStart, cEnd))
+                type in containers -> Box(type, children = parse(ch, cStart, cEnd))
+                len <= LOAD_LEAF -> Box(type, payload = readAt(ch, cStart, len.toInt()))
+                else -> Box(type, src = cStart, srcLen = len)
             }
             p = cEnd
         }
         return out
     }
 
-    private fun serialize(box: Box, out: ByteArrayOutputStream) {
-        val body = ByteArrayOutputStream()
-        box.prefix?.let { body.write(it) }
-        if (box.children != null) box.children.forEach { serialize(it, body) } else box.payload?.let { body.write(it) }
-        val bytes = body.toByteArray()
-        val size = bytes.size + 8L
-        if (size > 0xffffffffL) {
-            out.write(ByteBuffer.allocate(16).putInt(1).put(typeBytes(box.type)).putLong(bytes.size + 16L).array())
-        } else {
-            out.write(ByteBuffer.allocate(8).putInt(size.toInt()).put(typeBytes(box.type)).array())
-        }
-        out.write(bytes)
+    private fun bodySize(b: Box): Long =
+        (b.prefix?.size ?: 0) + (b.children?.sumOf { sizeOf(it) } ?: (b.payload?.size?.toLong() ?: b.srcLen))
+
+    private fun sizeOf(b: Box): Long {
+        val body = bodySize(b)
+        return if (body + 8 > 0xffffffffL) body + 16 else body + 8
     }
 
-    private fun serialize(box: Box): ByteArray = ByteArrayOutputStream().also { serialize(box, it) }.toByteArray()
+    /** Writes a box to [dst] at [at] (big leaves copied from [src]); returns where it ends. */
+    private fun emit(b: Box, src: FileChannel, dst: FileChannel, at: Long): Long {
+        val body = bodySize(b)
+        var p = at
+        val head = if (body + 8 > 0xffffffffL) {
+            ByteBuffer.allocate(16).putInt(1).put(typeBytes(b.type)).putLong(body + 16).array()
+        } else {
+            ByteBuffer.allocate(8).putInt((body + 8).toInt()).put(typeBytes(b.type)).array()
+        }
+        writeAt(dst, p, head)
+        p += head.size
+        b.prefix?.let {
+            writeAt(dst, p, it)
+            p += it.size
+        }
+        when {
+            b.children != null -> for (c in b.children) p = emit(c, src, dst, p)
+            b.payload != null -> {
+                writeAt(dst, p, b.payload!!)
+                p += b.payload!!.size
+            }
+            b.srcLen > 0 -> {
+                copyRange(src, b.src, b.srcLen, dst, p)
+                p += b.srcLen
+            }
+        }
+        return p
+    }
+
+    private fun copyRange(src: FileChannel, from: Long, len: Long, dst: FileChannel, to: Long) {
+        val buf = ByteBuffer.allocate(1 shl 20)
+        var done = 0L
+        while (done < len) {
+            buf.clear()
+            buf.limit(minOf(buf.capacity().toLong(), len - done).toInt())
+            var got = 0
+            while (buf.hasRemaining()) {
+                val n = src.read(buf, from + done + got)
+                if (n <= 0) break
+                got += n
+            }
+            if (got == 0) throw java.io.IOException("Short read")
+            buf.flip()
+            var w = to + done
+            while (buf.hasRemaining()) w += dst.write(buf, w)
+            done += got
+        }
+    }
 
     // ------------------------------------------------------------------ edits
 
@@ -140,15 +197,41 @@ object Mp4TagWriter {
         ilst.children.add(Box("covr", payload = data))
     }
 
+    private fun handlerOf(meta: Box): String? {
+        val p = meta.child("hdlr")?.payload ?: return null
+        return if (p.size >= 12) typeOf(p, 8) else null
+    }
+
+    /**
+     * The iTunes-style tag list. Files from Apple's encoders can carry QuickTime-style ("mdta")
+     * metadata instead, which players don't read iTunes tags from, so an iTunes one goes in front.
+     */
     private fun ilstOf(moov: Box): Box {
         val udta = moov.childOrAdd("udta") { Box("udta", children = mutableListOf()) }
-        val meta = udta.childOrAdd("meta") {
+        val meta = udta.children!!.firstOrNull { it.type == "meta" && handlerOf(it) == "mdir" } ?: run {
             val hdlr = ByteBuffer.allocate(25)
                 .putInt(0).putInt(0).put(typeBytes("mdir")).put(typeBytes("appl")).putInt(0).putInt(0).put(0)
                 .array()
-            Box("meta", children = mutableListOf(Box("hdlr", payload = hdlr)), prefix = ByteArray(4))
+            Box("meta", children = mutableListOf(Box("hdlr", payload = hdlr)), prefix = ByteArray(4)).also { udta.children.add(0, it) }
         }
         return meta.childOrAdd("ilst") { Box("ilst", children = mutableListOf()) }
+    }
+
+    /** The title written in the file's iTunes tags (for checking a write without Android's reader). */
+    fun readTitleCore(ch: FileChannel): String? = try {
+        val top = topLevel(ch).firstOrNull { it.type == "moov" }
+        if (top == null) {
+            null
+        } else {
+            val hdr = if ((ByteBuffer.wrap(readAt(ch, top.offset, 8)).getInt(0).toLong() and 0xffffffffL) == 1L) 16 else 8
+            val moov = Box("moov", children = parse(ch, top.offset + hdr, top.offset + top.size))
+            moov.child("udta")?.children.orEmpty().filter { it.type == "meta" }.firstNotNullOfOrNull { meta ->
+                meta.child("ilst")?.children?.firstOrNull { it.type == "©nam" || it.type == "©alb" }?.payload
+                    ?.takeIf { it.size > 16 }?.let { String(it, 16, it.size - 16, Charsets.UTF_8) }
+            }
+        }
+    } catch (e: Exception) {
+        null
     }
 
     private fun applyTags(moov: Box, tags: Tags) {
@@ -285,28 +368,39 @@ object Mp4TagWriter {
     }
 
     private fun writeAt(ch: FileChannel, pos: Long, bytes: ByteArray) {
+        if (bytes.isEmpty()) return
         val buf = ByteBuffer.wrap(bytes)
         var p = pos
         while (buf.hasRemaining()) p += ch.write(buf, p)
     }
 
-    /** Where the "restore original" information for one file lives. */
+    /**
+     * Where the "restore original" information for one file lives. The saved tail (the original
+     * index, for files whose index is at the end) is kept as a file, since it can be large.
+     */
     interface BackupStore {
         fun exists(): Boolean
-        fun save(info: String, tail: ByteArray?)
         fun info(): String?
-        fun tail(): ByteArray?
+        /** The saved tail, or null if none. */
+        fun tailFile(): File?
+        /** Saves the info, and the tail if there is one (copied from [from] at [at], [len] bytes). */
+        fun save(info: String, from: FileChannel?, at: Long, len: Long)
         fun clear()
     }
 
-    private class FileBackupStore(private val meta: File, private val bin: File) : BackupStore {
+    class FileBackupStore(private val meta: File, private val bin: File) : BackupStore {
         override fun exists() = meta.exists()
-        override fun save(info: String, tail: ByteArray?) {
-            if (tail != null) bin.writeBytes(tail)
+        override fun info() = if (meta.exists()) meta.readText() else null
+        override fun tailFile() = bin.takeIf { it.exists() }
+        override fun save(info: String, from: FileChannel?, at: Long, len: Long) {
+            if (from != null && len > 0) {
+                java.io.RandomAccessFile(bin, "rw").use { out ->
+                    out.setLength(0)
+                    copyRange(from, at, len, out.channel, 0)
+                }
+            }
             meta.writeText(info)
         }
-        override fun info() = if (meta.exists()) meta.readText() else null
-        override fun tail() = if (bin.exists()) bin.readBytes() else null
         override fun clear() {
             meta.delete()
             bin.delete()
@@ -335,6 +429,9 @@ object Mp4TagWriter {
         } catch (e: Exception) {
             return Result.Failed("This file can't be changed from here (${e.javaClass.simpleName}).")
         } ?: return Result.Failed("The file couldn't be opened.")
+        // Android's own reader can't open some very large M4Bs. When it could before, it still has
+        // to after; when it couldn't, Ember checks the result with its own reader.
+        val androidReads = androidCanRead(context, uri)
         return try {
             pfd.use {
                 writeCore(
@@ -345,7 +442,8 @@ object Mp4TagWriter {
                     chapters = chapters,
                     totalMs = totalMs,
                     cover = cover,
-                    verify = { verifyOnDevice(context, uri, tags, chapters, cover != null) },
+                    scratchDir = context.cacheDir,
+                    verify = { verifyOnDevice(context, uri, tags, chapters, cover != null, androidReads) },
                 )
             }
         } catch (e: Exception) {
@@ -365,26 +463,49 @@ object Mp4TagWriter {
         return pfd.use { restoreCore(FileOutputStream(pfd.fileDescriptor).channel, backup) }
     }
 
-    private fun verifyOnDevice(context: Context, uri: Uri, tags: Tags?, chapters: List<Pair<Long, String>>?, wroteCover: Boolean): Boolean {
-        if (chapters != null && !chaptersMatch(Mp4ChapterParser.parse(context, uri), chapters)) return false
-        if ((tags != null && tags.title.isNotBlank()) || wroteCover) {
-            val r = MediaMetadataRetriever()
+    private fun androidCanRead(context: Context, uri: Uri): Boolean {
+        val r = MediaMetadataRetriever()
+        return try {
+            r.setDataSource(context, uri)
+            !r.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION).isNullOrBlank()
+        } catch (e: Exception) {
+            false
+        } finally {
             try {
-                r.setDataSource(context, uri)
-                if (tags != null && tags.title.isNotBlank()) {
-                    val album = r.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM)
-                    val title = r.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
-                    if (album?.trim() != tags.title.trim() && title?.trim() != tags.title.trim()) return false
-                }
-                if (wroteCover && r.embeddedPicture == null) return false
-                if (r.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION).isNullOrBlank()) return false
+                r.release()
             } catch (e: Exception) {
-                return false
-            } finally {
-                try {
-                    r.release()
-                } catch (e: Exception) {
-                }
+            }
+        }
+    }
+
+    private fun verifyOnDevice(context: Context, uri: Uri, tags: Tags?, chapters: List<Pair<Long, String>>?, wroteCover: Boolean, androidReads: Boolean): Boolean {
+        // Ember's own reading: the index parses, the chapters and the title are as written.
+        val info = Mp4ChapterParser.info(context, uri)
+        if (chapters != null && !chaptersMatch(info.chapters, chapters)) return false
+        if (tags != null && tags.title.isNotBlank()) {
+            val title = context.contentResolver.openFileDescriptor(uri, "r")?.use { pfd ->
+                FileInputStream(pfd.fileDescriptor).use { readTitleCore(it.channel) }
+            }
+            if (title?.trim() != tags.title.trim()) return false
+        }
+        if (!androidReads) return true
+        // Android's reader (what other apps on the phone use) still reads it, with the new title and cover.
+        val r = MediaMetadataRetriever()
+        try {
+            r.setDataSource(context, uri)
+            if (tags != null && tags.title.isNotBlank()) {
+                val album = r.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM)
+                val title = r.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
+                if (album?.trim() != tags.title.trim() && title?.trim() != tags.title.trim()) return false
+            }
+            if (wroteCover && r.embeddedPicture == null) return false
+            if (r.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION).isNullOrBlank()) return false
+        } catch (e: Exception) {
+            return false
+        } finally {
+            try {
+                r.release()
+            } catch (e: Exception) {
             }
         }
         return true
@@ -406,6 +527,7 @@ object Mp4TagWriter {
         chapters: List<Pair<Long, String>>?,
         totalMs: Long,
         cover: ByteArray? = null,
+        scratchDir: File? = null,
         verify: () -> Boolean,
     ): Result {
         val tops = topLevel(reader)
@@ -415,11 +537,10 @@ object Mp4TagWriter {
         val tailRewritable = after.all { it.type == "free" || it.type == "skip" }
         val fileSize = reader.size()
 
-        // 1. Build the new index in memory.
-        val moovBytes = readAt(reader, moovTop.offset, moovTop.size.toInt())
-        val hdr = if ((ByteBuffer.wrap(moovBytes).getInt(0).toLong() and 0xffffffffL) == 1L) 16 else 8
+        // 1. Read the index (big sample tables stay in the file and are copied across later).
+        val hdr = if ((ByteBuffer.wrap(readAt(reader, moovTop.offset, 8)).getInt(0).toLong() and 0xffffffffL) == 1L) 16 else 8
         val moov = try {
-            Box("moov", children = parse(moovBytes, hdr, moovBytes.size))
+            Box("moov", children = parse(reader, moovTop.offset + hdr, moovTop.offset + moovTop.size))
         } catch (e: Exception) {
             return Result.Failed("Ember couldn't read this file's structure.")
         }
@@ -441,66 +562,77 @@ object Mp4TagWriter {
             var useCo64 = false
             repeat(2) {
                 rebuildChapterTrack(chapterTrack, chapters, totalMs, samples, if (useCo64) 0x1_0000_0000L else 0L)
-                val off = writePos + serialize(moov).size + 8
+                val off = writePos + sizeOf(moov) + 8
                 useCo64 = off > 0xffffffffL
                 rebuildChapterTrack(chapterTrack, chapters, totalMs, samples, off)
             }
         }
-        val newMoov = serialize(moov)
         val freeBox = if (sampleBytes.isNotEmpty()) {
             ByteBuffer.allocate(8 + sampleBytes.size).putInt(8 + sampleBytes.size).put(typeBytes("free")).put(sampleBytes).array()
         } else {
             ByteArray(0)
         }
 
-        // 2. Save what's needed to restore the original, once per file.
-        if (!backup.exists()) {
-            backup.save(
-                JSONObject().put("size", fileSize).put("moovOffset", moovTop.offset).put("tail", tailRewritable).toString(),
-                if (tailRewritable) readAt(reader, moovTop.offset, (fileSize - moovTop.offset).toInt()) else null,
-            )
-        }
-
-        // 3. Write, keeping a way back for this edit.
-        val undoTail = if (tailRewritable) readAt(reader, moovTop.offset, (fileSize - moovTop.offset).toInt()) else null
+        val scratch = File.createTempFile("ember-moov", ".bin", scratchDir)
+        val undo = File.createTempFile("ember-undo", ".bin", scratchDir)
         try {
-            if (tailRewritable) {
-                writeAt(writer, writePos, newMoov)
-                if (freeBox.isNotEmpty()) writeAt(writer, writePos + newMoov.size, freeBox)
-                writer.truncate(writePos + newMoov.size + freeBox.size)
-            } else {
-                // Append the new index labelled "free", then swap labels so the file is valid at every step.
-                val staged = newMoov.copyOf().also { System.arraycopy(typeBytes("free"), 0, it, 4, 4) }
-                writeAt(writer, writePos, staged)
-                if (freeBox.isNotEmpty()) writeAt(writer, writePos + newMoov.size, freeBox)
-                writer.force(true)
-                writeAt(writer, writePos + 4, typeBytes("moov"))
-                writer.force(true)
-                writeAt(writer, moovTop.offset + 4, typeBytes("free"))
-            }
-            writer.force(true)
-        } catch (e: Exception) {
-            rollback(writer, moovTop, fileSize, undoTail, tailRewritable)
-            return Result.Failed("Writing failed, so the file was left as it was.")
-        }
+            return java.io.RandomAccessFile(scratch, "rw").use { s ->
+                java.io.RandomAccessFile(undo, "rw").use { u ->
+                    // 2. Build the new index in a scratch file.
+                    val newSize = emit(moov, reader, s.channel, 0)
+                    if (!tailRewritable) writeAt(s.channel, 4, typeBytes("free")) // staged under a harmless label
 
-        // 4. Check the result by reading it back.
-        val ok = try {
-            verify()
-        } catch (e: Exception) {
-            false
+                    // 3. Save what's needed to restore the original, once per file.
+                    if (!backup.exists()) {
+                        val info = JSONObject().put("size", fileSize).put("moovOffset", moovTop.offset).put("tail", tailRewritable).toString()
+                        if (tailRewritable) backup.save(info, reader, moovTop.offset, fileSize - moovTop.offset) else backup.save(info, null, 0, 0)
+                    }
+
+                    // 4. Write, keeping a way back for this edit.
+                    val undoLen = if (tailRewritable) fileSize - moovTop.offset else 0L
+                    if (undoLen > 0) copyRange(reader, moovTop.offset, undoLen, u.channel, 0)
+                    try {
+                        copyRange(s.channel, 0, newSize, writer, writePos)
+                        if (freeBox.isNotEmpty()) writeAt(writer, writePos + newSize, freeBox)
+                        if (tailRewritable) {
+                            writer.truncate(writePos + newSize + freeBox.size)
+                        } else {
+                            // The new index went in labelled "free"; swap labels so the file is valid at every step.
+                            writer.force(true)
+                            writeAt(writer, writePos + 4, typeBytes("moov"))
+                            writer.force(true)
+                            writeAt(writer, moovTop.offset + 4, typeBytes("free"))
+                        }
+                        writer.force(true)
+                    } catch (e: Exception) {
+                        rollback(writer, moovTop, fileSize, u.channel, undoLen)
+                        return@use Result.Failed("Writing failed, so the file was left as it was.")
+                    }
+
+                    // 5. Check the result by reading it back.
+                    val ok = try {
+                        verify()
+                    } catch (e: Exception) {
+                        false
+                    }
+                    if (!ok) {
+                        rollback(writer, moovTop, fileSize, u.channel, undoLen)
+                        Result.Failed("The saved file didn't check out, so Ember put it back the way it was.")
+                    } else {
+                        Result.Ok
+                    }
+                }
+            }
+        } finally {
+            scratch.delete()
+            undo.delete()
         }
-        if (!ok) {
-            rollback(writer, moovTop, fileSize, undoTail, tailRewritable)
-            return Result.Failed("The saved file didn't check out, so Ember put it back the way it was.")
-        }
-        return Result.Ok
     }
 
-    private fun rollback(writer: FileChannel, moovTop: Top, oldSize: Long, undoTail: ByteArray?, tail: Boolean) {
+    private fun rollback(writer: FileChannel, moovTop: Top, oldSize: Long, undo: FileChannel, undoLen: Long) {
         try {
-            if (tail && undoTail != null) {
-                writeAt(writer, moovTop.offset, undoTail)
+            if (undoLen > 0) {
+                copyRange(undo, 0, undoLen, writer, moovTop.offset)
             } else {
                 writeAt(writer, moovTop.offset + 4, typeBytes("moov"))
             }
@@ -517,7 +649,8 @@ object Mp4TagWriter {
         val moovOffset = info.getLong("moovOffset")
         try {
             if (info.getBoolean("tail")) {
-                writeAt(writer, moovOffset, backup.tail() ?: return Result.Failed("The saved original is missing."))
+                val tail = backup.tailFile() ?: return Result.Failed("The saved original is missing.")
+                java.io.RandomAccessFile(tail, "r").use { t -> copyRange(t.channel, 0, t.length(), writer, moovOffset) }
             } else {
                 writeAt(writer, moovOffset + 4, typeBytes("moov"))
             }

@@ -478,6 +478,7 @@ class PlaybackService : MediaLibraryService() {
 
         override fun onPlaybackStateChanged(playbackState: Int) {
             if (playbackState == Player.STATE_ENDED) scope.launch { markFinished() }
+            if (playbackState == Player.STATE_READY) scope.launch { fillMissingLength() }
         }
     }
 
@@ -1011,6 +1012,36 @@ class PlaybackService : MediaLibraryService() {
         dao.updateProgress(id, globalPosition(), System.currentTimeMillis(), BookEntity.STATUS_IN_PROGRESS)
     }
 
+    /**
+     * A file whose length the library scan couldn't read (Android's reader gives up on some very
+     * large M4Bs) gets it from the player once it's open, so your place saves and the last chapter
+     * has an end.
+     */
+    private suspend fun fillMissingLength() {
+        val id = bookId ?: return
+        if (isEpisode) return
+        val idx = active.currentMediaItemIndex
+        val dur = active.duration
+        if (dur <= 0 || dur == androidx.media3.common.C.TIME_UNSET || idx !in trackDurations.indices || trackDurations[idx] > 0) return
+        val tracks = dao.getTracks(id)
+        if (idx !in tracks.indices) return
+        val fixed = tracks.mapIndexed { i, t -> if (i == idx) t.copy(durationMs = dur) else t }
+        dao.insertTracks(fixed)
+        applyTrackState(id, fixed)
+        val total = fixed.sumOf { it.durationMs }
+        dao.getBook(id)?.let { b -> if (b.durationMs != total) dao.updateBook(b.copy(durationMs = total)) }
+        val chapters = dao.getChapters(id)
+        if (chapters.isNotEmpty()) {
+            // Recompute ends from the starts (the old ones assumed a length of 0).
+            val trackStart = offsets[idx]
+            val healed = chapters.mapIndexed { i, c ->
+                val end = chapters.getOrNull(i + 1)?.startMs ?: total
+                if (fixed.size == 1 || c.startMs >= trackStart) c.copy(endMs = maxOf(end, c.startMs)) else c
+            }
+            if (healed != chapters) dao.replaceChapters(id, healed)
+        }
+    }
+
     private suspend fun markFinished() {
         val id = bookId ?: return
         if (isEpisode) {
@@ -1096,7 +1127,8 @@ class PlaybackService : MediaLibraryService() {
         applyEffects()
         // Playing a book takes it off Up Next.
         if (id in settings.upNext) container.appScope.launch { container.settings.editUpNext { it - id } }
-        val restart = book.status == BookEntity.STATUS_FINISHED || book.positionMs >= book.durationMs - 1_000
+        // (A book with no known length keeps its place: it used to start over every time.)
+        val restart = book.status == BookEntity.STATUS_FINISHED || (book.durationMs > 0 && book.positionMs >= book.durationMs - 1_000)
         var start = if (restart) 0L else book.positionMs
         // Starting from the very top skips the book's repeated intro too.
         val intro = book.skipIntroSec * 1000L

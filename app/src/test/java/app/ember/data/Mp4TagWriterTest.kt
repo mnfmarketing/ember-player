@@ -20,19 +20,13 @@ class Mp4TagWriterTest {
     private val outDir = System.getenv("TEST_M4B_OUT")?.let { File(it) }
 
     private class MemoryBackup : Mp4TagWriter.BackupStore {
-        var info: String? = null
-        var tail: ByteArray? = null
-        override fun exists() = info != null
-        override fun save(info: String, tail: ByteArray?) {
-            this.info = info
-            this.tail = tail
-        }
-        override fun info() = info
-        override fun tail() = tail
-        override fun clear() {
-            info = null
-            tail = null
-        }
+        private val dir = java.nio.file.Files.createTempDirectory("tagbackup").toFile()
+        private val store = Mp4TagWriter.FileBackupStore(File(dir, "b.json"), File(dir, "b.bin"))
+        override fun exists() = store.exists()
+        override fun info() = store.info()
+        override fun tailFile() = store.tailFile()
+        override fun save(info: String, from: java.nio.channels.FileChannel?, at: Long, len: Long) = store.save(info, from, at, len)
+        override fun clear() = store.clear()
     }
 
     private fun sha(f: File) = MessageDigest.getInstance("SHA-256").digest(f.readBytes())
@@ -52,7 +46,8 @@ class Mp4TagWriterTest {
     private fun edit(file: File, backup: MemoryBackup, tags: Mp4TagWriter.Tags?, chapters: List<Pair<Long, String>>?, totalMs: Long, cover: ByteArray? = null): Mp4TagWriter.Result =
         RandomAccessFile(file, "rw").use { raf ->
             Mp4TagWriter.writeCore(raf.channel, raf.channel, backup, tags, chapters, totalMs, cover) {
-                chapters == null || Mp4TagWriter.chaptersMatch(read(raf), chapters)
+                (chapters == null || Mp4TagWriter.chaptersMatch(read(raf), chapters)) &&
+                    (tags == null || Mp4TagWriter.readTitleCore(raf.channel)?.trim() == tags.title.trim())
             }
         }
 
@@ -100,4 +95,24 @@ class Mp4TagWriterTest {
     @Test fun moovAtEnd() = runScenario("end.m4b")
 
     @Test fun moovAtFront() = runScenario("front.m4b")
+
+    /** Hours long, with a 100 MB+ index (bigger than Ember used to allow), like some 1 GB+ books. */
+    @Test fun hugeIndex() {
+        assumeTrue("Test files not generated", inDir != null && File(inDir, "big.m4b").exists())
+        val info = RandomAccessFile(File(inDir, "big.m4b"), "r").use { raf ->
+            Mp4ChapterParser.info(object : Mp4ChapterParser.ByteSource {
+                override val size: Long get() = raf.length()
+                override fun read(buf: ByteBuffer, pos: Long) {
+                    var p = pos
+                    while (buf.hasRemaining()) {
+                        val n = raf.channel.read(buf, p)
+                        if (n <= 0) break
+                        p += n
+                    }
+                }
+            })
+        }
+        assertTrue("big.m4b length should come from its own header, got ${info.durationMs}", info.durationMs > 5 * 3_600_000L)
+        runScenario("big.m4b")
+    }
 }
