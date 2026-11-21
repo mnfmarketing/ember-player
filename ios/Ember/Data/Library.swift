@@ -225,7 +225,8 @@ final class Library {
         for f in found {
             let id = Ids.nameUUID(folder.id + ":" + f.key)
             keep.insert(id)
-            if let existing = book(id), tracks(id).count == f.files.count {
+            // (A book read without its length, from a file the system's reader couldn't open, is read again.)
+            if let existing = book(id), tracks(id).count == f.files.count, !tracks(id).contains(where: { $0.durationMs <= 0 }) {
                 if existing.pdf == nil, let p = f.pdf { existing.pdf = pdfRef(p, root: root) }
                 await recheckChapters(existing)
                 continue
@@ -282,7 +283,8 @@ final class Library {
         for f in found {
             let id = Ids.nameUUID("drive:" + f.key)
             keep.insert(id)
-            if let existing = book(id), tracks(id).count == f.files.count {
+            // (A book read without its length, from a file the system's reader couldn't open, is read again.)
+            if let existing = book(id), tracks(id).count == f.files.count, !tracks(id).contains(where: { $0.durationMs <= 0 }) {
                 if existing.pdf == nil, let p = f.pdf { existing.pdf = pdfRef(p, root: nil) }
                 await recheckChapters(existing)
                 continue

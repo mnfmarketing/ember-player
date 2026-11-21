@@ -136,7 +136,8 @@ final class Player {
             offsets.append(acc)
             acc += t.durationMs
         }
-        let restart = b.status == Book.statusFinished || b.positionMs >= b.durationMs - 1000
+        // (A book with no known length keeps its place.)
+        let restart = b.status == Book.statusFinished || (b.durationMs > 0 && b.positionMs >= b.durationMs - 1000)
         var start = restart ? 0 : b.positionMs
         let intro = Int64(b.skipIntroSec) * 1000
         if start == 0, intro > 0, tracks[0].durationMs == 0 || tracks[0].durationMs >= intro + 10_000 { start = intro }
@@ -257,7 +258,7 @@ final class Player {
 
     func seek(to global: Int64, logged: Bool = true) {
         guard let l = loaded else { return }
-        let target = min(max(global, 0), max(l.durationMs - 500, 0))
+        let target = l.durationMs > 0 ? min(max(global, 0), max(l.durationMs - 500, 0)) : max(global, 0)
         let from = positionMs
         var idx = 0
         for (i, o) in l.offsets.enumerated() where o <= target { idx = i }

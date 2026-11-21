@@ -24,7 +24,8 @@ enum Mp4TagWriter {
         case failed(String)
     }
 
-    private static let maxMoov: UInt64 = 96 << 20
+    /// Indexes up to this size are edited (long books can have 100 MB+ of sample tables).
+    private static let maxMoov: UInt64 = 512 << 20
 
     // MARK: Boxes
 

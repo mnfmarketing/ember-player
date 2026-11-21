@@ -85,3 +85,39 @@ final class DriveStreamTests: XCTestCase {
         XCTAssertGreaterThan(d.seconds, 5)
     }
 }
+
+/// Long books can have an index bigger than Ember used to read (64 MB): the big sample tables are
+/// skipped now, and the length comes from the file's own header.
+final class BigIndexTests: XCTestCase {
+    private final class Memory: Mp4Chapters.Source {
+        let bytes: [UInt8]
+        var size: Int64 { Int64(bytes.count) }
+        init(_ b: [UInt8]) { bytes = b }
+        func read(_ at: Int64, _ count: Int) async -> [UInt8] {
+            guard at >= 0, at < size else { return [] }
+            return Array(bytes[Int(at)..<min(Int(at) + count, bytes.count)])
+        }
+    }
+
+    private func be32(_ v: Int) -> [UInt8] { [UInt8((v >> 24) & 0xFF), UInt8((v >> 16) & 0xFF), UInt8((v >> 8) & 0xFF), UInt8(v & 0xFF)] }
+    private func box(_ type: String, _ body: [UInt8]) -> [UInt8] { be32(body.count + 8) + Array(type.utf8) + body }
+
+    func testHugeIndexStillGivesChaptersAndLength() async {
+        // mvhd v0: version/flags, created, modified, timescale 1000, duration 7_200_000 (2 hours)
+        let mvhd = box("mvhd", be32(0) + be32(0) + be32(0) + be32(1000) + be32(7_200_000) + [UInt8](repeating: 0, count: 80))
+        var chpl: [UInt8] = [1, 0, 0, 0, 0, 0, 0, 0, 2]
+        for (ms, t) in [(0, "First"), (3_600_000, "Second")] {
+            let v = UInt64(ms) * 10_000
+            chpl += (0..<8).map { UInt8((v >> (56 - 8 * $0)) & 0xFF) }
+            chpl += [UInt8(t.utf8.count)] + Array(t.utf8)
+        }
+        let bigTable = box("stbl", box("stsz", [UInt8](repeating: 0, count: 3 << 20)))
+        let trak = box("trak", box("mdia", box("minf", bigTable)))
+        let moov = box("moov", mvhd + trak + box("udta", box("chpl", chpl)))
+        let file = box("ftyp", Array("M4B ".utf8) + be32(0)) + moov
+        let info = await Mp4Chapters.infoOf(Memory(file))
+        XCTAssertEqual(info.durationMs, 7_200_000)
+        XCTAssertEqual(info.chapters.map(\.title), ["First", "Second"])
+        XCTAssertEqual(info.chapters.map(\.startMs), [0, 3_600_000])
+    }
+}

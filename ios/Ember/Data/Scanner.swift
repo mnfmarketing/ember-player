@@ -173,7 +173,11 @@ struct Scanner {
         var offset: Int64 = 0
         for (i, url) in f.files.enumerated() {
             let asset = DriveStream.asset(url)
-            let duration = (try? await asset.load(.duration)).map { Int64(($0.seconds.isFinite ? $0.seconds : 0) * 1000) } ?? 0
+            var duration = (try? await asset.load(.duration)).map { Int64(($0.seconds.isFinite ? $0.seconds : 0) * 1000) } ?? 0
+            // Ember reads the index itself too (chapters, and the length when the system's reader has none).
+            let own: Mp4Chapters.Info? = containerExt.contains(url.pathExtension.lowercased()) && (f.files.count == 1 || duration <= 0)
+                ? await Mp4Chapters.info(url) : nil
+            if duration <= 0, let d = own?.durationMs, d > 0 { duration = d }
             let common = (try? await asset.load(.commonMetadata)) ?? []
             let all = (try? await asset.load(.metadata)) ?? []
             let trackTitle = await string(common, .commonIdentifierTitle)
@@ -194,7 +198,7 @@ struct Scanner {
                 var found: [(String, Int64)] = []
                 if containerExt.contains(url.pathExtension.lowercased()) {
                     // Ember's own reader first (it knows Nero chapters too), then AVFoundation's.
-                    found = await Mp4Chapters.read(url).map { ($0.title, $0.startMs) }
+                    found = (own?.chapters ?? []).map { ($0.title, $0.startMs) }
                 }
                 if found.count <= 1, containerExt.contains(url.pathExtension.lowercased()) {
                     found = []

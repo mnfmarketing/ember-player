@@ -10,6 +10,12 @@ enum Mp4Chapters {
         let title: String
     }
 
+    /// Chapters, and the length from the file's own header.
+    struct Info {
+        let chapters: [Raw]
+        let durationMs: Int64
+    }
+
     /// Random-access bytes.
     protocol Source {
         var size: Int64 { get }
@@ -93,24 +99,78 @@ enum Mp4Chapters {
         }
     }
 
-    private static let maxMoov: Int64 = 64 << 20
+    /// Leaf boxes bigger than this are left out of the index Ember reads: they're the audio's sample
+    /// tables (tens of MB in long books), not needed for chapters. Ember used to load the whole index
+    /// and gave up past 64 MB, which some 1 GB+ books exceed.
+    private static let keepLeaf: Int64 = 1 << 20
+    private static let containers: Set<String> = ["moov", "trak", "mdia", "minf", "stbl", "udta", "tref", "edts", "dinf"]
 
     /// Chapters in a local or Drive file (empty if none, or not an MP4 file).
-    static func read(_ url: URL) async -> [Raw] {
+    static func read(_ url: URL) async -> [Raw] { await info(url).chapters }
+
+    static func info(_ url: URL) async -> Info {
         if url.isFileURL {
-            guard let s = FileSource(url) else { return [] }
-            return await parse(s)
+            guard let s = FileSource(url) else { return Info(chapters: [], durationMs: 0) }
+            return await infoOf(s)
         }
         if let id = DriveStream.fileID(url) {
             let local = DriveFiles.localURL(id, ext: url.pathExtension.lowercased())
-            if FileManager.default.fileExists(atPath: local.path), let s = FileSource(local) { return await parse(s) }
-            guard let s = await DriveSource.open(id: id) else { return [] }
-            return await parse(s)
+            if FileManager.default.fileExists(atPath: local.path), let s = FileSource(local) { return await infoOf(s) }
+            guard let s = await DriveSource.open(id: id) else { return Info(chapters: [], durationMs: 0) }
+            return await infoOf(s)
         }
-        return []
+        return Info(chapters: [], durationMs: 0)
     }
 
-    static func parse(_ src: Source) async -> [Raw] {
+    static func parse(_ src: Source) async -> [Raw] { await infoOf(src).chapters }
+
+    /// The index with the big sample tables left out (each kept as an empty box of the same type).
+    private static func slim(_ src: Source, _ start: Int64, _ end: Int64) async -> [UInt8] {
+        var out: [UInt8] = []
+        var p = start
+        while p + 8 <= end {
+            let h = await src.read(p, Int(min(16, end - p)))
+            guard h.count >= 8 else { break }
+            var size = Int64(u32(h, 0))
+            var hdr: Int64 = 8
+            if size == 1 {
+                guard h.count >= 16 else { break }
+                size = Int64(bitPattern: u64(h, 8))
+                hdr = 16
+            } else if size == 0 {
+                size = end - p
+            }
+            guard size >= hdr, p + size <= end else { break }
+            let type = typeOf(h, 4)
+            let len = size - hdr
+            let body: [UInt8]
+            if containers.contains(type) {
+                body = await slim(src, p + hdr, p + size)
+            } else if len <= keepLeaf {
+                body = await src.read(p + hdr, Int(len))
+            } else {
+                body = []
+            }
+            let n = UInt32(body.count + 8)
+            out += [UInt8(n >> 24), UInt8((n >> 16) & 0xFF), UInt8((n >> 8) & 0xFF), UInt8(n & 0xFF)] + Array(h[4..<8]) + body
+            p += size
+        }
+        return out
+    }
+
+    private static func movieDurationMs(_ m: [UInt8]) -> Int64 {
+        guard let r = find(m, 0..<m.count, ["mvhd"]), r.count >= 20 else { return 0 }
+        let v = m[r.lowerBound]
+        if v == 1 {
+            guard r.count >= 32 else { return 0 }
+            let ts = Int64(u32(m, r.lowerBound + 20)), dur = Int64(bitPattern: u64(m, r.lowerBound + 24))
+            return ts > 0 && dur > 0 ? dur * 1000 / ts : 0
+        }
+        let ts = Int64(u32(m, r.lowerBound + 12)), dur = Int64(u32(m, r.lowerBound + 16))
+        return ts > 0 && dur > 0 && dur != 0xFFFF_FFFF ? dur * 1000 / ts : 0
+    }
+
+    static func infoOf(_ src: Source) async -> Info {
         let size = src.size
         var pos: Int64 = 0
         var moov: [UInt8]?
@@ -129,22 +189,18 @@ enum Mp4Chapters {
             }
             guard boxSize >= hdr else { break }
             if type == "moov" {
-                let content = boxSize - hdr
-                guard content > 0, content <= maxMoov else { return [] }
-                let m = await src.read(pos + hdr, Int(content))
-                guard Int64(m.count) == content else { return [] }
-                moov = m
+                guard boxSize - hdr > 0 else { return Info(chapters: [], durationMs: 0) }
+                moov = await slim(src, pos + hdr, min(pos + boxSize, size))
                 break
             }
             pos += boxSize
         }
-        guard let m = moov else { return [] }
+        guard let m = moov else { return Info(chapters: [], durationMs: 0) }
         let all = 0..<m.count
         let nero = find(m, all, ["udta", "chpl"]).map { chpl(m, $0) } ?? []
         let qt = await quickTime(m, src)
-        if qt.count > 1 { return qt }
-        if nero.count > 1 { return nero }
-        return qt.isEmpty ? nero : qt
+        let chapters: [Raw] = qt.count > 1 ? qt : (nero.count > 1 ? nero : (qt.isEmpty ? nero : qt))
+        return Info(chapters: chapters, durationMs: movieDurationMs(m))
     }
 
     // MARK: Boxes (as ranges in the moov bytes)
