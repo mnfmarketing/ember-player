@@ -2,6 +2,14 @@
 
 package app.ember.ui.screens
 
+import androidx.compose.material.icons.rounded.ExpandMore
+import androidx.compose.material.icons.rounded.ExpandLess
+import androidx.compose.material.icons.rounded.Bookmarks
+import androidx.compose.material.icons.rounded.CollectionsBookmark
+import androidx.compose.material.icons.rounded.ChevronRight
+import androidx.compose.material.icons.rounded.List
+import androidx.compose.material.icons.rounded.PlaylistAddCheck
+import androidx.compose.material.icons.rounded.PlaylistAdd
 import androidx.compose.ui.text.font.FontWeight
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -155,7 +163,16 @@ fun BookDetailScreen(
     val myShelves = links.filter { it.bookId == book.id }.map { it.shelfId }.toSet()
     val isCurrent = np?.book?.id == book.id
 
-    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 32.dp)) {
+    val listState = androidx.compose.foundation.lazy.rememberLazyListState()
+    val scope = androidx.compose.runtime.rememberCoroutineScope()
+    var chaptersOpen by androidx.compose.runtime.saveable.rememberSaveable(bookId) { mutableStateOf(true) }
+    var savedOpen by androidx.compose.runtime.saveable.rememberSaveable(bookId) { mutableStateOf(false) }
+    var detailsOpen by androidx.compose.runtime.saveable.rememberSaveable(bookId) { mutableStateOf(false) }
+    var finishOpen by androidx.compose.runtime.saveable.rememberSaveable(bookId) { mutableStateOf(false) }
+    // Where "Bookmarks & clips" sits in the list: after the header, the main block and the chapters.
+    val savedHeaderIndex = 2 + if (!book.isExternal && chapters.size > 1) 1 + (if (chaptersOpen) chapters.size else 0) else 0
+
+    LazyColumn(Modifier.fillMaxSize(), state = listState, contentPadding = PaddingValues(bottom = 32.dp)) {
         item {
             Box(Modifier.fillMaxWidth()) {
                 CoverBackdrop(book, Modifier.matchParentSize())
@@ -181,6 +198,12 @@ fun BookDetailScreen(
                                         onEditChapters(book.id)
                                     })
                                 }
+                                if (!book.isExternal) {
+                                    DropdownMenuItem(text = { Text("Get chapter names") }, onClick = {
+                                        menu = false
+                                        onOpenRoute("chapters/${book.id}?lookup=true")
+                                    })
+                                }
                                 DropdownMenuItem(text = { Text("Find book info") }, onClick = {
                                     menu = false
                                     infoSheet = true
@@ -192,6 +215,11 @@ fun BookDetailScreen(
                                 DropdownMenuItem(text = { Text("Choose cover image") }, onClick = {
                                     menu = false
                                     pickImage.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                                })
+                                HorizontalDivider()
+                                DropdownMenuItem(text = { Text("Export notes") }, onClick = {
+                                    menu = false
+                                    exportNotes = true
                                 })
                                 if (book.status == BookEntity.STATUS_FINISHED) {
                                     DropdownMenuItem(text = { Text("Mark as not finished") }, onClick = {
@@ -247,7 +275,17 @@ fun BookDetailScreen(
                         )
                     }
                     if (book.narrator.isNotBlank()) {
-                        Text("Narrated by ${book.narrator}", style = MaterialTheme.typography.bodySmall, color = EmberColors.TextMuted)
+                        // Tap a narrator for everything they've read.
+                        val first = narratorsOf(book).firstOrNull()
+                        Text(
+                            "Read by ${book.narrator}",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = EmberColors.TextMuted,
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(8.dp))
+                                .then(if (first != null) Modifier.clickable(onClickLabel = "Books read by $first") { onOpenCollection("narrator", first) } else Modifier)
+                                .padding(horizontal = 8.dp, vertical = 2.dp),
+                        )
                     }
                     if (book.series.isNotBlank()) {
                         val num = book.seriesIndex?.let { if (it % 1f == 0f) " · Book ${it.toInt()}" else " · Book $it" } ?: ""
@@ -269,7 +307,7 @@ fun BookDetailScreen(
         }
 
         item {
-            Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
+            Column(Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
                 if (book.isExternal) {
                     val app = ExternalApp.from(book.externalApp)
                     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -287,7 +325,7 @@ fun BookDetailScreen(
                         }
                     }
                     Spacer(Modifier.height(14.dp))
-                    ThinProgress(book.progress, color = accent, height = 5.dp)
+                    ThinProgress(book.progress, color = accent, height = 4.dp)
                     Spacer(Modifier.height(6.dp))
                     Text(
                         "${(book.progress * 100).toInt()}% complete · listened in ${app.label}",
@@ -301,30 +339,90 @@ fun BookDetailScreen(
                         book.positionMs > 0 -> "Resume"
                         else -> "Start listening"
                     }
-                    Button(
-                        onClick = {
-                            vm.play(book.id)
-                            onPlayed()
-                        },
-                        colors = ButtonDefaults.buttonColors(containerColor = accent, contentColor = onColorFor(accent)),
-                        modifier = Modifier.fillMaxWidth().height(54.dp),
-                    ) {
-                        Icon(Icons.Rounded.PlayArrow, null)
-                        Spacer(Modifier.width(8.dp))
-                        Text(label, style = MaterialTheme.typography.titleMedium)
+                    // One big button, and Up Next beside it.
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Button(
+                            onClick = {
+                                vm.play(book.id)
+                                onPlayed()
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = accent, contentColor = onColorFor(accent)),
+                            modifier = Modifier.weight(1f).height(54.dp),
+                        ) {
+                            Icon(Icons.Rounded.PlayArrow, null)
+                            Spacer(Modifier.width(8.dp))
+                            Text(label, style = MaterialTheme.typography.titleMedium)
+                        }
+                        Spacer(Modifier.width(10.dp))
+                        val queued = settings.upNext.contains(book.id)
+                        Box(
+                            Modifier
+                                .size(54.dp)
+                                .clip(CircleShape)
+                                .background(accent.copy(alpha = if (queued) 0.30f else 0.14f))
+                                .clickable(onClickLabel = if (queued) "Remove from Up Next" else "Add to Up Next") {
+                                    if (queued) vm.removeFromUpNext(book.id) else vm.addToUpNext(listOf(book.id))
+                                },
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Icon(
+                                if (queued) Icons.Rounded.PlaylistAddCheck else Icons.Rounded.PlaylistAdd,
+                                if (queued) "In Up Next" else "Add to Up Next",
+                                tint = EmberColors.Text,
+                            )
+                        }
                     }
                     Spacer(Modifier.height(14.dp))
-                    ThinProgress(book.progress, color = accent, height = 5.dp)
+                    ThinProgress(book.progress, color = accent, height = 4.dp)
                     Spacer(Modifier.height(6.dp))
-                    Text(
-                        when (book.status) {
-                            BookEntity.STATUS_FINISHED -> "Finished · ${formatDuration(book.durationMs)}"
-                            BookEntity.STATUS_NEW -> "${formatDuration(book.durationMs)} · not started"
-                            else -> "${(book.progress * 100).toInt()}% · ${formatDuration(book.remainingMs)} left of ${formatDuration(book.durationMs)}"
-                        },
-                        style = MaterialTheme.typography.labelSmall,
-                        color = EmberColors.TextMuted,
-                    )
+                    Row {
+                        Text(
+                            when (book.status) {
+                                BookEntity.STATUS_FINISHED -> "Finished"
+                                BookEntity.STATUS_NEW -> "Not started"
+                                else -> "${(book.progress * 100).toInt()}%"
+                            },
+                            style = MaterialTheme.typography.labelSmall,
+                            color = EmberColors.TextMuted,
+                            modifier = Modifier.weight(1f),
+                        )
+                        Text(
+                            if (book.status == BookEntity.STATUS_IN_PROGRESS) "${formatDuration(book.remainingMs)} left of ${formatDuration(book.durationMs)}" else formatDuration(book.durationMs),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = EmberColors.TextMuted,
+                        )
+                    }
+                    // The chapter you're in; tap to jump to the list.
+                    val pos = if (isCurrent) np?.position ?: book.positionMs else book.positionMs
+                    val chIdx = chapters.indexOfLast { it.startMs <= pos }
+                    if (book.status == BookEntity.STATUS_IN_PROGRESS && chapters.size > 1 && chIdx >= 0) {
+                        Spacer(Modifier.height(10.dp))
+                        Row(
+                            Modifier
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(10.dp))
+                                .clickable(onClickLabel = "Show chapters") {
+                                    chaptersOpen = true
+                                    scope.launch { listState.animateScrollToItem(2) }
+                                }
+                                .padding(vertical = 6.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Icon(Icons.Rounded.List, null, tint = EmberColors.Text, modifier = Modifier.size(20.dp))
+                            Spacer(Modifier.width(8.dp))
+                            Text(
+                                chapters[chIdx].title,
+                                style = MaterialTheme.typography.titleSmall,
+                                color = EmberColors.Text,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                modifier = Modifier.weight(1f, fill = false),
+                            )
+                            Text(" · ${chIdx + 1} of ${chapters.size}", style = MaterialTheme.typography.bodySmall, color = EmberColors.TextMuted)
+                            Spacer(Modifier.weight(1f))
+                            Icon(Icons.Rounded.ChevronRight, null, tint = EmberColors.TextFaint, modifier = Modifier.size(20.dp))
+                        }
+                    }
                 }
                 if (book.source == BookEntity.SOURCE_DRIVE) {
                     Spacer(Modifier.height(10.dp))
@@ -338,201 +436,195 @@ fun BookDetailScreen(
                         color = EmberColors.TextMuted,
                     )
                 }
-                Spacer(Modifier.height(18.dp))
+                // Four quick ones, like the player's bottom row.
+                Spacer(Modifier.height(12.dp))
+                HorizontalDivider(color = EmberColors.TextFaint.copy(alpha = 0.18f))
+                Row(Modifier.fillMaxWidth().padding(vertical = 6.dp), horizontalArrangement = Arrangement.SpaceEvenly) {
+                    if (!book.isExternal) PageAction(Icons.Rounded.History, "Listening log") { showLog = true }
+                    if (book.hasPdf) PageAction(Icons.Rounded.PictureAsPdf, "PDF") { onOpenRoute("pdf/${book.id}") }
+                    PageAction(Icons.Rounded.CollectionsBookmark, if (myShelves.isEmpty()) "Shelves" else "Shelves · ${myShelves.size}") { shelfDialog = true }
+                    if (!book.isExternal) {
+                        PageAction(Icons.Rounded.Bookmarks, "Saved · ${bookmarks.size + clips.size}") {
+                            savedOpen = true
+                            scope.launch { listState.animateScrollToItem(savedHeaderIndex) }
+                        }
+                    }
+                }
+                HorizontalDivider(color = EmberColors.TextFaint.copy(alpha = 0.18f))
+                Spacer(Modifier.height(10.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text("Your rating", style = MaterialTheme.typography.labelLarge, color = EmberColors.TextMuted, modifier = Modifier.weight(1f))
                     RatingBar(book.rating, onRate = { vm.setRating(book.id, it) }, color = accent)
                 }
-                Spacer(Modifier.height(14.dp))
-                FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    shelves.filter { it.id in myShelves }.forEach { s ->
-                        AssistChip(
-                            onClick = { onOpenCollection("shelf", s.id.toString()) },
-                            label = { Text(s.name) },
-                            colors = AssistChipDefaults.assistChipColors(containerColor = EmberColors.Surface, labelColor = EmberColors.Text),
-                        )
-                    }
-                    AssistChip(
-                        onClick = { shelfDialog = true },
-                        label = { Text(if (myShelves.isEmpty()) "Add to a shelf" else "Shelves") },
-                        leadingIcon = { Icon(Icons.Rounded.Add, null, Modifier.size(18.dp)) },
-                    )
-                    if (book.hasPdf) {
-                        AssistChip(
-                            onClick = { onOpenRoute("pdf/${book.id}") },
-                            label = { Text("PDF") },
-                            leadingIcon = { Icon(Icons.Rounded.PictureAsPdf, null, Modifier.size(18.dp)) },
-                        )
-                    }
-                    if (book.status == BookEntity.STATUS_FINISHED) {
-                        AssistChip(
-                            onClick = { vm.openOnReadingSite(context, book, "storygraph") },
-                            label = { Text("StoryGraph") },
-                            leadingIcon = { Icon(Icons.Rounded.OpenInNew, null, Modifier.size(18.dp)) },
-                        )
-                        AssistChip(
-                            onClick = { vm.openOnReadingSite(context, book, "goodreads") },
-                            label = { Text("Goodreads") },
-                            leadingIcon = { Icon(Icons.Rounded.OpenInNew, null, Modifier.size(18.dp)) },
-                        )
-                    }
-                    if (!book.isExternal) {
-                        AssistChip(
-                            onClick = { showLog = true },
-                            label = { Text("Listening log") },
-                            leadingIcon = { Icon(Icons.Rounded.History, null, Modifier.size(18.dp)) },
-                        )
-                    }
-                    if (!book.isExternal) {
-                        val queued = settings.upNext.contains(book.id)
-                        AssistChip(
-                            onClick = { if (queued) vm.removeFromUpNext(book.id) else vm.addToUpNext(listOf(book.id)) },
-                            label = { Text(if (queued) "In Up Next" else "Up Next") },
-                            leadingIcon = {
-                                Icon(
-                                    if (queued) Icons.Rounded.Check else Icons.Rounded.QueueMusic,
-                                    if (queued) "Remove from Up Next" else "Add to Up Next",
-                                    Modifier.size(18.dp),
-                                )
-                            },
-                        )
-                    }
-                    AssistChip(
-                        onClick = { exportNotes = true },
-                        label = { Text("Export notes") },
-                        leadingIcon = { Icon(Icons.Rounded.Description, null, Modifier.size(18.dp)) },
-                    )
-                }
                 if (book.description.isNotBlank()) {
-                    Spacer(Modifier.height(16.dp))
-                    Text(book.description, style = MaterialTheme.typography.bodyMedium, color = EmberColors.TextMuted)
+                    Spacer(Modifier.height(12.dp))
+                    var more by remember(book.id) { mutableStateOf(false) }
+                    Text(
+                        book.description,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = EmberColors.TextMuted,
+                        maxLines = if (more) Int.MAX_VALUE else 4,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.clickable(onClickLabel = if (more) "Show less" else "Show more") { more = !more },
+                    )
+                    if (!more && book.description.length > 220) {
+                        Text("More", style = MaterialTheme.typography.labelLarge, color = accent, modifier = Modifier.clickable { more = true }.padding(top = 4.dp))
+                    }
                 }
+                Spacer(Modifier.height(8.dp))
             }
         }
 
-        if (bookmarks.isNotEmpty()) {
-            item { DetailHeader("Bookmarks") }
-            items(bookmarks, key = { "bm${it.id}" }) { bm ->
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                        .clickable { vm.playFrom(book.id, bm.positionMs) }
-                        .padding(horizontal = 20.dp, vertical = 10.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Icon(Icons.Rounded.Bookmark, null, tint = accent, modifier = Modifier.size(18.dp))
-                    Spacer(Modifier.width(12.dp))
-                    Column(Modifier.weight(1f)) {
-                        Text(
-                            formatClock(bm.positionMs) + if (bm.chapterTitle.isNotBlank()) " · ${bm.chapterTitle}" else "",
-                            style = MaterialTheme.typography.labelMedium,
-                            color = EmberColors.TextMuted,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                        if (bm.note.isNotBlank()) Text(bm.note, style = MaterialTheme.typography.bodyMedium, color = EmberColors.Text)
+        // Sections that open and close. Chapters comes first (index 2, for the chapter line above).
+        if (!book.isExternal && chapters.size > 1) {
+            item(key = "chaptersHeader") { SectionToggle("Chapters", "${chapters.size}", chaptersOpen) { chaptersOpen = !chaptersOpen } }
+            if (chaptersOpen) {
+                // Where you are in the book: heard chapters are dimmed with a check, the one you're in is highlighted.
+                val pos = when {
+                    isCurrent -> np?.position ?: book.positionMs
+                    book.status == BookEntity.STATUS_FINISHED -> book.durationMs
+                    else -> book.positionMs
+                }
+                val started = book.status != BookEntity.STATUS_NEW || pos > 0
+                itemsIndexed(chapters, key = { _, ch -> "ch${ch.idx}" }) { i, ch ->
+                    val current = started && book.status != BookEntity.STATUS_FINISHED && pos >= ch.startMs && pos < ch.endMs
+                    val heard = started && !current && ch.endMs <= pos
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .background(if (current) accent.copy(alpha = 0.12f) else Color.Transparent)
+                            .clickable { vm.playFrom(book.id, ch.startMs) }
+                            .padding(horizontal = 20.dp, vertical = 12.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Box(Modifier.width(36.dp)) {
+                            if (heard) {
+                                Icon(Icons.Rounded.Check, "Heard", tint = EmberColors.TextFaint, modifier = Modifier.size(16.dp))
+                            } else {
+                                Text("${i + 1}", style = MaterialTheme.typography.labelMedium, color = if (current) accent else EmberColors.TextFaint)
+                            }
+                        }
+                        Column(Modifier.weight(1f)) {
+                            Text(
+                                ch.title,
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = if (current) FontWeight.SemiBold else FontWeight.Normal,
+                                color = when {
+                                    current -> accent
+                                    heard -> EmberColors.TextMuted
+                                    else -> EmberColors.Text
+                                },
+                                maxLines = 2,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                            if (current && ch.endMs > ch.startMs) {
+                                Spacer(Modifier.height(6.dp))
+                                ThinProgress((pos - ch.startMs).toFloat() / (ch.endMs - ch.startMs), color = accent, height = 2.dp)
+                            }
+                        }
+                        Text(formatClock(ch.endMs - ch.startMs), style = MaterialTheme.typography.labelSmall, color = EmberColors.TextMuted)
                     }
                 }
             }
         }
 
-        if (clips.isNotEmpty()) {
-            item {
+        if (!book.isExternal) {
+            item(key = "savedHeader") {
                 editingClip?.let { clip ->
                     EditClipNoteDialog(clip, onDismiss = { editingClip = null }) {
                         vm.updateClipNote(clip.id, it)
                         editingClip = null
                     }
                 }
-                DetailHeader("Clips · ${clips.size}")
+                SectionToggle("Bookmarks & clips", "${bookmarks.size + clips.size}", savedOpen) { savedOpen = !savedOpen }
             }
-            items(clips, key = { "clip${it.id}" }) { clip ->
-                Box(Modifier.padding(horizontal = 8.dp)) {
-                    ClipRow(
-                        clip,
-                        onPlay = { vm.playClip(clip) },
-                        onCard = { onOpenRoute("card/clip/${clip.id}") },
-                        onEdit = { editingClip = clip },
-                        onDelete = { vm.deleteClip(clip.id) },
+            if (savedOpen) {
+                if (bookmarks.isEmpty() && clips.isEmpty()) {
+                    item {
+                        Text(
+                            "Nothing saved yet. Tap Bookmark or Clip in the player while you listen.",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = EmberColors.TextMuted,
+                            modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
+                        )
+                    }
+                }
+                items(bookmarks, key = { "bm${it.id}" }) { bm ->
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .clickable { vm.playFrom(book.id, bm.positionMs) }
+                            .padding(horizontal = 20.dp, vertical = 10.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(Icons.Rounded.Bookmark, null, tint = accent, modifier = Modifier.size(18.dp))
+                        Spacer(Modifier.width(12.dp))
+                        Column(Modifier.weight(1f)) {
+                            Text(
+                                formatClock(bm.positionMs) + if (bm.chapterTitle.isNotBlank()) " · ${bm.chapterTitle}" else "",
+                                style = MaterialTheme.typography.labelMedium,
+                                color = EmberColors.TextMuted,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                            if (bm.note.isNotBlank()) Text(bm.note, style = MaterialTheme.typography.bodyMedium, color = EmberColors.Text)
+                        }
+                    }
+                }
+                items(clips, key = { "clip${it.id}" }) { clip ->
+                    Box(Modifier.padding(horizontal = 8.dp)) {
+                        ClipRow(
+                            clip,
+                            onPlay = { vm.playClip(clip) },
+                            onCard = { onOpenRoute("card/clip/${clip.id}") },
+                            onEdit = { editingClip = clip },
+                            onDelete = { vm.deleteClip(clip.id) },
+                        )
+                    }
+                }
+            }
+        }
+
+        item(key = "detailsHeader") { SectionToggle("Details", null, detailsOpen) { detailsOpen = !detailsOpen } }
+        if (detailsOpen) {
+            item {
+                val listened by androidx.compose.runtime.produceState(0L, book.id, book.lastPlayedAt) { value = vm.listenedMs(book.id) }
+                Column(Modifier.padding(horizontal = 20.dp)) {
+                    val df = DateFormat.getDateInstance(DateFormat.MEDIUM)
+                    if (!book.isExternal) {
+                        DetailLine("Length", formatDuration(book.durationMs))
+                        if (listened >= 60_000) DetailLine("Time listened", formatDuration(listened))
+                    }
+                    DetailLine("Added", df.format(Date(book.addedAt)))
+                    if (book.finishedAt > 0) DetailLine("Finished", df.format(Date(book.finishedAt)))
+                    if (!book.isExternal) DetailLine("Speed", app.ember.util.formatSpeed(book.speed))
+                    DetailLine(
+                        "Source",
+                        when {
+                            book.isExternal -> ExternalApp.from(book.externalApp).label
+                            book.source == BookEntity.SOURCE_DRIVE -> "Google Drive"
+                            else -> "On this phone"
+                        },
                     )
                 }
             }
         }
 
-        if (!book.isExternal && chapters.size > 1) {
-            item { DetailHeader("Chapters · ${chapters.size}") }
-            // Where you are in the book: heard chapters are dimmed with a check, the one you're in is highlighted.
-            val pos = when {
-                isCurrent -> np?.position ?: book.positionMs
-                book.status == BookEntity.STATUS_FINISHED -> book.durationMs
-                else -> book.positionMs
-            }
-            val started = book.status != BookEntity.STATUS_NEW || pos > 0
-            itemsIndexed(chapters, key = { _, ch -> "ch${ch.idx}" }) { i, ch ->
-                val current = started && book.status != BookEntity.STATUS_FINISHED && pos >= ch.startMs && pos < ch.endMs
-                val heard = started && !current && ch.endMs <= pos
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                        .background(if (current) accent.copy(alpha = 0.12f) else Color.Transparent)
-                        .clickable { vm.playFrom(book.id, ch.startMs) }
-                        .padding(horizontal = 20.dp, vertical = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Box(Modifier.width(36.dp)) {
-                        if (heard) {
-                            Icon(Icons.Rounded.Check, "Heard", tint = EmberColors.TextFaint, modifier = Modifier.size(16.dp))
-                        } else {
-                            Text(
-                                "${i + 1}",
-                                style = MaterialTheme.typography.labelMedium,
-                                color = if (current) accent else EmberColors.TextFaint,
-                            )
-                        }
+        item(key = "finishHeader") { SectionToggle("When you finish", "StoryGraph · Goodreads", finishOpen) { finishOpen = !finishOpen } }
+        if (finishOpen) {
+            item {
+                Row(Modifier.padding(horizontal = 20.dp, vertical = 6.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    OutlinedButton(onClick = { vm.openOnReadingSite(context, book, "storygraph") }) {
+                        Icon(Icons.Rounded.OpenInNew, null, Modifier.size(16.dp))
+                        Spacer(Modifier.width(6.dp))
+                        Text("StoryGraph")
                     }
-                    Column(Modifier.weight(1f)) {
-                        Text(
-                            ch.title,
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = if (current) FontWeight.SemiBold else FontWeight.Normal,
-                            color = when {
-                                current -> accent
-                                heard -> EmberColors.TextMuted
-                                else -> EmberColors.Text
-                            },
-                            maxLines = 2,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                        if (current && ch.endMs > ch.startMs) {
-                            Spacer(Modifier.height(6.dp))
-                            ThinProgress((pos - ch.startMs).toFloat() / (ch.endMs - ch.startMs), color = accent, height = 2.dp)
-                        }
+                    OutlinedButton(onClick = { vm.openOnReadingSite(context, book, "goodreads") }) {
+                        Icon(Icons.Rounded.OpenInNew, null, Modifier.size(16.dp))
+                        Spacer(Modifier.width(6.dp))
+                        Text("Goodreads")
                     }
-                    Text(formatClock(ch.endMs - ch.startMs), style = MaterialTheme.typography.labelSmall, color = EmberColors.TextMuted)
                 }
-            }
-        }
-
-        item {
-            val listened by androidx.compose.runtime.produceState(0L, book.id, book.lastPlayedAt) { value = vm.listenedMs(book.id) }
-            DetailHeader("Details")
-            Column(Modifier.padding(horizontal = 20.dp)) {
-                val df = DateFormat.getDateInstance(DateFormat.MEDIUM)
-                DetailLine("Added", df.format(Date(book.addedAt)))
-                if (book.finishedAt > 0) DetailLine("Finished", df.format(Date(book.finishedAt)))
-                if (!book.isExternal) {
-                    DetailLine("Length", formatDuration(book.durationMs))
-                    if (listened >= 60_000) DetailLine("Time listened", formatDuration(listened))
-                    DetailLine("Default speed", app.ember.util.formatSpeed(book.speed))
-                }
-                DetailLine(
-                    "Source",
-                    when {
-                        book.isExternal -> ExternalApp.from(book.externalApp).label
-                        book.source == BookEntity.SOURCE_DRIVE -> "Google Drive"
-                        else -> "On this phone"
-                    },
-                )
             }
         }
     }
@@ -786,3 +878,42 @@ private fun DriveDownloadRow(vm: MainViewModel, bookId: String) {
     }
 }
 
+
+/** A section heading that opens and closes what's under it. */
+@Composable
+private fun SectionToggle(title: String, extra: String?, open: Boolean, onToggle: () -> Unit) {
+    Column {
+        HorizontalDivider(color = EmberColors.TextFaint.copy(alpha = 0.18f))
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .clickable(onClickLabel = if (open) "Close $title" else "Open $title", onClick = onToggle)
+                .padding(horizontal = 20.dp, vertical = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(title, style = MaterialTheme.typography.titleMedium, color = EmberColors.Text)
+            if (extra != null) {
+                Spacer(Modifier.width(8.dp))
+                Text(extra, style = MaterialTheme.typography.bodySmall, color = EmberColors.TextMuted, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f, fill = false))
+            }
+            Spacer(Modifier.weight(1f))
+            Icon(if (open) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore, null, tint = EmberColors.TextMuted)
+        }
+    }
+}
+
+/** An icon with a label under it (the book page's quick row). */
+@Composable
+private fun PageAction(icon: androidx.compose.ui.graphics.vector.ImageVector, label: String, onClick: () -> Unit) {
+    Column(
+        Modifier
+            .clip(RoundedCornerShape(12.dp))
+            .clickable(onClick = onClick)
+            .padding(horizontal = 10.dp, vertical = 8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Icon(icon, null, tint = EmberColors.Text, modifier = Modifier.size(24.dp))
+        Spacer(Modifier.height(4.dp))
+        Text(label, style = MaterialTheme.typography.labelMedium, color = EmberColors.TextMuted, maxLines = 1)
+    }
+}
