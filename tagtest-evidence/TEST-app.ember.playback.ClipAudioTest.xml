@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="app.ember.playback.ClipAudioTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-24T06:15:06" hostname="runnervmeozm8" time="0.002">
+<testsuite name="app.ember.playback.ClipAudioTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-24T15:16:27" hostname="ip-10-0-133-137" time="0.003">
   <properties/>
   <testcase name="inOneFile" classname="app.ember.playback.ClipAudioTest" time="0.001"/>
   <testcase name="acrossTwoFiles" classname="app.ember.playback.ClipAudioTest" time="0.001"/>
   <testcase name="unknownLengthTakesTheRest" classname="app.ember.playback.ClipAudioTest" time="0.0"/>
-  <testcase name="singleFileBook" classname="app.ember.playback.ClipAudioTest" time="0.0"/>
+  <testcase name="singleFileBook" classname="app.ember.playback.ClipAudioTest" time="0.001"/>
   <testcase name="noFiles" classname="app.ember.playback.ClipAudioTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
