@@ -2,6 +2,10 @@
 
 package app.ember.ui.screens
 
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material.icons.rounded.GraphicEq
+import androidx.compose.material.icons.rounded.Share
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -217,7 +221,34 @@ fun ClipRow(
                 Text("“${clip.note}”", style = MaterialTheme.typography.bodyMedium, color = textColor, maxLines = 4, overflow = TextOverflow.Ellipsis)
             }
         }
-        IconButton(onClick = onCard) { Icon(Icons.Rounded.FormatQuote, "Make a quote card", tint = mutedColor) }
+        // Share: a quote card, or the clip's audio itself.
+        val shareAudio = app.ember.ui.components.LocalShareClipAudio.current
+        if (shareAudio == null) {
+            IconButton(onClick = onCard) { Icon(Icons.Rounded.FormatQuote, "Make a quote card", tint = mutedColor) }
+        } else {
+            var shareMenu by remember { mutableStateOf(false) }
+            Box {
+                IconButton(onClick = { shareMenu = true }) { Icon(Icons.Rounded.Share, "Share clip", tint = mutedColor) }
+                DropdownMenu(expanded = shareMenu, onDismissRequest = { shareMenu = false }) {
+                    DropdownMenuItem(
+                        text = { Text("Quote card") },
+                        leadingIcon = { Icon(Icons.Rounded.FormatQuote, null) },
+                        onClick = {
+                            shareMenu = false
+                            onCard()
+                        },
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Audio (${clip.lengthMs / 1000}s)") },
+                        leadingIcon = { Icon(Icons.Rounded.GraphicEq, null) },
+                        onClick = {
+                            shareMenu = false
+                            shareAudio(clip)
+                        },
+                    )
+                }
+            }
+        }
         if (onEdit != null) IconButton(onClick = onEdit) { Icon(Icons.Rounded.Edit, "Edit note", tint = mutedColor) }
         IconButton(onClick = onDelete) { Icon(Icons.Rounded.Delete, "Delete clip", tint = mutedColor) }
     }

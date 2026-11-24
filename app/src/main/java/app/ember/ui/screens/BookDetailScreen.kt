@@ -514,6 +514,7 @@ fun BookDetailScreen(
         }
 
         item {
+            val listened by androidx.compose.runtime.produceState(0L, book.id, book.lastPlayedAt) { value = vm.listenedMs(book.id) }
             DetailHeader("Details")
             Column(Modifier.padding(horizontal = 20.dp)) {
                 val df = DateFormat.getDateInstance(DateFormat.MEDIUM)
@@ -521,6 +522,7 @@ fun BookDetailScreen(
                 if (book.finishedAt > 0) DetailLine("Finished", df.format(Date(book.finishedAt)))
                 if (!book.isExternal) {
                     DetailLine("Length", formatDuration(book.durationMs))
+                    if (listened >= 60_000) DetailLine("Time listened", formatDuration(listened))
                     DetailLine("Default speed", app.ember.util.formatSpeed(book.speed))
                 }
                 DetailLine(

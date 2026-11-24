@@ -96,7 +96,9 @@ fun PdfScreen(vm: MainViewModel, bookId: String, onBack: () -> Unit) {
         if (uri == null) return@produceState
         value = withContext(io) {
             runCatching {
-                val fd = context.contentResolver.openFileDescriptor(Uri.parse(uri), "r") ?: error("no file")
+                // Drive PDFs download the first time you open them.
+                val local = vm.localPdf(uri) ?: error("Couldn't download the PDF from Google Drive. Check your connection.")
+                val fd = context.contentResolver.openFileDescriptor(local, "r") ?: error("no file")
                 val r = PdfRenderer(fd)
                 OpenPdf(fd, r).also { d ->
                     for (i in 0 until d.pageCount) {

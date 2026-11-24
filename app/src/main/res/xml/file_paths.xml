@@ -2,5 +2,6 @@
 <paths>
     <cache-path name="cards" path="cards/" />
     <cache-path name="notes" path="notes/" />
+    <cache-path name="clips" path="clips/" />
     <files-path name="docs" path="docs/" />
 </paths>

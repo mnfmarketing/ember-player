@@ -323,6 +323,7 @@ fun EmberRoot(vm: MainViewModel, routeRequest: String? = null, onRouteHandled: (
         var quickBookId by remember { mutableStateOf<String?>(null) }
         CompositionLocalProvider(
             LocalBookMenu provides { id: String -> quickBookId = id },
+            app.ember.ui.components.LocalShareClipAudio provides { clip: app.ember.data.ClipEntity -> vm.shareClipAudio(clip) },
             LocalBookSelection provides selection,
         ) {
             Row(

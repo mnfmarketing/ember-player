@@ -126,6 +126,8 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
 
     private val c = app.container
+    /** The app's context (for files, toasts and the share sheet). */
+    private val appContext: Context get() = getApplication<Application>()
     private val dao = c.db.dao()
     private val conn = c.player
     private val mediaDao = c.media.dao()
@@ -842,7 +844,28 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     /** The PDF's file name, for showing in Edit details. */
+    /** Where a Drive PDF is kept once downloaded (shareable through the file provider). */
+    private fun drivePdfFile(uri: String): java.io.File =
+        java.io.File(appContext.filesDir, "docs/drive/" + uri.removePrefix(app.ember.data.LibraryScanner.DRIVE_PDF_PREFIX) + ".pdf")
+
+    /** A PDF Ember can open: Drive ones are downloaded the first time (then kept). Null if that fails. */
+    suspend fun localPdf(uri: String): Uri? = withContext(Dispatchers.IO) {
+        if (!uri.startsWith(app.ember.data.LibraryScanner.DRIVE_PDF_PREFIX)) return@withContext Uri.parse(uri)
+        val f = drivePdfFile(uri)
+        if (!f.exists() || f.length() == 0L) {
+            val bytes = c.drive.download(uri.removePrefix(app.ember.data.LibraryScanner.DRIVE_PDF_PREFIX)) ?: return@withContext null
+            f.parentFile?.mkdirs()
+            val tmp = java.io.File(f.path + ".part")
+            tmp.writeBytes(bytes)
+            tmp.renameTo(f)
+        }
+        Uri.fromFile(f)
+    }
+
     suspend fun pdfName(uri: String): String = withContext(Dispatchers.IO) {
+        if (uri.startsWith(app.ember.data.LibraryScanner.DRIVE_PDF_PREFIX)) {
+            return@withContext runCatching { c.drive.name(uri.removePrefix(app.ember.data.LibraryScanner.DRIVE_PDF_PREFIX)) }.getOrNull() ?: "PDF in Google Drive"
+        }
         val u = Uri.parse(uri)
         if (u.scheme == "file") return@withContext u.lastPathSegment ?: "PDF"
         runCatching {
@@ -854,7 +877,11 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     /** Opens the PDF in another app (Samsung Notes, Drive, a PDF reader…). */
     fun openPdfElsewhere(context: Context, uri: String): Boolean {
-        val u = Uri.parse(uri)
+        val u = if (uri.startsWith(app.ember.data.LibraryScanner.DRIVE_PDF_PREFIX)) {
+            drivePdfFile(uri).takeIf { it.exists() }?.let { Uri.fromFile(it) } ?: return false
+        } else {
+            Uri.parse(uri)
+        }
         val shareable = if (u.scheme == "file") {
             androidx.core.content.FileProvider.getUriForFile(context, context.packageName + ".files", java.io.File(u.path ?: return false))
         } else {
@@ -1710,6 +1737,68 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             chapterTitle = np.chapters.lastOrNull { it.startMs <= start }?.title?.takeIf { np.chapters.size > 1 } ?: "",
             coverPath = np.book.coverPath,
         )
+    }
+
+    /** Real time you've spent listening to a book (from its listening log, all devices). */
+    suspend fun listenedMs(bookId: String): Long {
+        val playing = nowPlaying.value?.let { it.book.id == bookId && it.isPlaying } == true
+        return app.ember.data.ListenTime.total(dao.getListenLog(bookId), System.currentTimeMillis(), playing)
+    }
+
+    /** Cuts the clip's audio into an .m4a and opens the share sheet. */
+    fun shareClipAudio(clip: app.ember.data.ClipEntity) {
+        val toast = { msg: String -> android.widget.Toast.makeText(appContext, msg, android.widget.Toast.LENGTH_LONG).show() }
+        viewModelScope.launch {
+            toast("Preparing the clip's audio…")
+            try {
+                val parts = clipAudioParts(clip)
+                if (parts == null) {
+                    toast("Download this book first to share its audio (Google Drive books stream).")
+                    return@launch
+                }
+                val dir = java.io.File(appContext.cacheDir, "clips")
+                dir.listFiles()?.forEach { it.delete() }
+                val f = app.ember.playback.ClipAudio.export(appContext, parts, java.io.File(dir, app.ember.playback.ClipAudio.fileName(clip.title, clip.startMs)))
+                val uri = androidx.core.content.FileProvider.getUriForFile(appContext, appContext.packageName + ".files", f)
+                val text = buildString {
+                    if (clip.note.isNotBlank()) append("“${clip.note.trim()}”\n")
+                    append(clip.title)
+                    if (clip.subtitle.isNotBlank()) append(" · ${clip.subtitle}")
+                }
+                val send = android.content.Intent(android.content.Intent.ACTION_SEND)
+                    .setType("audio/mp4")
+                    .putExtra(android.content.Intent.EXTRA_STREAM, uri)
+                    .putExtra(android.content.Intent.EXTRA_TEXT, text)
+                    .addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                appContext.startActivity(
+                    android.content.Intent.createChooser(send, "Share clip audio")
+                        .addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK or android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION),
+                )
+            } catch (e: Exception) {
+                if (e is kotlinx.coroutines.CancellationException) throw e
+                toast("Couldn't cut the audio: ${e.message ?: e.javaClass.simpleName}")
+            }
+        }
+    }
+
+    /** The files and stretches a clip covers, or null if a file isn't on the phone (a streamed Drive book). */
+    private suspend fun clipAudioParts(clip: app.ember.data.ClipEntity): List<app.ember.playback.ClipAudio.Part>? {
+        if (clip.mediaId.startsWith(PlaybackService.EPISODE_PREFIX)) {
+            val ep = mediaDao.getEpisode(clip.mediaId.removePrefix(PlaybackService.EPISODE_PREFIX)) ?: return null
+            val local = ep.localPath?.let { java.io.File(it) }?.takeIf { ep.isDownloaded && it.exists() && it.length() > 0 }
+            val uri = if (local != null) android.net.Uri.fromFile(local) else android.net.Uri.parse(ep.audioUrl)
+            return listOf(app.ember.playback.ClipAudio.Part(uri, clip.startMs, clip.endMs))
+        }
+        val tracks = dao.getTracks(clip.mediaId)
+        val local = mutableMapOf<String, android.net.Uri?>()
+        for (t in tracks) {
+            local[t.uri] = if (t.uri.startsWith(app.ember.data.LibraryScanner.DRIVE_TRACK_PREFIX)) {
+                c.downloads.driveLocal(t.uri.removePrefix(app.ember.data.LibraryScanner.DRIVE_TRACK_PREFIX))?.let { android.net.Uri.fromFile(it) }
+            } else {
+                android.net.Uri.parse(t.uri)
+            }
+        }
+        return app.ember.playback.ClipAudio.parts(tracks.map { it.uri }, tracks.map { it.durationMs }, clip.startMs, clip.endMs) { local[it] }
     }
 
     fun saveClip(draft: app.ember.data.ClipEntity, note: String, onSaved: (Long) -> Unit = {}) {

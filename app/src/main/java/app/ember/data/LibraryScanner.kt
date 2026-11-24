@@ -535,7 +535,11 @@ class LibraryScanner(
         val cover: DriveFile?,
         val sourceId: String,
         val parts: List<Pair<String, Int>> = emptyList(),
+        /** A companion PDF in the book's Drive folder. */
+        val pdf: DriveFile? = null,
     )
+
+    private fun DriveFile.isPdfFile() = !isFolder && (mimeType == "application/pdf" || ext() == "pdf")
 
     private fun DriveFile.ext() = name.substringAfterLast('.', "").lowercase()
     private fun DriveFile.isAudioFile() = !isFolder && (mimeType.startsWith("audio/") || ext() in AUDIO_EXT)
@@ -586,6 +590,7 @@ class LibraryScanner(
         val children = drive.list(folderId)
         val audio = children.filter { it.isAudioFile() }.sortedWith { a, b -> naturalCompare(a.name, b.name) }
         val images = children.filter { it.isImageFile() }
+        val pdfs = children.filter { it.isPdfFile() }.sortedWith { a, b -> naturalCompare(a.name, b.name) }
         val dirs = children.filter { it.isFolder }.sortedWith { a, b -> naturalCompare(a.name, b.name) }
         val preferred = listOf("cover", "folder", "front", "art", "poster")
         val folderCover = images.minByOrNull { img ->
@@ -598,7 +603,8 @@ class LibraryScanner(
             if (discs.all { (_, kids) -> kids.none { k -> k.isFolder } && kids.any { k -> k.isAudioFile() } }) {
                 val parts = discs.map { (d, kids) -> d to kids.filter { k -> k.isAudioFile() }.sortedWith { a, b -> naturalCompare(a.name, b.name) } }
                 val discCover = discs.firstNotNullOfOrNull { (_, kids) -> kids.firstOrNull { k -> k.isImageFile() } }
-                out += DriveCandidate(folderId, parts.flatMap { it.second }, name, folderCover ?: discCover, folderId, parts.map { (d, f) -> d.id to f.size })
+                val pdf = pdfs.firstOrNull() ?: discs.firstNotNullOfOrNull { (_, kids) -> kids.firstOrNull { k -> k.isPdfFile() } }
+                out += DriveCandidate(folderId, parts.flatMap { it.second }, name, folderCover ?: discCover, folderId, parts.map { (d, f) -> d.id to f.size }, pdf)
                 return
             }
         }
@@ -609,10 +615,11 @@ class LibraryScanner(
                 audio.forEach { f ->
                     val base = f.name.substringBeforeLast('.').lowercase()
                     val match = images.firstOrNull { it.name.substringBeforeLast('.').lowercase() == base }
-                    out += DriveCandidate(f.id, listOf(f), f.name.substringBeforeLast('.'), match ?: folderCover.takeIf { audio.size == 1 }, f.id)
+                    val pdf = pdfs.firstOrNull { it.name.substringBeforeLast('.').lowercase() == base } ?: pdfs.singleOrNull()?.takeIf { audio.size == 1 }
+                    out += DriveCandidate(f.id, listOf(f), f.name.substringBeforeLast('.'), match ?: folderCover.takeIf { audio.size == 1 }, f.id, pdf = pdf)
                 }
             } else {
-                out += DriveCandidate(folderId, audio, name, folderCover, folderId)
+                out += DriveCandidate(folderId, audio, name, folderCover, folderId, pdf = pdfs.firstOrNull())
             }
         }
         for (d in dirs) walkDrive(d.id, d.name, depth + 1, out)
@@ -620,6 +627,8 @@ class LibraryScanner(
 
     private suspend fun importDriveCandidate(id: String, c: DriveCandidate, folderId: Long) {
         val existing = dao.getBook(id)
+        // A PDF in the folder (added later too) shows up, unless you removed it by hand ("").
+        if (existing != null && existing.pdfUri == null && c.pdf != null) dao.setPdf(id, DRIVE_PDF_PREFIX + c.pdf.id)
         if (existing != null) {
             val tracks = dao.getTracks(id)
             if (tracks.size == c.files.size && tracks.none { it.durationMs <= 0 }) return
@@ -709,6 +718,7 @@ class LibraryScanner(
                 sourceUri = DRIVE_PREFIX + c.sourceId,
                 folderId = folderId,
                 durationMs = offset,
+                pdfUri = base.pdfUri ?: c.pdf?.let { DRIVE_PDF_PREFIX + it.id },
             ),
             trackRows,
             chapters,
@@ -757,6 +767,8 @@ class LibraryScanner(
 
         const val DRIVE_PREFIX = "drive:"
         const val DRIVE_TRACK_PREFIX = "drive://"
+        /** A companion PDF that lives in Google Drive (downloaded when you open it). */
+        const val DRIVE_PDF_PREFIX = "drivepdf://"
 
         val AUDIO_EXT = setOf("mp3", "m4a", "m4b", "aac", "ogg", "opus", "flac", "wav", "mp4")
         val CONTAINER_EXT = setOf("m4b", "m4a", "mp4")

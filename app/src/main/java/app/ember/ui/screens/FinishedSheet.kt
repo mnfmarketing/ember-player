@@ -63,6 +63,14 @@ fun FinishedSheet(vm: MainViewModel, bookId: String, onDismiss: () -> Unit, onTu
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
             )
+            val listened by androidx.compose.runtime.produceState(0L, book.id) { value = vm.listenedMs(book.id) }
+            if (listened >= 60_000) {
+                Text(
+                    "${app.ember.util.formatDuration(listened)} with this book",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = EmberColors.TextMuted,
+                )
+            }
             Spacer(Modifier.height(16.dp))
             Text("How was it?", style = MaterialTheme.typography.bodyLarge, color = EmberColors.TextMuted)
             RatingBar(book.rating, onRate = { vm.setRating(book.id, if (it == book.rating) 0 else it) }, size = 40.dp, color = accent)

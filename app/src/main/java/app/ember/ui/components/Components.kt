@@ -271,6 +271,9 @@ fun RatingBar(rating: Int, onRate: ((Int) -> Unit)?, size: Dp = 26.dp, color: Co
 /** Long-pressing a book cover anywhere calls this with the book's id (provided in EmberRoot). */
 val LocalBookMenu = androidx.compose.runtime.staticCompositionLocalOf<((String) -> Unit)?> { null }
 
+/** Shares a clip's audio (cut into an .m4a); null where that isn't wired up. */
+val LocalShareClipAudio = androidx.compose.runtime.staticCompositionLocalOf<((app.ember.data.ClipEntity) -> Unit)?> { null }
+
 /** Books picked for a bulk action. While any are picked, tapping a cover ticks it instead of opening it. */
 class BookSelection(val ids: Set<String>, val toggle: (String) -> Unit)
 
