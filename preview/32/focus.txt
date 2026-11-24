@@ -1,7 +1,0 @@
-== Book page: top, then sections
-== Narrator page from the book page
-== Books > Authors > Narrators
-== Get chapter names (catalog over the network)
-== Sound: Even out loudness
-== Settings > Downloads and storage
-== Mini player

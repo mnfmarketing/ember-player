@@ -1,0 +1,33 @@
+11-24 15:59:01.089   703   703 W AvrcpMediaPlayerWrapper: onQueueChanged(): app.ember.audiobooks tried to update with no new data
+11-24 15:59:01.090   703   703 W AvrcpMediaPlayerWrapper: onQueueChanged(): app.ember.audiobooks tried to update with no new data
+11-24 15:59:01.092   703   703 W AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks tried to update with no new data
+11-24 15:59:03.095   703   703 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-24 15:59:06.113   703   703 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-24 15:59:09.115   703   703 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-24 15:59:10.939   506  2504 W ActivityTaskManager: Force removing ActivityRecord{96a2f5d u0 app.ember.audiobooks/app.ember.ui.MainActivity t10 f}}: app died, no saved state
+11-24 15:59:10.962   703   703 W AvrcpMediaPlayerList: app.ember.audiobooks is already the active player
+11-24 15:59:10.962   703   703 W AvrcpMediaPlayerWrapper: The session was destroyed app.ember.audiobooks
+11-24 15:59:14.296  2595  2642 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+11-24 15:59:14.298  2595  2595 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+11-24 15:59:14.539   703   703 W AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks tried to update with no new data
+11-24 15:59:14.854  2595  2642 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+11-24 15:59:14.854  2595  2642 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+11-24 15:59:35.722   506  2583 W ActivityTaskManager: Force removing ActivityRecord{f46608e u0 app.ember.audiobooks/app.ember.ui.MainActivity t11 f}}: app died, no saved state
+11-24 15:59:35.727   506   602 W InputDispatcher: channel '7916320 app.ember.audiobooks/app.ember.ui.MainActivity (server)' ~ Consumer closed input channel or an error occurred.  events=0x9
+11-24 15:59:35.727   506   602 E InputDispatcher: channel '7916320 app.ember.audiobooks/app.ember.ui.MainActivity (server)' ~ Channel is unrecoverably broken and will be disposed!
+11-24 15:59:35.729   703   703 W AvrcpMediaPlayerList: app.ember.audiobooks is already the active player
+11-24 15:59:35.729   703   703 W AvrcpMediaPlayerWrapper: The session was destroyed app.ember.audiobooks
+11-24 15:59:35.731   506  2583 W InputDispatcher: Attempted to unregister already unregistered input channel '7916320 app.ember.audiobooks/app.ember.ui.MainActivity (server)'
+11-24 15:59:38.930  2756  2801 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+11-24 15:59:38.931  2756  2756 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+11-24 15:59:39.145   703   703 W AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks tried to update with no new data
+11-24 15:59:39.345  2756  2801 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+11-24 15:59:39.362  2756  2801 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+11-24 16:00:00.894   506  2410 W ActivityTaskManager: Force removing ActivityRecord{ae4dcf u0 app.ember.audiobooks/app.ember.ui.MainActivity t12 f}}: app died, no saved state
+11-24 16:00:00.904   703   703 W AvrcpMediaPlayerList: app.ember.audiobooks is already the active player
+11-24 16:00:00.904   703   703 W AvrcpMediaPlayerWrapper: The session was destroyed app.ember.audiobooks
+11-24 16:00:04.094  2932  2932 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+11-24 16:00:04.133  2932  2977 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+11-24 16:00:04.354   703   703 W AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks tried to update with no new data
+11-24 16:00:04.538  2932  2977 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
+11-24 16:00:04.563  2932  2977 W GooglePlayServicesUtil: app.ember.audiobooks requires the Google Play Store, but it is missing.
