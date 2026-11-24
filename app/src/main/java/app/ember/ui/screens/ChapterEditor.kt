@@ -2,6 +2,7 @@
 
 package app.ember.ui.screens
 
+import androidx.compose.material.icons.rounded.TravelExplore
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -72,7 +73,7 @@ private class EditableChapter(val key: Long, start: Long, title: String) {
 
 /** Rename, add, remove and re-time chapters. Changes are saved in Ember, not in the audio file. */
 @Composable
-fun ChapterEditorScreen(vm: MainViewModel, bookId: String, onDone: () -> Unit) {
+fun ChapterEditorScreen(vm: MainViewModel, bookId: String, onDone: () -> Unit, startLookup: Boolean = false) {
     val np by vm.nowPlaying.collectAsState()
     val book by remember(bookId) { vm.observeBook(bookId) }.collectAsState(initial = null)
     val rows = remember { mutableStateListOf<EditableChapter>() }
@@ -82,6 +83,7 @@ fun ChapterEditorScreen(vm: MainViewModel, bookId: String, onDone: () -> Unit) {
     var dirty by remember { mutableStateOf(false) }
     var confirmLeave by remember { mutableStateOf(false) }
     var writeFile by remember { mutableStateOf(true) }
+    var lookup by remember { mutableStateOf(startLookup) }
 
     LaunchedEffect(bookId) {
         val chapters = vm.chaptersFor(bookId)
@@ -131,6 +133,25 @@ fun ChapterEditorScreen(vm: MainViewModel, bookId: String, onDone: () -> Unit) {
                 onClick = { confirmNumber = true },
                 label = { Text("Number all") },
                 leadingIcon = { Icon(Icons.Rounded.FormatListNumbered, null, Modifier.size(18.dp)) },
+            )
+            AssistChip(
+                onClick = { lookup = true },
+                label = { Text("Get chapter names") },
+                leadingIcon = { Icon(Icons.Rounded.TravelExplore, null, Modifier.size(18.dp)) },
+            )
+        }
+        val b = book
+        if (lookup && b != null && loaded) {
+            ChapterLookupSheet(
+                book = b,
+                current = rows.map { it.start to it.title },
+                onDismiss = { lookup = false },
+                onApply = { list ->
+                    rows.clear()
+                    list.forEach { (t, n) -> rows += EditableChapter(nextKey++, t, n) }
+                    dirty = true
+                    lookup = false
+                },
             )
         }
         if (!typing) Text(

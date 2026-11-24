@@ -70,6 +70,50 @@ object BookInfo {
         }.filter { it.title.isNotBlank() }
     }
 
+    /** A book's published chapters (from Audnexus, which Audiobookshelf also uses), by Audible ASIN. */
+    data class CatalogChapters(val chapters: List<Pair<Long, String>>, val runtimeMs: Long, val accurate: Boolean)
+
+    suspend fun chapters(asin: String): CatalogChapters? = withContext(Dispatchers.IO) {
+        if (asin.isBlank()) return@withContext null
+        val text = try {
+            val conn = (URL("https://api.audnex.us/books/${enc(asin)}/chapters?region=us").openConnection() as HttpURLConnection).apply {
+                connectTimeout = 10_000
+                readTimeout = 20_000
+                setRequestProperty("User-Agent", "Ember-Audiobooks/1.0")
+                setRequestProperty("Accept", "application/json")
+            }
+            if (conn.responseCode != 200) return@withContext null
+            conn.inputStream.bufferedReader().use { it.readText() }.also { conn.disconnect() }
+        } catch (e: Exception) {
+            return@withContext null
+        }
+        val o = runCatching { JSONObject(text) }.getOrNull() ?: return@withContext null
+        val arr = o.optJSONArray("chapters") ?: return@withContext null
+        val list = (0 until arr.length()).mapNotNull { i ->
+            val c = arr.optJSONObject(i) ?: return@mapNotNull null
+            c.optLong("startOffsetMs", -1).takeIf { it >= 0 }?.let { it to c.optString("title").trim() }
+        }
+        if (list.isEmpty()) return@withContext null
+        CatalogChapters(list, o.optLong("runtimeLengthMs"), o.optBoolean("isAccurate", true))
+    }
+
+    /** How catalog chapters fit a book: exact times when the lengths agree, otherwise stretched to fit. */
+    data class Fit(val chapters: List<Pair<Long, String>>, val exact: Boolean, val namesOnly: List<Pair<Long, String>>?)
+
+    fun fit(cat: CatalogChapters, bookLengthMs: Long, current: List<Pair<Long, String>>): Fit {
+        val named = cat.chapters.mapIndexed { i, (t, n) -> t to n.ifBlank { "Chapter ${i + 1}" } }
+        val exact = bookLengthMs <= 0 || cat.runtimeMs <= 0 ||
+            abs(cat.runtimeMs - bookLengthMs) <= maxOf(90_000L, bookLengthMs / 100)
+        val timed = if (exact) {
+            named.map { (t, n) -> t.coerceAtMost(maxOf(0L, bookLengthMs - 1000).takeIf { bookLengthMs > 0 } ?: t) to n }
+        } else {
+            named.map { (t, n) -> (t.toDouble() * bookLengthMs / cat.runtimeMs).toLong() to n }
+        }
+        // Same number of chapters as the book has now: the names can go on your own times.
+        val namesOnly = if (current.size == named.size && current.size > 1) current.mapIndexed { i, (t, _) -> t to named[i].second } else null
+        return Fit(timed, exact, namesOnly)
+    }
+
     /**
      * The match to trust without asking: the title lines up, the author lines up (when known)
      * and the length is close (when known). Null when nothing is clear enough.

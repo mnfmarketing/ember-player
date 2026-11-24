@@ -148,7 +148,7 @@ private fun TabIcon(vm: MainViewModel, t: TopDest, selected: Boolean) {
 private fun tabLabel(t: TopDest, profileName: String): String =
     if (t.route == "you") profileName.trim().substringBefore(' ').ifBlank { "You" } else t.label
 
-private val formRoutes = setOf("player", "edit/{id}", "chapters/{id}", "add_external", "drive_picker", "card/{kind}/{id}", "search?q={q}", "torrent_add", "pdf/{id}", "car", "recap")
+private val formRoutes = setOf("player", "edit/{id}", "chapters/{id}?lookup={lookup}", "add_external", "drive_picker", "card/{kind}/{id}", "search?q={q}", "torrent_add", "pdf/{id}", "car", "recap")
 
 @Composable
 fun EmberRoot(vm: MainViewModel, routeRequest: String? = null, onRouteHandled: () -> Unit = {}) {
@@ -571,10 +571,21 @@ fun EmberRoot(vm: MainViewModel, routeRequest: String? = null, onRouteHandled: (
                                 EditBookScreen(vm = vm, bookId = e.arguments?.getString("id").orEmpty(), onDone = { nav.popBackStack() })
                             }
                             composable(
-                                "chapters/{id}",
-                                arguments = listOf(navArgument("id") { type = NavType.StringType }),
+                                "chapters/{id}?lookup={lookup}",
+                                arguments = listOf(
+                                    navArgument("id") { type = NavType.StringType },
+                                    navArgument("lookup") {
+                                        type = NavType.BoolType
+                                        defaultValue = false
+                                    },
+                                ),
                             ) { e ->
-                                ChapterEditorScreen(vm = vm, bookId = e.arguments?.getString("id").orEmpty(), onDone = { nav.popBackStack() })
+                                ChapterEditorScreen(
+                                    vm = vm,
+                                    bookId = e.arguments?.getString("id").orEmpty(),
+                                    onDone = { nav.popBackStack() },
+                                    startLookup = e.arguments?.getBoolean("lookup") == true,
+                                )
                             }
                             composable("add_external") {
                                 AddExternalScreen(vm = vm, onDone = { id ->
