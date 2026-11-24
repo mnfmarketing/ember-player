@@ -1770,6 +1770,8 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
                     .putExtra(android.content.Intent.EXTRA_STREAM, uri)
                     .putExtra(android.content.Intent.EXTRA_TEXT, text)
                     .addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                // Lets the share sheet show the file's name.
+                send.clipData = android.content.ClipData.newRawUri(f.name, uri)
                 appContext.startActivity(
                     android.content.Intent.createChooser(send, "Share clip audio")
                         .addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK or android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION),
