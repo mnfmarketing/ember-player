@@ -14,13 +14,18 @@ struct BooksView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 14) {
-                Picker("Show", selection: $filter) {
-                    Text("All").tag(0)
-                    Text("Listening").tag(1)
-                    Text("Not started").tag(2)
-                    Text("Finished").tag(3)
+                // Chips like the Fold's: five choices don't fit a segmented control on the iPhone.
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
+                        ForEach(Self.filters, id: \.tag) { f in
+                            Button { filter = f.tag } label: {
+                                Text(f.label).font(.subheadline.weight(.medium)).padding(.horizontal, 4)
+                            }
+                            .buttonStyle(FilterChipStyle(selected: filter == f.tag))
+                            .accessibilityAddTraits(filter == f.tag ? .isSelected : [])
+                        }
+                    }
                 }
-                .pickerStyle(.segmented)
 
                 // iPad tucks the toolbar's Downloads button into its overflow menu, so show what's downloading here.
                 if hSize == .regular { DownloadingBar() }
@@ -82,9 +87,15 @@ struct BooksView: View {
         .navigationDestination(isPresented: Binding(get: { app.openDownloads }, set: { app.openDownloads = $0 })) { DownloadsView() }
     }
 
+    /// Tags are what's saved in "booksFilter" (0–3 from before, 4 = not finished).
+    static let filters: [(tag: Int, label: String)] = [
+        (0, "All"), (4, "Not finished"), (1, "Listening"), (2, "Not started"), (3, "Finished"),
+    ]
+
     private var shown: [Book] {
         var list = books.filter { b in
             switch filter {
+            case 4: return b.status != Book.statusFinished
             case 1: return b.status == Book.statusInProgress
             case 2: return b.status == Book.statusNew
             case 3: return b.status == Book.statusFinished
@@ -99,6 +110,18 @@ struct BooksView: View {
         default: break
         }
         return list
+    }
+}
+
+struct FilterChipStyle: ButtonStyle {
+    let selected: Bool
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .padding(.horizontal, 12).padding(.vertical, 7)
+            .foregroundStyle(selected ? Color.white : Color.primary)
+            .background(selected ? AnyShapeStyle(Color.accentColor) : AnyShapeStyle(.fill.tertiary), in: Capsule())
+            .opacity(configuration.isPressed ? 0.7 : 1)
     }
 }
 
