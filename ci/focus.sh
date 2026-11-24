@@ -68,8 +68,7 @@ tap_text "Share clip"; sleep 2
 shot f11-clip-share-menu 1
 tap_text "Audio (30s)"; sleep 12
 shot f12-clip-audio-share-sheet 1
-adb shell ls -l /data/data/$PKG/cache/clips/ 2>&1 | tee -a "$OUT/focus.txt"
-adb shell run-as $PKG ls -l cache/clips/ 2>&1 | tee -a "$OUT/focus.txt"
+adb logcat -d | grep -E "TransformerInternal|ExportException|checkArgument|Share clip audio|ChooserActivity" | tail -8 | tee -a "$OUT/focus.txt"
 adb shell input keyevent KEYCODE_BACK; sleep 2
 
 say "Finished near the end: play The Time Machine's last chapter (under 2 min left)"

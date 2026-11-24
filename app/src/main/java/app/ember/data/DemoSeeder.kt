@@ -195,23 +195,25 @@ object DemoSeeder {
         }
     }
 
-    /** A soft 220 Hz tone as an 8 kHz mono WAV, [seconds] long. */
+    /** A soft 220 Hz tone as an 8 kHz mono 16-bit WAV, [seconds] long (16-bit so clip audio can cut it). */
     private fun writeTone(f: File, seconds: Int) {
         val rate = 8000
-        val n = rate * seconds
+        val bytes = rate * seconds * 2
         val out = java.io.BufferedOutputStream(f.outputStream())
         fun le32(v: Int) = byteArrayOf(v.toByte(), (v shr 8).toByte(), (v shr 16).toByte(), (v shr 24).toByte())
         fun le16(v: Int) = byteArrayOf(v.toByte(), (v shr 8).toByte())
         out.use {
-            it.write("RIFF".toByteArray()); it.write(le32(36 + n)); it.write("WAVE".toByteArray())
+            it.write("RIFF".toByteArray()); it.write(le32(36 + bytes)); it.write("WAVE".toByteArray())
             it.write("fmt ".toByteArray()); it.write(le32(16)); it.write(le16(1)); it.write(le16(1))
-            it.write(le32(rate)); it.write(le32(rate)); it.write(le16(1)); it.write(le16(8))
-            it.write("data".toByteArray()); it.write(le32(n))
-            val buf = ByteArray(rate)
+            it.write(le32(rate)); it.write(le32(rate * 2)); it.write(le16(2)); it.write(le16(16))
+            it.write("data".toByteArray()); it.write(le32(bytes))
+            val buf = ByteArray(rate * 2)
             for (sec in 0 until seconds) {
                 for (i in 0 until rate) {
                     val t = (sec * rate + i).toDouble() / rate
-                    buf[i] = (128 + 24 * Math.sin(2 * Math.PI * 220 * t)).toInt().toByte()
+                    val v = (6000 * Math.sin(2 * Math.PI * 220 * t)).toInt()
+                    buf[2 * i] = v.toByte()
+                    buf[2 * i + 1] = (v shr 8).toByte()
                 }
                 it.write(buf)
             }
