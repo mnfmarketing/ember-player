@@ -1,0 +1,1 @@
+  mCurrentFocus=Window{ee8c4f6 u0 com.google.android.wearable.sysui/com.google.android.wearable.sysui.mainui.activity.SysUiActivity}

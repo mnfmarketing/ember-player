@@ -1,0 +1,109 @@
+11-24 15:28:03.660   929  1097 E AndroidRuntime: FATAL EXCEPTION: [com.google.android.gms.chimera.container.intentoperation.GmsIntentOperationChimeraService-Executor] idle
+11-24 15:28:03.660   929  1097 E AndroidRuntime: Process: com.google.android.gms, PID: 929
+11-24 15:28:03.660   929  1097 E AndroidRuntime: java.lang.NullPointerException: NfcAdapter is null
+11-24 15:28:03.660   929  1097 E AndroidRuntime: 	at android.nfc.cardemulation.CardEmulation.getInstance(CardEmulation.java:150)
+11-24 15:28:03.660   929  1097 E AndroidRuntime: 	at olp.<init>(:com.google.android.gms@224814082@22.48.14 (220704-493411920):1)
+11-24 15:28:03.660   929  1097 E AndroidRuntime: 	at olq.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):4)
+11-24 15:28:03.660   929  1097 E AndroidRuntime: 	at dagger.internal.DoubleCheck.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):1)
+11-24 15:28:03.660   929  1097 E AndroidRuntime: 	at mnl.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):2)
+11-24 15:28:03.660   929  1097 E AndroidRuntime: 	at dagger.internal.DoubleCheck.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):1)
+11-24 15:28:03.660   929  1097 E AndroidRuntime: 	at msh.c(:com.google.android.gms@224814082@22.48.14 (220704-493411920):0)
+11-24 15:28:03.660   929  1097 E AndroidRuntime: 	at com.google.android.gms.dck.service.BleActionStateIntentOperation.onHandleIntent(:com.google.android.gms@224814082@22.48.14 (220704-493411920):3)
+11-24 15:28:03.660   929  1097 E AndroidRuntime: 	at com.google.android.chimera.IntentOperation.onHandleIntent(:com.google.android.gms@224814082@22.48.14 (220704-493411920):2)
+11-24 15:28:03.660   929  1097 E AndroidRuntime: 	at jsn.onHandleIntent(:com.google.android.gms@224814082@22.48.14 (220704-493411920):4)
+11-24 15:28:03.660   929  1097 E AndroidRuntime: 	at emb.run(:com.google.android.gms@224814082@22.48.14 (220704-493411920):3)
+11-24 15:28:03.660   929  1097 E AndroidRuntime: 	at ema.run(:com.google.android.gms@224814082@22.48.14 (220704-493411920):11)
+11-24 15:28:03.660   929  1097 E AndroidRuntime: 	at aztn.run(:com.google.android.gms@224814082@22.48.14 (220704-493411920):2)
+11-24 15:28:03.660   929  1097 E AndroidRuntime: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
+11-24 15:28:03.660   929  1097 E AndroidRuntime: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
+11-24 15:28:03.660   929  1097 E AndroidRuntime: 	at java.lang.Thread.run(Thread.java:923)
+11-24 15:28:03.661  1782  1812 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+11-24 15:28:03.663   374   555 D installd: Found quota mount /dev/block/dm-4 at /data
+11-24 15:28:03.663   374   555 D installd: Found quota mount /dev/block/dm-4 at /data/user/0
+11-24 15:28:03.663   374   555 D installd: Found quota mount /dev/block/dm-4 at /mnt/pass_through/0/emulated
+11-24 15:28:03.663   374   555 D installd: Found quota mount /dev/block/dm-4 at /mnt/user/0/emulated/0/Android/data
+11-24 15:28:03.663   374   555 D installd: Found quota mount /dev/block/dm-4 at /storage/emulated/0/Android/data
+11-24 15:28:03.663   374   555 D installd: Found quota mount /dev/block/dm-4 at /mnt/androidwritable/0/emulated/0/Android/data
+11-24 15:28:03.663   374   555 D installd: Found quota mount /dev/block/dm-4 at /mnt/installer/0/emulated/0/Android/data
+--
+11-24 15:28:03.692   929  1097 E DeviceDoctorHandler: FATAL EXCEPTION: [com.google.android.gms.chimera.container.intentoperation.GmsIntentOperationChimeraService-Executor] idle
+11-24 15:28:03.692   929  1097 E DeviceDoctorHandler: Process: com.google.android.gms, PID: 929
+11-24 15:28:03.692   929  1097 E DeviceDoctorHandler: java.lang.NullPointerException: NfcAdapter is null
+11-24 15:28:03.692   929  1097 E DeviceDoctorHandler: 	at android.nfc.cardemulation.CardEmulation.getInstance(CardEmulation.java:150)
+11-24 15:28:03.692   929  1097 E DeviceDoctorHandler: 	at olp.<init>(:com.google.android.gms@224814082@22.48.14 (220704-493411920):1)
+11-24 15:28:03.692   929  1097 E DeviceDoctorHandler: 	at olq.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):4)
+11-24 15:28:03.692   929  1097 E DeviceDoctorHandler: 	at dagger.internal.DoubleCheck.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):1)
+11-24 15:28:03.692   929  1097 E DeviceDoctorHandler: 	at mnl.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):2)
+11-24 15:28:03.692   929  1097 E DeviceDoctorHandler: 	at dagger.internal.DoubleCheck.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):1)
+11-24 15:28:03.692   929  1097 E DeviceDoctorHandler: 	at msh.c(:com.google.android.gms@224814082@22.48.14 (220704-493411920):0)
+11-24 15:28:03.692   929  1097 E DeviceDoctorHandler: 	at com.google.android.gms.dck.service.BleActionStateIntentOperation.onHandleIntent(:com.google.android.gms@224814082@22.48.14 (220704-493411920):3)
+11-24 15:28:03.692   929  1097 E DeviceDoctorHandler: 	at com.google.android.chimera.IntentOperation.onHandleIntent(:com.google.android.gms@224814082@22.48.14 (220704-493411920):2)
+11-24 15:28:03.692   929  1097 E DeviceDoctorHandler: 	at jsn.onHandleIntent(:com.google.android.gms@224814082@22.48.14 (220704-493411920):4)
+11-24 15:28:03.692   929  1097 E DeviceDoctorHandler: 	at emb.run(:com.google.android.gms@224814082@22.48.14 (220704-493411920):3)
+11-24 15:28:03.692   929  1097 E DeviceDoctorHandler: 	at ema.run(:com.google.android.gms@224814082@22.48.14 (220704-493411920):11)
+11-24 15:28:03.692   929  1097 E DeviceDoctorHandler: 	at aztn.run(:com.google.android.gms@224814082@22.48.14 (220704-493411920):2)
+11-24 15:28:03.692   929  1097 E DeviceDoctorHandler: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
+11-24 15:28:03.692   929  1097 E DeviceDoctorHandler: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
+11-24 15:28:03.692   929  1097 E DeviceDoctorHandler: 	at java.lang.Thread.run(Thread.java:923)
+11-24 15:28:03.692   929  1097 E DeviceDoctorHandler: 
+11-24 15:28:03.693   462   868 I DropBoxManagerService: add tag=system_app_crash isTagEnabled=true flags=0x2
+11-24 15:28:03.696   970   970 D MultiSimSettingController: onDefaultDataSettingChanged
+11-24 15:28:03.700   462  1310 D PowerManagerService: scheduleUserInactivityTimeout timeMs=2147503519
+11-24 15:28:03.708  1387  1766 I chatty  : uid=10033(com.google.android.wearable.app) expire 8 lines
+11-24 15:28:03.706   462  1310 D PowerManagerService: scheduleUserInactivityTimeout timeMs=2147503519
+11-24 15:28:03.717   462  1384 D DeviceIdleController: Adding AppId 10055 to temp whitelist. New entry: false
+--
+11-24 15:28:05.295  1905  2067 E AndroidRuntime: FATAL EXCEPTION: [com.google.android.gms.chimera.container.intentoperation.GmsIntentOperationChimeraService-Executor] idle
+11-24 15:28:05.295  1905  2067 E AndroidRuntime: Process: com.google.android.gms, PID: 1905
+11-24 15:28:05.295  1905  2067 E AndroidRuntime: java.lang.NullPointerException: NfcAdapter is null
+11-24 15:28:05.295  1905  2067 E AndroidRuntime: 	at android.nfc.cardemulation.CardEmulation.getInstance(CardEmulation.java:150)
+11-24 15:28:05.295  1905  2067 E AndroidRuntime: 	at olp.<init>(:com.google.android.gms@224814082@22.48.14 (220704-493411920):1)
+11-24 15:28:05.295  1905  2067 E AndroidRuntime: 	at olq.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):4)
+11-24 15:28:05.295  1905  2067 E AndroidRuntime: 	at dagger.internal.DoubleCheck.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):1)
+11-24 15:28:05.295  1905  2067 E AndroidRuntime: 	at mnl.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):2)
+11-24 15:28:05.295  1905  2067 E AndroidRuntime: 	at dagger.internal.DoubleCheck.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):1)
+11-24 15:28:05.295  1905  2067 E AndroidRuntime: 	at msh.c(:com.google.android.gms@224814082@22.48.14 (220704-493411920):0)
+11-24 15:28:05.295  1905  2067 E AndroidRuntime: 	at com.google.android.gms.dck.service.BleActionStateIntentOperation.onHandleIntent(:com.google.android.gms@224814082@22.48.14 (220704-493411920):3)
+11-24 15:28:05.295  1905  2067 E AndroidRuntime: 	at com.google.android.chimera.IntentOperation.onHandleIntent(:com.google.android.gms@224814082@22.48.14 (220704-493411920):2)
+11-24 15:28:05.295  1905  2067 E AndroidRuntime: 	at jsn.onHandleIntent(:com.google.android.gms@224814082@22.48.14 (220704-493411920):4)
+11-24 15:28:05.295  1905  2067 E AndroidRuntime: 	at emb.run(:com.google.android.gms@224814082@22.48.14 (220704-493411920):3)
+11-24 15:28:05.295  1905  2067 E AndroidRuntime: 	at ema.run(:com.google.android.gms@224814082@22.48.14 (220704-493411920):11)
+11-24 15:28:05.295  1905  2067 E AndroidRuntime: 	at aztn.run(:com.google.android.gms@224814082@22.48.14 (220704-493411920):2)
+11-24 15:28:05.295  1905  2067 E AndroidRuntime: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
+11-24 15:28:05.295  1905  2067 E AndroidRuntime: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
+11-24 15:28:05.295  1905  2067 E AndroidRuntime: 	at java.lang.Thread.run(Thread.java:923)
+11-24 15:28:05.295  2030  2030 I zuf     : SslGuard completed installation.
+11-24 15:28:05.296  1905  2067 I GCore-Chimera-Crash: ChkKCWNvbnRhaW5lchDKzplrGEAg4PqKgbdBIAA=
+11-24 15:28:05.296  1905  2067 I GCore-Chimera-Crash: GCore-Chimera-Crash
+11-24 15:28:05.296  1905  2067 I DeviceDrDatabaseHelper: Cleaning stale data from database!
+11-24 15:28:05.301   462   779 D PackageManager: Instant App installer not found with android.intent.action.INSTALL_INSTANT_APP_PACKAGE
+11-24 15:28:05.301   462   779 D PackageManager: Clear ephemeral installer activity
+11-24 15:28:05.301   462   779 D PackageManager: Instant App installer not found with android.intent.action.INSTALL_INSTANT_APP_PACKAGE
+11-24 15:28:05.301   462   779 D PackageManager: Clear ephemeral installer activity
+--
+11-24 15:28:05.324  1905  2067 E DeviceDoctorHandler: FATAL EXCEPTION: [com.google.android.gms.chimera.container.intentoperation.GmsIntentOperationChimeraService-Executor] idle
+11-24 15:28:05.324  1905  2067 E DeviceDoctorHandler: Process: com.google.android.gms, PID: 1905
+11-24 15:28:05.324  1905  2067 E DeviceDoctorHandler: java.lang.NullPointerException: NfcAdapter is null
+11-24 15:28:05.324  1905  2067 E DeviceDoctorHandler: 	at android.nfc.cardemulation.CardEmulation.getInstance(CardEmulation.java:150)
+11-24 15:28:05.324  1905  2067 E DeviceDoctorHandler: 	at olp.<init>(:com.google.android.gms@224814082@22.48.14 (220704-493411920):1)
+11-24 15:28:05.324  1905  2067 E DeviceDoctorHandler: 	at olq.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):4)
+11-24 15:28:05.324  1905  2067 E DeviceDoctorHandler: 	at dagger.internal.DoubleCheck.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):1)
+11-24 15:28:05.324  1905  2067 E DeviceDoctorHandler: 	at mnl.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):2)
+11-24 15:28:05.324  1905  2067 E DeviceDoctorHandler: 	at dagger.internal.DoubleCheck.get(:com.google.android.gms@224814082@22.48.14 (220704-493411920):1)
+11-24 15:28:05.324  1905  2067 E DeviceDoctorHandler: 	at msh.c(:com.google.android.gms@224814082@22.48.14 (220704-493411920):0)
+11-24 15:28:05.324  1905  2067 E DeviceDoctorHandler: 	at com.google.android.gms.dck.service.BleActionStateIntentOperation.onHandleIntent(:com.google.android.gms@224814082@22.48.14 (220704-493411920):3)
+11-24 15:28:05.324  1905  2067 E DeviceDoctorHandler: 	at com.google.android.chimera.IntentOperation.onHandleIntent(:com.google.android.gms@224814082@22.48.14 (220704-493411920):2)
+11-24 15:28:05.324  1905  2067 E DeviceDoctorHandler: 	at jsn.onHandleIntent(:com.google.android.gms@224814082@22.48.14 (220704-493411920):4)
+11-24 15:28:05.324  1905  2067 E DeviceDoctorHandler: 	at emb.run(:com.google.android.gms@224814082@22.48.14 (220704-493411920):3)
+11-24 15:28:05.324  1905  2067 E DeviceDoctorHandler: 	at ema.run(:com.google.android.gms@224814082@22.48.14 (220704-493411920):11)
+11-24 15:28:05.324  1905  2067 E DeviceDoctorHandler: 	at aztn.run(:com.google.android.gms@224814082@22.48.14 (220704-493411920):2)
+11-24 15:28:05.324  1905  2067 E DeviceDoctorHandler: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
+11-24 15:28:05.324  1905  2067 E DeviceDoctorHandler: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
+11-24 15:28:05.324  1905  2067 E DeviceDoctorHandler: 	at java.lang.Thread.run(Thread.java:923)
+11-24 15:28:05.324  1905  2067 E DeviceDoctorHandler: 
+11-24 15:28:05.336  2008  2008 D WatchFaceService: createInstance id defaultInstance createHeadlessInstance
+11-24 15:28:05.341   462   613 I DropBoxManagerService: add tag=system_app_crash isTagEnabled=true flags=0x2
+11-24 15:28:05.345   462   624 D ConnectivityService: [100 WIFI] EVENT_NETWORK_INFO_CHANGED, going from UNKNOWN to UNKNOWN
+11-24 15:28:05.358   462   462 D WearWifiMediator: NETWORK_STATE_CHANGED : Disconnected
+11-24 15:28:05.359   462   620 V WifiClientModeImpl: stopIpClient IpClientWithPreConnection: false
+11-24 15:28:05.359   462   620 V WifiClientModeImpl: java.lang.Throwable
