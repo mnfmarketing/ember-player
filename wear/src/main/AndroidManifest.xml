@@ -24,5 +24,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- The tile beside the watch face. -->
+        <service
+            android:name=".EmberTileService"
+            android:exported="true"
+            android:label="Ember"
+            android:permission="com.google.android.wearable.permission.BIND_TILE_PROVIDER">
+            <intent-filter>
+                <action android:name="androidx.wear.tiles.action.BIND_TILE_PROVIDER" />
+            </intent-filter>
+            <meta-data
+                android:name="androidx.wear.tiles.PREVIEW"
+                android:resource="@mipmap/ic_launcher" />
+        </service>
+
+        <!-- Keeps the tile current when the phone's player changes. -->
+        <service
+            android:name=".TileRefresh"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
+                <data
+                    android:host="*"
+                    android:pathPrefix="/ember/now"
+                    android:scheme="wear" />
+            </intent-filter>
+        </service>
     </application>
 </manifest>
