@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="app.ember.playback.ClipAudioTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-24T05:51:25" hostname="runnervmeozm8" time="0.003">
+<testsuite name="app.ember.playback.ClipAudioTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-24T05:55:59" hostname="ip-10-0-130-106" time="0.004">
   <properties/>
-  <testcase name="inOneFile" classname="app.ember.playback.ClipAudioTest" time="0.002"/>
+  <testcase name="inOneFile" classname="app.ember.playback.ClipAudioTest" time="0.003"/>
   <testcase name="acrossTwoFiles" classname="app.ember.playback.ClipAudioTest" time="0.0"/>
   <testcase name="unknownLengthTakesTheRest" classname="app.ember.playback.ClipAudioTest" time="0.0"/>
   <testcase name="singleFileBook" classname="app.ember.playback.ClipAudioTest" time="0.0"/>
