@@ -1,0 +1,9 @@
+demo ready on 6478AFFB-AE17-412A-A1E5-51BCFFD300B6 after 3s
+TIMED OUT: xcrun simctl launch E6D22F64-35F4-4792-92E9-462C0B7C23BA app.ember.audiobooks -EmberDemo YES
+demo ready on E6D22F64-35F4-4792-92E9-462C0B7C23BA after 180s
+p-f-01-books-all
+p-f-02-books-listening-and-not-started
+p-f-03-books-two-chips-dark
+TIMED OUT: xcrun simctl launch --terminate-running-process 6478AFFB-AE17-412A-A1E5-51BCFFD300B6 app.ember.audiobooks -EmberDemo YES -EmberRoute books -booksFilters 1,2
+TIMED OUT: xcrun simctl io 6478AFFB-AE17-412A-A1E5-51BCFFD300B6 screenshot ios-out/p-f-03-books-two-chips-dark.png
+t-f-01-books-two-chips
