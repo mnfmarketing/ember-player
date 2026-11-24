@@ -1,0 +1,16 @@
+== New player layout
+== Books: March Family shows as one stack
+== restart: both chips still on
+== Home: Next in your series (Good Wives after Little Women)
+== Book page: heard chapters and time listened
+== Settings > Playback: Count a book as finished
+== Clip audio: share menu, then Audio opens the share sheet
+11-24 06:11:15.221  3211  3211 D ChooserActivity: querying direct share targets from ShortcutManager
+11-24 06:11:15.221  3211  3211 D ChooserActivity: List built querying services
+11-24 06:11:15.227  3211  3211 D ChooserActivity: queryTargets setting watchdog timer for 1500-10000ms
+11-24 06:11:15.240  3211  3211 W ChooserActivity: Could not load (content://app.ember.audiobooks.files/clips/Pride%20and%20Prejudice%20-%20clip%20at%200h4m0s.m4a) thumbnail/name for preview. If desired, consider using Intent#createChooser to launch the ChooserActivity, and set your Intent's clipData and flags in accordance with that method's documentation
+11-24 06:11:15.603  3211  3211 D ChooserActivity: LIST_VIEW_UPDATE_MESSAGE; 
+11-24 06:11:16.728  3211  3211 D ChooserActivity: unbindRemainingServices, 0 left
+11-24 06:11:16.979  3211  3211 D ChooserActivity: LIST_VIEW_UPDATE_MESSAGE; 
+11-24 06:11:18.479  3211  3211 D ChooserActivity: LIST_VIEW_UPDATE_MESSAGE; 
+== Finished near the end: play The Time Machine's last chapter (under 2 min left)
