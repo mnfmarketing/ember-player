@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="app.ember.util.NamesTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-24T15:21:36" hostname="runnervmeozm8" time="0.015">
+<testsuite name="app.ember.util.NamesTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-24T15:22:28" hostname="runnervmeozm8" time="0.027">
   <properties/>
-  <testcase name="mergedNames" classname="app.ember.util.NamesTest" time="0.003"/>
-  <testcase name="fileStyleChapterNames" classname="app.ember.util.NamesTest" time="0.005"/>
+  <testcase name="mergedNames" classname="app.ember.util.NamesTest" time="0.005"/>
+  <testcase name="fileStyleChapterNames" classname="app.ember.util.NamesTest" time="0.009"/>
   <testcase name="shortTitles" classname="app.ember.util.NamesTest" time="0.002"/>
-  <testcase name="discFolderNames" classname="app.ember.util.NamesTest" time="0.005"/>
-  <testcase name="realNamesStay" classname="app.ember.util.NamesTest" time="0.0"/>
+  <testcase name="discFolderNames" classname="app.ember.util.NamesTest" time="0.007"/>
+  <testcase name="realNamesStay" classname="app.ember.util.NamesTest" time="0.004"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
