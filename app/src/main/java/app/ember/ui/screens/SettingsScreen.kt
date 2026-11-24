@@ -136,6 +136,7 @@ private val settingIndex = listOf(
     SettingHit("Rate books when you finish them", "playback", "rating storygraph goodreads finished"),
     SettingHit("Play the next book in a series", "playback", "series autoplay auto-play"),
     SettingHit("Count a book as finished", "playback", "finished credits end done mark complete"),
+    SettingHit("Even out loudness", "sound", "loudness volume level normalize quiet loud leveling"),
     SettingHit("Clip length", "playback", "clips quote"),
     SettingHit("Bedtime", "sleep", "night timer automatic"),
     SettingHit("Fade out at the end", "sleep", "fade volume"),
@@ -524,7 +525,7 @@ fun SettingsScreen(
             } else {
                 "Equalizer off"
             }
-            ) + if (settings.narrationBoost) " · narration boost" else ""
+            ) + (if (settings.narrationBoost) " · narration boost" else "") + (if (settings.levelLoudness) " · even loudness" else "")
         "library" -> when {
             scan != null -> "Scanning…"
             folders.isEmpty() -> "No folders yet"

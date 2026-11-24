@@ -71,6 +71,7 @@ class PlaybackService : MediaLibraryService() {
     private var castPlayer: CastPlayer? = null
     private var castServer: LocalMediaServer? = null
     private val sound = SoundEngine()
+    private val leveler = app.ember.sound.Leveler()
     private val casting: Boolean get() = castPlayer != null && active === castPlayer
     private lateinit var player: AudiobookPlayer
     private var session: MediaLibrarySession? = null
@@ -135,7 +136,20 @@ class PlaybackService : MediaLibraryService() {
         val loadControl = DefaultLoadControl.Builder()
             .setBufferDurationsMs(15_000, 120_000, 1_000, 3_000)
             .build()
-        exo = ExoPlayer.Builder(this)
+        // Ember's own audio stage (loudness leveling) ahead of the built-in silence trimming and speed.
+        val renderers = object : androidx.media3.exoplayer.DefaultRenderersFactory(this) {
+            override fun buildAudioSink(
+                context: android.content.Context,
+                enableFloatOutput: Boolean,
+                enableAudioTrackPlaybackParams: Boolean,
+            ): androidx.media3.exoplayer.audio.AudioSink =
+                androidx.media3.exoplayer.audio.DefaultAudioSink.Builder(context)
+                    .setAudioProcessorChain(androidx.media3.exoplayer.audio.DefaultAudioSink.DefaultAudioProcessorChain(leveler))
+                    .setEnableFloatOutput(enableFloatOutput)
+                    .setEnableAudioTrackPlaybackParams(enableAudioTrackPlaybackParams)
+                    .build()
+        }
+        exo = ExoPlayer.Builder(this, renderers)
             .setLoadControl(loadControl)
             .setMediaSourceFactory(DefaultMediaSourceFactory(resolving))
             .setAudioAttributes(attrs, true)
@@ -513,6 +527,7 @@ class PlaybackService : MediaLibraryService() {
             else -> settings
         }
         exo.skipSilenceEnabled = s.skipSilence
+        leveler.enabled = s.levelLoudness
         sound.apply(s)
     }
 

@@ -41,6 +41,7 @@ fun CollectionScreen(vm: MainViewModel, kind: String, key: String, onBack: () ->
     val (title, label, list) = when (kind) {
         "series" -> Triple(key, "Series", books.filter { it.series == key }.sortedBy { it.seriesIndex ?: Float.MAX_VALUE })
         "author" -> Triple(key, "Author", books.filter { it.author == key }.sortedWith(compareBy<BookEntity> { it.series.lowercase() }.thenBy { it.seriesIndex ?: 0f }))
+        "narrator" -> Triple(key, "Narrator", books.filter { b -> narratorsOf(b).any { it.equals(key, ignoreCase = true) } }.sortedWith(compareBy<BookEntity> { it.author.lowercase() }.thenBy { it.series.lowercase() }.thenBy { it.seriesIndex ?: 0f }))
         else -> {
             val id = key.toLongOrNull()
             val ids = links.filter { it.shelfId == id }.map { it.bookId }.toSet()
@@ -79,3 +80,7 @@ fun CollectionScreen(vm: MainViewModel, kind: String, key: String, onBack: () ->
         }
     }
 }
+
+/** A book's narrators, one by one ("A, B & C" or "A and B" → A, B, C). */
+fun narratorsOf(b: BookEntity): List<String> =
+    b.narrator.split(Regex(",|&|;|\\band\\b|/")).map { it.trim() }.filter { it.isNotEmpty() }

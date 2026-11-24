@@ -141,6 +141,14 @@ fun SoundSheet(vm: MainViewModel, onDismiss: () -> Unit) {
                 }
                 Switch(checked = s.narrationBoost, onCheckedChange = { vm.setNarrationBoost(it) })
             }
+            Spacer(Modifier.height(12.dp))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) {
+                    Text("Even out loudness", style = MaterialTheme.typography.bodyLarge, color = EmberColors.Text)
+                    Text("Brings every book to about the same volume, so you're not reaching for the volume between books", style = MaterialTheme.typography.bodySmall, color = EmberColors.TextMuted)
+                }
+                Switch(checked = s.levelLoudness, onCheckedChange = { vm.setLevelLoudness(it) })
+            }
             val np by vm.nowPlaying.collectAsState()
             np?.takeIf { !it.isEpisode }?.let { current ->
                 Spacer(Modifier.height(16.dp))

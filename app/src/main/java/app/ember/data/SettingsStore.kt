@@ -90,6 +90,10 @@ data class Settings(
     val librarySort: String = "RECENT",
     /** Books › All shows a series with two or more books as one stack. */
     val stackSeries: Boolean = true,
+    /** Books › Authors lists narrators instead. */
+    val byNarrator: Boolean = false,
+    /** Even out loudness between books (Ember's leveler). */
+    val levelLoudness: Boolean = false,
     /** A book counts as finished once this little is left (0 = only at the very end). */
     val finishWithinSec: Int = 120,
 )
@@ -146,6 +150,8 @@ class SettingsStore(private val context: Context) {
         val libraryFilter = stringPreferencesKey("library_filter")
         val librarySort = stringPreferencesKey("library_sort")
         val stackSeries = booleanPreferencesKey("stack_series")
+        val byNarrator = booleanPreferencesKey("by_narrator")
+        val levelLoudness = booleanPreferencesKey("level_loudness")
         val finishWithin = intPreferencesKey("finish_within_sec")
     }
 
@@ -203,6 +209,8 @@ class SettingsStore(private val context: Context) {
         libraryFilter = this[Keys.libraryFilter] ?: "",
         librarySort = this[Keys.librarySort] ?: "RECENT",
         stackSeries = this[Keys.stackSeries] ?: true,
+        byNarrator = this[Keys.byNarrator] ?: false,
+        levelLoudness = this[Keys.levelLoudness] ?: false,
         finishWithinSec = this[Keys.finishWithin] ?: 120,
     )
 
@@ -226,6 +234,8 @@ class SettingsStore(private val context: Context) {
     suspend fun setLibraryFilter(name: String) = context.dataStore.edit { it[Keys.libraryFilter] = name }
     suspend fun setLibrarySort(name: String) = context.dataStore.edit { it[Keys.librarySort] = name }
     suspend fun setStackSeries(on: Boolean) = context.dataStore.edit { it[Keys.stackSeries] = on }
+    suspend fun setByNarrator(on: Boolean) = context.dataStore.edit { it[Keys.byNarrator] = on }
+    suspend fun setLevelLoudness(on: Boolean) = context.dataStore.edit { it[Keys.levelLoudness] = on }
     suspend fun setFinishWithin(sec: Int) = context.dataStore.edit { it[Keys.finishWithin] = sec }
 
     suspend fun setResumeOnConnect(on: Boolean) = context.dataStore.edit { it[Keys.resumeOnConnect] = on }
@@ -294,6 +304,7 @@ class SettingsStore(private val context: Context) {
         it[Keys.eqPreset] = s.eqPreset
         it[Keys.eqCustom] = s.eqCustom.joinToString(",")
         it[Keys.boost] = s.narrationBoost
+        it[Keys.levelLoudness] = s.levelLoudness
         it[Keys.resumeOnConnect] = s.resumeOnConnect
         it[Keys.seriesAutoPlay] = s.seriesAutoPlay
         it[Keys.clipLength] = s.clipLengthSec

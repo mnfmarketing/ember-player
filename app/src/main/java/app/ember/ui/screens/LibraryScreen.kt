@@ -2,6 +2,9 @@
 
 package app.ember.ui.screens
 
+import androidx.compose.material.icons.rounded.ArrowDropDown
+import androidx.compose.material.icons.rounded.Person
+import androidx.compose.material.icons.rounded.RecordVoiceOver
 import androidx.compose.foundation.background
 import app.ember.ui.components.bookAccent
 import androidx.compose.ui.graphics.graphicsLayer
@@ -111,6 +114,7 @@ fun LibraryScreen(
     val sort = LibrarySort.entries.firstOrNull { it.name == settings.librarySort } ?: LibrarySort.RECENT
     var addMenu by remember { mutableStateOf(false) }
     var sortMenu by remember { mutableStateOf(false) }
+    var peopleMenu by remember { mutableStateOf(false) }
     var newShelf by remember { mutableStateOf(false) }
 
     val q = query.trim().lowercase()
@@ -246,6 +250,30 @@ fun LibraryScreen(
                         }
                     }
                 }
+                if (view == 2) {
+                    // Authors or narrators.
+                    Box {
+                        FilterChip(
+                            selected = false,
+                            onClick = { peopleMenu = true },
+                            label = { Text(if (settings.byNarrator) "Narrators" else "Authors") },
+                            leadingIcon = { Icon(if (settings.byNarrator) Icons.Rounded.RecordVoiceOver else Icons.Rounded.Person, null, Modifier.size(18.dp)) },
+                            trailingIcon = { Icon(Icons.Rounded.ArrowDropDown, null, Modifier.size(18.dp)) },
+                        )
+                        DropdownMenu(expanded = peopleMenu, onDismissRequest = { peopleMenu = false }) {
+                            listOf(false to "Authors", true to "Narrators").forEach { (n, label) ->
+                                DropdownMenuItem(
+                                    text = { Text(label) },
+                                    trailingIcon = { if (settings.byNarrator == n) Icon(Icons.Rounded.Check, null, Modifier.size(18.dp)) },
+                                    onClick = {
+                                        vm.setByNarrator(n)
+                                        peopleMenu = false
+                                    },
+                                )
+                            }
+                        }
+                    }
+                }
                 LibraryFilter.entries.forEach { f ->
                     FilterChip(
                         selected = if (f == LibraryFilter.ALL) picked.isEmpty() else f in picked,
@@ -340,8 +368,13 @@ fun LibraryScreen(
             }
 
             2 -> {
-                val matching = filtered.filter { it.author.isNotBlank() }.map { it.author }.toSet()
-                val groups = searched.filter { it.author in matching }.groupBy { it.author }.toSortedMap(String.CASE_INSENSITIVE_ORDER)
+                // People: authors, or narrators (a book with two narrators shows under both).
+                val keyOf: (BookEntity) -> List<String> = if (settings.byNarrator) { b -> narratorsOf(b) } else { b -> listOfNotNull(b.author.takeIf { it.isNotBlank() }) }
+                val matching = filtered.flatMap(keyOf).toSet()
+                val groups = searched.flatMap { b -> keyOf(b).map { it to b } }
+                    .filter { it.first in matching }
+                    .groupBy({ it.first }, { it.second })
+                    .toSortedMap(String.CASE_INSENSITIVE_ORDER)
                 if (groups.isEmpty()) {
                     EmptyState(title = "Nothing matches", body = "Try a different search or filter.")
                 } else {
@@ -352,7 +385,7 @@ fun LibraryScreen(
                                 subtitle = "${e.value.size} ${if (e.value.size == 1) "book" else "books"}",
                                 books = e.value,
                                 progress = null,
-                                onClick = { onOpenCollection("author", e.key) },
+                                onClick = { onOpenCollection(if (settings.byNarrator) "narrator" else "author", e.key) },
                             )
                         }
                     }
