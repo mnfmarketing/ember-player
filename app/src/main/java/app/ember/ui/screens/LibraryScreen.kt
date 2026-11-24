@@ -3,6 +3,15 @@
 package app.ember.ui.screens
 
 import androidx.compose.foundation.background
+import app.ember.ui.components.bookAccent
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.material.icons.rounded.CollectionsBookmark
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.layout.offset
+import androidx.compose.material3.Switch
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material.icons.rounded.Check
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -189,16 +198,27 @@ fun LibraryScreen(
             }
         }
 
-        when (view) {
-            0 -> {
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                        .horizontalScroll(rememberScrollState())
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
+        // Status chips (and the sort, on All) sit above All, Series and Authors alike.
+        val statuses = buildSet {
+            if (LibraryFilter.IN_PROGRESS in picked) add(BookEntity.STATUS_IN_PROGRESS)
+            if (LibraryFilter.NOT_STARTED in picked) add(BookEntity.STATUS_NEW)
+            if (LibraryFilter.FINISHED in picked) add(BookEntity.STATUS_FINISHED)
+        }
+        // Status chips add together (any of them); Other apps narrows to books from other apps.
+        val filtered = searched.filter {
+            (statuses.isEmpty() || it.status in statuses) &&
+                (LibraryFilter.OTHER_APPS !in picked || it.isExternal)
+        }
+        if (view <= 2) {
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .horizontalScroll(rememberScrollState())
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                if (view == 0) {
                     Box {
                         FilterChip(
                             selected = false,
@@ -208,49 +228,63 @@ fun LibraryScreen(
                         )
                         DropdownMenu(expanded = sortMenu, onDismissRequest = { sortMenu = false }) {
                             LibrarySort.entries.forEach { s ->
-                                DropdownMenuItem(text = { Text(s.label) }, onClick = {
-                                    vm.setLibrarySort(s.name)
-                                    sortMenu = false
-                                })
+                                DropdownMenuItem(
+                                    text = { Text(s.label) },
+                                    trailingIcon = { if (s == sort) Icon(Icons.Rounded.Check, null, Modifier.size(18.dp)) },
+                                    onClick = {
+                                        vm.setLibrarySort(s.name)
+                                        sortMenu = false
+                                    },
+                                )
                             }
+                            HorizontalDivider()
+                            DropdownMenuItem(
+                                text = { Text("Stack series") },
+                                trailingIcon = { Switch(checked = settings.stackSeries, onCheckedChange = null) },
+                                onClick = { vm.setStackSeries(!settings.stackSeries) },
+                            )
                         }
                     }
-                    LibraryFilter.entries.forEach { f ->
-                        FilterChip(
-                            selected = if (f == LibraryFilter.ALL) picked.isEmpty() else f in picked,
-                            onClick = {
-                                val next = when (f) {
-                                    LibraryFilter.ALL -> emptySet()
-                                    in picked -> picked - f
-                                    else -> picked + f
-                                }
-                                vm.setLibraryFilter(LibraryFilter.entries.filter { it in next }.joinToString(",") { it.name })
-                            },
-                            label = { Text(f.label) },
-                            colors = FilterChipDefaults.filterChipColors(
-                                selectedContainerColor = MaterialTheme.colorScheme.primary,
-                                selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
-                            ),
-                        )
+                }
+                LibraryFilter.entries.forEach { f ->
+                    FilterChip(
+                        selected = if (f == LibraryFilter.ALL) picked.isEmpty() else f in picked,
+                        onClick = {
+                            val next = when (f) {
+                                LibraryFilter.ALL -> emptySet()
+                                in picked -> picked - f
+                                else -> picked + f
+                            }
+                            vm.setLibraryFilter(LibraryFilter.entries.filter { it in next }.joinToString(",") { it.name })
+                        },
+                        label = { Text(f.label) },
+                        colors = FilterChipDefaults.filterChipColors(
+                            selectedContainerColor = MaterialTheme.colorScheme.primary,
+                            selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
+                        ),
+                    )
+                }
+            }
+        }
+
+        when (view) {
+            0 -> {
+                // A series with two or more matching books shows as one stack (not while searching).
+                val stack = settings.stackSeries && q.isEmpty()
+                val entries: List<LibItem> = if (!stack) {
+                    filtered.map { LibItem.One(it) }
+                } else {
+                    val (inSeries, loose) = filtered.partition { it.series.isNotBlank() }
+                    loose.map { LibItem.One(it) } + inSeries.groupBy { it.series.trim().lowercase() }.values.map { g ->
+                        if (g.size == 1) LibItem.One(g[0]) else LibItem.Stack(g[0].series.trim(), g.sortedBy { it.seriesIndex ?: Float.MAX_VALUE })
                     }
                 }
-                // Status chips add together (any of them); Other apps narrows to books from other apps.
-                val statuses = buildSet {
-                    if (LibraryFilter.IN_PROGRESS in picked) add(BookEntity.STATUS_IN_PROGRESS)
-                    if (LibraryFilter.NOT_STARTED in picked) add(BookEntity.STATUS_NEW)
-                    if (LibraryFilter.FINISHED in picked) add(BookEntity.STATUS_FINISHED)
-                }
-                val shown = searched.filter {
-                    (statuses.isEmpty() || it.status in statuses) &&
-                        (LibraryFilter.OTHER_APPS !in picked || it.isExternal)
-                }.let { list ->
-                    when (sort) {
-                        LibrarySort.RECENT -> list.sortedWith(compareByDescending<BookEntity> { it.lastPlayedAt }.thenByDescending { it.addedAt })
-                        LibrarySort.ADDED -> list.sortedByDescending { it.addedAt }
-                        LibrarySort.TITLE -> list.sortedBy { sortTitle(it.title) }
-                        LibrarySort.AUTHOR -> list.sortedWith(compareBy<BookEntity> { it.author.lowercase() }.thenBy { it.series.lowercase() }.thenBy { it.seriesIndex ?: 0f })
-                        LibrarySort.PROGRESS -> list.sortedByDescending { it.progress }
-                    }
+                val shown = when (sort) {
+                    LibrarySort.RECENT -> entries.sortedWith(compareByDescending<LibItem> { it.lastPlayedAt }.thenByDescending { it.addedAt })
+                    LibrarySort.ADDED -> entries.sortedByDescending { it.addedAt }
+                    LibrarySort.TITLE -> entries.sortedBy { sortTitle(it.title) }
+                    LibrarySort.AUTHOR -> entries.sortedWith(compareBy<LibItem> { it.author.lowercase() }.thenBy { it.title.lowercase() })
+                    LibrarySort.PROGRESS -> entries.sortedByDescending { it.progress }
                 }
                 if (shown.isEmpty()) {
                     EmptyState(
@@ -265,19 +299,29 @@ fun LibraryScreen(
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
-                        items(shown, key = { it.id }) { b ->
-                            BookTile(b, onClick = { onOpenBook(b.id) })
+                        items(shown, key = { it.key }) { e ->
+                            when (e) {
+                                is LibItem.One -> BookTile(e.book, onClick = { onOpenBook(e.book.id) })
+                                is LibItem.Stack -> SeriesStackTile(
+                                    name = e.name,
+                                    books = e.books,
+                                    all = books.filter { it.series.trim().equals(e.name, ignoreCase = true) },
+                                    onClick = { onOpenCollection("series", e.books[0].series) },
+                                )
+                            }
                         }
                     }
                 }
             }
 
             1 -> {
-                val groups = searched.filter { it.series.isNotBlank() }.groupBy { it.series }.toSortedMap(String.CASE_INSENSITIVE_ORDER)
+                // A series shows when any of its books match the chips; counts are for the whole series.
+                val matching = filtered.filter { it.series.isNotBlank() }.map { it.series }.toSet()
+                val groups = searched.filter { it.series in matching }.groupBy { it.series }.toSortedMap(String.CASE_INSENSITIVE_ORDER)
                 if (groups.isEmpty()) {
                     EmptyState(
-                        title = "No series yet",
-                        body = "Open a book, tap Edit details, and add its series name and number. Ember groups them here.",
+                        title = if (books.none { it.series.isNotBlank() }) "No series yet" else "Nothing matches",
+                        body = if (books.none { it.series.isNotBlank() }) "Open a book, tap Edit details, and add its series name and number. Ember groups them here." else "Try a different search or filter.",
                     )
                 } else {
                     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(12.dp)) {
@@ -296,16 +340,21 @@ fun LibraryScreen(
             }
 
             2 -> {
-                val groups = searched.filter { it.author.isNotBlank() }.groupBy { it.author }.toSortedMap(String.CASE_INSENSITIVE_ORDER)
-                LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(12.dp)) {
-                    items(groups.entries.toList(), key = { it.key }) { e ->
-                        GroupRow(
-                            title = e.key,
-                            subtitle = "${e.value.size} ${if (e.value.size == 1) "book" else "books"}",
-                            books = e.value,
-                            progress = null,
-                            onClick = { onOpenCollection("author", e.key) },
-                        )
+                val matching = filtered.filter { it.author.isNotBlank() }.map { it.author }.toSet()
+                val groups = searched.filter { it.author in matching }.groupBy { it.author }.toSortedMap(String.CASE_INSENSITIVE_ORDER)
+                if (groups.isEmpty()) {
+                    EmptyState(title = "Nothing matches", body = "Try a different search or filter.")
+                } else {
+                    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(12.dp)) {
+                        items(groups.entries.toList(), key = { it.key }) { e ->
+                            GroupRow(
+                                title = e.key,
+                                subtitle = "${e.value.size} ${if (e.value.size == 1) "book" else "books"}",
+                                books = e.value,
+                                progress = null,
+                                onClick = { onOpenCollection("author", e.key) },
+                            )
+                        }
                     }
                 }
             }
@@ -425,4 +474,89 @@ fun NameDialog(title: String, placeholder: String, initial: String = "", onDismi
         },
         dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
     )
+}
+
+/** One tile on Books › All: a book, or a series shown as a stack. */
+private sealed class LibItem {
+    abstract val key: String
+    abstract val title: String
+    abstract val author: String
+    abstract val lastPlayedAt: Long
+    abstract val addedAt: Long
+    abstract val progress: Float
+
+    data class One(val book: BookEntity) : LibItem() {
+        override val key get() = book.id
+        override val title get() = book.title
+        override val author get() = book.author
+        override val lastPlayedAt get() = book.lastPlayedAt
+        override val addedAt get() = book.addedAt
+        override val progress get() = book.progress
+    }
+
+    data class Stack(val name: String, val books: List<BookEntity>) : LibItem() {
+        override val key get() = "series:" + name.lowercase()
+        override val title get() = name
+        override val author get() = books.firstOrNull { it.author.isNotBlank() }?.author.orEmpty()
+        override val lastPlayedAt get() = books.maxOf { it.lastPlayedAt }
+        override val addedAt get() = books.maxOf { it.addedAt }
+        override val progress get() = books.maxOf { it.progress }
+    }
+}
+
+/** The cover on top of a series stack: the book you're in, else the next one you haven't started. */
+internal fun stackFront(books: List<BookEntity>): BookEntity =
+    books.filter { it.status == BookEntity.STATUS_IN_PROGRESS }.maxByOrNull { it.lastPlayedAt }
+        ?: books.firstOrNull { it.status == BookEntity.STATUS_NEW }
+        ?: books.first()
+
+@Composable
+private fun SeriesStackTile(name: String, books: List<BookEntity>, all: List<BookEntity>, onClick: () -> Unit) {
+    val front = stackFront(books)
+    val behind = books.filter { it.id != front.id }.take(2)
+    val total = all.size.coerceAtLeast(books.size)
+    val done = all.count { it.status == BookEntity.STATUS_FINISHED }
+    Column(
+        Modifier
+            .clip(RoundedCornerShape(12.dp))
+            .clickable(onClickLabel = "Open series", onClick = onClick)
+            .padding(4.dp),
+    ) {
+        // Two covers peek out above and to the right, so it reads as a pile at a glance.
+        Box(Modifier.fillMaxWidth().padding(top = 8.dp, end = 8.dp)) {
+            behind.getOrNull(1)?.let {
+                BookCover(it, Modifier.fillMaxWidth().offset(8.dp, (-8).dp).graphicsLayer { alpha = 0.45f }, showBadge = false)
+            }
+            behind.getOrNull(0)?.let {
+                BookCover(it, Modifier.fillMaxWidth().offset(4.dp, (-4).dp).graphicsLayer { alpha = 0.75f }, showBadge = false)
+            }
+            BookCover(front, Modifier.fillMaxWidth().shadow(4.dp, RoundedCornerShape(10.dp)), showBadge = false)
+            Row(
+                Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(6.dp)
+                    .clip(RoundedCornerShape(50))
+                    .background(Color(0xCC0E0D10))
+                    .padding(horizontal = 8.dp, vertical = 3.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(Icons.Rounded.CollectionsBookmark, null, Modifier.size(12.dp), tint = Color.White)
+                Spacer(Modifier.width(4.dp))
+                Text("${books.size}", style = MaterialTheme.typography.labelMedium, color = Color.White)
+            }
+        }
+        Spacer(Modifier.height(8.dp))
+        if (done > 0 || books.any { it.status == BookEntity.STATUS_IN_PROGRESS }) {
+            ThinProgress(done.toFloat() / total, color = bookAccent(front))
+            Spacer(Modifier.height(6.dp))
+        }
+        Text(name, style = MaterialTheme.typography.titleSmall, color = EmberColors.Text, maxLines = 2, overflow = TextOverflow.Ellipsis)
+        Text(
+            "$total books · $done finished",
+            style = MaterialTheme.typography.bodySmall,
+            color = EmberColors.TextMuted,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
+    }
 }

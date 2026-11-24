@@ -2,6 +2,7 @@
 
 package app.ember.ui.screens
 
+import androidx.compose.ui.text.font.FontWeight
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -460,29 +461,53 @@ fun BookDetailScreen(
 
         if (!book.isExternal && chapters.size > 1) {
             item { DetailHeader("Chapters · ${chapters.size}") }
+            // Where you are in the book: heard chapters are dimmed with a check, the one you're in is highlighted.
+            val pos = when {
+                isCurrent -> np?.position ?: book.positionMs
+                book.status == BookEntity.STATUS_FINISHED -> book.durationMs
+                else -> book.positionMs
+            }
+            val started = book.status != BookEntity.STATUS_NEW || pos > 0
             itemsIndexed(chapters, key = { _, ch -> "ch${ch.idx}" }) { i, ch ->
-                val current = isCurrent && np?.chapterIndex == i
+                val current = started && book.status != BookEntity.STATUS_FINISHED && pos >= ch.startMs && pos < ch.endMs
+                val heard = started && !current && ch.endMs <= pos
                 Row(
                     Modifier
                         .fillMaxWidth()
+                        .background(if (current) accent.copy(alpha = 0.12f) else Color.Transparent)
                         .clickable { vm.playFrom(book.id, ch.startMs) }
                         .padding(horizontal = 20.dp, vertical = 12.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Text(
-                        "${i + 1}",
-                        style = MaterialTheme.typography.labelMedium,
-                        color = if (current) accent else EmberColors.TextFaint,
-                        modifier = Modifier.width(36.dp),
-                    )
-                    Text(
-                        ch.title,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = if (current) accent else EmberColors.Text,
-                        modifier = Modifier.weight(1f),
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis,
-                    )
+                    Box(Modifier.width(36.dp)) {
+                        if (heard) {
+                            Icon(Icons.Rounded.Check, "Heard", tint = EmberColors.TextFaint, modifier = Modifier.size(16.dp))
+                        } else {
+                            Text(
+                                "${i + 1}",
+                                style = MaterialTheme.typography.labelMedium,
+                                color = if (current) accent else EmberColors.TextFaint,
+                            )
+                        }
+                    }
+                    Column(Modifier.weight(1f)) {
+                        Text(
+                            ch.title,
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = if (current) FontWeight.SemiBold else FontWeight.Normal,
+                            color = when {
+                                current -> accent
+                                heard -> EmberColors.TextMuted
+                                else -> EmberColors.Text
+                            },
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                        if (current && ch.endMs > ch.startMs) {
+                            Spacer(Modifier.height(6.dp))
+                            ThinProgress((pos - ch.startMs).toFloat() / (ch.endMs - ch.startMs), color = accent, height = 2.dp)
+                        }
+                    }
                     Text(formatClock(ch.endMs - ch.startMs), style = MaterialTheme.typography.labelSmall, color = EmberColors.TextMuted)
                 }
             }

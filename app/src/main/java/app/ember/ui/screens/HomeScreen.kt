@@ -1,5 +1,9 @@
 package app.ember.ui.screens
 
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -91,6 +95,7 @@ fun HomeScreen(
     val series = books.filter { it.series.isNotBlank() }.groupBy { it.series }
         .entries.sortedByDescending { e -> e.value.maxOf { it.lastPlayedAt } }
     val finished = books.filter { it.status == BookEntity.STATUS_FINISHED }.sortedByDescending { it.finishedAt }.take(14)
+    val nextUp = nextInSeries(books)
 
     // While the big "Continue listening" card is on screen, the mini player below would only repeat it.
     val listState = androidx.compose.foundation.lazy.rememberLazyListState()
@@ -199,6 +204,17 @@ fun HomeScreen(
         if (inProgress.isNotEmpty()) {
             item { SectionHeader("Keep listening") }
             item { BookRow(inProgress, onOpenBook) }
+        }
+
+        if (nextUp.isNotEmpty()) {
+            item { SectionHeader("Next in your series") }
+            item {
+                LazyRow(contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    items(nextUp, key = { "next:" + it.id }) { b ->
+                        NextInSeriesCard(b, onOpen = { onOpenBook(b.id) }, onStart = { vm.play(b.id) })
+                    }
+                }
+            }
         }
 
         if (external.isNotEmpty()) {
@@ -407,3 +423,63 @@ fun SeriesCard(name: String, books: List<BookEntity>, onClick: () -> Unit) {
         Text("${books.size} books · $done finished", style = MaterialTheme.typography.bodySmall, color = EmberColors.TextMuted)
     }
 }
+
+/**
+ * For each series you've finished a book in and aren't in the middle of, the next book
+ * you haven't started (after the highest-numbered one you finished). Most recent finish first.
+ */
+fun nextInSeries(books: List<BookEntity>): List<BookEntity> =
+    books.filter { it.series.isNotBlank() }
+        .groupBy { it.series.trim().lowercase() }.values
+        .mapNotNull { g ->
+            if (g.any { it.status == BookEntity.STATUS_IN_PROGRESS }) return@mapNotNull null
+            val done = g.filter { it.status == BookEntity.STATUS_FINISHED }
+            if (done.isEmpty()) return@mapNotNull null
+            val ordered = g.sortedWith(compareBy<BookEntity> { it.seriesIndex ?: Float.MAX_VALUE }.thenBy { it.title.lowercase() })
+            val lastDone = ordered.indexOfLast { it.status == BookEntity.STATUS_FINISHED }
+            val next = ordered.drop(lastDone + 1).firstOrNull { it.status == BookEntity.STATUS_NEW }
+                ?: ordered.firstOrNull { it.status == BookEntity.STATUS_NEW }
+            next?.let { it to done.maxOf { d -> d.finishedAt } }
+        }
+        .sortedByDescending { it.second }
+        .map { it.first }
+
+@Composable
+private fun NextInSeriesCard(book: BookEntity, onOpen: () -> Unit, onStart: () -> Unit) {
+    val accent = bookAccent(book)
+    Row(
+        Modifier
+            .width(300.dp)
+            .clip(RoundedCornerShape(18.dp))
+            .background(accent.copy(alpha = 0.16f))
+            .clickable(onClick = onOpen)
+            .padding(12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        BookCover(book, Modifier.size(84.dp), showBadge = false)
+        Spacer(Modifier.width(12.dp))
+        Column(Modifier.weight(1f)) {
+            Text(
+                book.series + (book.seriesIndex?.let { " · Book " + formatSeriesIndex(it) } ?: ""),
+                style = MaterialTheme.typography.labelMedium,
+                color = accent,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+            Text(book.displayTitle, style = MaterialTheme.typography.titleSmall, color = EmberColors.Text, maxLines = 2, overflow = TextOverflow.Ellipsis)
+            Spacer(Modifier.height(8.dp))
+            Button(
+                onClick = onStart,
+                colors = ButtonDefaults.buttonColors(containerColor = accent, contentColor = if (accent.luminance() > 0.4f) Color.Black else Color.White),
+                contentPadding = PaddingValues(horizontal = 14.dp, vertical = 4.dp),
+                modifier = Modifier.height(34.dp),
+            ) {
+                Icon(Icons.Rounded.PlayArrow, null, Modifier.size(18.dp))
+                Spacer(Modifier.width(4.dp))
+                Text("Start next")
+            }
+        }
+    }
+}
+
+private fun formatSeriesIndex(f: Float): String = if (f % 1f == 0f) f.toInt().toString() else f.toString()

@@ -135,6 +135,7 @@ private val settingIndex = listOf(
     SettingHit("Flip to pause", "playback", "face down turn over"),
     SettingHit("Rate books when you finish them", "playback", "rating storygraph goodreads finished"),
     SettingHit("Play the next book in a series", "playback", "series autoplay auto-play"),
+    SettingHit("Count a book as finished", "playback", "finished credits end done mark complete"),
     SettingHit("Clip length", "playback", "clips quote"),
     SettingHit("Bedtime", "sleep", "night timer automatic"),
     SettingHit("Fade out at the end", "sleep", "fade volume"),
@@ -253,6 +254,14 @@ fun SettingsScreen(
                     "Put your phone face down to pause. Turn it back up within 30 minutes to pick up again.",
                     settings.flipToPause,
                 ) { vm.setFlipToPause(it) }
+                ChoiceRow(
+                    "Count a book as finished",
+                    listOf(0, 60, 120, 300),
+                    settings.finishWithinSec,
+                    { if (it == 0) "At the end" else "${it / 60} min left" },
+                    { vm.setFinishWithin(it) },
+                    note = "Credits and previews of the next book often fill the last minutes, so a book counts as finished this close to the end. It keeps playing if you're still listening.",
+                )
                 ToggleRow(
                     "Rate books when you finish them",
                     "When a book plays to the end, Ember asks for your rating and offers to open it in StoryGraph or Goodreads.",

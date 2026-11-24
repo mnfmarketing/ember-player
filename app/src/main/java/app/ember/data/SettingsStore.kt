@@ -88,6 +88,10 @@ data class Settings(
     /** Books screen: the chips that are on (LibraryFilter names, comma-separated; "" = All) and the sort (a LibrarySort name). */
     val libraryFilter: String = "",
     val librarySort: String = "RECENT",
+    /** Books › All shows a series with two or more books as one stack. */
+    val stackSeries: Boolean = true,
+    /** A book counts as finished once this little is left (0 = only at the very end). */
+    val finishWithinSec: Int = 120,
 )
 
 class SettingsStore(private val context: Context) {
@@ -141,6 +145,8 @@ class SettingsStore(private val context: Context) {
         val upNext = stringPreferencesKey("up_next")
         val libraryFilter = stringPreferencesKey("library_filter")
         val librarySort = stringPreferencesKey("library_sort")
+        val stackSeries = booleanPreferencesKey("stack_series")
+        val finishWithin = intPreferencesKey("finish_within_sec")
     }
 
     val flow: Flow<Settings> = context.dataStore.data.map { p -> p.toSettings() }
@@ -196,6 +202,8 @@ class SettingsStore(private val context: Context) {
         upNext = this[Keys.upNext]?.split(',')?.filter { it.isNotBlank() } ?: emptyList(),
         libraryFilter = this[Keys.libraryFilter] ?: "",
         librarySort = this[Keys.librarySort] ?: "RECENT",
+        stackSeries = this[Keys.stackSeries] ?: true,
+        finishWithinSec = this[Keys.finishWithin] ?: 120,
     )
 
     suspend fun setSkipBack(sec: Int) = context.dataStore.edit { it[Keys.skipBack] = sec }
@@ -217,6 +225,8 @@ class SettingsStore(private val context: Context) {
     suspend fun setBookTimeLeft(on: Boolean) = context.dataStore.edit { it[Keys.bookTimeLeft] = on }
     suspend fun setLibraryFilter(name: String) = context.dataStore.edit { it[Keys.libraryFilter] = name }
     suspend fun setLibrarySort(name: String) = context.dataStore.edit { it[Keys.librarySort] = name }
+    suspend fun setStackSeries(on: Boolean) = context.dataStore.edit { it[Keys.stackSeries] = on }
+    suspend fun setFinishWithin(sec: Int) = context.dataStore.edit { it[Keys.finishWithin] = sec }
 
     suspend fun setResumeOnConnect(on: Boolean) = context.dataStore.edit { it[Keys.resumeOnConnect] = on }
     suspend fun setSeriesAutoPlay(on: Boolean) = context.dataStore.edit { it[Keys.seriesAutoPlay] = on }

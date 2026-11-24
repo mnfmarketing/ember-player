@@ -1009,7 +1009,38 @@ class PlaybackService : MediaLibraryService() {
             if (active.duration > 0) media.fillDuration(epId, active.duration)
             return
         }
-        dao.updateProgress(id, globalPosition(), System.currentTimeMillis(), BookEntity.STATUS_IN_PROGRESS)
+        if (softFinishedId == id) return
+        val pos = globalPosition()
+        val total = offsets.lastOrNull()?.plus(trackDurations.lastOrNull() ?: 0L) ?: 0L
+        val within = settings.finishWithinSec * 1000L
+        // Close enough to the end (credits, a preview of the next book): it counts as finished now,
+        // and keeps playing. Series auto-play and Up Next still wait for the real end.
+        if (within > 0 && total > within * 3 && pos >= total - within && active.isPlaying) {
+            softFinishedId = id
+            finishBook(id)
+            return
+        }
+        dao.updateProgress(id, pos, System.currentTimeMillis(), BookEntity.STATUS_IN_PROGRESS)
+    }
+
+    /** The book this session already counted as finished near its end (see saveProgress). */
+    private var softFinishedId: String? = null
+
+    /** Marks the book finished (place at the end, so playing it again starts over) and offers the rating sheet. */
+    private suspend fun finishBook(id: String): BookEntity? {
+        val book = dao.getBook(id) ?: return null
+        val now = System.currentTimeMillis()
+        dao.updateBook(
+            book.copy(
+                status = BookEntity.STATUS_FINISHED,
+                finishedAt = now,
+                lastPlayedAt = now,
+                positionMs = book.durationMs,
+            ),
+        )
+        refreshWidget(applicationContext)
+        PlaybackStatus.finished.value = PlaybackStatus.Finished(book.id)
+        return book
     }
 
     /**
@@ -1054,18 +1085,9 @@ class PlaybackService : MediaLibraryService() {
             active.play()
             return
         }
-        val book = dao.getBook(id) ?: return
-        val now = System.currentTimeMillis()
-        dao.updateBook(
-            book.copy(
-                status = BookEntity.STATUS_FINISHED,
-                finishedAt = now,
-                lastPlayedAt = now,
-                positionMs = book.durationMs,
-            ),
-        )
-        refreshWidget(applicationContext)
-        PlaybackStatus.finished.value = PlaybackStatus.Finished(book.id)
+        // Already counted as finished a little before the end: just move on.
+        val book = (if (softFinishedId == id) dao.getBook(id) else finishBook(id)) ?: return
+        softFinishedId = null
         // Up Next comes first, then the next book in the series.
         val queued = settings.upNext.filter { it != book.id }
         for (nextId in queued) {
@@ -1092,6 +1114,7 @@ class PlaybackService : MediaLibraryService() {
     }
 
     private suspend fun loadTrackState(id: String) {
+        if (softFinishedId == id) softFinishedId = null
         val tracks = dao.getTracks(id)
         applyTrackState(id, tracks)
         bookFx = dao.getBook(id)

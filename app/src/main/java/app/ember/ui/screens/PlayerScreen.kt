@@ -2,6 +2,7 @@
 
 package app.ember.ui.screens
 
+import androidx.compose.material.icons.rounded.Check
 import kotlinx.coroutines.launch
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.runtime.SideEffect
@@ -914,12 +915,18 @@ fun ChaptersAndBookmarks(
                             .padding(horizontal = 12.dp, vertical = 12.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        Text(
-                            "${i + 1}",
-                            style = MaterialTheme.typography.labelMedium,
-                            color = if (isCurrent) MaterialTheme.colorScheme.primary else mutedColor,
-                            modifier = Modifier.width(32.dp),
-                        )
+                        // Chapters you've heard get a check instead of their number.
+                        Box(Modifier.width(32.dp)) {
+                            if (done && !isCurrent) {
+                                Icon(Icons.Rounded.Check, "Heard", tint = mutedColor, modifier = Modifier.size(16.dp))
+                            } else {
+                                Text(
+                                    "${i + 1}",
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = if (isCurrent) MaterialTheme.colorScheme.primary else mutedColor,
+                                )
+                            }
+                        }
                         Column(Modifier.weight(1f)) {
                             Text(
                                 ch.title,
