@@ -96,11 +96,11 @@ fi
 # Just a few (commit message [few-shots]).
 if [ "${EMBER_SHOTS:-all}" = few ]; then
   xcrun simctl ui "$PHONE" appearance light
-  shot "$PHONE" "p-f-01-books-all" books 7 -booksFilter 0
-  shot "$PHONE" "p-f-02-books-not-finished" books 7 -booksFilter 4
+  shot "$PHONE" "p-f-01-books-all" books 7 -booksFilters ""
+  shot "$PHONE" "p-f-02-books-listening-and-not-started" books 7 -booksFilters 1,2
   xcrun simctl ui "$PHONE" appearance dark
-  shot "$PHONE" "p-f-03-books-not-finished-dark" books 7 -booksFilter 4
-  shot "$PAD" "t-f-01-books-not-finished" books 9 -booksFilter 4
+  shot "$PHONE" "p-f-03-books-two-chips-dark" books 7 -booksFilters 1,2
+  shot "$PAD" "t-f-01-books-two-chips" books 9 -booksFilters 1,2
   crashes
   xcrun simctl shutdown all > /dev/null 2>&1 < /dev/null || true
   exit 0

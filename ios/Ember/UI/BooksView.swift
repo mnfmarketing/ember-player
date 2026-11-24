@@ -5,7 +5,8 @@ import UniformTypeIdentifiers
 struct BooksView: View {
     @Environment(AppModel.self) private var app
     @Query(sort: [SortDescriptor(\Book.addedAt, order: .reverse)]) private var books: [Book]
-    @AppStorage("booksFilter") private var filter = 0
+    /// Chips that are on, comma-separated tags (1 listening, 2 not started, 3 finished); "" = All.
+    @AppStorage("booksFilters") private var filters = ""
     @AppStorage("booksSort") private var sort = "recent"
     @State private var picking = false
     @State private var addingExternal = false
@@ -14,15 +15,17 @@ struct BooksView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 14) {
-                // Chips like the Fold's: five choices don't fit a segmented control on the iPhone.
+                // Chips like the Fold's: each turns on and off, and several can be on
+                // (Listening + Not started hides finished books). All turns them all off.
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 8) {
-                        ForEach(Self.filters, id: \.tag) { f in
-                            Button { filter = f.tag } label: {
+                        ForEach(Self.chips, id: \.tag) { f in
+                            let on = f.tag == 0 ? picked.isEmpty : picked.contains(f.tag)
+                            Button { toggle(f.tag) } label: {
                                 Text(f.label).font(.subheadline.weight(.medium)).padding(.horizontal, 4)
                             }
-                            .buttonStyle(FilterChipStyle(selected: filter == f.tag))
-                            .accessibilityAddTraits(filter == f.tag ? .isSelected : [])
+                            .buttonStyle(FilterChipStyle(selected: on))
+                            .accessibilityAddTraits(on ? .isSelected : [])
                         }
                     }
                 }
@@ -87,21 +90,25 @@ struct BooksView: View {
         .navigationDestination(isPresented: Binding(get: { app.openDownloads }, set: { app.openDownloads = $0 })) { DownloadsView() }
     }
 
-    /// Tags are what's saved in "booksFilter" (0–3 from before, 4 = not finished).
-    static let filters: [(tag: Int, label: String)] = [
-        (0, "All"), (4, "Not finished"), (1, "Listening"), (2, "Not started"), (3, "Finished"),
+    static let chips: [(tag: Int, label: String)] = [
+        (0, "All"), (1, "Listening"), (2, "Not started"), (3, "Finished"),
     ]
 
+    private var picked: Set<Int> { Set(filters.split(separator: ",").compactMap { Int($0) }.filter { (1...3).contains($0) }) }
+
+    private func toggle(_ tag: Int) {
+        var next = picked
+        if tag == 0 { next = [] } else if next.contains(tag) { next.remove(tag) } else { next.insert(tag) }
+        filters = next.sorted().map(String.init).joined(separator: ",")
+    }
+
     private var shown: [Book] {
-        var list = books.filter { b in
-            switch filter {
-            case 4: return b.status != Book.statusFinished
-            case 1: return b.status == Book.statusInProgress
-            case 2: return b.status == Book.statusNew
-            case 3: return b.status == Book.statusFinished
-            default: return true
-            }
-        }
+        let on = picked
+        var statuses: Set<Int> = []
+        if on.contains(1) { statuses.insert(Book.statusInProgress) }
+        if on.contains(2) { statuses.insert(Book.statusNew) }
+        if on.contains(3) { statuses.insert(Book.statusFinished) }
+        var list = statuses.isEmpty ? books : books.filter { statuses.contains($0.status) }
         switch sort {
         case "recent": list.sort { ($0.lastPlayedAt, $0.addedAt) > ($1.lastPlayedAt, $1.addedAt) }
         case "title": list.sort { $0.displayTitle.localizedStandardCompare($1.displayTitle) == .orderedAscending }
