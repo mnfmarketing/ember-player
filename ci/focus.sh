@@ -1,10 +1,28 @@
 # Steps for the batch being built (sourced by quick.sh; helpers come from lib.sh).
 # Replace these for each new batch. Name screenshots f01-..., f02-... so they sort together.
 #
-# Ember-28: chips that combine, series stacks, chips on Series/Authors, next in series on Home,
+# Ember-28: the new player layout, chips that combine, series stacks, chips on Series/Authors, next in series on Home,
 # finished near the end, heard chapters, time listened, clip audio.
 say() { echo "== $*" | tee -a "$OUT/focus.txt"; }
 up() { adb shell input swipe 540 1900 540 700 400; sleep 1; }
+
+say "New player layout"
+open_route "player"; sleep 4
+shot f00a-player 1
+tap_text "More"; sleep 2
+shot f00b-player-menu 1
+adb shell input keyevent KEYCODE_BACK; sleep 1
+tap_text "Open chapters"; sleep 3
+shot f00c-chapter-list 1
+adb shell input keyevent KEYCODE_BACK; sleep 2
+adb shell wm size 1968x2184
+adb shell wm density 380
+sleep 3
+open_route "library"; sleep 3
+shot f00d-unfolded-player-column 1
+adb shell wm size reset
+adb shell wm density reset
+sleep 3
 
 say "Books: March Family shows as one stack"
 open_route "library"; sleep 3

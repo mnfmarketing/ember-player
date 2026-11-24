@@ -2,6 +2,15 @@
 
 package app.ember.ui.screens
 
+import androidx.compose.ui.graphics.luminance
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material.icons.rounded.ChevronRight
+import androidx.compose.material.icons.rounded.Tune
+import androidx.compose.material.icons.rounded.Share
+import androidx.compose.material.icons.rounded.Bookmarks
+import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.Check
 import kotlinx.coroutines.launch
 import androidx.compose.foundation.layout.requiredHeight
@@ -170,6 +179,19 @@ fun PlayerScreen(
     var showSound by remember { mutableStateOf(false) }
     var showCast by remember { mutableStateOf(false) }
     var showLog by remember { mutableStateOf(false) }
+    var listTab by remember { mutableIntStateOf(0) }
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val menu = PlayerMenuActions(
+        onSaved = {
+            listTab = 1
+            showList = true
+        },
+        onSound = { showSound = true },
+        onLock = { vm.setLocked(true) },
+        onDetails = { onOpenBook(current.book.id) },
+        onShare = { shareListening(context, current) },
+        onSettings = { onOpenRoute("settings/playback") },
+    )
     val onLog: () -> Unit = { showLog = true }
     val onPdf: (() -> Unit)? = if (current.book.hasPdf) ({ onOpenRoute("pdf/${current.book.id}") }) else null
     var clipDraft by remember { mutableStateOf<app.ember.data.ClipEntity?>(null) }
@@ -229,17 +251,20 @@ fun PlayerScreen(
                     onBookmark = { showAddBookmark = true },
                     onSound = { showSound = true },
                     onClip = onClip,
-                    onChapters = { showList = true },
+                    onChapters = {
+                        listTab = 0
+                        showList = true
+                    },
                     onChapter = onChapter,
+                    menu = menu,
                     bookTime = settings.bookTimeLeft,
                     onToggleTime = { vm.setBookTimeLeft(!settings.bookTimeLeft) },
                     onLog = onLog,
                     onPdf = onPdf,
-                    onLock = { vm.setLocked(true) },
                 )
             } else if (wide) {
                 Column(Modifier.fillMaxSize()) {
-                    PlayerTopBar(current, embedded, onCollapse, onOpenBook, focused, onToggleFocus, castDevice, onSound = { showSound = true }, onMinimize = onMinimize, onLock = { vm.setLocked(true) }) { showCast = true }
+                    PlayerTopBar(current, onCollapse, focused, onToggleFocus, castDevice, menu, onMinimize = onMinimize) { showCast = true }
                     SleepMarkBar(vm, current, Modifier.padding(horizontal = 24.dp, vertical = 4.dp))
                     Row(
                         Modifier
@@ -295,7 +320,7 @@ fun PlayerScreen(
                         .fillMaxSize()
                         .then(if (fits) Modifier else Modifier.verticalScroll(rememberScrollState())),
                 ) {
-                    PlayerTopBar(current, embedded, onCollapse, onOpenBook, focused, onToggleFocus, castDevice, onSound = { showSound = true }, onMinimize = onMinimize, onLock = { vm.setLocked(true) }) { showCast = true }
+                    PlayerTopBar(current, onCollapse, focused, onToggleFocus, castDevice, menu, onMinimize = onMinimize) { showCast = true }
                     SleepMarkBar(vm, current, Modifier.padding(horizontal = 16.dp, vertical = 2.dp))
                     Column(
                         Modifier
@@ -318,7 +343,10 @@ fun PlayerScreen(
                             onBookmark = { showAddBookmark = true },
                             onSound = { showSound = true },
                             onClip = onClip,
-                            onList = { showList = true },
+                            onList = {
+                                listTab = 0
+                                showList = true
+                            },
                             bookTime = settings.bookTimeLeft,
                             onToggleTime = { vm.setBookTimeLeft(!settings.bookTimeLeft) },
                             onLog = onLog,
@@ -399,6 +427,7 @@ fun PlayerScreen(
                     onDeleteBookmark = vm::deleteBookmark,
                     textColor = EmberColors.Text,
                     mutedColor = EmberColors.TextMuted,
+                    initialTab = listTab,
                     saved = saved.copy(
                         onPlayClip = {
                             vm.playClip(it)
@@ -421,18 +450,68 @@ fun PlayerScreen(
     }
 }
 
+/** What the player's ⋮ menu does. */
+internal class PlayerMenuActions(
+    val onSaved: () -> Unit,
+    val onSound: () -> Unit,
+    val onLock: () -> Unit,
+    val onDetails: () -> Unit,
+    val onShare: () -> Unit,
+    val onSettings: () -> Unit,
+)
+
+/** Cast, and a ⋮ menu with everything the player doesn't need on screen all the time. */
+@Composable
+private fun PlayerMenuButtons(np: NowPlaying, castDevice: String?, menu: PlayerMenuActions, onCast: () -> Unit) {
+    IconButton(onClick = onCast) {
+        Icon(
+            if (castDevice != null) Icons.Rounded.CastConnected else Icons.Rounded.Cast,
+            if (castDevice != null) "Casting to $castDevice" else "Cast",
+            tint = if (castDevice != null) MaterialTheme.colorScheme.primary else GlassText,
+        )
+    }
+    var open by remember { mutableStateOf(false) }
+    Box {
+        IconButton(onClick = { open = true }) { Icon(Icons.Rounded.MoreVert, "More", tint = GlassText) }
+        DropdownMenu(expanded = open, onDismissRequest = { open = false }) {
+            val item = @Composable { icon: ImageVector, label: String, action: () -> Unit ->
+                DropdownMenuItem(
+                    text = { Text(label) },
+                    leadingIcon = { Icon(icon, null) },
+                    onClick = {
+                        open = false
+                        action()
+                    },
+                )
+            }
+            item(Icons.Rounded.Bookmarks, "Bookmarks & clips", menu.onSaved)
+            item(Icons.Rounded.GraphicEq, "Sound & EQ", menu.onSound)
+            item(Icons.Rounded.Lock, "Pocket lock", menu.onLock)
+            HorizontalDivider(Modifier.padding(vertical = 4.dp))
+            item(Icons.Rounded.Info, if (np.isEpisode) "Episode details" else "Book details", menu.onDetails)
+            item(Icons.Rounded.Share, "Share", menu.onShare)
+            item(Icons.Rounded.Tune, "Player settings", menu.onSettings)
+        }
+    }
+}
+
+/** "I'm listening to …" through the share sheet. */
+internal fun shareListening(context: android.content.Context, np: NowPlaying) {
+    val by = np.book.author.takeIf { it.isNotBlank() }?.let { " by $it" } ?: ""
+    val text = "I'm listening to “${np.book.displayTitle}”$by."
+    val send = android.content.Intent(android.content.Intent.ACTION_SEND).setType("text/plain").putExtra(android.content.Intent.EXTRA_TEXT, text)
+    context.startActivity(android.content.Intent.createChooser(send, "Share").addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK))
+}
+
 @Composable
 private fun PlayerTopBar(
     np: NowPlaying,
-    embedded: Boolean,
     onCollapse: (() -> Unit)?,
-    onOpenBook: (String) -> Unit,
     focused: Boolean,
     onToggleFocus: (() -> Unit)?,
     castDevice: String?,
-    onSound: () -> Unit,
+    menu: PlayerMenuActions,
     onMinimize: (() -> Unit)? = null,
-    onLock: () -> Unit = {},
     onCast: () -> Unit,
 ) {
     Row(
@@ -459,46 +538,13 @@ private fun PlayerTopBar(
                     tint = GlassText,
                 )
             }
-        } else {
-            Spacer(Modifier.width(48.dp))
         }
-        Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                when {
-                    np.isEpisode -> np.book.author.ifBlank { "Podcast" }
-                    else -> "Now playing"
-                },
-                style = MaterialTheme.typography.labelSmall,
-                color = GlassMuted,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
+        Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
             if (castDevice != null) {
-                Text("Playing on $castDevice", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
-            } else if (np.chapters.size > 1) {
-                Text(
-                    "Chapter ${np.chapterIndex + 1} of ${np.chapters.size}",
-                    style = MaterialTheme.typography.labelMedium,
-                    color = GlassText,
-                )
+                Text("Playing on $castDevice", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary, maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
         }
-        IconButton(onClick = onLock) {
-            Icon(Icons.Rounded.Lock, "Lock the screen", tint = GlassText)
-        }
-        IconButton(onClick = onSound) {
-            Icon(Icons.Rounded.GraphicEq, "Sound and equalizer", tint = GlassText)
-        }
-        IconButton(onClick = onCast) {
-            Icon(
-                if (castDevice != null) Icons.Rounded.CastConnected else Icons.Rounded.Cast,
-                if (castDevice != null) "Casting to $castDevice" else "Cast",
-                tint = if (castDevice != null) MaterialTheme.colorScheme.primary else GlassText,
-            )
-        }
-        IconButton(onClick = { onOpenBook(np.book.id) }) {
-            Icon(Icons.Rounded.Info, "Book details", tint = GlassText)
-        }
+        PlayerMenuButtons(np, castDevice, menu, onCast)
     }
 }
 
@@ -581,82 +627,157 @@ private fun ColumnScope.PlayerCore(
     PlayerExtrasRow(onLog, onPdf, tint = GlassText, modifier = Modifier.fillMaxWidth(), onCar = onCar)
     Spacer(Modifier.height(12.dp))
 
-    GlassPanel(Modifier.fillMaxWidth(), padding = PaddingValues(horizontal = 16.dp, vertical = 14.dp)) {
-        Column {
+    // The chapter you're in; tap for the chapter list.
+    ChapterLine(np, onClick = if (showListButton) onList else null)
+    ChapterSlider(np, onSeek = vm::seekGlobal, bookTime = bookTime, onToggleTime = onToggleTime, center = bookLeftLabel(np))
+    Spacer(Modifier.height(8.dp))
+    Row(
+        Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        IconButton(onClick = { tick(); vm.previousChapter() }) {
+            Icon(Icons.Rounded.SkipPrevious, "Previous chapter", tint = GlassText, modifier = Modifier.size(32.dp))
+        }
+        IconButton(onClick = { tick(); vm.skipBack() }, modifier = Modifier.size(60.dp)) {
+            SkipIcon(skipBack, forward = false, tint = GlassText, size = 42.dp)
+        }
+        PlayButton(np, size = 80.dp, onClick = vm::togglePlay)
+        IconButton(onClick = { tick(); vm.skipForward() }, modifier = Modifier.size(60.dp)) {
+            SkipIcon(skipForward, forward = true, tint = GlassText, size = 42.dp)
+        }
+        IconButton(onClick = { tick(); vm.nextChapter() }) {
+            Icon(Icons.Rounded.SkipNext, "Next chapter", tint = GlassText, modifier = Modifier.size(32.dp))
+        }
+    }
+    Spacer(Modifier.height(18.dp))
+    PlayerActionRow(np, sleep, onSpeed, onSleep, onBookmark, onClip)
+}
+
+/** Time left in the whole book (or episode) at your speed, for the middle of the scrubber. */
+private fun bookLeftLabel(np: NowPlaying): String {
+    val left = (np.remaining / np.speed.coerceAtLeast(0.1f)).toLong()
+    return formatDuration(left) + " left" + if (np.speed != 1f) " · ${formatSpeed(np.speed)}" else ""
+}
+
+/** "≡  The Ball · 3 of 6  ›": the chapter you're in, a tap away from the list. */
+@Composable
+private fun ChapterLine(np: NowPlaying, onClick: (() -> Unit)?, compact: Boolean = false) {
+    val title = np.chapter?.title?.takeIf { it.isNotBlank() } ?: return
+    val many = np.chapters.size > 1
+    Row(
+        Modifier
+            .clip(RoundedCornerShape(10.dp))
+            .then(if (onClick != null && many) Modifier.clickable(onClickLabel = "Open chapters", onClick = onClick) else Modifier)
+            .padding(horizontal = 10.dp, vertical = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        if (many && onClick != null) {
+            Icon(Icons.Rounded.List, null, tint = GlassText, modifier = Modifier.size(if (compact) 18.dp else 22.dp))
+            Spacer(Modifier.width(8.dp))
+        }
+        Text(
+            title,
+            style = if (compact) MaterialTheme.typography.titleSmall else MaterialTheme.typography.titleMedium,
+            color = GlassText,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.weight(1f, fill = false),
+        )
+        if (many) {
             Text(
-                np.chapter?.title ?: np.book.displayTitle,
-                style = MaterialTheme.typography.titleSmall,
-                color = GlassText,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-            ChapterSlider(np, onSeek = vm::seekGlobal, bookTime = bookTime, onToggleTime = onToggleTime)
-            val left = (np.remaining / np.speed.coerceAtLeast(0.1f)).toLong()
-            Text(
-                "${(np.progress * 100).toInt()}% of ${if (np.isEpisode) "episode" else "book"} · ${formatDuration(left)} left" +
-                    if (np.speed != 1f) " at ${formatSpeed(np.speed)}" else "",
-                style = MaterialTheme.typography.labelSmall,
+                " · ${np.chapterIndex + 1} of ${np.chapters.size}",
+                style = MaterialTheme.typography.bodySmall,
                 color = GlassMuted,
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center,
+                maxLines = 1,
             )
-            Spacer(Modifier.height(12.dp))
-            Row(
-                Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                IconButton(onClick = { tick(); vm.previousChapter() }) {
-                    Icon(Icons.Rounded.SkipPrevious, "Previous chapter", tint = GlassText, modifier = Modifier.size(28.dp))
-                }
-                IconButton(onClick = { tick(); vm.skipBack() }, modifier = Modifier.size(56.dp)) {
-                    SkipIcon(skipBack, forward = false, tint = GlassText)
-                }
-                Box(
-                    Modifier
-                        .size(76.dp)
-                        .clip(CircleShape)
-                        .background(accent)
-                        .clickable(onClick = vm::togglePlay),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    if (np.buffering && !np.isPlaying) {
-                        CircularProgressIndicator(color = onColorFor(accent), strokeWidth = 3.dp, modifier = Modifier.size(32.dp))
-                    } else {
-                        AnimatedContent(np.isPlaying, label = "playpause") { playing ->
-                            Icon(
-                                if (playing) Icons.Rounded.Pause else Icons.Rounded.PlayArrow,
-                                if (playing) "Pause" else "Play",
-                                tint = onColorFor(accent),
-                                modifier = Modifier.size(42.dp),
-                            )
-                        }
-                    }
-                }
-                IconButton(onClick = { tick(); vm.skipForward() }, modifier = Modifier.size(56.dp)) {
-                    SkipIcon(skipForward, forward = true, tint = GlassText)
-                }
-                IconButton(onClick = { tick(); vm.nextChapter() }) {
-                    Icon(Icons.Rounded.SkipNext, "Next chapter", tint = GlassText, modifier = Modifier.size(28.dp))
-                }
+            if (onClick != null) Icon(Icons.Rounded.ChevronRight, null, tint = GlassMuted, modifier = Modifier.size(20.dp))
+        }
+    }
+}
+
+/** The big round play button: light on the dark player, dark on the light one. */
+@Composable
+private fun PlayButton(np: NowPlaying, size: androidx.compose.ui.unit.Dp, onClick: () -> Unit) {
+    val fill = GlassText
+    val mark = if (fill.luminance() > 0.5f) Color(0xFF15111A) else Color.White
+    Box(
+        Modifier
+            .size(size)
+            .shadow(10.dp, CircleShape)
+            .clip(CircleShape)
+            .background(fill)
+            .clickable(onClickLabel = if (np.isPlaying) "Pause" else "Play", onClick = onClick),
+        contentAlignment = Alignment.Center,
+    ) {
+        if (np.buffering && !np.isPlaying) {
+            CircularProgressIndicator(color = mark, strokeWidth = 3.dp, modifier = Modifier.size(size * 0.4f))
+        } else {
+            AnimatedContent(np.isPlaying, label = "playpause") { playing ->
+                Icon(
+                    if (playing) Icons.Rounded.Pause else Icons.Rounded.PlayArrow,
+                    if (playing) "Pause" else "Play",
+                    tint = mark,
+                    modifier = Modifier.size(size * 0.55f),
+                )
             }
         }
     }
-    Spacer(Modifier.height(14.dp))
-    Row(
-        Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly,
-    ) {
-        PillButton(Icons.Rounded.Speed, formatSpeed(np.speed), onSpeed)
+}
+
+/** Speed, Sleep, Bookmark and Clip: labels under plain icons, nothing boxed in. */
+@Composable
+private fun PlayerActionRow(
+    np: NowPlaying,
+    sleep: SleepTimer.State,
+    onSpeed: () -> Unit,
+    onSleep: () -> Unit,
+    onBookmark: () -> Unit,
+    onClip: () -> Unit,
+    compact: Boolean = false,
+) {
+    val accent = MaterialTheme.colorScheme.primary
+    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+        PlayerAction("Speed", onSpeed, highlighted = np.speed != 1f, compact = compact) { tint ->
+            Text(formatSpeed(np.speed), style = MaterialTheme.typography.titleLarge, color = tint, maxLines = 1)
+        }
         val sleepLabel = when {
             sleep.stopAtPositionMs != null -> "End of ch."
             sleep.endsAt != null -> formatClock(sleep.remainingMs() ?: 0)
             else -> "Sleep"
         }
-        PillButton(Icons.Rounded.Bedtime, sleepLabel, onSleep, highlighted = sleep.active)
-        PillButton(Icons.Rounded.BookmarkAdd, "Bookmark", onBookmark)
-        PillButton(Icons.Rounded.ContentCut, "Clip", onClip)
-        if (showListButton) PillButton(Icons.Rounded.List, "Chapters", onList)
+        PlayerAction(sleepLabel, onSleep, highlighted = sleep.active, compact = compact) { tint ->
+            Icon(Icons.Rounded.Bedtime, "Sleep timer", tint = tint, modifier = Modifier.size(26.dp))
+        }
+        PlayerAction("Bookmark", onBookmark, compact = compact) { tint ->
+            Icon(Icons.Rounded.BookmarkAdd, "Add bookmark", tint = tint, modifier = Modifier.size(26.dp))
+        }
+        PlayerAction("Clip", onClip, compact = compact) { tint ->
+            Icon(Icons.Rounded.ContentCut, "Clip the last few seconds", tint = tint, modifier = Modifier.size(26.dp))
+        }
+    }
+}
+
+@Composable
+private fun PlayerAction(
+    label: String,
+    onClick: () -> Unit,
+    highlighted: Boolean = false,
+    compact: Boolean = false,
+    top: @Composable (Color) -> Unit,
+) {
+    val tint = if (highlighted) MaterialTheme.colorScheme.primary.let { if (it.luminance() < 0.15f) GlassText else it } else GlassText
+    Column(
+        Modifier
+            .widthIn(min = if (compact) 56.dp else 72.dp)
+            .clip(RoundedCornerShape(14.dp))
+            .clickable(onClick = onClick)
+            .padding(horizontal = 6.dp, vertical = 6.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Box(Modifier.height(30.dp), contentAlignment = Alignment.Center) { top(tint) }
+        Spacer(Modifier.height(4.dp))
+        Text(label, style = MaterialTheme.typography.labelMedium, color = if (highlighted) tint else GlassMuted, maxLines = 1)
     }
 }
 
@@ -668,7 +789,7 @@ private fun ColumnScope.PlayerCore(
  *  - Slide your finger down while dragging for finer control (half, quarter, tenth speed).
  */
 @Composable
-internal fun ChapterSlider(np: NowPlaying, onSeek: (Long) -> Unit, bookTime: Boolean = false, onToggleTime: () -> Unit = {}) {
+internal fun ChapterSlider(np: NowPlaying, onSeek: (Long) -> Unit, bookTime: Boolean = false, onToggleTime: () -> Unit = {}, center: String? = null) {
     val length = np.chapterLength.coerceAtLeast(1)
     val current = (np.chapterPosition.toFloat() / length).coerceIn(0f, 1f)
     val latest by androidx.compose.runtime.rememberUpdatedState(current)
@@ -798,6 +919,15 @@ internal fun ChapterSlider(np: NowPlaying, onSeek: (Long) -> Unit, bookTime: Boo
             hint > 0 -> "Drag to move · slide down for finer control"
             else -> null
         }
+        if (bubble == null && center != null) {
+            Text(
+                center,
+                style = MaterialTheme.typography.labelMedium,
+                color = GlassText,
+                maxLines = 1,
+                modifier = Modifier.align(Alignment.Center),
+            )
+        }
         if (bubble != null) {
             Text(
                 bubble,
@@ -884,10 +1014,11 @@ fun ChaptersAndBookmarks(
     mutedColor: Color = GlassMuted,
     compact: Boolean = false,
     saved: SavedExtras? = null,
+    initialTab: Int = 0,
 ) {
     val clips = saved?.clips.orEmpty()
     val savedCount = bookmarks.size + clips.size
-    var tab by remember { mutableIntStateOf(0) }
+    var tab by remember(initialTab) { mutableIntStateOf(initialTab) }
     Column(Modifier.fillMaxSize()) {
         TabRow(
             selectedTabIndex = tab,
@@ -1356,13 +1487,12 @@ private fun SidePanePlayer(
     onClip: () -> Unit,
     onChapters: () -> Unit,
     onChapter: (Long) -> Unit,
+    menu: PlayerMenuActions,
     bookTime: Boolean = false,
     onToggleTime: () -> Unit = {},
     onLog: () -> Unit = {},
     onPdf: (() -> Unit)? = null,
-    onLock: () -> Unit = {},
 ) {
-    val accent = bookAccent(np.book)
     val tick = rememberTick()
     Column(Modifier.fillMaxSize()) {
         Row(
@@ -1382,19 +1512,7 @@ private fun SidePanePlayer(
                 }
             }
             Spacer(Modifier.weight(1f))
-            IconButton(onClick = onSound) {
-                Icon(Icons.Rounded.GraphicEq, "Sound and equalizer", tint = GlassText)
-            }
-            IconButton(onClick = onCast) {
-                Icon(
-                    if (castDevice != null) Icons.Rounded.CastConnected else Icons.Rounded.Cast,
-                    if (castDevice != null) "Casting to $castDevice" else "Cast",
-                    tint = if (castDevice != null) MaterialTheme.colorScheme.primary else GlassText,
-                )
-            }
-            IconButton(onClick = { onOpenBook(np.book.id) }) {
-                Icon(Icons.Rounded.Info, "Details", tint = GlassText)
-            }
+            PlayerMenuButtons(np, castDevice, menu, onCast)
         }
 
         val coverModifier = Modifier
@@ -1484,58 +1602,18 @@ private fun SidePanePlayer(
                     modifier = Modifier.size(28.dp).clip(CircleShape).clickable { tick(); vm.nextChapter() }.padding(2.dp),
                 )
             }
-            ChapterSlider(np, onSeek = vm::seekGlobal, bookTime = bookTime, onToggleTime = onToggleTime)
+            ChapterSlider(np, onSeek = vm::seekGlobal, bookTime = bookTime, onToggleTime = onToggleTime, center = bookLeftLabel(np))
             Row(
                 Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                IconButton(onClick = { tick(); vm.skipBack() }) { SkipIcon(skipBack, forward = false, tint = GlassText, size = 32.dp) }
-                Box(
-                    Modifier
-                        .size(60.dp)
-                        .clip(CircleShape)
-                        .background(accent)
-                        .clickable(onClick = vm::togglePlay),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    if (np.buffering && !np.isPlaying) {
-                        CircularProgressIndicator(color = onColorFor(accent), strokeWidth = 3.dp, modifier = Modifier.size(26.dp))
-                    } else {
-                        Icon(
-                            if (np.isPlaying) Icons.Rounded.Pause else Icons.Rounded.PlayArrow,
-                            if (np.isPlaying) "Pause" else "Play",
-                            tint = onColorFor(accent),
-                            modifier = Modifier.size(34.dp),
-                        )
-                    }
-                }
-                IconButton(onClick = { tick(); vm.skipForward() }) { SkipIcon(skipForward, forward = true, tint = GlassText, size = 32.dp) }
+                IconButton(onClick = { tick(); vm.skipBack() }, modifier = Modifier.size(52.dp)) { SkipIcon(skipBack, forward = false, tint = GlassText, size = 34.dp) }
+                PlayButton(np, size = 64.dp, onClick = vm::togglePlay)
+                IconButton(onClick = { tick(); vm.skipForward() }, modifier = Modifier.size(52.dp)) { SkipIcon(skipForward, forward = true, tint = GlassText, size = 34.dp) }
             }
             Spacer(Modifier.height(8.dp))
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                SmallRoundButton(Icons.Rounded.Lock, "Lock the screen", highlighted = false, onClick = onLock)
-                SmallRoundButton(Icons.Rounded.Speed, "Speed ${formatSpeed(np.speed)}", highlighted = np.speed != 1f, onClick = onSpeed)
-                SmallRoundButton(Icons.Rounded.Bedtime, "Sleep timer", highlighted = sleep.active, onClick = onSleep)
-                SmallRoundButton(Icons.Rounded.BookmarkAdd, "Add bookmark", highlighted = false, onClick = onBookmark)
-                SmallRoundButton(Icons.Rounded.ContentCut, "Clip the last few seconds", highlighted = false, onClick = onClip)
-                if (!showList) SmallRoundButton(Icons.Rounded.List, "Chapters", highlighted = false, onClick = onChapters)
-            }
-            val status = when {
-                sleep.stopAtPositionMs != null -> "Sleep at end of chapter"
-                sleep.endsAt != null -> "Sleep in " + formatClock(sleep.remainingMs() ?: 0)
-                np.speed != 1f -> "Playing at ${formatSpeed(np.speed)}"
-                else -> null
-            }
-            if (status != null) {
-                Text(
-                    status,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = GlassMuted,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
-                )
-            }
+            PlayerActionRow(np, sleep, onSpeed, onSleep, onBookmark, onClip, compact = true)
             Spacer(Modifier.height(8.dp))
         }
 
