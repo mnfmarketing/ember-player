@@ -108,9 +108,9 @@ object DemoSeeder {
         dao.addListening(today, 19 * 60_000L)
         c.settings.setLastBook("demo-0")
         // A few evenings with the first book, so its listening log and "Time listened" have something in them.
-        val now = System.currentTimeMillis()
+        val logNow = System.currentTimeMillis()
         listOf(3 to 52, 2 to 40, 1 to 38).forEachIndexed { n, (daysAgo, mins) ->
-            val start = now - daysAgo * 86_400_000L - 2 * 3_600_000L
+            val start = logNow - daysAgo * 86_400_000L - 2 * 3_600_000L
             val pos = (duration * (0.1 + n * 0.1)).toLong()
             dao.insertListenEvent(ListenEventEntity(bookId = "demo-0", at = start, kind = ListenEventEntity.PLAY, positionMs = pos))
             dao.insertListenEvent(ListenEventEntity(bookId = "demo-0", at = start + mins * 60_000L, kind = ListenEventEntity.PAUSE, positionMs = pos + 60_000))
