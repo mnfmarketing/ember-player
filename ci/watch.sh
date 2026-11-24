@@ -24,6 +24,11 @@ shot w2-sleep-timer 6
 # Without a phone: it should say so rather than hang.
 adb shell am start -S -n "$ACT"
 shot w3-no-phone 12
+# The tile: add it beside the watch face and show it (no phone here, so it says so).
+adb shell am broadcast -a com.google.android.wearable.app.DEBUG_SURFACE --es operation add-tile --ecn component $PKG/app.ember.wear.EmberTileService || true
+sleep 3
+adb shell am broadcast -a com.google.android.wearable.app.DEBUG_SYSUI --es operation show-tile --ei index 0 || true
+shot w4-tile 8
 adb shell dumpsys window | grep -E "mCurrentFocus" > "$OUT/focus.txt" || true
 adb logcat -d > "$OUT/logcat.txt"
 grep -E "FATAL EXCEPTION|AndroidRuntime: (FATAL|Process)" -A 25 "$OUT/logcat.txt" > "$OUT/crashes.txt" || true
