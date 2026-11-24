@@ -320,14 +320,15 @@ class EmberWidget : GlanceAppWidget() {
             GlanceModifier
                 .size(sizeDp.dp)
                 .cornerRadius((sizeDp / 2).dp)
-                .background(ColorProvider(d.accent))
+                // Light round button with a dark mark, like the player's.
+                .background(ColorProvider(White))
                 .clickable(actionRunCallback<TogglePlayAction>()),
             contentAlignment = Alignment.Center,
         ) {
             Image(
                 ImageProvider(if (playing) R.drawable.ic_w_pause else R.drawable.ic_w_play),
                 contentDescription = if (playing) "Pause" else "Play",
-                colorFilter = ColorFilter.tint(ColorProvider(onAccent(d.accent))),
+                colorFilter = ColorFilter.tint(ColorProvider(Color(0xFF15111A))),
                 modifier = GlanceModifier.size((sizeDp * 0.5f).dp),
             )
         }

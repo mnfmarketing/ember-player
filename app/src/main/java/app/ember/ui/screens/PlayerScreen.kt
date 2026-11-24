@@ -1385,12 +1385,14 @@ fun MiniPlayer(
                         )
                     }
                     // Icons light up in the book's accent color when not at their defaults.
+                    // The speed itself, as in the player's bottom row.
                     IconButton(onClick = onSpeed) {
-                        Icon(
-                            Icons.Rounded.Speed,
-                            "Playback speed, ${formatSpeed(np.speed)}",
-                            tint = if (np.speed != 1f) accent else EmberColors.TextMuted,
-                            modifier = Modifier.size(22.dp),
+                        Text(
+                            formatSpeed(np.speed),
+                            style = MaterialTheme.typography.labelLarge,
+                            color = if (np.speed != 1f) accent else EmberColors.TextMuted,
+                            maxLines = 1,
+                            modifier = Modifier.semantics { contentDescription = "Playback speed, ${formatSpeed(np.speed)}" },
                         )
                     }
                     IconButton(onClick = onSleep) {
@@ -1442,10 +1444,14 @@ fun MiniPlayer(
 @Composable
 private fun PlayPauseWithSleep(isPlaying: Boolean, accent: Color, onToggle: () -> Unit, onSleep: () -> Unit) {
     val haptics = androidx.compose.ui.platform.LocalHapticFeedback.current
+    // The same round play button as the player, in miniature.
+    val fill = EmberColors.Text
     Box(
         Modifier
-            .size(48.dp)
+            .padding(start = 4.dp, end = 2.dp)
+            .size(42.dp)
             .clip(CircleShape)
+            .background(fill)
             .combinedClickable(
                 onClick = onToggle,
                 onLongClickLabel = "Sleep timer",
@@ -1459,8 +1465,8 @@ private fun PlayPauseWithSleep(isPlaying: Boolean, accent: Color, onToggle: () -
         Icon(
             if (isPlaying) Icons.Rounded.Pause else Icons.Rounded.PlayArrow,
             if (isPlaying) "Pause" else "Play",
-            tint = accent,
-            modifier = Modifier.size(32.dp),
+            tint = if (fill.luminance() > 0.5f) Color(0xFF15111A) else Color.White,
+            modifier = Modifier.size(26.dp),
         )
     }
 }
