@@ -85,6 +85,9 @@ data class Settings(
     val profileName: String = "",
     /** When your profile photo was last changed (0 = no photo; the first letter of your name shows instead). */
     val profilePhotoAt: Long = 0,
+    /** Books screen: the chip you last picked (a LibraryFilter name) and the sort (a LibrarySort name). */
+    val libraryFilter: String = "ALL",
+    val librarySort: String = "RECENT",
 )
 
 class SettingsStore(private val context: Context) {
@@ -136,6 +139,8 @@ class SettingsStore(private val context: Context) {
         val bedtimeTo = intPreferencesKey("bedtime_to")
         val bedtimeTimer = intPreferencesKey("bedtime_timer")
         val upNext = stringPreferencesKey("up_next")
+        val libraryFilter = stringPreferencesKey("library_filter")
+        val librarySort = stringPreferencesKey("library_sort")
     }
 
     val flow: Flow<Settings> = context.dataStore.data.map { p -> p.toSettings() }
@@ -189,6 +194,8 @@ class SettingsStore(private val context: Context) {
         bedtimeToMin = this[Keys.bedtimeTo] ?: (6 * 60),
         bedtimeTimerMin = this[Keys.bedtimeTimer] ?: 30,
         upNext = this[Keys.upNext]?.split(',')?.filter { it.isNotBlank() } ?: emptyList(),
+        libraryFilter = this[Keys.libraryFilter] ?: "ALL",
+        librarySort = this[Keys.librarySort] ?: "RECENT",
     )
 
     suspend fun setSkipBack(sec: Int) = context.dataStore.edit { it[Keys.skipBack] = sec }
@@ -208,6 +215,8 @@ class SettingsStore(private val context: Context) {
     suspend fun setPlayerPaneFraction(f: Float) = context.dataStore.edit { it[Keys.paneFraction] = f }
     suspend fun setPodcastListView(on: Boolean) = context.dataStore.edit { it[Keys.podcastList] = on }
     suspend fun setBookTimeLeft(on: Boolean) = context.dataStore.edit { it[Keys.bookTimeLeft] = on }
+    suspend fun setLibraryFilter(name: String) = context.dataStore.edit { it[Keys.libraryFilter] = name }
+    suspend fun setLibrarySort(name: String) = context.dataStore.edit { it[Keys.librarySort] = name }
 
     suspend fun setResumeOnConnect(on: Boolean) = context.dataStore.edit { it[Keys.resumeOnConnect] = on }
     suspend fun setSeriesAutoPlay(on: Boolean) = context.dataStore.edit { it[Keys.seriesAutoPlay] = on }

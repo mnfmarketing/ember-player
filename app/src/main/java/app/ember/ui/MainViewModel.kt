@@ -1364,6 +1364,8 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             .stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())
 
     fun setPodcastListView(on: Boolean) = viewModelScope.launch { c.settings.setPodcastListView(on) }
+    fun setLibraryFilter(name: String) = viewModelScope.launch { c.settings.setLibraryFilter(name) }
+    fun setLibrarySort(name: String) = viewModelScope.launch { c.settings.setLibrarySort(name) }
     fun setBookTimeLeft(on: Boolean) = viewModelScope.launch { c.settings.setBookTimeLeft(on) }
     fun setPlayerPaneFraction(f: Float) = viewModelScope.launch { c.settings.setPlayerPaneFraction(f) }
 

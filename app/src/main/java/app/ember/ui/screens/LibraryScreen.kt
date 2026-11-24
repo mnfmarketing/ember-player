@@ -70,7 +70,7 @@ import app.ember.ui.components.ThinProgress
 import app.ember.ui.theme.EmberColors
 
 private enum class LibraryFilter(val label: String) {
-    ALL("All"), IN_PROGRESS("In progress"), NOT_STARTED("Not started"), FINISHED("Finished"), OTHER_APPS("Other apps"),
+    ALL("All"), NOT_FINISHED("Not finished"), IN_PROGRESS("In progress"), NOT_STARTED("Not started"), FINISHED("Finished"), OTHER_APPS("Other apps"),
 }
 
 private enum class LibrarySort(val label: String) {
@@ -94,8 +94,10 @@ fun LibraryScreen(
 
     var view by rememberSaveable { mutableIntStateOf(0) }
     var query by rememberSaveable { mutableStateOf("") }
-    var filter by rememberSaveable { mutableStateOf(LibraryFilter.ALL) }
-    var sort by rememberSaveable { mutableStateOf(LibrarySort.RECENT) }
+    // Remembered across launches, so a "Not finished" view stays put.
+    val settings by vm.settings.collectAsState()
+    val filter = LibraryFilter.entries.firstOrNull { it.name == settings.libraryFilter } ?: LibraryFilter.ALL
+    val sort = LibrarySort.entries.firstOrNull { it.name == settings.librarySort } ?: LibrarySort.RECENT
     var addMenu by remember { mutableStateOf(false) }
     var sortMenu by remember { mutableStateOf(false) }
     var newShelf by remember { mutableStateOf(false) }
@@ -205,7 +207,7 @@ fun LibraryScreen(
                         DropdownMenu(expanded = sortMenu, onDismissRequest = { sortMenu = false }) {
                             LibrarySort.entries.forEach { s ->
                                 DropdownMenuItem(text = { Text(s.label) }, onClick = {
-                                    sort = s
+                                    vm.setLibrarySort(s.name)
                                     sortMenu = false
                                 })
                             }
@@ -214,7 +216,7 @@ fun LibraryScreen(
                     LibraryFilter.entries.forEach { f ->
                         FilterChip(
                             selected = filter == f,
-                            onClick = { filter = f },
+                            onClick = { vm.setLibraryFilter(f.name) },
                             label = { Text(f.label) },
                             colors = FilterChipDefaults.filterChipColors(
                                 selectedContainerColor = MaterialTheme.colorScheme.primary,
@@ -226,6 +228,7 @@ fun LibraryScreen(
                 val shown = searched.filter {
                     when (filter) {
                         LibraryFilter.ALL -> true
+                        LibraryFilter.NOT_FINISHED -> it.status != BookEntity.STATUS_FINISHED
                         LibraryFilter.IN_PROGRESS -> it.status == BookEntity.STATUS_IN_PROGRESS
                         LibraryFilter.NOT_STARTED -> it.status == BookEntity.STATUS_NEW
                         LibraryFilter.FINISHED -> it.status == BookEntity.STATUS_FINISHED
