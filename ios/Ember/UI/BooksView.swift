@@ -119,8 +119,9 @@ struct FilterChipStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .padding(.horizontal, 12).padding(.vertical, 7)
-            .foregroundStyle(selected ? Color.white : Color.primary)
-            .background(selected ? AnyShapeStyle(Color.accentColor) : AnyShapeStyle(.fill.tertiary), in: Capsule())
+            .foregroundStyle(Color.primary)
+            .background(selected ? AnyShapeStyle(Color.accentColor.opacity(0.32)) : AnyShapeStyle(.fill.tertiary), in: Capsule())
+            .overlay(Capsule().strokeBorder(selected ? Color.accentColor : .clear, lineWidth: 1.5))
             .opacity(configuration.isPressed ? 0.7 : 1)
     }
 }
