@@ -1,4 +1,0 @@
-== Book menu
-== Narrator link
-== Narrators switch
-== Sound sheet

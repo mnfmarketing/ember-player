@@ -11,8 +11,8 @@
 + timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell settings put global hide_error_dialogs 1
 + adb shell settings put secure anr_show_background 0
 + timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell settings put secure anr_show_background 0
-+ adb install -r Ember-33.apk
-+ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb install -r Ember-33.apk
++ adb install -r Ember-34.apk
++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb install -r Ember-34.apk
 Performing Streamed Install
 Success
 + adb shell pm grant app.ember.audiobooks android.permission.POST_NOTIFICATIONS
@@ -41,8 +41,8 @@ Starting: Intent { cmp=app.ember.audiobooks/app.ember.ui.MainActivity }
 Status: ok
 LaunchState: COLD
 Activity: app.ember.audiobooks/app.ember.ui.MainActivity
-TotalTime: 1471
-WaitTime: 1477
+TotalTime: 1110
+WaitTime: 1114
 Complete
 + sleep 4
 + adb shell am force-stop app.ember.audiobooks
@@ -53,8 +53,8 @@ Starting: Intent { cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extra
 Status: ok
 LaunchState: COLD
 Activity: app.ember.audiobooks/app.ember.ui.MainActivity
-TotalTime: 1075
-WaitTime: 1077
+TotalTime: 888
+WaitTime: 893
 Complete
 + sleep 30
 + adb logcat -c
@@ -89,117 +89,10 @@ Warning: Activity not started, intent has been delivered to currently running to
 + timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
 ++ dirname ci/quick.sh
 + source ci/focus.sh
-++ say 'Book menu'
-++ echo '== Book menu'
+++ say 'Sound sheet from the player menu'
+++ echo '== Sound sheet from the player menu'
 ++ tee -a smoke-out/focus.txt
-== Book menu
-++ fresh
-++ adb shell am force-stop app.ember.audiobooks
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am force-stop app.ember.audiobooks
-++ sleep 2
-++ adb shell am start -W -n app.ember.audiobooks/app.ember.ui.MainActivity
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -W -n app.ember.audiobooks/app.ember.ui.MainActivity
-++ sleep 4
-++ open_route book/demo-0
-++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route book/demo-0
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route book/demo-0
-Warning: Activity not started, intent has been delivered to currently running top-most instance.
-++ sleep 4
-++ tap_text More
-++ adb shell uiautomator dump /sdcard/ui.xml
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
-++ adb pull /sdcard/ui.xml /tmp/ui.xml
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 14.8 MB/s (19966 bytes in 0.001s)
-++ python3 - More
-tapped More at 1006,137
-++ sleep 2
-++ shot f01-book-menu 1
-++ sleep 1
-++ adb exec-out screencap -p
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
-++ adb shell input keyevent KEYCODE_BACK
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input keyevent KEYCODE_BACK
-++ sleep 1
-++ say 'Narrator link'
-++ echo '== Narrator link'
-++ tee -a smoke-out/focus.txt
-== Narrator link
-++ tap_text 'Read by Ada Quill'
-++ adb shell uiautomator dump /sdcard/ui.xml
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
-++ adb pull /sdcard/ui.xml /tmp/ui.xml
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 19.2 MB/s (19966 bytes in 0.001s)
-++ python3 - 'Read by Ada Quill'
-tapped Read by Ada Quill at 540,1030
-++ sleep 3
-++ shot f02-narrator-page 1
-++ sleep 1
-++ adb exec-out screencap -p
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
-++ say 'Narrators switch'
-++ tee -a smoke-out/focus.txt
-++ echo '== Narrators switch'
-== Narrators switch
-++ fresh
-++ adb shell am force-stop app.ember.audiobooks
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am force-stop app.ember.audiobooks
-++ sleep 2
-++ adb shell am start -W -n app.ember.audiobooks/app.ember.ui.MainActivity
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -W -n app.ember.audiobooks/app.ember.ui.MainActivity
-++ sleep 4
-++ open_route library
-++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route library
-Warning: Activity not started, intent has been delivered to currently running top-most instance.
-++ sleep 3
-++ tap_text Authors
-++ adb shell uiautomator dump /sdcard/ui.xml
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
-++ adb pull /sdcard/ui.xml /tmp/ui.xml
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.8 MB/s (34064 bytes in 0.042s)
-++ python3 - Authors
-tapped Authors at 664,479
-++ sleep 2
-++ tap_text last:Authors
-++ adb shell uiautomator dump /sdcard/ui.xml
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
-++ adb pull /sdcard/ui.xml /tmp/ui.xml
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 23.7 MB/s (30363 bytes in 0.001s)
-++ python3 - last:Authors
-tapped last:Authors at 200,626
-++ sleep 2
-++ shot f03-people-menu 1
-++ sleep 1
-++ adb exec-out screencap -p
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
-++ tap_text Narrators
-++ adb shell uiautomator dump /sdcard/ui.xml
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
-++ adb pull /sdcard/ui.xml /tmp/ui.xml
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.1 MB/s (3044 bytes in 0.041s)
-++ python3 - Narrators
-tapped Narrators at 157,899
-++ sleep 2
-++ shot f04-books-narrators 1
-++ sleep 1
-++ adb exec-out screencap -p
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
-++ say 'Sound sheet'
-++ echo '== Sound sheet'
-++ tee -a smoke-out/focus.txt
-== Sound sheet
-++ fresh
-++ adb shell am force-stop app.ember.audiobooks
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am force-stop app.ember.audiobooks
-++ sleep 2
-++ adb shell am start -W -n app.ember.audiobooks/app.ember.ui.MainActivity
-++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -W -n app.ember.audiobooks/app.ember.ui.MainActivity
-++ sleep 4
+== Sound sheet from the player menu
 ++ open_route player
 ++ adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell am start -n app.ember.audiobooks/app.ember.ui.MainActivity --es ember_route player
@@ -210,27 +103,42 @@ Warning: Activity not started, intent has been delivered to currently running to
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
 ++ adb pull /sdcard/ui.xml /tmp/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 14.5 MB/s (19587 bytes in 0.001s)
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.5 MB/s (19588 bytes in 0.041s)
 ++ python3 - More
 tapped More at 996,137
 ++ sleep 2
-++ tap_text 'Sound & EQ'
+++ tap_text 'Sound*'
 ++ adb shell uiautomator dump /sdcard/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
 ++ adb pull /sdcard/ui.xml /tmp/ui.xml
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
-/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.1 MB/s (5721 bytes in 0.042s)
-++ python3 - 'Sound & EQ'
-could not find Sound & EQ
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.1 MB/s (5721 bytes in 0.041s)
+++ python3 - 'Sound*'
+tapped Sound* at 805,410
 ++ sleep 4
-++ shot f05-sound-sheet 1
+++ shot f01-sound-sheet 1
 ++ sleep 1
 ++ adb exec-out screencap -p
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
 ++ adb shell input swipe 540 1700 540 900 600
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell input swipe 540 1700 540 900 600
 ++ sleep 2
-++ shot f06-sound-even-loudness 1
+++ shot f02-sound-sheet-scrolled 1
+++ sleep 1
+++ adb exec-out screencap -p
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
+++ tap_text 'Even out loudness'
+++ adb shell uiautomator dump /sdcard/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb shell uiautomator dump /sdcard/ui.xml
+++ adb pull /sdcard/ui.xml /tmp/ui.xml
+++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/ui.xml /tmp/ui.xml
+/sdcard/ui.xml: 1 file pulled, 0 skipped. 0.5 MB/s (26732 bytes in 0.048s)
+++ python3 - 'Even out loudness'
+Traceback (most recent call last):
+  File "<stdin>", line 8, in <module>
+AttributeError: 'NoneType' object has no attribute 'group'
+++ sleep 2
+++ shot f03-even-loudness-on 1
 ++ sleep 1
 ++ adb exec-out screencap -p
 ++ timeout 90 /usr/local/lib/android/sdk/platform-tools/adb exec-out screencap -p
@@ -241,7 +149,7 @@ Warning: Activity not started, intent has been delivered to currently running to
 + sleep 5
 + adb pull /sdcard/Download/EmberTest/quick-end.json smoke-out/quick-end.json
 + timeout 90 /usr/local/lib/android/sdk/platform-tools/adb pull /sdcard/Download/EmberTest/quick-end.json smoke-out/quick-end.json
-/sdcard/Download/EmberTest/quick-end.json: 1 file pulled, 0 skipped. 0.1 MB/s (2365 bytes in 0.042s)
+/sdcard/Download/EmberTest/quick-end.json: 1 file pulled, 0 skipped. 0.1 MB/s (2364 bytes in 0.042s)
 + finish_logs
 + adb logcat -d
 + timeout 90 /usr/local/lib/android/sdk/platform-tools/adb logcat -d
