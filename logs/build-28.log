@@ -1,0 +1,121 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preReleaseBuild UP-TO-DATE
+> Task :app:mergeReleaseJniLibFolders
+> Task :app:mergeReleaseNativeLibs
+> Task :app:buildKotlinToolingMetadata
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :app:checkReleaseDuplicateClasses
+> Task :app:generateReleaseResValues
+
+> Task :app:stripReleaseDebugSymbols
+Unable to strip the following libraries, packaging them as they are: libandroidx.graphics.path.so, libdatastore_shared_counter.so, libtorrent4j.so.
+
+> Task :app:checkReleaseAarMetadata
+> Task :app:mapReleaseSourceSetPaths
+> Task :app:generateReleaseResources
+> Task :app:extractReleaseNativeSymbolTables
+> Task :app:mergeReleaseNativeDebugMetadata NO-SOURCE
+> Task :app:packageReleaseResources
+> Task :app:mergeReleaseResources
+> Task :app:createReleaseCompatibleScreenManifests
+> Task :app:extractDeepLinksRelease
+> Task :app:parseReleaseLocalResources
+> Task :app:processReleaseMainManifest
+> Task :app:processReleaseManifest
+> Task :app:processReleaseManifestForPackage
+> Task :app:javaPreCompileRelease
+> Task :app:desugarReleaseFileDependencies
+> Task :app:mergeReleaseStartupProfile
+> Task :app:processReleaseResources
+> Task :app:mergeReleaseShaders
+> Task :app:mergeReleaseArtProfile
+> Task :app:compileReleaseShaders NO-SOURCE
+> Task :app:generateReleaseAssets UP-TO-DATE
+> Task :app:mergeReleaseAssets
+> Task :app:compressReleaseAssets
+> Task :app:extractReleaseVersionControlInfo
+> Task :app:collectReleaseDependencies
+> Task :app:sdkReleaseDependencyData
+> Task :app:validateSigningRelease
+> Task :app:writeReleaseAppMetadata
+> Task :app:writeReleaseSigningConfigVersions
+> Task :wear:preBuild UP-TO-DATE
+> Task :wear:preReleaseBuild UP-TO-DATE
+> Task :wear:mergeReleaseJniLibFolders
+> Task :wear:mergeReleaseNativeLibs
+> Task :app:optimizeReleaseResources
+> Task :wear:buildKotlinToolingMetadata
+
+> Task :wear:stripReleaseDebugSymbols
+Unable to strip the following libraries, packaging them as they are: libandroidx.graphics.path.so.
+
+> Task :wear:checkReleaseDuplicateClasses
+> Task :wear:extractReleaseNativeSymbolTables
+> Task :wear:mergeReleaseNativeDebugMetadata NO-SOURCE
+> Task :wear:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :wear:checkReleaseAarMetadata
+> Task :wear:generateReleaseResValues
+> Task :wear:mapReleaseSourceSetPaths
+> Task :wear:generateReleaseResources
+> Task :wear:packageReleaseResources
+> Task :wear:parseReleaseLocalResources
+> Task :wear:createReleaseCompatibleScreenManifests
+> Task :wear:extractDeepLinksRelease
+> Task :wear:processReleaseMainManifest
+> Task :wear:processReleaseManifest
+> Task :wear:processReleaseManifestForPackage
+> Task :wear:javaPreCompileRelease
+> Task :wear:mergeReleaseArtProfile
+> Task :wear:extractProguardFiles
+> Task :wear:mergeReleaseStartupProfile
+> Task :wear:mergeReleaseResources
+> Task :wear:mergeReleaseShaders
+> Task :wear:compileReleaseShaders NO-SOURCE
+> Task :wear:generateReleaseAssets UP-TO-DATE
+> Task :wear:mergeReleaseAssets
+> Task :wear:compressReleaseAssets
+> Task :wear:extractReleaseVersionControlInfo
+> Task :wear:collectReleaseDependencies
+> Task :wear:processReleaseResources
+> Task :wear:sdkReleaseDependencyData
+> Task :wear:optimizeReleaseResources
+> Task :app:mergeExtDexRelease
+> Task :wear:validateSigningRelease
+> Task :wear:writeReleaseAppMetadata
+> Task :wear:writeReleaseSigningConfigVersions
+> Task :app:kspReleaseKotlin
+> Task :wear:compileReleaseKotlin
+> Task :wear:compileReleaseJavaWithJavac NO-SOURCE
+> Task :wear:mergeReleaseGeneratedProguardFiles
+> Task :wear:processReleaseJavaRes
+> Task :wear:expandReleaseArtProfileWildcards
+> Task :wear:mergeReleaseJavaResource
+> Task :app:compileReleaseKotlin
+e: file:///home/runner/work/ember-player/ember-player/app/src/main/java/app/ember/data/DemoSeeder.kt:49:13 Conflicting declarations:
+local val now: Long
+local val now: Long
+e: file:///home/runner/work/ember-player/ember-player/app/src/main/java/app/ember/data/DemoSeeder.kt:111:13 Conflicting declarations:
+local val now: Long
+local val now: Long
+
+> Task :app:compileReleaseKotlin FAILED
+> Task :wear:minifyReleaseWithR8
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1795499042812.json
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileReleaseKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1m 41s
+75 actionable tasks: 75 executed
