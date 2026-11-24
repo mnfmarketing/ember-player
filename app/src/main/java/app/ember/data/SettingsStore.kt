@@ -85,8 +85,8 @@ data class Settings(
     val profileName: String = "",
     /** When your profile photo was last changed (0 = no photo; the first letter of your name shows instead). */
     val profilePhotoAt: Long = 0,
-    /** Books screen: the chip you last picked (a LibraryFilter name) and the sort (a LibrarySort name). */
-    val libraryFilter: String = "ALL",
+    /** Books screen: the chips that are on (LibraryFilter names, comma-separated; "" = All) and the sort (a LibrarySort name). */
+    val libraryFilter: String = "",
     val librarySort: String = "RECENT",
 )
 
@@ -194,7 +194,7 @@ class SettingsStore(private val context: Context) {
         bedtimeToMin = this[Keys.bedtimeTo] ?: (6 * 60),
         bedtimeTimerMin = this[Keys.bedtimeTimer] ?: 30,
         upNext = this[Keys.upNext]?.split(',')?.filter { it.isNotBlank() } ?: emptyList(),
-        libraryFilter = this[Keys.libraryFilter] ?: "ALL",
+        libraryFilter = this[Keys.libraryFilter] ?: "",
         librarySort = this[Keys.librarySort] ?: "RECENT",
     )
 

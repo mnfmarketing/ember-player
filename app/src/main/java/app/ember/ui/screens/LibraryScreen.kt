@@ -70,7 +70,7 @@ import app.ember.ui.components.ThinProgress
 import app.ember.ui.theme.EmberColors
 
 private enum class LibraryFilter(val label: String) {
-    ALL("All"), NOT_FINISHED("Not finished"), IN_PROGRESS("In progress"), NOT_STARTED("Not started"), FINISHED("Finished"), OTHER_APPS("Other apps"),
+    ALL("All"), IN_PROGRESS("In progress"), NOT_STARTED("Not started"), FINISHED("Finished"), OTHER_APPS("Other apps"),
 }
 
 private enum class LibrarySort(val label: String) {
@@ -94,9 +94,11 @@ fun LibraryScreen(
 
     var view by rememberSaveable { mutableIntStateOf(0) }
     var query by rememberSaveable { mutableStateOf("") }
-    // Remembered across launches, so a "Not finished" view stays put.
+    // Chips turn on and off; several can be on (In progress + Not started hides finished books).
+    // Remembered across launches.
     val settings by vm.settings.collectAsState()
-    val filter = LibraryFilter.entries.firstOrNull { it.name == settings.libraryFilter } ?: LibraryFilter.ALL
+    val picked = settings.libraryFilter.split(',').mapNotNull { n -> LibraryFilter.entries.firstOrNull { it.name == n } }
+        .filter { it != LibraryFilter.ALL }.toSet()
     val sort = LibrarySort.entries.firstOrNull { it.name == settings.librarySort } ?: LibrarySort.RECENT
     var addMenu by remember { mutableStateOf(false) }
     var sortMenu by remember { mutableStateOf(false) }
@@ -215,8 +217,15 @@ fun LibraryScreen(
                     }
                     LibraryFilter.entries.forEach { f ->
                         FilterChip(
-                            selected = filter == f,
-                            onClick = { vm.setLibraryFilter(f.name) },
+                            selected = if (f == LibraryFilter.ALL) picked.isEmpty() else f in picked,
+                            onClick = {
+                                val next = when (f) {
+                                    LibraryFilter.ALL -> emptySet()
+                                    in picked -> picked - f
+                                    else -> picked + f
+                                }
+                                vm.setLibraryFilter(LibraryFilter.entries.filter { it in next }.joinToString(",") { it.name })
+                            },
                             label = { Text(f.label) },
                             colors = FilterChipDefaults.filterChipColors(
                                 selectedContainerColor = MaterialTheme.colorScheme.primary,
@@ -225,15 +234,15 @@ fun LibraryScreen(
                         )
                     }
                 }
+                // Status chips add together (any of them); Other apps narrows to books from other apps.
+                val statuses = buildSet {
+                    if (LibraryFilter.IN_PROGRESS in picked) add(BookEntity.STATUS_IN_PROGRESS)
+                    if (LibraryFilter.NOT_STARTED in picked) add(BookEntity.STATUS_NEW)
+                    if (LibraryFilter.FINISHED in picked) add(BookEntity.STATUS_FINISHED)
+                }
                 val shown = searched.filter {
-                    when (filter) {
-                        LibraryFilter.ALL -> true
-                        LibraryFilter.NOT_FINISHED -> it.status != BookEntity.STATUS_FINISHED
-                        LibraryFilter.IN_PROGRESS -> it.status == BookEntity.STATUS_IN_PROGRESS
-                        LibraryFilter.NOT_STARTED -> it.status == BookEntity.STATUS_NEW
-                        LibraryFilter.FINISHED -> it.status == BookEntity.STATUS_FINISHED
-                        LibraryFilter.OTHER_APPS -> it.isExternal
-                    }
+                    (statuses.isEmpty() || it.status in statuses) &&
+                        (LibraryFilter.OTHER_APPS !in picked || it.isExternal)
                 }.let { list ->
                     when (sort) {
                         LibrarySort.RECENT -> list.sortedWith(compareByDescending<BookEntity> { it.lastPlayedAt }.thenByDescending { it.addedAt })
