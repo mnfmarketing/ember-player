@@ -2,6 +2,7 @@
 
 package app.ember.ui.screens
 
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -134,20 +135,26 @@ fun SoundSheet(vm: MainViewModel, onDismiss: () -> Unit) {
                 }
             }
             Spacer(Modifier.height(12.dp))
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                Modifier.toggleable(value = s.narrationBoost, role = androidx.compose.ui.semantics.Role.Switch, onValueChange = { vm.setNarrationBoost(it) }),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 Column(Modifier.weight(1f)) {
                     Text("Boost quiet narration", style = MaterialTheme.typography.bodyLarge, color = EmberColors.Text)
                     Text("Lifts soft voices without cranking the volume", style = MaterialTheme.typography.bodySmall, color = EmberColors.TextMuted)
                 }
-                Switch(checked = s.narrationBoost, onCheckedChange = { vm.setNarrationBoost(it) })
+                Switch(checked = s.narrationBoost, onCheckedChange = null)
             }
             Spacer(Modifier.height(12.dp))
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                Modifier.toggleable(value = s.levelLoudness, role = androidx.compose.ui.semantics.Role.Switch, onValueChange = { vm.setLevelLoudness(it) }),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 Column(Modifier.weight(1f)) {
                     Text("Even out loudness", style = MaterialTheme.typography.bodyLarge, color = EmberColors.Text)
                     Text("Brings every book to about the same volume, so you're not reaching for the volume between books", style = MaterialTheme.typography.bodySmall, color = EmberColors.TextMuted)
                 }
-                Switch(checked = s.levelLoudness, onCheckedChange = { vm.setLevelLoudness(it) })
+                Switch(checked = s.levelLoudness, onCheckedChange = null)
             }
             val np by vm.nowPlaying.collectAsState()
             np?.takeIf { !it.isEpisode }?.let { current ->
