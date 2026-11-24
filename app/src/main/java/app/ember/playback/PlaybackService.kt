@@ -1027,6 +1027,7 @@ class PlaybackService : MediaLibraryService() {
         if (softFinishedId == id) return
         val pos = globalPosition()
         val total = offsets.lastOrNull()?.plus(trackDurations.lastOrNull() ?: 0L) ?: 0L
+        if (total > 0 && total - pos <= NEXT_FETCH_WITHIN_MS) fetchNextInSeries(id)
         val within = settings.finishWithinSec * 1000L
         // Close enough to the end (credits, a preview of the next book): it counts as finished now,
         // and keeps playing. Series auto-play and Up Next still wait for the real end.
@@ -1036,6 +1037,29 @@ class PlaybackService : MediaLibraryService() {
             return
         }
         dao.updateProgress(id, pos, System.currentTimeMillis(), BookEntity.STATUS_IN_PROGRESS)
+    }
+
+    /** Books whose sequel this session already asked to download. */
+    private val nextFetched = mutableSetOf<String>()
+
+    /**
+     * Near the end of a book, the next one in its series downloads on Wi-Fi (Drive books only;
+     * books on the phone are already here), so it's ready to play offline.
+     */
+    private fun fetchNextInSeries(id: String) {
+        if (!settings.autoGetNext || !nextFetched.add(id)) return
+        scope.launch {
+            val all = dao.getBooks()
+            val book = all.firstOrNull { it.id == id } ?: return@launch
+            val next = nextInSeries(book, all)?.takeIf { it.source == BookEntity.SOURCE_DRIVE } ?: return@launch
+            val token = container.driveAuth.token() ?: return@launch
+            for (t in dao.getTracks(next.id)) {
+                val fileId = t.uri.removePrefix(app.ember.data.LibraryScanner.DRIVE_TRACK_PREFIX)
+                if (container.downloads.driveLocal(fileId) == null) {
+                    container.downloads.downloadDriveFile(fileId, token, "${next.title} · ${t.title}", wifiOnly = true)
+                }
+            }
+        }
     }
 
     /** The book this session already counted as finished near its end (see saveProgress). */
@@ -1509,6 +1533,8 @@ class PlaybackService : MediaLibraryService() {
         private const val ALL_BOOKS = "allbooks"
         const val EPISODE_PREFIX = "episode:"
         private const val SHAKE_AFTER_MS = 5 * 60_000L
+        /** How close to the end a book gets before its sequel starts downloading. */
+        private const val NEXT_FETCH_WITHIN_MS = 45 * 60_000L
 
         /** True while the playback service is alive (the watch link checks it). */
         @Volatile

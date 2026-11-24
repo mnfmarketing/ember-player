@@ -149,6 +149,7 @@ private val settingIndex = listOf(
     SettingHit("Downloads", "storage", "downloaded space free up storage"),
     SettingHit("Torrent downloads folder", "storage", "torrent folder"),
     SettingHit("Torrents on Wi-Fi only", "storage", "wifi wi-fi mobile data"),
+    SettingHit("Download the next book in a series", "storage", "drive offline download next sequel series auto"),
     SettingHit("Auto-download episodes", "podcasts", "episodes download keep"),
     SettingHit("Open car mode when your car connects", "car", "car mode automatic bluetooth"),
     SettingHit("Your car", "car", "bluetooth device"),
@@ -414,6 +415,11 @@ fun SettingsScreen(
                     "Torrent downloads wait for Wi-Fi so audiobooks don't use your mobile data.",
                     settings.torrentWifiOnly,
                 ) { vm.setTorrentWifiOnly(it) }
+                ToggleRow(
+                    "Download the next book in a series",
+                    "When a Google Drive book is in its last 45 minutes, the next one in its series downloads on Wi-Fi so it's ready offline.",
+                    settings.autoGetNext,
+                ) { vm.setAutoGetNext(it) }
             }
 
             "podcasts" -> item {

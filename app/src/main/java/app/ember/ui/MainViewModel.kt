@@ -1396,6 +1396,14 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     fun setStackSeries(on: Boolean) = viewModelScope.launch { c.settings.setStackSeries(on) }
     fun setByNarrator(on: Boolean) = viewModelScope.launch { c.settings.setByNarrator(on) }
     fun setLevelLoudness(on: Boolean) = viewModelScope.launch { c.settings.setLevelLoudness(on) }
+    fun setAutoGetNext(on: Boolean) = viewModelScope.launch { c.settings.setAutoGetNext(on) }
+
+    /** Bytes of a Drive book saved on the phone (0 if none). */
+    suspend fun driveDownloadBytes(bookId: String): Long {
+        val book = dao.getBook(bookId) ?: return 0
+        if (book.source != BookEntity.SOURCE_DRIVE) return 0
+        return dao.getTracks(bookId).sumOf { t -> c.downloads.driveLocal(t.uri.removePrefix(LibraryScanner.DRIVE_TRACK_PREFIX))?.length() ?: 0L }
+    }
     fun setFinishWithin(sec: Int) = viewModelScope.launch { c.settings.setFinishWithin(sec) }
     fun setBookTimeLeft(on: Boolean) = viewModelScope.launch { c.settings.setBookTimeLeft(on) }
     fun setPlayerPaneFraction(f: Float) = viewModelScope.launch { c.settings.setPlayerPaneFraction(f) }

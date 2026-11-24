@@ -2,6 +2,9 @@
 
 package app.ember.ui.screens
 
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -70,6 +73,16 @@ fun FinishedSheet(vm: MainViewModel, bookId: String, onDismiss: () -> Unit, onTu
                     style = MaterialTheme.typography.bodyMedium,
                     color = EmberColors.TextMuted,
                 )
+            }
+            // A finished Drive book saved on the phone: offer the space back.
+            var saved by remember(book.id) { mutableStateOf(0L) }
+            LaunchedEffect(book.id) { saved = vm.driveDownloadBytes(book.id) }
+            if (saved > 0) {
+                val ctx = androidx.compose.ui.platform.LocalContext.current
+                TextButton(onClick = {
+                    vm.removeDriveBookDownload(book.id)
+                    saved = 0
+                }) { Text("Remove the download · frees ${android.text.format.Formatter.formatShortFileSize(ctx, saved)}") }
             }
             Spacer(Modifier.height(16.dp))
             Text("How was it?", style = MaterialTheme.typography.bodyLarge, color = EmberColors.TextMuted)
