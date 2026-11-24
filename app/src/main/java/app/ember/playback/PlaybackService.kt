@@ -1284,15 +1284,23 @@ class PlaybackService : MediaLibraryService() {
         return MediaItem.Builder().setMediaId("book:${b.id}").setMediaMetadata(meta.build()).build()
     }
 
-    private fun folderItem(id: String, title: String): MediaItem =
+    private fun folderItem(id: String, title: String, subtitle: String? = null, grid: Boolean = false): MediaItem =
         MediaItem.Builder()
             .setMediaId(id)
             .setMediaMetadata(
                 MediaMetadata.Builder()
                     .setTitle(title)
+                    .setSubtitle(subtitle)
                     .setIsBrowsable(true)
                     .setIsPlayable(false)
                     .setMediaType(MediaMetadata.MEDIA_TYPE_FOLDER_AUDIO_BOOKS)
+                    // Car screens show the books inside as covers when asked to.
+                    .setExtras(
+                        android.os.Bundle().apply {
+                            putInt("android.media.browse.CONTENT_STYLE_PLAYABLE_HINT", if (grid) 2 else 1)
+                            putInt("android.media.browse.CONTENT_STYLE_BROWSABLE_HINT", 1)
+                        },
+                    )
                     .build(),
             )
             .build()
@@ -1358,22 +1366,40 @@ class PlaybackService : MediaLibraryService() {
             params: LibraryParams?,
         ): ListenableFuture<LibraryResult<ImmutableList<MediaItem>>> = scope.future {
             val books = dao.getBooks().filter { !it.isExternal }
-            val items: List<MediaItem> = when (parentId) {
-                ROOT -> listOf(
-                    folderItem(CONTINUE, "Continue listening"),
+            val upNext = container.settings.current().upNext.mapNotNull { id -> books.firstOrNull { it.id == id } }
+            val nextUp = app.ember.data.nextInSeries(books)
+            val items: List<MediaItem> = when {
+                parentId == ROOT -> listOfNotNull(
+                    folderItem(CONTINUE, "Continue listening", grid = true),
+                    folderItem(UP_NEXT, "Up Next", "${upNext.size} queued").takeIf { upNext.isNotEmpty() },
+                    folderItem(NEXT_SERIES, "Next in your series", grid = true).takeIf { nextUp.isNotEmpty() },
                     folderItem(LIBRARY, "Books"),
                     folderItem(PODCASTS, "Podcasts"),
                 )
-                PODCASTS -> {
+                parentId == UP_NEXT -> upNext.map { bookItem(it) }
+                parentId == NEXT_SERIES -> nextUp.map { bookItem(it) }
+                parentId == LIBRARY -> listOf(
+                    folderItem(RECENT_ADDED, "Recently added", grid = true),
+                    folderItem(NOT_STARTED, "Not started", grid = true),
+                    folderItem(SERIES, "Series"),
+                    folderItem(ALL_BOOKS, "All books"),
+                )
+                parentId == RECENT_ADDED -> books.sortedByDescending { it.addedAt }.take(30).map { bookItem(it) }
+                parentId == NOT_STARTED -> books.filter { it.status == BookEntity.STATUS_NEW }.sortedByDescending { it.addedAt }.map { bookItem(it) }
+                parentId == SERIES -> books.filter { it.series.isNotBlank() }.groupBy { it.series.trim() }.toSortedMap(String.CASE_INSENSITIVE_ORDER)
+                    .map { (name, list) -> folderItem(SERIES_PREFIX + name, name, "${list.size} books · ${list.count { it.status == BookEntity.STATUS_FINISHED }} finished", grid = true) }
+                parentId.startsWith(SERIES_PREFIX) -> books.filter { it.series.trim() == parentId.removePrefix(SERIES_PREFIX) }
+                    .sortedBy { it.seriesIndex ?: Float.MAX_VALUE }.map { bookItem(it) }
+                parentId == ALL_BOOKS -> books.sortedBy { it.title.lowercase() }.map { bookItem(it) }
+                parentId == PODCASTS -> {
                     val shows = media.getPodcasts().associateBy { it.id }
                     val queue = media.getQueue()
                     val latest = media.getLatestUnplayed(40).filter { e -> queue.none { it.id == e.id } }
                     (queue + latest).map { episodeItem(it, shows[it.podcastId]) }
                 }
-                CONTINUE -> books.filter { it.status == BookEntity.STATUS_IN_PROGRESS }
+                parentId == CONTINUE -> books.filter { it.status == BookEntity.STATUS_IN_PROGRESS }
                     .sortedByDescending { it.lastPlayedAt }
                     .map { bookItem(it) }
-                LIBRARY -> books.sortedBy { it.title.lowercase() }.map { bookItem(it) }
                 else -> emptyList()
             }
             LibraryResult.ofItemList(items, params)
@@ -1474,6 +1500,13 @@ class PlaybackService : MediaLibraryService() {
         private const val CONTINUE = "continue"
         private const val LIBRARY = "library"
         private const val PODCASTS = "podcasts"
+        private const val UP_NEXT = "upnext"
+        private const val NEXT_SERIES = "nextseries"
+        private const val RECENT_ADDED = "recentadded"
+        private const val NOT_STARTED = "notstarted"
+        private const val SERIES = "series"
+        private const val SERIES_PREFIX = "series:"
+        private const val ALL_BOOKS = "allbooks"
         const val EPISODE_PREFIX = "episode:"
         private const val SHAKE_AFTER_MS = 5 * 60_000L
 
