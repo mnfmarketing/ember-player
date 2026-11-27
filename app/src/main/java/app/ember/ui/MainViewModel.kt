@@ -1899,9 +1899,11 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         val episodes: List<EpisodeEntity> = emptyList(),
         val bookmarks: List<Pair<BookmarkEntity, BookEntity>> = emptyList(),
         val clips: List<app.ember.data.ClipEntity> = emptyList(),
+        /** Chapter names that match, with their book. */
+        val chapters: List<Pair<app.ember.data.ChapterEntity, BookEntity>> = emptyList(),
     ) {
         val isEmpty: Boolean get() = books.isEmpty() && people.isEmpty() && series.isEmpty() && shows.isEmpty() &&
-            episodes.isEmpty() && bookmarks.isEmpty() && clips.isEmpty()
+            episodes.isEmpty() && bookmarks.isEmpty() && clips.isEmpty() && chapters.isEmpty()
     }
 
     suspend fun searchEverything(raw: String): SearchResults = withContext(Dispatchers.Default) {
@@ -1925,7 +1927,13 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             .filter { hit(it.note) || hit(it.chapterTitle) }
             .mapNotNull { m -> byId[m.bookId]?.let { m to it } }
         val clipHits = clips.value.filter { hit(it.note) || hit(it.title) || hit(it.chapterTitle) }
-        SearchResults(q, bookHits, people, series, shows, episodes, marks, clipHits)
+        // Real chapter names only ("Chapter 12" would match everything).
+        val generic = Regex("(?i)^(chapter|part|track)\\s*\\d+$")
+        val chapterHits = withContext(Dispatchers.IO) { dao.searchChapters("%$q%", 60) }
+            .filter { hit(it.title) && !generic.matches(it.title.trim()) }
+            .mapNotNull { ch -> byId[ch.bookId]?.let { ch to it } }
+            .take(40)
+        SearchResults(q, bookHits, people, series, shows, episodes, marks, clipHits, chapterHits)
     }
 
     /** Lowercase without accents, so "Bronte" finds "Brontë". */

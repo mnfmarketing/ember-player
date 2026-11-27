@@ -651,7 +651,7 @@ private fun ColumnScope.PlayerCore(
         }
     }
     Spacer(Modifier.height(18.dp))
-    PlayerActionRow(np, sleep, onSpeed, onSleep, onBookmark, onClip)
+    PlayerActionRow(np, sleep, onSpeed, onSleep, onBookmark, onClip, vm = vm)
 }
 
 /** Time left in the whole book (or episode) at your speed, for the middle of the scrubber. */
@@ -741,19 +741,56 @@ private fun PlayerActionRow(
     onBookmark: () -> Unit,
     onClip: () -> Unit,
     compact: Boolean = false,
+    vm: MainViewModel? = null,
 ) {
-    val accent = MaterialTheme.colorScheme.primary
+    var speedPresets by remember { mutableStateOf(false) }
+    var sleepPresets by remember { mutableStateOf(false) }
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-        PlayerAction("Speed", onSpeed, highlighted = np.speed != 1f, compact = compact) { tint ->
-            Text(formatSpeed(np.speed), style = MaterialTheme.typography.titleLarge, color = tint, maxLines = 1)
+        // Tap for the full sheet; press and hold for quick picks.
+        Box {
+            PlayerAction("Speed", onSpeed, highlighted = np.speed != 1f, compact = compact, onLongClick = { speedPresets = vm != null }) { tint ->
+                Text(formatSpeed(np.speed), style = MaterialTheme.typography.titleLarge, color = tint, maxLines = 1)
+            }
+            DropdownMenu(expanded = speedPresets, onDismissRequest = { speedPresets = false }) {
+                listOf(1f, 1.25f, 1.5f, 1.75f, 2f).forEach { sp ->
+                    DropdownMenuItem(
+                        text = { Text(formatSpeed(sp)) },
+                        trailingIcon = { if (np.speed == sp) Icon(Icons.Rounded.Check, null) },
+                        onClick = {
+                            speedPresets = false
+                            vm?.setSpeed(sp)
+                        },
+                    )
+                }
+            }
         }
         val sleepLabel = when {
             sleep.stopAtPositionMs != null -> "End of ch."
             sleep.endsAt != null -> formatClock(sleep.remainingMs() ?: 0)
             else -> "Sleep"
         }
-        PlayerAction(sleepLabel, onSleep, highlighted = sleep.active, compact = compact) { tint ->
-            Icon(Icons.Rounded.Bedtime, "Sleep timer", tint = tint, modifier = Modifier.size(26.dp))
+        Box {
+            PlayerAction(sleepLabel, onSleep, highlighted = sleep.active, compact = compact, onLongClick = { sleepPresets = vm != null }) { tint ->
+                Icon(Icons.Rounded.Bedtime, "Sleep timer", tint = tint, modifier = Modifier.size(26.dp))
+            }
+            DropdownMenu(expanded = sleepPresets, onDismissRequest = { sleepPresets = false }) {
+                listOf(15, 30, 45, 60).forEach { m ->
+                    DropdownMenuItem(text = { Text("$m minutes") }, onClick = {
+                        sleepPresets = false
+                        vm?.sleepFor(m)
+                    })
+                }
+                DropdownMenuItem(text = { Text("End of chapter") }, onClick = {
+                    sleepPresets = false
+                    vm?.sleepEndOfChapter()
+                })
+                if (sleep.active) {
+                    DropdownMenuItem(text = { Text("Turn off") }, onClick = {
+                        sleepPresets = false
+                        vm?.cancelSleep()
+                    })
+                }
+            }
         }
         PlayerAction("Bookmark", onBookmark, compact = compact) { tint ->
             Icon(Icons.Rounded.BookmarkAdd, "Add bookmark", tint = tint, modifier = Modifier.size(26.dp))
@@ -764,12 +801,14 @@ private fun PlayerActionRow(
     }
 }
 
+@OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
 private fun PlayerAction(
     label: String,
     onClick: () -> Unit,
     highlighted: Boolean = false,
     compact: Boolean = false,
+    onLongClick: (() -> Unit)? = null,
     top: @Composable (Color) -> Unit,
 ) {
     val tint = if (highlighted) MaterialTheme.colorScheme.primary.let { if (it.luminance() < 0.15f) GlassText else it } else GlassText
@@ -777,7 +816,7 @@ private fun PlayerAction(
         Modifier
             .widthIn(min = if (compact) 56.dp else 72.dp)
             .clip(RoundedCornerShape(14.dp))
-            .clickable(onClick = onClick)
+            .combinedClickable(onClick = onClick, onLongClick = onLongClick)
             .padding(horizontal = 6.dp, vertical = 6.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -1312,6 +1351,7 @@ fun MiniPlayer(
     skipForwardSec: Int = 30,
     onSkipBack: () -> Unit = {},
     onSkipForward: () -> Unit = {},
+    percent: Boolean = false,
 ) {
     val accent = bookAccent(np.book)
     val tick = rememberTick()
@@ -1394,7 +1434,9 @@ fun MiniPlayer(
                     Column(Modifier.weight(1f)) {
                         Text(np.book.displayTitle, style = MaterialTheme.typography.titleSmall, color = EmberColors.Text, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         Text(
-                            np.chapter?.title ?: np.book.author,
+                            (np.chapter?.title ?: np.book.author) +
+                                // How far along, the way you chose in the player (time left or percent).
+                                (if (percent) " · ${(np.progress * 100).toInt()}%" else " · ${formatDuration((np.remaining / np.speed.coerceAtLeast(0.1f)).toLong())} left"),
                             style = MaterialTheme.typography.bodySmall,
                             color = EmberColors.TextMuted,
                             maxLines = 1,
@@ -1636,7 +1678,7 @@ private fun SidePanePlayer(
                 IconButton(onClick = { tick(); vm.skipForward() }, modifier = Modifier.size(52.dp)) { SkipIcon(skipForward, forward = true, tint = GlassText, size = 34.dp) }
             }
             Spacer(Modifier.height(8.dp))
-            PlayerActionRow(np, sleep, onSpeed, onSleep, onBookmark, onClip, compact = true)
+            PlayerActionRow(np, sleep, onSpeed, onSleep, onBookmark, onClip, compact = true, vm = vm)
             Spacer(Modifier.height(8.dp))
         }
 

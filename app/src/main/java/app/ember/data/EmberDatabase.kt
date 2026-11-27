@@ -229,6 +229,10 @@ abstract class LibraryDao {
     @Query("DELETE FROM clips WHERE mediaId = :mediaId")
     abstract suspend fun deleteClipsFor(mediaId: String)
 
+    /** Chapters whose name contains the text (for Search). */
+    @Query("SELECT * FROM chapters WHERE title LIKE :like ORDER BY bookId, idx LIMIT :limit")
+    abstract suspend fun searchChapters(like: String, limit: Int): List<ChapterEntity>
+
     // Everything, for backups
     @Query("SELECT * FROM bookmarks")
     abstract suspend fun getAllBookmarks(): List<BookmarkEntity>

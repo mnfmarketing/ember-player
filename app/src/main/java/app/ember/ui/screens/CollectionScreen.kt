@@ -1,5 +1,20 @@
 package app.ember.ui.screens
 
+import app.ember.ui.components.bookAccent
+import app.ember.ui.components.BookCover
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.graphics.Color
+import androidx.compose.material.icons.rounded.PlayArrow
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Button
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -71,6 +86,49 @@ fun CollectionScreen(vm: MainViewModel, kind: String, key: String, onBack: () ->
                     Text(parts.joinToString(" · "), style = MaterialTheme.typography.bodySmall, color = EmberColors.TextMuted)
                     if (kind == "series" && list.isNotEmpty()) {
                         ThinProgress(finished.toFloat() / list.size, modifier = Modifier.padding(top = 12.dp), height = 5.dp)
+                    }
+                }
+                // The book to listen to now: the one you're in, else the first after your last finished one.
+                val next = if (kind == "series") {
+                    list.filter { it.status == BookEntity.STATUS_IN_PROGRESS }.maxByOrNull { it.lastPlayedAt }
+                        ?: list.drop(list.indexOfLast { it.status == BookEntity.STATUS_FINISHED } + 1).firstOrNull { it.status == BookEntity.STATUS_NEW }
+                        ?: list.firstOrNull { it.status == BookEntity.STATUS_NEW }
+                } else {
+                    null
+                }
+                if (next != null) {
+                    val accent = bookAccent(next)
+                    Row(
+                        Modifier
+                            .padding(horizontal = 12.dp, vertical = 8.dp)
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(18.dp))
+                            .background(accent.copy(alpha = 0.16f))
+                            .clickable { onOpenBook(next.id) }
+                            .padding(12.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        BookCover(next, Modifier.size(72.dp), showBadge = false)
+                        Spacer(Modifier.width(12.dp))
+                        Column(Modifier.weight(1f)) {
+                            Text(
+                                (if (next.status == BookEntity.STATUS_IN_PROGRESS) "Continue" else "Up next") +
+                                    (next.seriesIndex?.let { " · Book " + (if (it % 1f == 0f) it.toInt().toString() else it.toString()) } ?: ""),
+                                style = MaterialTheme.typography.labelMedium,
+                                color = accent,
+                            )
+                            Text(next.displayTitle, style = MaterialTheme.typography.titleSmall, color = EmberColors.Text, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                        }
+                        Spacer(Modifier.width(8.dp))
+                        Button(
+                            onClick = { vm.play(next.id) },
+                            colors = ButtonDefaults.buttonColors(containerColor = accent, contentColor = if (accent.luminance() > 0.4f) Color.Black else Color.White),
+                            contentPadding = PaddingValues(horizontal = 14.dp, vertical = 4.dp),
+                        ) {
+                            Icon(Icons.Rounded.PlayArrow, null, Modifier.size(18.dp))
+                            Spacer(Modifier.width(4.dp))
+                            Text(if (next.status == BookEntity.STATUS_IN_PROGRESS) "Resume" else "Start next")
+                        }
                     }
                 }
             }

@@ -88,6 +88,7 @@ fun HomeScreen(
     val np by vm.nowPlaying.collectAsState()
     val stats by vm.stats.collectAsState()
     val scan by vm.scanProgress.collectAsState()
+    val homeSettings by vm.settings.collectAsState()
 
     val inProgress = books.filter { it.status == BookEntity.STATUS_IN_PROGRESS && it.id != np?.book?.id }
         .sortedByDescending { it.lastPlayedAt }
@@ -189,7 +190,7 @@ fun HomeScreen(
         }
 
         np?.let { current ->
-            item(key = "hero") { ContinueHero(current, onOpen = onOpenPlayer, onToggle = vm::togglePlay, onDetails = { onOpenBook(current.book.id) }) }
+            item(key = "hero") { ContinueHero(current, onOpen = onOpenPlayer, onToggle = vm::togglePlay, onDetails = { onOpenBook(current.book.id) }, percent = homeSettings.showPercent) }
         }
 
         item {
@@ -270,7 +271,7 @@ fun HomeScreen(
 
 
 @Composable
-private fun ContinueHero(np: NowPlaying, onOpen: () -> Unit, onToggle: () -> Unit, onDetails: () -> Unit) {
+private fun ContinueHero(np: NowPlaying, onOpen: () -> Unit, onToggle: () -> Unit, onDetails: () -> Unit, percent: Boolean = false) {
     val accent = bookAccent(np.book)
     Box(
         Modifier
@@ -310,7 +311,7 @@ private fun ContinueHero(np: NowPlaying, onOpen: () -> Unit, onToggle: () -> Uni
                 ThinProgress(np.progress, color = accent)
                 Spacer(Modifier.height(6.dp))
                 Text(
-                    "${formatDuration(np.remaining)} left",
+                    if (percent) "${(np.progress * 100).toInt()}% complete" else "${formatDuration(np.remaining)} left",
                     style = MaterialTheme.typography.labelSmall,
                     color = EmberColors.TextMuted,
                 )

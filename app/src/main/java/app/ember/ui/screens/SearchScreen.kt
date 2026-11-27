@@ -182,6 +182,31 @@ fun SearchScreen(
                     }
                 }
             }
+            if (r.chapters.isNotEmpty()) {
+                item { Heading("Chapters", r.chapters.size) }
+                items(r.chapters, key = { "ch-" + it.first.bookId + "-" + it.first.idx }) { (ch, b) ->
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .clickable { vm.playFrom(b.id, ch.startMs) }
+                            .padding(horizontal = 16.dp, vertical = 10.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        app.ember.ui.components.BookCover(b, Modifier.size(44.dp), showBadge = false)
+                        Spacer(Modifier.width(12.dp))
+                        Column(Modifier.weight(1f)) {
+                            Text(ch.title, style = MaterialTheme.typography.bodyMedium, color = EmberColors.Text, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text(
+                                b.displayTitle + " · chapter ${ch.idx + 1} · " + app.ember.util.formatClock(ch.startMs),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = EmberColors.TextMuted,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                        }
+                    }
+                }
+            }
             if (r.bookmarks.isNotEmpty()) {
                 item { Heading("Bookmarks", r.bookmarks.size) }
                 items(r.bookmarks, key = { "m-" + it.first.id }) { (m, b) ->

@@ -692,6 +692,7 @@ fun EmberRoot(vm: MainViewModel, routeRequest: String? = null, onRouteHandled: (
                                     skipForwardSec = savedFraction.skipForwardSec,
                                     onSkipBack = vm::skipBack,
                                     onSkipForward = vm::skipForward,
+                                    percent = savedFraction.showPercent,
                                 )
                             }
                         }

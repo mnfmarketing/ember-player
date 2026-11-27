@@ -222,7 +222,7 @@ fun LibraryScreen(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                if (view == 0) {
+                if (view <= 1) {
                     Box {
                         FilterChip(
                             selected = false,
@@ -354,7 +354,17 @@ fun LibraryScreen(
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
-                        items(groups.entries.toList(), key = { "series:" + it.key }) { e ->
+                        // Same sort as All: by the series' most recent play, newest book, name, author or how far along.
+                        val ordered = groups.entries.toList().let { g ->
+                            when (sort) {
+                                LibrarySort.RECENT -> g.sortedByDescending { e -> e.value.maxOf { it.lastPlayedAt } }
+                                LibrarySort.ADDED -> g.sortedByDescending { e -> e.value.maxOf { it.addedAt } }
+                                LibrarySort.TITLE -> g.sortedBy { sortTitle(it.key) }
+                                LibrarySort.AUTHOR -> g.sortedWith(compareBy({ e -> e.value.firstOrNull { it.author.isNotBlank() }?.author.orEmpty().lowercase() }, { it.key.lowercase() }))
+                                LibrarySort.PROGRESS -> g.sortedByDescending { e -> e.value.sumOf { it.progress.toDouble() } / e.value.size }
+                            }
+                        }
+                        items(ordered, key = { "series:" + it.key }) { e ->
                             val list = e.value.sortedBy { it.seriesIndex ?: Float.MAX_VALUE }
                             SeriesStackTile(
                                 name = e.key,
