@@ -64,5 +64,5 @@ open_route "player"; sleep 3
 tap_ending "% complete"; sleep 2
 
 say "Search finds chapter names"
-open_route "search/Ball"; sleep 4
+open_route "search?q=Ball"; sleep 4
 shot f09-search-chapters 1
