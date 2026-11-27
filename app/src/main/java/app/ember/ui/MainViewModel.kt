@@ -1397,6 +1397,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     fun setByNarrator(on: Boolean) = viewModelScope.launch { c.settings.setByNarrator(on) }
     fun setLevelLoudness(on: Boolean) = viewModelScope.launch { c.settings.setLevelLoudness(on) }
     fun setAutoGetNext(on: Boolean) = viewModelScope.launch { c.settings.setAutoGetNext(on) }
+    fun toggleShowPercent() = viewModelScope.launch { c.settings.toggleShowPercent() }
 
     /** Bytes of a Drive book saved on the phone (0 if none). */
     suspend fun driveDownloadBytes(bookId: String): Long {

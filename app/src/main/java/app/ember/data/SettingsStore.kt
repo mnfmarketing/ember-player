@@ -96,6 +96,8 @@ data class Settings(
     val levelLoudness: Boolean = false,
     /** Near the end of a Drive book, download the next in its series on Wi-Fi. */
     val autoGetNext: Boolean = true,
+    /** The player's middle label shows percent complete instead of time left. */
+    val showPercent: Boolean = false,
     /** A book counts as finished once this little is left (0 = only at the very end). */
     val finishWithinSec: Int = 120,
 )
@@ -155,6 +157,7 @@ class SettingsStore(private val context: Context) {
         val byNarrator = booleanPreferencesKey("by_narrator")
         val levelLoudness = booleanPreferencesKey("level_loudness")
         val autoGetNext = booleanPreferencesKey("auto_get_next")
+        val showPercent = booleanPreferencesKey("show_percent")
         val finishWithin = intPreferencesKey("finish_within_sec")
     }
 
@@ -215,6 +218,7 @@ class SettingsStore(private val context: Context) {
         byNarrator = this[Keys.byNarrator] ?: false,
         levelLoudness = this[Keys.levelLoudness] ?: false,
         autoGetNext = this[Keys.autoGetNext] ?: true,
+        showPercent = this[Keys.showPercent] ?: false,
         finishWithinSec = this[Keys.finishWithin] ?: 120,
     )
 
@@ -241,6 +245,7 @@ class SettingsStore(private val context: Context) {
     suspend fun setByNarrator(on: Boolean) = context.dataStore.edit { it[Keys.byNarrator] = on }
     suspend fun setLevelLoudness(on: Boolean) = context.dataStore.edit { it[Keys.levelLoudness] = on }
     suspend fun setAutoGetNext(on: Boolean) = context.dataStore.edit { it[Keys.autoGetNext] = on }
+    suspend fun toggleShowPercent() = context.dataStore.edit { it[Keys.showPercent] = !(it[Keys.showPercent] ?: false) }
     suspend fun setFinishWithin(sec: Int) = context.dataStore.edit { it[Keys.finishWithin] = sec }
 
     suspend fun setResumeOnConnect(on: Boolean) = context.dataStore.edit { it[Keys.resumeOnConnect] = on }

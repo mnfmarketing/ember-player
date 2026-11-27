@@ -629,7 +629,7 @@ private fun ColumnScope.PlayerCore(
 
     // The chapter you're in; tap for the chapter list.
     ChapterLine(np, onClick = if (showListButton) onList else null)
-    ChapterSlider(np, onSeek = vm::seekGlobal, bookTime = bookTime, onToggleTime = onToggleTime, center = bookLeftLabel(np))
+    ChapterSlider(np, onSeek = vm::seekGlobal, bookTime = bookTime, onToggleTime = onToggleTime, center = bookLeftLabel(np, vm.settings.collectAsState().value.showPercent), onCenterClick = { vm.toggleShowPercent() })
     Spacer(Modifier.height(8.dp))
     Row(
         Modifier.fillMaxWidth(),
@@ -655,7 +655,13 @@ private fun ColumnScope.PlayerCore(
 }
 
 /** Time left in the whole book (or episode) at your speed, for the middle of the scrubber. */
-private fun bookLeftLabel(np: NowPlaying): String {
+private fun bookLeftLabel(np: NowPlaying, percent: Boolean = false): String {
+    // Tap to switch between time left and how far through the book you are.
+    if (percent) {
+        val total = np.position + np.remaining
+        val pct = if (total > 0) (np.position * 100 / total).toInt() else 0
+        return "$pct% complete"
+    }
     val left = (np.remaining / np.speed.coerceAtLeast(0.1f)).toLong()
     return formatDuration(left) + " left" + if (np.speed != 1f) " · ${formatSpeed(np.speed)}" else ""
 }
@@ -789,7 +795,14 @@ private fun PlayerAction(
  *  - Slide your finger down while dragging for finer control (half, quarter, tenth speed).
  */
 @Composable
-internal fun ChapterSlider(np: NowPlaying, onSeek: (Long) -> Unit, bookTime: Boolean = false, onToggleTime: () -> Unit = {}, center: String? = null) {
+internal fun ChapterSlider(
+    np: NowPlaying,
+    onSeek: (Long) -> Unit,
+    bookTime: Boolean = false,
+    onToggleTime: () -> Unit = {},
+    center: String? = null,
+    onCenterClick: (() -> Unit)? = null,
+) {
     val length = np.chapterLength.coerceAtLeast(1)
     val current = (np.chapterPosition.toFloat() / length).coerceIn(0f, 1f)
     val latest by androidx.compose.runtime.rememberUpdatedState(current)
@@ -925,7 +938,11 @@ internal fun ChapterSlider(np: NowPlaying, onSeek: (Long) -> Unit, bookTime: Boo
                 style = MaterialTheme.typography.labelMedium,
                 color = GlassText,
                 maxLines = 1,
-                modifier = Modifier.align(Alignment.Center),
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .clip(RoundedCornerShape(8.dp))
+                    .then(if (onCenterClick != null) Modifier.clickable(onClickLabel = "Switch between time left and percent complete", onClick = onCenterClick) else Modifier)
+                    .padding(horizontal = 10.dp, vertical = 4.dp),
             )
         }
         if (bubble != null) {
@@ -1608,7 +1625,7 @@ private fun SidePanePlayer(
                     modifier = Modifier.size(28.dp).clip(CircleShape).clickable { tick(); vm.nextChapter() }.padding(2.dp),
                 )
             }
-            ChapterSlider(np, onSeek = vm::seekGlobal, bookTime = bookTime, onToggleTime = onToggleTime, center = bookLeftLabel(np))
+            ChapterSlider(np, onSeek = vm::seekGlobal, bookTime = bookTime, onToggleTime = onToggleTime, center = bookLeftLabel(np, vm.settings.collectAsState().value.showPercent), onCenterClick = { vm.toggleShowPercent() })
             Row(
                 Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly,
