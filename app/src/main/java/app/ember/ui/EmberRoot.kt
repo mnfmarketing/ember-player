@@ -262,7 +262,10 @@ fun EmberRoot(vm: MainViewModel, routeRequest: String? = null, onRouteHandled: (
                 onRouteHandled()
                 return@LaunchedEffect
             }
-            if (r == "home" || r == "library" || r == "podcasts" || r == "you") nav.navigateTop(r) else nav.navigate(r) { launchSingleTop = true }
+            // A link to a screen that doesn't exist (an old shortcut, a typo) is ignored instead of closing Ember.
+            runCatching {
+                if (r == "home" || r == "library" || r == "podcasts" || r == "you") nav.navigateTop(r) else nav.navigate(r) { launchSingleTop = true }
+            }
             onRouteHandled()
         }
         if (np == null && focused) focused = false
