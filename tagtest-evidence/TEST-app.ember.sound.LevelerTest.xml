@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="app.ember.sound.LevelerTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-27T07:21:19" hostname="ip-10-0-139-34" time="0.006">
+<testsuite name="app.ember.sound.LevelerTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-27T16:30:52" hostname="runnervm0j63q" time="0.005">
   <properties/>
-  <testcase name="limiterLeavesNormalSamplesAlone" classname="app.ember.sound.LevelerTest" time="0.002"/>
+  <testcase name="limiterLeavesNormalSamplesAlone" classname="app.ember.sound.LevelerTest" time="0.001"/>
   <testcase name="limiterNeverClips" classname="app.ember.sound.LevelerTest" time="0.003"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
