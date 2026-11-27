@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="app.ember.data.ChapterFitTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-27T16:30:52" hostname="runnervm0j63q" time="0.032">
+<testsuite name="app.ember.data.ChapterFitTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-27T16:38:35" hostname="runnervm0j63q" time="0.036">
   <properties/>
-  <testcase name="sameLengthKeepsTimes" classname="app.ember.data.ChapterFitTest" time="0.031"/>
+  <testcase name="sameLengthKeepsTimes" classname="app.ember.data.ChapterFitTest" time="0.034"/>
   <testcase name="namesOnlyWhenCountsMatch" classname="app.ember.data.ChapterFitTest" time="0.001"/>
   <testcase name="differentLengthStretches" classname="app.ember.data.ChapterFitTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
