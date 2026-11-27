@@ -241,12 +241,6 @@ fun LibraryScreen(
                                     },
                                 )
                             }
-                            HorizontalDivider()
-                            DropdownMenuItem(
-                                text = { Text("Stack series") },
-                                trailingIcon = { Switch(checked = settings.stackSeries, onCheckedChange = null) },
-                                onClick = { vm.setStackSeries(!settings.stackSeries) },
-                            )
                         }
                     }
                 }
@@ -298,7 +292,7 @@ fun LibraryScreen(
         when (view) {
             0 -> {
                 // A series with two or more matching books shows as one stack (not while searching).
-                val stack = settings.stackSeries && q.isEmpty()
+                val stack = false // All always shows every book; series stacks live on the Series tab
                 val entries: List<LibItem> = if (!stack) {
                     filtered.map { LibItem.One(it) }
                 } else {
@@ -352,14 +346,20 @@ fun LibraryScreen(
                         body = if (books.none { it.series.isNotBlank() }) "Open a book, tap Edit details, and add its series name and number. Ember groups them here." else "Try a different search or filter.",
                     )
                 } else {
-                    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(12.dp)) {
-                        items(groups.entries.toList(), key = { it.key }) { e ->
+                    // Each series as a stack of its covers, with how many books and how many you've finished.
+                    LazyVerticalGrid(
+                        columns = GridCells.Adaptive(118.dp),
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(start = 12.dp, end = 12.dp, bottom = 24.dp),
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        items(groups.entries.toList(), key = { "series:" + it.key }) { e ->
                             val list = e.value.sortedBy { it.seriesIndex ?: Float.MAX_VALUE }
-                            GroupRow(
-                                title = e.key,
-                                subtitle = "${list.size} books · ${list.count { it.status == BookEntity.STATUS_FINISHED }} finished",
+                            SeriesStackTile(
+                                name = e.key,
                                 books = list,
-                                progress = list.count { it.status == BookEntity.STATUS_FINISHED }.toFloat() / list.size,
+                                all = list,
                                 onClick = { onOpenCollection("series", e.key) },
                             )
                         }
