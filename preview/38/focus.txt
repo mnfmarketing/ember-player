@@ -1,4 +1,0 @@
-== Books: All, then Series with its sort
-== Player: percent toggle, then long-press Speed and Sleep
-== Home and mini player follow the percent choice
-== Search finds chapter names

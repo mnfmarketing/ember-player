@@ -1,0 +1,361 @@
+--------- beginning of main
+11-27 16:41:00.003   724   724 D KeyguardClockSwitch: Updating clock: 441
+11-27 16:41:00.899   509   545 D EventSequenceValidator: Transition from ACTIVITY_FINISHED to INTENT_STARTED
+--------- beginning of system
+11-27 16:41:00.900   509  2457 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+11-27 16:41:00.903   422   422 I perfetto: ing_service_impl.cc:758 Configured tracing session 7, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:1, uid:1071 session name: ""
+11-27 16:41:00.903   412   412 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=7)
+11-27 16:41:00.903  2465  2467 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+11-27 16:41:00.905   509   545 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+11-27 16:41:00.920   412   412 I perfetto: ftrace_procfs.cc:176    enabled ftrace
+--------- beginning of kernel
+11-27 16:41:01.147     0     0 W perfetto: enabled ftrace
+11-27 16:41:02.126     0     0 W healthd : battery l=100 v=5000 t=25.0 h=2 st=2 c=900000 fc=300000 cc=10 chg=a
+11-27 16:41:03.451   483   483 E wifi_forwarder: qemu_pipe_open_ns:62: Could not connect to the 'pipe:qemud:wififorward' service: Invalid argument
+11-27 16:41:03.451   483   483 E wifi_forwarder: RemoteConnection failed to initialize: RemoteConnection failed to open pipe
+11-27 16:41:03.501   463   463 E netmgr  : qemu_pipe_open_ns:62: Could not connect to the 'pipe:qemud:network' service: Invalid argument
+11-27 16:41:03.501   463   463 E netmgr  : Failed to open QEMU pipe 'qemud:network': Invalid argument
+11-27 16:41:05.909   412   412 I perfetto: probes_producer.cc:329  Producer stop (id=7)
+11-27 16:41:05.910   422   422 I perfetto: ng_service_impl.cc:1948 Tracing session 7 ended, total sessions:0
+11-27 16:41:05.911   412   412 I perfetto: ftrace_procfs.cc:183    disabled ftrace
+11-27 16:41:06.137     0     0 W perfetto: disabled ftrace
+11-27 16:41:05.954   299   345 D goldfish-address-space: claimShared: Ask to claim region [0x3f8000000 0x3f89e4000]
+11-27 16:41:06.119   162   162 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device manifest.
+11-27 16:41:06.120  2475  2475 I Gralloc4: mapper 4.x is not supported
+11-27 16:41:06.124  2475  2475 D HostConnection: createUnique: call
+11-27 16:41:06.124  2475  2475 D HostConnection: HostConnection::get() New Host Connection established 0x733422caa650, tid 2475
+11-27 16:41:06.124  2475  2475 D goldfish-address-space: allocate: Ask for block of size 0x100
+11-27 16:41:06.125  2475  2475 D goldfish-address-space: allocate: ioctl allocate returned offset 0x3f7ffe000 size 0x2000
+11-27 16:41:06.132  2475  2475 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform ANDROID_EMU_hwc_display_power_mode GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-27 16:41:06.501   509   545 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+11-27 16:41:06.505   422   422 I perfetto: ing_service_impl.cc:758 Configured tracing session 8, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:1, uid:1071 session name: ""
+11-27 16:41:06.506   412   412 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=8)
+11-27 16:41:06.507   509   545 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+11-27 16:41:06.522   412   412 I perfetto: ftrace_procfs.cc:176    enabled ftrace
+11-27 16:41:06.749     0     0 W perfetto: enabled ftrace
+11-27 16:41:06.703  2390  2405 I mber.audiobook: JIT allocated 61KB for compiled code of void app.ember.ui.screens.LibraryScreenKt.LibraryScreen(app.ember.ui.MainViewModel, kotlin.jvm.functions.Function1, kotlin.jvm.functions.Function2, kotlin.jvm.functions.Function0, kotlin.jvm.functions.Function0, kotlin.jvm.functions.Function0, kotlin.jvm.functions.Function0, kotlin.jvm.functions.Function0, androidx.compose.runtime.Composer, int, int)
+11-27 16:41:06.703  2390  2405 I mber.audiobook: Compiler allocated 10MB to compile void app.ember.ui.screens.LibraryScreenKt.LibraryScreen(app.ember.ui.MainViewModel, kotlin.jvm.functions.Function1, kotlin.jvm.functions.Function2, kotlin.jvm.functions.Function0, kotlin.jvm.functions.Function0, kotlin.jvm.functions.Function0, kotlin.jvm.functions.Function0, kotlin.jvm.functions.Function0, androidx.compose.runtime.Composer, int, int)
+11-27 16:41:06.752  2390  2405 I mber.audiobook: Compiler allocated 11MB to compile void app.ember.ui.screens.LibraryScreenKt.LibraryScreen(app.ember.ui.MainViewModel, kotlin.jvm.functions.Function1, kotlin.jvm.functions.Function2, kotlin.jvm.functions.Function0, kotlin.jvm.functions.Function0, kotlin.jvm.functions.Function0, kotlin.jvm.functions.Function0, kotlin.jvm.functions.Function0, androidx.compose.runtime.Composer, int, int)
+11-27 16:41:06.787  2390  2406 I mber.audiobook: Background concurrent copying GC freed 557219(16MB) AllocSpace objects, 121(5640KB) LOS objects, 49% free, 8119KB/15MB, paused 20us total 107.216ms
+11-27 16:41:06.800   299   345 D goldfish-address-space: claimShared: Ask to claim region [0x3fae03000 0x3fae97000]
+11-27 16:41:06.802  2390  2448 D HostConnection: HostConnection::get() New Host Connection established 0x77a2d968ec50, tid 2448
+11-27 16:41:06.806  2390  2448 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform ANDROID_EMU_hwc_display_power_mode GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-27 16:41:06.812   299   345 D goldfish-address-space: claimShared: Ask to claim region [0x3fae97000 0x3faf19000]
+11-27 16:41:06.814   299   345 D goldfish-address-space: claimShared: Ask to claim region [0x3faf19000 0x3fafaf000]
+11-27 16:41:06.815  2390  2448 D EGL_emulation: eglCreateContext: 0x77a2c96d3f90: maj 3 min 0 rcv 3
+11-27 16:41:06.819   299   345 D goldfish-address-space: claimShared: Ask to claim region [0x3fafaf000 0x3fb03c000]
+11-27 16:41:06.820  2390  2448 D EGL_emulation: eglMakeCurrent: 0x77a2c96d3f90: ver 3 0 (tinfo 0x77a26970afb0) (first time)
+11-27 16:41:06.822  2390  2419 D HostConnection: HostConnection::get() New Host Connection established 0x77a2d9692f10, tid 2419
+11-27 16:41:06.825  2390  2415 D HostConnection: HostConnection::get() New Host Connection established 0x77a2d96911d0, tid 2415
+11-27 16:41:06.827  2390  2460 D HostConnection: HostConnection::get() New Host Connection established 0x77a2d9693990, tid 2460
+11-27 16:41:06.833  2390  2415 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform ANDROID_EMU_hwc_display_power_mode GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-27 16:41:06.835  2390  2460 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform ANDROID_EMU_hwc_display_power_mode GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-27 16:41:06.836  2390  2419 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform ANDROID_EMU_hwc_display_power_mode GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-27 16:41:06.842   299   345 D goldfish-address-space: claimShared: Ask to claim region [0x3fb03c000 0x3fb0cf000]
+11-27 16:41:09.855   509  2489 I system_server: The ClassLoaderContext is a special shared library.
+11-27 16:41:09.869   509  2489 I chatty  : uid=1000(system) Binder:509_3 identical 18 lines
+11-27 16:41:09.870   509  2489 I system_server: The ClassLoaderContext is a special shared library.
+11-27 16:41:09.873   429  1409 V installd: DexInv: --- BEGIN '/apex/com.android.os.statsd/javalib/service-statsd.jar' ---
+11-27 16:41:09.883  2490  2490 W dex2oat32: Unexpected CPU variant for X86 using defaults: x86_64
+11-27 16:41:09.884  2490  2490 I dex2oat32: /apex/com.android.art/bin/dex2oat32 --input-vdex-fd=-1 --output-vdex-fd=9 --updatable-bcp-packages-file=/system/etc/updatable-bcp-packages.txt --resolve-startup-const-strings=true --max-image-block-size=524288 --compiler-filter=verify --classpath-dir=/apex/com.android.os.statsd/javalib --class-loader-context=PCL[];PCL[/system/framework/com.android.location.provider.jar:/system/framework/services.jar:/system/framework/ethernet-service.jar:/apex/com.android.permission/javalib/service-permission.jar:/apex/com.android.wifi/javalib/service-wifi.jar:/apex/com.android.ipsec/javalib/android.net.ipsec.ike.jar] --generate-mini-debug-info --compact-dex-level=none --compilation-reason=boot
+11-27 16:41:09.885  2490  2490 I dex2oat32: setting boot class path to /apex/com.android.art/javalib/core-oj.jar:/apex/com.android.art/javalib/core-libart.jar:/apex/com.android.art/javalib/core-icu4j.jar:/apex/com.android.art/javalib/okhttp.jar:/apex/com.android.art/javalib/bouncycastle.jar:/apex/com.android.art/javalib/apache-xml.jar:/system/framework/framework.jar:/system/framework/ext.jar:/system/framework/telephony-common.jar:/system/framework/voip-common.jar:/system/framework/ims-common.jar:/system/framework/framework-atb-backward-compatibility.jar
+11-27 16:41:09.887   509   651 D WifiNl80211Manager: Scan result ready event
+11-27 16:41:09.887   509   651 D WifiNative: Scan result ready event
+11-27 16:41:09.921  2490  2490 I dex2oat32: dex2oat took 38.455ms (38.318ms cpu) (threads: 2) arena alloc=0B (0B) java alloc=33KB (34600B) native alloc=1006KB (1030320B) free=1501KB (1537088B)
+11-27 16:41:09.923   429  1409 V installd: DexInv: --- END '/apex/com.android.os.statsd/javalib/service-statsd.jar' (success) ---
+11-27 16:41:09.925   509  2489 I system_server: The ClassLoaderContext is a special shared library.
+11-27 16:41:09.991   509  2489 I chatty  : uid=1000(system) Binder:509_3 identical 69 lines
+11-27 16:41:09.991   509  2489 I system_server: The ClassLoaderContext is a special shared library.
+11-27 16:41:09.991   509  2489 I BackgroundDexOptService: Pinning optimized code {android}
+11-27 16:41:09.991   509  2489 D IorapForwardingService: onPackagesUpdated: android
+11-27 16:41:10.556   299   345 D goldfish-address-space: claimShared: Ask to claim region [0x3f8000000 0x3f89e4000]
+11-27 16:41:10.562   162   162 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device manifest.
+11-27 16:41:10.562  2496  2496 I Gralloc4: mapper 4.x is not supported
+11-27 16:41:10.567  2496  2496 D HostConnection: createUnique: call
+11-27 16:41:10.568  2496  2496 D HostConnection: HostConnection::get() New Host Connection established 0x7e69ee76a250, tid 2496
+11-27 16:41:10.568  2496  2496 D goldfish-address-space: allocate: Ask for block of size 0x100
+11-27 16:41:10.568  2496  2496 D goldfish-address-space: allocate: ioctl allocate returned offset 0x3f7ffe000 size 0x2000
+11-27 16:41:10.579  2496  2496 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform ANDROID_EMU_hwc_display_power_mode GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-27 16:41:10.957   509   545 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+11-27 16:41:06.501   509  2457 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+11-27 16:41:10.957   509   651 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+11-27 16:41:10.960   422   422 I perfetto: ing_service_impl.cc:758 Configured tracing session 9, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:2, uid:1071 session name: ""
+11-27 16:41:10.961   412   412 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=9)
+11-27 16:41:10.962   509   545 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+11-27 16:41:10.963  2500  2502 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+11-27 16:41:10.975   509   651 I MediaFocusControl: requestAudioFocus() from uid/pid 10130/2390 clientId=android.media.AudioManager@b0d625candroidx.media3.exoplayer.AudioFocusManager$AudioFocusListener@7d31965 callingPack=app.ember.audiobooks req=1 flags=0x2 sdk=35
+11-27 16:41:10.981   285  2382 E android.hardware.audio.service.ranchu: device/generic/goldfish/audio/primary_device.cpp:getParameters:234 failure: Result::NOT_SUPPORTED
+11-27 16:41:11.009   365  2381 D AudioFlinger: Client defaulted notificationFrames to 1000 for frameCount 2000
+11-27 16:41:11.010   365  2381 D AF::TrackHandle: OpPlayAudio: track:55 usage:1 not muted
+11-27 16:41:11.012   509  1005 I system_server: oneway function results will be dropped but finished with status OK and parcel size 4
+11-27 16:41:11.012   509  1005 I chatty  : uid=1000(system) Binder:509_8 identical 2 lines
+11-27 16:41:11.012   509  1005 I system_server: oneway function results will be dropped but finished with status OK and parcel size 4
+11-27 16:41:11.013   509   509 D MediaSessionService: Media button session is changed to app.ember.audiobooks/androidx.media3.session.id. (userId=0)
+11-27 16:41:11.014   365  2351 W APM::AudioPolicyEngine: getDevicesForStrategy() unknown strategy: -1
+11-27 16:41:11.014   365  2351 W APM::AudioPolicyEngine: getDevicesForStrategy() unknown strategy: -1
+11-27 16:41:11.014   706   706 I AvrcpMediaPlayerList: onMediaKeyEventSessionChanged: token=app.ember.audiobooks
+11-27 16:41:11.020   706   706 D AvrcpMediaPlayerList: setActivePlayer(): setting player to app.ember.audiobooks
+11-27 16:41:11.021   706   706 W AvrcpMediaPlayerList: setActivePlayer(): Metadata not synced on new player
+11-27 16:41:11.021   706   706 V AvrcpMediaPlayerList: onActiveSessionsChanged: number of controllers: 1
+11-27 16:41:11.021   706   706 D AvrcpMediaPlayerList: onActiveSessionsChanged: controller: app.ember.audiobooks
+11-27 16:41:11.021   706   706 D AvrcpMediaPlayerList: Already have a controller for the player: app.ember.audiobooks, updating instead
+11-27 16:41:11.022   706   706 D AvrcpMediaPlayerList: sendMediaUpdate
+11-27 16:41:11.022   706   706 D AvrcpMediaPlayerList: sendMediaUpdate state=PlaybackState {state=6, position=252000, buffered position=252000, speed=0.0, updated=82454, actions=7339775, custom actions=[], active item id=0, error=null}
+11-27 16:41:11.022   706   706 D AvrcpTargetService: onMediaUpdated: track_changed=true state=true queue=true
+11-27 16:41:11.022   706   706 D AvrcpNativeInterface: sendMediaUpdate: metadata=true playStatus=true queue=true
+11-27 16:41:11.022   706   706 D AvrcpTargetJni: sendMediaUpdateNative
+11-27 16:41:11.022   706   706 I bt_stack: [INFO:avrcp_service.cc(346)] virtual void bluetooth::avrcp::AvrcpService::SendMediaUpdate(bool, bool, bool) track_changed=1 :  play_state=1 :  queue=1
+11-27 16:41:11.026   706   706 V AvrcpMediaPlayerWrapper: onQueueChanged(): app.ember.audiobooks
+11-27 16:41:11.026   706   706 W AvrcpMediaPlayerWrapper: onQueueChanged(): app.ember.audiobooks tried to update with no new data
+11-27 16:41:11.029   706   706 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=6, position=252000, buffered position=252000, speed=0.0, updated=82505, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:11.029   706   706 W AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks tried to update with no new data
+11-27 16:41:11.037  2390  2390 V MediaRouter: Selecting route: RouteInfo{ name=Phone, description=null, status=null, category=RouteCategory{ name=System types=ROUTE_TYPE_LIVE_AUDIO ROUTE_TYPE_LIVE_VIDEO  groupable=false }, supportedTypes=ROUTE_TYPE_LIVE_AUDIO ROUTE_TYPE_LIVE_VIDEO , presentationDisplay=null }
+11-27 16:41:11.060   509   931 I system_server: oneway function results will be dropped but finished with status OK and parcel size 4
+11-27 16:41:11.060   285   471 E FMQ     : grantorIdx must be less than 3
+11-27 16:41:11.060   285   471 E FMQ     : grantorIdx must be less than 3
+11-27 16:41:11.062   365   462 E FMQ     : grantorIdx must be less than 3
+11-27 16:41:11.062   365   462 E FMQ     : grantorIdx must be less than 3
+11-27 16:41:11.064   706   706 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=3, position=252000, buffered position=317500, speed=1.0, updated=82539, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:11.065   706   706 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=3, position=252000, buffered position=317500, speed=1.0, updated=82540, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:11.100  2390  2437 D AudioTrack: getTimestamp_l(15): device stall time corrected using current time 82576688045
+11-27 16:41:11.195   365   462 D AudioFlinger: mixer(0x78903b5c3040) throttle end: throttle time(14)
+11-27 16:41:11.203   509   509 D NotificationService: 0|app.ember.audiobooks|1001|null|10130: granting content://settings/system/notification_sound
+11-27 16:41:11.203   509   509 I chatty  : uid=1000(system) Binder:509_3 identical 1 line
+11-27 16:41:11.203   509   509 D NotificationService: 0|app.ember.audiobooks|1001|null|10130: granting content://settings/system/notification_sound
+11-27 16:41:11.204   509   509 W NotificationHistory: Attempted to add notif for locked/gone/disabled user 0
+11-27 16:41:11.212   724   724 D InterruptionStateProvider: No alerting: filtered notification: 0|app.ember.audiobooks|1001|null|10130
+11-27 16:41:11.227   724   724 I chatty  : uid=10121(com.android.systemui) identical 2 lines
+11-27 16:41:11.227   724   724 D InterruptionStateProvider: No alerting: filtered notification: 0|app.ember.audiobooks|1001|null|10130
+11-27 16:41:11.228   724   724 V MediaTimeout: processState: PlaybackState {state=3, position=252164, buffered position=317500, speed=1.0, updated=82704, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:11.228   724   724 D MediaResumeListener: Checking for service component for app.ember.audiobooks
+11-27 16:41:11.230   724   807 D MediaResumeListener: Testing if we can connect to ComponentInfo{app.ember.audiobooks/app.ember.playback.PlaybackService}
+11-27 16:41:11.233   706   722 D BluetoothDatabase: getBondedDevicesOrdered: Invalid address for device LocalStorage
+11-27 16:41:11.244   724   724 D MediaResumeListener: Checking for service component for app.ember.audiobooks
+11-27 16:41:11.247   724   724 W ConstraintSet: id unknown center_vertical_guideline
+11-27 16:41:11.247   724   724 W ConstraintSet: id unknown media_action_barrier
+11-27 16:41:11.247   724   724 W ConstraintSet: id unknown qs_media_controls_options
+11-27 16:41:11.250   724   807 D MediaResumeListener: Testing if we can connect to ComponentInfo{app.ember.audiobooks/app.ember.playback.PlaybackService}
+11-27 16:41:11.264   724   724 W ConstraintSet: id unknown center_vertical_guideline
+11-27 16:41:11.264   724   724 W ConstraintSet: id unknown media_action_barrier
+11-27 16:41:11.264   724   724 W ConstraintSet: id unknown qs_media_controls_options
+11-27 16:41:11.270   724   724 W ConstraintSet: id unknown center_vertical_guideline
+11-27 16:41:11.270   724   724 W ConstraintSet: id unknown media_action_barrier
+11-27 16:41:11.270   724   724 W ConstraintSet: id unknown qs_media_controls_options
+11-27 16:41:11.275   724   724 W ConstraintSet: id unknown center_vertical_guideline
+11-27 16:41:11.275   724   724 W ConstraintSet: id unknown media_action_barrier
+11-27 16:41:11.275   724   724 W ConstraintSet: id unknown qs_media_controls_options
+11-27 16:41:11.286   724   724 D InterruptionStateProvider: No alerting: filtered notification: 0|app.ember.audiobooks|1001|null|10130
+11-27 16:41:11.286   724   724 D InterruptionStateProvider: No alerting: filtered notification: 0|app.ember.audiobooks|1001|null|10130
+11-27 16:41:11.289   724   807 D ResumeMediaBrowser: connected
+11-27 16:41:11.289   724   807 D MediaResumeListener: yes we can resume with ComponentInfo{app.ember.audiobooks/app.ember.playback.PlaybackService}
+11-27 16:41:11.296   724   724 D InterruptionStateProvider: No alerting: filtered notification: 0|app.ember.audiobooks|1001|null|10130
+11-27 16:41:11.296   724   724 D InterruptionStateProvider: No alerting: filtered notification: 0|app.ember.audiobooks|1001|null|10130
+11-27 16:41:11.297   724   724 W ConstraintSet: id unknown center_vertical_guideline
+11-27 16:41:11.297   724   724 W ConstraintSet: id unknown media_action_barrier
+11-27 16:41:11.298   724   724 W ConstraintSet: id unknown qs_media_controls_options
+11-27 16:41:11.312   724   724 W ConstraintSet: id unknown center_vertical_guideline
+11-27 16:41:11.312   724   724 W ConstraintSet: id unknown media_action_barrier
+11-27 16:41:11.312   724   724 W ConstraintSet: id unknown qs_media_controls_options
+11-27 16:41:11.506   412   412 I perfetto: probes_producer.cc:329  Producer stop (id=8)
+11-27 16:41:11.507   422   422 I perfetto: ng_service_impl.cc:1948 Tracing session 8 ended, total sessions:1
+11-27 16:41:13.066   706   706 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-27 16:41:13.067   706   706 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="Pride and Prejudice" artist="Jane Austen" album="Pride and Prejudice" duration=600000 trackPosition=1/1 }
+11-27 16:41:13.067   706   706 E AvrcpMediaPlayerWrapper:   └ Current Playstate: PlaybackState {state=3, position=254003, buffered position=317500, speed=1.0, updated=84543, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:13.067   706   706 E AvrcpMediaPlayerWrapper:   └ QueueItem(0): { mediaId="NowPlayingId0" title="Pride and Prejudice" artist="Chapter 1" album="" duration=0 trackPosition=1/1 }
+11-27 16:41:13.068   706   706 V AvrcpMediaPlayerWrapper: trySendMediaUpdate(): Metadata has been updated for app.ember.audiobooks
+11-27 16:41:13.068   706   706 D AvrcpMediaPlayerList: sendMediaUpdate
+11-27 16:41:13.068   706   706 D AvrcpMediaPlayerList: sendMediaUpdate state=PlaybackState {state=3, position=254004, buffered position=317500, speed=1.0, updated=84544, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:13.068   706   706 D AvrcpTargetService: onMediaUpdated: track_changed=false state=true queue=false
+11-27 16:41:13.068   706   706 D AvrcpNativeInterface: sendMediaUpdate: metadata=false playStatus=true queue=false
+11-27 16:41:13.068   706   706 D AvrcpTargetJni: sendMediaUpdateNative
+11-27 16:41:13.068   706   706 I bt_stack: [INFO:avrcp_service.cc(346)] virtual void bluetooth::avrcp::AvrcpService::SendMediaUpdate(bool, bool, bool) track_changed=0 :  play_state=1 :  queue=0
+11-27 16:41:14.021   509  2457 I system_server: oneway function results will be dropped but finished with status OK and parcel size 4
+11-27 16:41:14.082   706   706 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=3, position=255007, buffered position=383100, speed=1.0, updated=85556, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:14.082   724   724 V MediaTimeout: processState: PlaybackState {state=3, position=255007, buffered position=383100, speed=1.0, updated=85556, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:15.963   412   412 I perfetto: probes_producer.cc:329  Producer stop (id=9)
+11-27 16:41:15.964   422   422 I perfetto: ng_service_impl.cc:1948 Tracing session 9 ended, total sessions:0
+11-27 16:41:15.965   412   412 I perfetto: ftrace_procfs.cc:183    disabled ftrace
+11-27 16:41:16.191     0     0 W perfetto: disabled ftrace
+11-27 16:41:15.975   365   462 D AudioFlinger: mixer(0x78903b5c3040) throttle end: throttle time(1)
+11-27 16:41:15.985   509   545 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+11-27 16:41:15.985   509  2457 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+11-27 16:41:15.987   422   422 I perfetto: ing_service_impl.cc:758 Configured tracing session 10, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:1, uid:1071 session name: ""
+11-27 16:41:15.987   509   545 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+11-27 16:41:15.991  2518  2520 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+11-27 16:41:16.085   706   706 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-27 16:41:16.085   706   706 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="Pride and Prejudice" artist="Jane Austen" album="Pride and Prejudice" duration=600000 trackPosition=1/1 }
+11-27 16:41:16.085   706   706 E AvrcpMediaPlayerWrapper:   └ Current Playstate: PlaybackState {state=3, position=257012, buffered position=383100, speed=1.0, updated=87561, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:16.086   706   706 E AvrcpMediaPlayerWrapper:   └ QueueItem(0): { mediaId="NowPlayingId0" title="Pride and Prejudice" artist="Chapter 1" album="" duration=0 trackPosition=1/1 }
+11-27 16:41:16.086   706   706 V AvrcpMediaPlayerWrapper: trySendMediaUpdate(): Metadata has been updated for app.ember.audiobooks
+11-27 16:41:16.086   706   706 D AvrcpMediaPlayerList: sendMediaUpdate
+11-27 16:41:16.086   706   706 D AvrcpMediaPlayerList: sendMediaUpdate state=PlaybackState {state=3, position=257013, buffered position=383100, speed=1.0, updated=87562, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:16.086   706   706 D AvrcpTargetService: onMediaUpdated: track_changed=false state=true queue=false
+11-27 16:41:16.087   706   706 D AvrcpNativeInterface: sendMediaUpdate: metadata=false playStatus=true queue=false
+11-27 16:41:16.087   706   706 D AvrcpTargetJni: sendMediaUpdateNative
+11-27 16:41:16.087   706   706 I bt_stack: [INFO:avrcp_service.cc(346)] virtual void bluetooth::avrcp::AvrcpService::SendMediaUpdate(bool, bool, bool) track_changed=0 :  play_state=1 :  queue=0
+11-27 16:41:16.120   412   412 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=10)
+11-27 16:41:16.140   412   412 I perfetto: ftrace_procfs.cc:176    enabled ftrace
+11-27 16:41:16.367     0     0 W perfetto: enabled ftrace
+11-27 16:41:16.804  2390  2390 I Choreographer: Skipped 32 frames!  The application may be doing too much work on its main thread.
+11-27 16:41:17.086   724   724 V MediaTimeout: processState: PlaybackState {state=3, position=258016, buffered position=383100, speed=1.0, updated=88561, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:17.086   706   706 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=3, position=258016, buffered position=383100, speed=1.0, updated=88561, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:17.126   365   462 D AudioFlinger: mixer(0x78903b5c3040) throttle end: throttle time(136)
+11-27 16:41:19.092   706   706 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-27 16:41:19.092   706   706 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="Pride and Prejudice" artist="Jane Austen" album="Pride and Prejudice" duration=600000 trackPosition=1/1 }
+11-27 16:41:19.092   706   706 E AvrcpMediaPlayerWrapper:   └ Current Playstate: PlaybackState {state=3, position=260023, buffered position=383100, speed=1.0, updated=90568, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:19.093   706   706 E AvrcpMediaPlayerWrapper:   └ QueueItem(0): { mediaId="NowPlayingId0" title="Pride and Prejudice" artist="Chapter 1" album="" duration=0 trackPosition=1/1 }
+11-27 16:41:19.093   706   706 V AvrcpMediaPlayerWrapper: trySendMediaUpdate(): Metadata has been updated for app.ember.audiobooks
+11-27 16:41:19.093   706   706 D AvrcpMediaPlayerList: sendMediaUpdate
+11-27 16:41:19.093   706   706 D AvrcpMediaPlayerList: sendMediaUpdate state=PlaybackState {state=3, position=260024, buffered position=383100, speed=1.0, updated=90569, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:19.093   706   706 D AvrcpTargetService: onMediaUpdated: track_changed=false state=true queue=false
+11-27 16:41:19.093   706   706 D AvrcpNativeInterface: sendMediaUpdate: metadata=false playStatus=true queue=false
+11-27 16:41:19.093   706   706 D AvrcpTargetJni: sendMediaUpdateNative
+11-27 16:41:19.093   706   706 I bt_stack: [INFO:avrcp_service.cc(346)] virtual void bluetooth::avrcp::AvrcpService::SendMediaUpdate(bool, bool, bool) track_changed=0 :  play_state=1 :  queue=0
+11-27 16:41:19.135  1581  2035 I Dialer  : OmtpVvmCarrierCfgHlpr - OmtpEvent:CONFIG_STATUS_SMS_TIME_OUT
+11-27 16:41:19.136  1581  1581 I Dialer  : RetryPolicy - discarding deferred status: configuration_state=4
+11-27 16:41:19.137  1581  1581 I Dialer  : VvmTaskExecutor - no more tasks, stopping service if no task are added in 5000 millis
+11-27 16:41:19.137  1581  1581 I Dialer  : VvmTaskReceiver - task received
+11-27 16:41:19.137  1581  1581 I Dialer  : VvmTaskReceiver - TaskExecutor already running
+11-27 16:41:19.137  1581  1581 I Dialer  : Task.createTask - create task:com.android.voicemail.impl.ActivationTask
+11-27 16:41:19.137  1581  1581 I Dialer  : RetryPolicy - retry #1 for com.android.voicemail.impl.ActivationTask@a63def6 queued, executing in 5000
+11-27 16:41:19.139  1581  1581 I Dialer  : VvmTaskExecutor - com.android.voicemail.impl.ActivationTask@a63def6 added
+11-27 16:41:19.140  1581  1581 I Dialer  : VvmTaskExecutor - minimal wait time:4998
+11-27 16:41:19.140  1581  1581 I Dialer  : VvmTaskExecutor - sleep for 4998 millis
+11-27 16:41:20.040   299   345 D goldfish-address-space: claimShared: Ask to claim region [0x3f8000000 0x3f89e4000]
+11-27 16:41:20.052   162   162 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device manifest.
+11-27 16:41:20.055  2528  2528 I Gralloc4: mapper 4.x is not supported
+11-27 16:41:20.060  2528  2528 D HostConnection: createUnique: call
+11-27 16:41:20.061  2528  2528 D HostConnection: HostConnection::get() New Host Connection established 0x7dc832a94c10, tid 2528
+11-27 16:41:20.061  2528  2528 D goldfish-address-space: allocate: Ask for block of size 0x100
+11-27 16:41:20.061  2528  2528 D goldfish-address-space: allocate: ioctl allocate returned offset 0x3f7ffe000 size 0x2000
+11-27 16:41:20.069  2528  2528 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform ANDROID_EMU_hwc_display_power_mode GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-27 16:41:20.112   724   724 V MediaTimeout: processState: PlaybackState {state=3, position=261033, buffered position=383100, speed=1.0, updated=91587, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:20.113   706   706 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=3, position=261033, buffered position=383100, speed=1.0, updated=91587, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:20.983   509   545 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+11-27 16:41:20.984   509  2380 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+11-27 16:41:20.988   422   422 I perfetto: ing_service_impl.cc:758 Configured tracing session 11, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:2, uid:1071 session name: ""
+11-27 16:41:20.988   412   412 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=11)
+11-27 16:41:20.988  2533  2535 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+11-27 16:41:20.989   509   545 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+11-27 16:41:20.990   412   412 I perfetto: probes_producer.cc:329  Producer stop (id=10)
+11-27 16:41:20.990   422   422 I perfetto: ng_service_impl.cc:1948 Tracing session 10 ended, total sessions:1
+11-27 16:41:21.223   365   462 D AudioFlinger: mixer(0x78903b5c3040) throttle end: throttle time(10)
+11-27 16:41:22.116   706   706 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-27 16:41:22.117   706   706 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="Pride and Prejudice" artist="Jane Austen" album="Pride and Prejudice" duration=600000 trackPosition=1/1 }
+11-27 16:41:22.117   706   706 E AvrcpMediaPlayerWrapper:   └ Current Playstate: PlaybackState {state=3, position=263039, buffered position=383100, speed=1.0, updated=93593, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:22.117   706   706 E AvrcpMediaPlayerWrapper:   └ QueueItem(0): { mediaId="NowPlayingId0" title="Pride and Prejudice" artist="Chapter 1" album="" duration=0 trackPosition=1/1 }
+11-27 16:41:22.118   706   706 V AvrcpMediaPlayerWrapper: trySendMediaUpdate(): Metadata has been updated for app.ember.audiobooks
+11-27 16:41:22.118   706   706 D AvrcpMediaPlayerList: sendMediaUpdate
+11-27 16:41:22.118   706   706 D AvrcpMediaPlayerList: sendMediaUpdate state=PlaybackState {state=3, position=263040, buffered position=383100, speed=1.0, updated=93594, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:22.118   706   706 D AvrcpTargetService: onMediaUpdated: track_changed=false state=true queue=false
+11-27 16:41:22.118   706   706 D AvrcpNativeInterface: sendMediaUpdate: metadata=false playStatus=true queue=false
+11-27 16:41:22.118   706   706 D AvrcpTargetJni: sendMediaUpdateNative
+11-27 16:41:22.118   706   706 I bt_stack: [INFO:avrcp_service.cc(346)] virtual void bluetooth::avrcp::AvrcpService::SendMediaUpdate(bool, bool, bool) track_changed=0 :  play_state=1 :  queue=0
+11-27 16:41:23.117   706   706 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=3, position=264044, buffered position=383100, speed=1.0, updated=94592, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:23.117   724   724 V MediaTimeout: processState: PlaybackState {state=3, position=264044, buffered position=383100, speed=1.0, updated=94592, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:24.177  1581  2035 I Dialer  : VvmTaskExecutor - executing task com.android.voicemail.impl.ActivationTask@a63def6
+11-27 16:41:24.177  1581  2035 I Dialer  : PreOMigrationHandler - ComponentInfo{com.android.phone/com.android.services.telephony.TelephonyConnectionService}, ***, UserHandle{0} already migrated
+11-27 16:41:24.188  1676  1734 I VoicemailNotifier: receivers for android.intent.action.PROVIDER_CHANGED :[]
+11-27 16:41:24.189  1581  2035 I Dialer  : VvmActivationTask - VVM content provider configured - vvm_type_cvvm
+11-27 16:41:24.189  1581  2035 I Dialer  : OmtpVvmCarrierCfgHlpr - OmtpEvent:CONFIG_ACTIVATING
+11-27 16:41:24.192  1676  1734 I VoicemailNotifier: receivers for android.intent.action.PROVIDER_CHANGED :[]
+11-27 16:41:24.198  1055  1238 D SmsNumberUtils: enter filterDestAddr. destAddr="[BajqU4K5_YhSYbs-7QUn0dOwcmI]"
+11-27 16:41:24.199  1055  1238 D SmsNumberUtils: destAddr is not formatted.
+11-27 16:41:24.199  1055  1238 D SmsNumberUtils: leave filterDestAddr, new destAddr="[BajqU4K5_YhSYbs-7QUn0dOwcmI]"
+11-27 16:41:25.120   706   706 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-27 16:41:25.121   706   706 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="Pride and Prejudice" artist="Jane Austen" album="Pride and Prejudice" duration=600000 trackPosition=1/1 }
+11-27 16:41:25.121   706   706 E AvrcpMediaPlayerWrapper:   └ Current Playstate: PlaybackState {state=3, position=266049, buffered position=383100, speed=1.0, updated=96597, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:25.122   706   706 E AvrcpMediaPlayerWrapper:   └ QueueItem(0): { mediaId="NowPlayingId0" title="Pride and Prejudice" artist="Chapter 1" album="" duration=0 trackPosition=1/1 }
+11-27 16:41:25.122   706   706 V AvrcpMediaPlayerWrapper: trySendMediaUpdate(): Metadata has been updated for app.ember.audiobooks
+11-27 16:41:25.122   706   706 D AvrcpMediaPlayerList: sendMediaUpdate
+11-27 16:41:25.122   706   706 D AvrcpMediaPlayerList: sendMediaUpdate state=PlaybackState {state=3, position=266050, buffered position=383100, speed=1.0, updated=96598, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:25.123   706   706 D AvrcpTargetService: onMediaUpdated: track_changed=false state=true queue=false
+11-27 16:41:25.123   706   706 D AvrcpNativeInterface: sendMediaUpdate: metadata=false playStatus=true queue=false
+11-27 16:41:25.123   706   706 D AvrcpTargetJni: sendMediaUpdateNative
+11-27 16:41:25.123   706   706 I bt_stack: [INFO:avrcp_service.cc(346)] virtual void bluetooth::avrcp::AvrcpService::SendMediaUpdate(bool, bool, bool) track_changed=0 :  play_state=1 :  queue=0
+11-27 16:41:25.989   412   412 I perfetto: probes_producer.cc:329  Producer stop (id=11)
+11-27 16:41:25.989   422   422 I perfetto: ng_service_impl.cc:1948 Tracing session 11 ended, total sessions:0
+11-27 16:41:25.990   412   412 I perfetto: ftrace_procfs.cc:183    disabled ftrace
+11-27 16:41:26.217     0     0 W perfetto: disabled ftrace
+11-27 16:41:26.119   724   724 V MediaTimeout: processState: PlaybackState {state=3, position=267043, buffered position=383100, speed=1.0, updated=97593, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:26.119   706   706 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=3, position=267043, buffered position=383100, speed=1.0, updated=97593, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:27.039   299   345 D goldfish-address-space: claimShared: Ask to claim region [0x3f8000000 0x3f89e4000]
+11-27 16:41:27.046   162   162 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device manifest.
+11-27 16:41:27.047  2545  2545 I Gralloc4: mapper 4.x is not supported
+11-27 16:41:27.052  2545  2545 D HostConnection: createUnique: call
+11-27 16:41:27.053  2545  2545 D HostConnection: HostConnection::get() New Host Connection established 0x704402eab450, tid 2545
+11-27 16:41:27.053  2545  2545 D goldfish-address-space: allocate: Ask for block of size 0x100
+11-27 16:41:27.053  2545  2545 D goldfish-address-space: allocate: ioctl allocate returned offset 0x3f7ffe000 size 0x2000
+11-27 16:41:27.064  2545  2545 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform ANDROID_EMU_hwc_display_power_mode GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-27 16:41:27.255   509   545 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+11-27 16:41:27.256   509   931 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+11-27 16:41:27.256   422   422 I perfetto: ing_service_impl.cc:758 Configured tracing session 12, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:1, uid:1071 session name: ""
+11-27 16:41:27.256   412   412 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=12)
+11-27 16:41:27.258   509   545 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+11-27 16:41:27.259  2549  2551 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+11-27 16:41:27.265   412   412 I perfetto: ftrace_procfs.cc:176    enabled ftrace
+11-27 16:41:27.491     0     0 W perfetto: enabled ftrace
+11-27 16:41:28.121   706   706 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-27 16:41:28.122   706   706 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="Pride and Prejudice" artist="Jane Austen" album="Pride and Prejudice" duration=600000 trackPosition=1/1 }
+11-27 16:41:28.122   706   706 E AvrcpMediaPlayerWrapper:   └ Current Playstate: PlaybackState {state=3, position=269048, buffered position=383100, speed=1.0, updated=99598, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:28.123   706   706 E AvrcpMediaPlayerWrapper:   └ QueueItem(0): { mediaId="NowPlayingId0" title="Pride and Prejudice" artist="Chapter 1" album="" duration=0 trackPosition=1/1 }
+11-27 16:41:28.123   706   706 V AvrcpMediaPlayerWrapper: trySendMediaUpdate(): Metadata has been updated for app.ember.audiobooks
+11-27 16:41:28.123   706   706 D AvrcpMediaPlayerList: sendMediaUpdate
+11-27 16:41:28.123   706   706 D AvrcpMediaPlayerList: sendMediaUpdate state=PlaybackState {state=3, position=269049, buffered position=383100, speed=1.0, updated=99599, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:28.123   706   706 D AvrcpTargetService: onMediaUpdated: track_changed=false state=true queue=false
+11-27 16:41:28.123   706   706 D AvrcpNativeInterface: sendMediaUpdate: metadata=false playStatus=true queue=false
+11-27 16:41:28.123   706   706 D AvrcpTargetJni: sendMediaUpdateNative
+11-27 16:41:28.123   706   706 I bt_stack: [INFO:avrcp_service.cc(346)] virtual void bluetooth::avrcp::AvrcpService::SendMediaUpdate(bool, bool, bool) track_changed=0 :  play_state=1 :  queue=0
+11-27 16:41:29.120   724   724 V MediaTimeout: processState: PlaybackState {state=3, position=270050, buffered position=383100, speed=1.0, updated=100595, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:29.120   706   706 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=3, position=270050, buffered position=383100, speed=1.0, updated=100595, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:31.124   706   706 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-27 16:41:31.124   706   706 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="Pride and Prejudice" artist="Jane Austen" album="Pride and Prejudice" duration=600000 trackPosition=1/1 }
+11-27 16:41:31.125   706   706 E AvrcpMediaPlayerWrapper:   └ Current Playstate: PlaybackState {state=3, position=272055, buffered position=383100, speed=1.0, updated=102600, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:31.125   706   706 E AvrcpMediaPlayerWrapper:   └ QueueItem(0): { mediaId="NowPlayingId0" title="Pride and Prejudice" artist="Chapter 1" album="" duration=0 trackPosition=1/1 }
+11-27 16:41:31.125   706   706 V AvrcpMediaPlayerWrapper: trySendMediaUpdate(): Metadata has been updated for app.ember.audiobooks
+11-27 16:41:31.125   706   706 D AvrcpMediaPlayerList: sendMediaUpdate
+11-27 16:41:31.126   706   706 D AvrcpMediaPlayerList: sendMediaUpdate state=PlaybackState {state=3, position=272056, buffered position=383100, speed=1.0, updated=102601, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:31.126   706   706 D AvrcpTargetService: onMediaUpdated: track_changed=false state=true queue=false
+11-27 16:41:31.126   706   706 D AvrcpNativeInterface: sendMediaUpdate: metadata=false playStatus=true queue=false
+11-27 16:41:31.126   706   706 D AvrcpTargetJni: sendMediaUpdateNative
+11-27 16:41:31.126   706   706 I bt_stack: [INFO:avrcp_service.cc(346)] virtual void bluetooth::avrcp::AvrcpService::SendMediaUpdate(bool, bool, bool) track_changed=0 :  play_state=1 :  queue=0
+11-27 16:41:31.310   299   345 D goldfish-address-space: claimShared: Ask to claim region [0x3f8000000 0x3f89e4000]
+11-27 16:41:31.326   162   162 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device manifest.
+11-27 16:41:31.327  2559  2559 I Gralloc4: mapper 4.x is not supported
+11-27 16:41:31.331  2559  2559 D HostConnection: createUnique: call
+11-27 16:41:31.332  2559  2559 D HostConnection: HostConnection::get() New Host Connection established 0x7d01c4e49250, tid 2559
+11-27 16:41:31.332  2559  2559 D goldfish-address-space: allocate: Ask for block of size 0x100
+11-27 16:41:31.332  2559  2559 D goldfish-address-space: allocate: ioctl allocate returned offset 0x3f7ffe000 size 0x2000
+11-27 16:41:31.340  2559  2559 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform ANDROID_EMU_hwc_display_power_mode GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-27 16:41:31.529   509   545 D EventSequenceValidator: Transition from INTENT_FAILED to INTENT_STARTED
+11-27 16:41:31.529   509   651 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.ember.audiobooks/app.ember.ui.MainActivity (has extras)} from uid 2000
+11-27 16:41:31.530   422   422 I perfetto: ing_service_impl.cc:758 Configured tracing session 13, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:2, uid:1071 session name: ""
+11-27 16:41:31.530   412   412 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=13)
+11-27 16:41:31.534  2563  2565 I cmd     : oneway function results will be dropped but finished with status OK and parcel size 4
+11-27 16:41:31.535   509   545 D EventSequenceValidator: Transition from INTENT_STARTED to INTENT_FAILED
+11-27 16:41:31.556   509  1029 D CompatibilityChangeReporter: Compat change id reported: 149924527; UID 10130; state: ENABLED
+11-27 16:41:31.557   509  1029 D CompatibilityChangeReporter: Compat change id reported: 132649864; UID 10130; state: DISABLED
+11-27 16:41:31.558  1415  1435 I MediaProvider: Deleted 0 items on external due to app.ember.audiobooks
+11-27 16:41:31.569  1415  1435 I MediaProvider: Using lower FS for /storage/emulated/0/Download/EmberTest/quick-end.json
+11-27 16:41:32.122   706   706 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=3, position=273048, buffered position=383100, speed=1.0, updated=103597, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:32.122   724   724 V MediaTimeout: processState: PlaybackState {state=3, position=273048, buffered position=383100, speed=1.0, updated=103597, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:32.256   412   412 I perfetto: probes_producer.cc:329  Producer stop (id=12)
+11-27 16:41:32.257   422   422 I perfetto: ng_service_impl.cc:1948 Tracing session 12 ended, total sessions:1
+11-27 16:41:34.125   706   706 E AvrcpMediaPlayerWrapper: Timeout while waiting for metadata to sync for app.ember.audiobooks
+11-27 16:41:34.136   706   706 E AvrcpMediaPlayerWrapper:   └ Current Metadata: { mediaId="currsong" title="Pride and Prejudice" artist="Jane Austen" album="Pride and Prejudice" duration=600000 trackPosition=1/1 }
+11-27 16:41:34.137   706   706 E AvrcpMediaPlayerWrapper:   └ Current Playstate: PlaybackState {state=3, position=275063, buffered position=383100, speed=1.0, updated=105612, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:34.137   706   706 E AvrcpMediaPlayerWrapper:   └ QueueItem(0): { mediaId="NowPlayingId0" title="Pride and Prejudice" artist="Chapter 1" album="" duration=0 trackPosition=1/1 }
+11-27 16:41:34.137   706   706 V AvrcpMediaPlayerWrapper: trySendMediaUpdate(): Metadata has been updated for app.ember.audiobooks
+11-27 16:41:34.137   706   706 D AvrcpMediaPlayerList: sendMediaUpdate
+11-27 16:41:34.137   706   706 D AvrcpMediaPlayerList: sendMediaUpdate state=PlaybackState {state=3, position=275064, buffered position=383100, speed=1.0, updated=105613, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:34.137   706   706 D AvrcpTargetService: onMediaUpdated: track_changed=false state=true queue=false
+11-27 16:41:34.137   706   706 D AvrcpNativeInterface: sendMediaUpdate: metadata=false playStatus=true queue=false
+11-27 16:41:34.137   706   706 D AvrcpTargetJni: sendMediaUpdateNative
+11-27 16:41:34.137   706   706 I bt_stack: [INFO:avrcp_service.cc(346)] virtual void bluetooth::avrcp::AvrcpService::SendMediaUpdate(bool, bool, bool) track_changed=0 :  play_state=1 :  queue=0
+11-27 16:41:35.122   724   724 V MediaTimeout: processState: PlaybackState {state=3, position=276051, buffered position=383100, speed=1.0, updated=106597, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:35.123   706   706 V AvrcpMediaPlayerWrapper: onPlaybackStateChanged(): app.ember.audiobooks : PlaybackState {state=3, position=276051, buffered position=383100, speed=1.0, updated=106597, actions=7340031, custom actions=[], active item id=0, error=null}
+11-27 16:41:36.533   412   412 I perfetto: probes_producer.cc:329  Producer stop (id=13)
+11-27 16:41:36.534   422   422 I perfetto: ng_service_impl.cc:1948 Tracing session 13 ended, total sessions:0
+11-27 16:41:36.535   412   412 I perfetto: ftrace_procfs.cc:183    disabled ftrace
+11-27 16:41:36.761     0     0 W perfetto: disabled ftrace
+11-27 16:41:36.826     0     0 D logd    : logdr: UID=2000 GID=2000 PID=2572 n tail=0 logMask=99 pid=0 start=0ns timeout=0ns

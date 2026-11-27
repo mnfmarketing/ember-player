@@ -1,0 +1,2 @@
+== Search finds chapter names
+== A link to a screen that doesn't exist is ignored
